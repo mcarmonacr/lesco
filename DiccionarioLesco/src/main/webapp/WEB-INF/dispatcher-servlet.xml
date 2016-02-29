@@ -1,13 +1,22 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:tx="http://www.springframework.org/schema/tx"
 	xsi:schemaLocation="
 http://www.springframework.org/schema/beans
 http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
 http://www.springframework.org/schema/context
-http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+http://www.springframework.org/schema/context/spring-context-3.0.xsd
+http://www.springframework.org/schema/mvc
+http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+http://www.springframework.org/schema/tx 
+http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
     
-	<context:component-scan base-package="com.lesco.diccionario.controller" />
+    <mvc:annotation-driven />
+	<mvc:resources mapping="/resources/**" location="/resources/" />
+
+	<context:component-scan base-package="com.lesco.diccionario" />
  
  
  	<!-- freemarker config -->
@@ -34,5 +43,30 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 <!-- 			<value>.jsp</value> -->
 <!-- 		</property> -->
 <!-- 	</bean> -->
+
+	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+	    <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+	    <property name="url" value="jdbc:mysql://localhost:3306/world"/>
+	    <property name="username" value="root"/>
+	    <property name="password" value="password"/>
+	</bean>
+	
+	<bean id="sessionFactory"
+    class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+	    <property name="dataSource" ref="dataSource" />
+	    <property name="configLocation" value="classpath:hibernate.cfg.xml" />
+	</bean>
+	
+	<tx:annotation-driven />
+	<bean id="transactionManager"
+	    class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+	    <property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<bean id="cityDao" class="com.lesco.diccionario.dao.CityDAOImpl">
+	    <constructor-arg>
+	        <ref bean="sessionFactory" />
+	    </constructor-arg>
+	</bean>
 	
 </beans>

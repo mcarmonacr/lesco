@@ -40,11 +40,47 @@
 			<version>${spring.version}</version>
 		</dependency>
 		
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-context</artifactId>
+		    <version>${spring.version}</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-orm</artifactId>
+		    <version>${spring.version}</version>
+		    <type>jar</type>
+		    <scope>compile</scope>
+		</dependency>
+		
+		<!-- Hibernate ORM framework -->
+		<dependency>
+		    <groupId>org.hibernate</groupId>
+		    <artifactId>hibernate-core</artifactId>
+		    <version>4.3.5.Final</version>
+		</dependency>
+		
+		<!-- Apache Commons DBCP dependency (for database connection pooling) -->
+		
+		<dependency>
+		    <groupId>org.apache.commons</groupId>
+		    <artifactId>commons-dbcp2</artifactId>
+		    <version>2.0</version>
+		</dependency>
+		
+		<!-- MySQL Connector Java dependency (JDBC driver for MySQL) -->
+		<dependency>
+		    <groupId>mysql</groupId>
+		    <artifactId>mysql-connector-java</artifactId>
+		    <version>5.1.30</version>
+		</dependency>
+		
 		<!-- ClassNotFoundException FreeMarkerConfigurationFactory -->
 		<dependency>
 		    <groupId>org.springframework</groupId>
 		    <artifactId>spring-context-support</artifactId>
-		    <version>3.2.4.RELEASE</version>
+		    <version>${spring.version}</version>
 		</dependency>
 		
 		<!-- FreeMarker Dependencies-->
