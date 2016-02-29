@@ -10,6 +10,7 @@
   
     <properties>
 		<spring.version>4.0.1.RELEASE</spring.version>
+		<log4j.version>1.2.17</log4j.version>
 	</properties>
 	
 	<dependencies>
@@ -37,6 +38,27 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
 			<version>${spring.version}</version>
+		</dependency>
+		
+		<!-- ClassNotFoundException FreeMarkerConfigurationFactory -->
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-context-support</artifactId>
+		    <version>3.2.4.RELEASE</version>
+		</dependency>
+		
+		<!-- FreeMarker Dependencies-->
+		<dependency>
+	        <groupId>org.freemarker</groupId>
+	        <artifactId>freemarker</artifactId>
+	        <version>2.3.20</version>
+	    </dependency>
+	    
+	    <!-- Log4j -->
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>${log4j.version}</version>
 		</dependency>
  
 	</dependencies>
