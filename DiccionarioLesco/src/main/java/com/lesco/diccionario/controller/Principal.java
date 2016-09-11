@@ -24,6 +24,26 @@ public class Principal {
 	@Autowired
 	private CityDAO cityDAO;
 	
+	
+	@RequestMapping("/")
+	public ModelAndView prin(
+			@RequestParam(value = "name", required = false, defaultValue = "World") String name) {
+		System.out.println("in controller");
+		
+		//logs debug message
+		if(logger.isDebugEnabled()){
+			logger.debug("getWelcome is executed!");
+		}
+		
+		//logs exception
+		logger.error("This is Error message", new Exception("Testing"));
+ 
+		ModelAndView mv = new ModelAndView("helloworld");
+		mv.addObject("message", message);
+		mv.addObject("name", name);
+		return mv;
+	}
+	
 	@RequestMapping("/principal")
 	public ModelAndView principal(
 			@RequestParam(value = "name", required = false, defaultValue = "World") String name) {

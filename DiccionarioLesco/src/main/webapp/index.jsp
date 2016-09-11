@@ -15,5 +15,14 @@ pageEncoding="ISO-8859-1"%>
 			<a href="hello?name=Eric">Click Here</a>
 		</h3>
 	</center>
+	
+	
+	<%
+   // New location to be redirected
+   //String site = new String("http://localhost:8088/DiccionarioLesco/");
+   //response.setStatus(response.SC_MOVED_TEMPORARILY);
+   //response.setHeader("Location", site); 
+%>
+	
 </body>
 </html>

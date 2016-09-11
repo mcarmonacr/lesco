@@ -16,7 +16,7 @@
  
 	<servlet-mapping>
 		<servlet-name>dispatcher</servlet-name>
-		<url-pattern>/</url-pattern>
+		<url-pattern>/*</url-pattern>
 	</servlet-mapping>
  
 	<context-param>
@@ -29,5 +29,20 @@
 			org.springframework.web.context.ContextLoaderListener
 		</listener-class>
 	</listener>
+	
+	<error-page>
+		 <error-code>400</error-code>
+		 <location>/400</location>
+	</error-page>
+	 
+	<error-page>
+		 <error-code>404</error-code>
+		 <location>/404</location>
+	</error-page>
+	 
+	<error-page>
+		 <error-code>500</error-code>
+		 <location>/500</location>
+	</error-page>
 	
 </web-app>
