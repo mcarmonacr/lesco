@@ -21,4 +21,15 @@ public class LescoController {
 		return mv;
 	}
 	
+	@RequestMapping("/testTemplate")
+	public ModelAndView lescoTestTemplate() {
+		
+		logger.debug("LescoController - lescoTestTemplate() - Starting method");
+ 
+		ModelAndView mv = new ModelAndView("testTemplate");
+		//mv.addObject("message", message);
+		//mv.addObject("name", name);
+		return mv;
+	}
+	
 }
