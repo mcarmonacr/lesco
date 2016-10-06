@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.lesco.diccionario.modelo">
+    <class name="UserProfile" table="UserProfile">
+    
+        <id name="id" type="java.lang.Integer" column="ID">
+            <generator class="foreign">
+            	<param name="property">user</param>
+            </generator>
+        </id>
+        
+        <one-to-one name="user" class="User"
+			constrained="true"></one-to-one>
+        
+        <property name="userName" column="UserName" />
+        <property name="email" column="Email" />
+        <property name="termsnAndConditions" column="Salt" />
+        
+    </class> 
+</hibernate-mapping>

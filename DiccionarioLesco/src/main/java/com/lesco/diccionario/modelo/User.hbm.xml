@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.lesco.diccionario.modelo">
+    <class name="User" table="User">
+    
+        <id name="id" type="java.lang.Integer" column="ID">
+            <generator class="native"/>
+        </id>
+        
+        <property name="userName" column="UserName" />
+        <property name="userPassword" column="UserPassword" />
+        <property name="salt" column="Salt" />
+        
+        <one-to-one name="userProfile" class="UserProfile"
+			cascade="save-update"></one-to-one>
+        
+    </class> 
+</hibernate-mapping>
