@@ -3,18 +3,19 @@
         "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping package="com.lesco.diccionario.modelo">
-    <class name="User" table="User">
+    <class name="ProfileDetail" table="ProfileDetail">
     
         <id name="id" type="java.lang.Integer" column="ID">
-            <generator class="native"/>
+            <generator class="foreign">
+            	<param name="property">userProfile</param>
+            </generator>
         </id>
         
-        <property name="userName" column="UserName" />
-        <property name="userPassword" column="UserPassword" />
-        <property name="salt" column="Salt" />
-        
         <one-to-one name="userProfile" class="UserProfile"
-			cascade="save-update"></one-to-one>
+			constrained="true"></one-to-one>
+        
+        <property name="email" column="Email" />
+        <property name="termsAndConditions" column="Salt" />
         
     </class> 
 </hibernate-mapping>

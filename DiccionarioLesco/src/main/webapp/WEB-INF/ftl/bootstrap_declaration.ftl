@@ -8,6 +8,8 @@
   
 <!--   <link rel="stylesheet" type="text/css" href="resources/css/common.css"> -->
 
+<link rel="stylesheet" type="text/css" href="resources/css/jumbotron.css">
+
 	<#if css??>
  	 <link rel="stylesheet" type="text/css" href=${css}>
 	</#if>

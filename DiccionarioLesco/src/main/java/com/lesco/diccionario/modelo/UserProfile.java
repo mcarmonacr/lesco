@@ -3,9 +3,10 @@ package com.lesco.diccionario.modelo;
 public class UserProfile {
 
 	private Integer id;
-	private String email;
-	private Boolean termsnAndConditions;
-	private User user;
+	private String userName;
+	private String userPassword;
+	private String salt;
+	private ProfileDetail profileDetail;
 	/**
 	 * @return the id
 	 */
@@ -19,40 +20,52 @@ public class UserProfile {
 		this.id = id;
 	}
 	/**
-	 * @return the email
+	 * @return the userName
 	 */
-	public String getEmail() {
-		return email;
+	public String getUserName() {
+		return userName;
 	}
 	/**
-	 * @param email the email to set
+	 * @param userName the userName to set
 	 */
-	public void setEmail(String email) {
-		this.email = email;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 	/**
-	 * @return the termsnAndConditions
+	 * @return the userPassword
 	 */
-	public Boolean getTermsnAndConditions() {
-		return termsnAndConditions;
+	public String getUserPassword() {
+		return userPassword;
 	}
 	/**
-	 * @param termsnAndConditions the termsnAndConditions to set
+	 * @param userPassword the userPassword to set
 	 */
-	public void setTermsnAndConditions(Boolean termsnAndConditions) {
-		this.termsnAndConditions = termsnAndConditions;
+	public void setUserPassword(String userPassword) {
+		this.userPassword = userPassword;
 	}
 	/**
-	 * @return the user
+	 * @return the salt
 	 */
-	public User getUser() {
-		return user;
+	public String getSalt() {
+		return salt;
 	}
 	/**
-	 * @param user the user to set
+	 * @param salt the salt to set
 	 */
-	public void setUser(User user) {
-		this.user = user;
+	public void setSalt(String salt) {
+		this.salt = salt;
 	}
-		
+	/**
+	 * @return the profileDetail
+	 */
+	public ProfileDetail getProfileDetail() {
+		return profileDetail;
+	}
+	/**
+	 * @param profileDetail the profileDetail to set
+	 */
+	public void setProfileDetail(ProfileDetail profileDetail) {
+		this.profileDetail = profileDetail;
+	}
+
 }
