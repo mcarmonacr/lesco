@@ -10,23 +10,17 @@ public class LescoController {
 	
 	private static final Logger logger = Logger.getLogger(Principal.class);
 
-	@RequestMapping("/lesco")
+	/**
+	 * Home page
+	 * 
+	 * @return
+	 */
+	@RequestMapping("/")
 	public ModelAndView lesco() {
 		
 		logger.debug("LescoController - lesco() - Starting method");
  
-		ModelAndView mv = new ModelAndView("lesco");
-		//mv.addObject("message", message);
-		//mv.addObject("name", name);
-		return mv;
-	}
-	
-	@RequestMapping("/testTemplate")
-	public ModelAndView lescoTestTemplate() {
-		
-		logger.debug("LescoController - lescoTestTemplate() - Starting method");
- 
-		ModelAndView mv = new ModelAndView("testTemplate");
+		ModelAndView mv = new ModelAndView("home");
 		//mv.addObject("message", message);
 		//mv.addObject("name", name);
 		return mv;

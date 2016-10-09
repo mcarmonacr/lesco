@@ -24,7 +24,7 @@ public class Principal {
 	@Autowired
 	private CityDAO cityDAO;
 	
-	@RequestMapping("/")
+	@RequestMapping("/login")
 	public ModelAndView login(
 			@RequestParam(value = "name", required = false, defaultValue = "World") String name) {
 		System.out.println("in controller");
@@ -101,6 +101,28 @@ public class Principal {
 		ModelAndView mv = new ModelAndView("helloworld");
 		mv.addObject("message", message);
 		mv.addObject("name", name);
+		return mv;
+	}
+	
+	@RequestMapping("/lesco")
+	public ModelAndView lesco() {
+		
+		logger.debug("LescoController - lesco() - Starting method");
+ 
+		ModelAndView mv = new ModelAndView("lesco");
+		//mv.addObject("message", message);
+		//mv.addObject("name", name);
+		return mv;
+	}
+	
+	@RequestMapping("/testTemplate")
+	public ModelAndView lescoTestTemplate() {
+		
+		logger.debug("LescoController - lescoTestTemplate() - Starting method");
+ 
+		ModelAndView mv = new ModelAndView("testTemplate");
+		//mv.addObject("message", message);
+		//mv.addObject("name", name);
 		return mv;
 	}
 	
