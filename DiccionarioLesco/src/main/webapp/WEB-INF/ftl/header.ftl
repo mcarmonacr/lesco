@@ -38,7 +38,11 @@
 	            <div class="form-group">
 	              <input type="password" placeholder="Password" class="form-control">
 	            </div>
-	            <button type="submit" class="btn btn-success">Sign in</button>
+	            <button type="submit" class="btn btn-success">Ingresar</button>
+<!-- 	            <button type="submit" class="btn btn-success" href="/registrarse/">Registrarse</button> -->
+	            <a href="/DiccionarioLesco/registrarse/" class="btn btn-success">
+			      <span class="glyphicon glyphicon-user"></span> Registrarse 
+			    </a>
 	          </form>
         </div><!--/.navbar-collapse -->
       </div>

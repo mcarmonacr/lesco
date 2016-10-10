@@ -9,5 +9,6 @@
     <mapping resource="com/lesco/diccionario/modelo/City.hbm.xml"/>
     <mapping resource="com/lesco/diccionario/modelo/UserProfile.hbm.xml"/>
     <mapping resource="com/lesco/diccionario/modelo/ProfileDetail.hbm.xml"/>
+    <mapping resource="com/lesco/diccionario/modelo/Category.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

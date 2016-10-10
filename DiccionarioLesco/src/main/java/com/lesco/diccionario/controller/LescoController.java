@@ -9,7 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class LescoController {
 	
 	private static final Logger logger = Logger.getLogger(Principal.class);
-
+	
 	/**
 	 * Home page
 	 * 
@@ -21,6 +21,22 @@ public class LescoController {
 		logger.debug("LescoController - lesco() - Starting method");
  
 		ModelAndView mv = new ModelAndView("home");
+		//mv.addObject("message", message);
+		//mv.addObject("name", name);
+		return mv;
+	}
+	
+	/**
+	 * Home page
+	 * 
+	 * @return
+	 */
+	@RequestMapping("/registrarse")
+	public ModelAndView registrarse() {
+		
+		logger.debug("LescoController - registro() - Starting method");
+ 
+		ModelAndView mv = new ModelAndView("register");
 		//mv.addObject("message", message);
 		//mv.addObject("name", name);
 		return mv;
