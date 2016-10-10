@@ -81,6 +81,18 @@ public class AdminController {
 		
 		if(categoryForm.getCategoryName() != null){
 			System.out.println("Form text: " + categoryForm.getCategoryName());
+			
+			//Checks if the category already exists
+			if(categoryDAO.findByCategoryName(categoryForm.getCategoryName()) == null){
+				Category category = new Category();
+				category.setCategoryName(categoryForm.getCategoryName());
+				categoryDAO.save(category);
+				
+				//Si quisiera obtener el ID nada más tendría que hacer:
+				//category.getId();
+			}
+
+			
 			result.setMessage("Sucess");
 		}else{
 			result.setMessage("Failure");

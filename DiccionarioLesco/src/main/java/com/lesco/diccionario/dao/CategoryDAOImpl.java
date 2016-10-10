@@ -3,7 +3,10 @@ package com.lesco.diccionario.dao;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.lesco.diccionario.modelo.Category;
@@ -18,6 +21,15 @@ public class CategoryDAOImpl implements CategoryDAO {
     }
 	
 	@Transactional
+	public void save(Category category) {
+		Session session = this.sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		session.persist(category);
+		tx.commit();
+		session.close();
+	}
+	
+	@Transactional
 	public List<Category> list() {
 		
 		@SuppressWarnings("unchecked")
@@ -26,5 +38,14 @@ public class CategoryDAOImpl implements CategoryDAO {
                 .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
 
         return listCategories;
+	}
+	
+	@Transactional
+	public Category findByCategoryName(String categoryName){
+		
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Category.class);
+        criteria.add(Restrictions.eq("categoryName",categoryName));
+        return (Category) criteria.uniqueResult();
+		
 	}
 }

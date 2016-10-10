@@ -2,10 +2,18 @@
 <@c.page css="resources/css/admin.css">
     <!-- custom page content -->
         
-    <h3><span class="label label-default">Administración</span></h3>
+    <h2><span class="label label-default">Administración</span></h2>
+    
+    <h3><span class="label label-primary">Categorías</span></h3>
     
     
     <#-- <a href="#" class="list-group-item">${categoryName}</a> -->
+    	
+    <ul class="list-group">	
+    <#list listCategories as category>
+    	<li class="list-group-item list-group-item-info">${category.categoryName}</li>
+  	</#list>
+     </ul>
     
 	<form name="categoryForm" id="categoryForm">
 	  <div class="form-group">
