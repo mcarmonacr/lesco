@@ -14,6 +14,7 @@ CREATE TABLE ProfileDetail
 ID INT NOT NULL,
 Email VARCHAR(100) NOT NULL,
 TermsnAndConditions BIT (1) DEFAULT 0,
+BirthDate DATE NOT NULL,
 PRIMARY KEY (ID),
 FOREIGN KEY (ID) REFERENCES UserProfile(ID) -- One-To-One with the Table UserProfile
 );

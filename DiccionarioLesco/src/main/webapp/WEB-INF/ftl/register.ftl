@@ -46,6 +46,32 @@
   </div>
 </div>
 
+<!-- Password input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="passwordinput">Fecha de Nacimiento</label>
+  <div class="col-md-4">
+  <div class="input-group input-append date" id="datePicker">
+    <input type="text" class="form-control" name="birthdate" value="10/24/1984" />
+    	<span class="input-group-addon">
+            <span class="glyphicon glyphicon-calendar"></span>
+        </span>
+        </div>
+  </div>
+</div>
+
+ 
+<script type="text/javascript">
+$(function() {
+    $('input[name="birthdate"]').daterangepicker({
+        singleDatePicker: true,
+        showDropdowns: true
+    }, 
+    function(start, end, label) {
+        var years = moment().diff(start, 'years');
+        alert("You are " + years + " years old.");
+    });
+});
+</script>
 
 
 <!-- Multiple Checkboxes -->
@@ -55,12 +81,11 @@
   <div class="checkbox">
     <label for="checkboxes-0">
       <input name="checkboxes" id="checkboxes-0" value="1" type="checkbox">
-      Acepto lo siguiente: <a href="#">Términos Y Condiciones</a>
+      He leído y acepto los <a href="#">Términos Y Condiciones</a>
     </label>
 	</div>
   </div>
 </div>
-
 
 <!-- Button (Double) -->
 <div class="form-group">

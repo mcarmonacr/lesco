@@ -59,4 +59,21 @@ public class LescoController {
 		return mv;
 	}
 	
+	
+	/**
+	 * About page
+	 * 
+	 * @return
+	 */
+	@RequestMapping("/acerca")
+	public ModelAndView acerca() {
+		
+		logger.debug("LescoController - acerca() - Starting method");
+ 
+		ModelAndView mv = new ModelAndView("about");
+		//mv.addObject("message", message);
+		//mv.addObject("name", name);
+		return mv;
+	}
+	
 }
