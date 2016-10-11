@@ -42,4 +42,21 @@ public class LescoController {
 		return mv;
 	}
 	
+	
+	/**
+	 * Contact page
+	 * 
+	 * @return
+	 */
+	@RequestMapping("/contacto")
+	public ModelAndView contacto() {
+		
+		logger.debug("LescoController - contacto() - Starting method");
+ 
+		ModelAndView mv = new ModelAndView("contact");
+		//mv.addObject("message", message);
+		//mv.addObject("name", name);
+		return mv;
+	}
+	
 }
