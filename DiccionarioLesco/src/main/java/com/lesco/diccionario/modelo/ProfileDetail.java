@@ -1,9 +1,12 @@
 package com.lesco.diccionario.modelo;
 
+import java.util.Date;
+
 public class ProfileDetail {
 
 	private Integer id;
 	private String email;
+	private Date birthDate;
 	private Boolean termsAndConditions;
 	private UserProfile userProfile;
 	/**
@@ -29,6 +32,18 @@ public class ProfileDetail {
 	 */
 	public void setEmail(String email) {
 		this.email = email;
+	}	
+	/**
+	 * @return the birthDate
+	 */
+	public Date getBirthDate() {
+		return birthDate;
+	}
+	/**
+	 * @param birthDate the birthDate to set
+	 */
+	public void setBirthDate(Date birthDate) {
+		this.birthDate = birthDate;
 	}
 	/**
 	 * @return the termsAndConditions

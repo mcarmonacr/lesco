@@ -15,6 +15,7 @@
 			constrained="true"></one-to-one>
         
         <property name="email" column="Email" />
+        <property name="birthDate" column="BirthDate" />
         <property name="termsAndConditions" column="Salt" />
         
     </class> 
