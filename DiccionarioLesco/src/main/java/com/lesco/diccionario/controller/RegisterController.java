@@ -15,10 +15,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.lesco.diccionario.dao.CategoryDAO;
 import com.lesco.diccionario.dao.CityDAO;
+import com.lesco.diccionario.dao.UserDAO;
 import com.lesco.diccionario.modelo.Category;
 import com.lesco.diccionario.modelo.City;
 import com.lesco.diccionario.pojo.AjaxResponseBody;
 import com.lesco.diccionario.pojo.CategoryForm;
+import com.lesco.diccionario.pojo.RegisterForm;
 
 /**
  * 
@@ -34,7 +36,7 @@ public class RegisterController {
 	private static final Logger logger = Logger.getLogger(RegisterController.class);
 
 	@Autowired
-	private CategoryDAO categoryDAO;
+	private UserDAO userDAO;
 	
 	/**
 	 * Home page
@@ -46,14 +48,14 @@ public class RegisterController {
 		
 		logger.debug("AdminController - admin() - Starting method");
 		
-		List<Category> listCategories = categoryDAO.list();
-		
-		System.out.println("List of cities " + listCategories);
+//		List<Category> listCategories = userDAO.list();
+//		
+//		System.out.println("List of cities " + listCategories);
  
 		ModelAndView mv = new ModelAndView("admin");
 		
-		mv.addObject("listCategories", listCategories);
-		//mv.addObject("name", name);
+//		mv.addObject("listCategories", listCategories);
+		
 		return mv;
 	}
 	
@@ -77,23 +79,23 @@ public class RegisterController {
 	/**
 	 * Json POST method
 	 * 
-	 * @param categoryForm
+	 * @param registerForm
 	 */
 	@RequestMapping(value= "/agregarUsuario", method = RequestMethod.POST, headers = "Accept=application/json", consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody AjaxResponseBody agregarUsuario(@RequestBody CategoryForm categoryForm){
+	public @ResponseBody AjaxResponseBody agregarUsuario(@RequestBody RegisterForm registerForm){
 		
 		AjaxResponseBody result = new AjaxResponseBody();
 		
 		logger.debug("AdminController - agregarCategoria() - Starting method");
 		
-		if(categoryForm.getCategoryName() != null){
-			System.out.println("Form text: " + categoryForm.getCategoryName());
+		if(registerForm.getUserName() != null){
+			System.out.println("Form text: " + registerForm.getUserName());
 			
 			//Checks if the category already exists
-			if(categoryDAO.findByCategoryName(categoryForm.getCategoryName()) == null){
-				Category category = new Category();
-				category.setCategoryName(categoryForm.getCategoryName());
-				categoryDAO.save(category);
+			if(userDAO.findByUserName(registerForm.getUserName()) == null){
+				//Category category = new Category();
+				//category.setCategoryName(categoryForm.getCategoryName());
+				//userDAO.save(category);
 				
 				//Si quisiera obtener el ID nada más tendría que hacer:
 				//category.getId();
@@ -114,23 +116,23 @@ public class RegisterController {
 	 * 
 	 * Json POST method
 	 * 
-	 * @param categoryForm
+	 * @param registerForm
 	 */
 	@RequestMapping(value= "/verificarUsuario", method = RequestMethod.POST, headers = "Accept=application/json", consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody AjaxResponseBody verificarUsuario(@RequestBody CategoryForm categoryForm){
+	public @ResponseBody AjaxResponseBody verificarUsuario(@RequestBody RegisterForm registerForm){
 		
 		AjaxResponseBody result = new AjaxResponseBody();
 		
 		logger.debug("AdminController - agregarCategoria() - Starting method");
 		
-		if(categoryForm.getCategoryName() != null){
-			System.out.println("Form text: " + categoryForm.getCategoryName());
+		if(registerForm.getUserName() != null){
+			System.out.println("Form text: " + registerForm.getUserName());
 			
 			//Checks if the category already exists
-			if(categoryDAO.findByCategoryName(categoryForm.getCategoryName()) == null){
-				Category category = new Category();
-				category.setCategoryName(categoryForm.getCategoryName());
-				categoryDAO.save(category);
+			if(userDAO.findByUserName(registerForm.getUserName()) == null){
+				//Category category = new Category();
+				//category.setCategoryName(categoryForm.getCategoryName());
+				//userDAO.save(category);
 				
 				//Si quisiera obtener el ID nada más tendría que hacer:
 				//category.getId();

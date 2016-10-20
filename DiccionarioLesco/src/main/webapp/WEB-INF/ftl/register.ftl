@@ -87,7 +87,7 @@
 
 // 				});
 
-				$("#userName").keypress(function(){
+				$("#userName").keyup(function(){
 					submitdata();
 				});
 
@@ -96,10 +96,10 @@
 			
 			function submitdata() {
 
-				  var UserName=document.getElementById("userName");
+				  var userName=document.getElementById("userName");
 				  
 				  var search = {
-				            "UserName":UserName.value
+				            "userName":userName.value
 				    }
 
 				  $.ajax({

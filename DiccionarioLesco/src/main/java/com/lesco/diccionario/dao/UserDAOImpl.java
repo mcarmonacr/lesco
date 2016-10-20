@@ -1,6 +1,9 @@
 package com.lesco.diccionario.dao;
 
+import java.util.List;
+
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -40,9 +43,15 @@ public class UserDAOImpl implements UserDAO {
 	@Transactional
 	public UserProfile findByUserName(String userName){
 		
-		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(UserProfile.class);
-        criteria.add(Restrictions.eq("userName",userName));
-        return (UserProfile) criteria.uniqueResult();
-		
+//		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(UserProfile.class);
+//        criteria.add(Restrictions.eq("userName",userName));
+//        return (UserProfile) criteria.uniqueResult();
+        
+        
+        Query query = sessionFactory.getCurrentSession().createQuery("from UserProfile where userName = :userName ");
+        query.setParameter("userName", userName);
+        List list = query.list();
+        
+		return null;
 	}
 }
