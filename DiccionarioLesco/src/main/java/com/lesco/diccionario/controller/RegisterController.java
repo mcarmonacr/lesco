@@ -20,8 +20,15 @@ import com.lesco.diccionario.modelo.City;
 import com.lesco.diccionario.pojo.AjaxResponseBody;
 import com.lesco.diccionario.pojo.CategoryForm;
 
+/**
+ * 
+ * 
+ * 
+ * @author m.carmona.dinarte
+ *
+ */
 @Controller
-@RequestMapping("/admin")
+@RequestMapping("/registro")
 public class RegisterController {
 	
 	private static final Logger logger = Logger.getLogger(RegisterController.class);
@@ -72,8 +79,45 @@ public class RegisterController {
 	 * 
 	 * @param categoryForm
 	 */
-	@RequestMapping(value= "/agregarCategoria", method = RequestMethod.POST, headers = "Accept=application/json", consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody AjaxResponseBody agregarCategoria(@RequestBody CategoryForm categoryForm){
+	@RequestMapping(value= "/agregarUsuario", method = RequestMethod.POST, headers = "Accept=application/json", consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody AjaxResponseBody agregarUsuario(@RequestBody CategoryForm categoryForm){
+		
+		AjaxResponseBody result = new AjaxResponseBody();
+		
+		logger.debug("AdminController - agregarCategoria() - Starting method");
+		
+		if(categoryForm.getCategoryName() != null){
+			System.out.println("Form text: " + categoryForm.getCategoryName());
+			
+			//Checks if the category already exists
+			if(categoryDAO.findByCategoryName(categoryForm.getCategoryName()) == null){
+				Category category = new Category();
+				category.setCategoryName(categoryForm.getCategoryName());
+				categoryDAO.save(category);
+				
+				//Si quisiera obtener el ID nada más tendría que hacer:
+				//category.getId();
+			}
+
+			
+			result.setMessage("Sucess");
+		}else{
+			result.setMessage("Failure");
+		}
+
+		return result;
+	}
+	
+	
+	/**
+	 * Verifica si el usuario ya se encuentra en la base de datos
+	 * 
+	 * Json POST method
+	 * 
+	 * @param categoryForm
+	 */
+	@RequestMapping(value= "/verificarUsuario", method = RequestMethod.POST, headers = "Accept=application/json", consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody AjaxResponseBody verificarUsuario(@RequestBody CategoryForm categoryForm){
 		
 		AjaxResponseBody result = new AjaxResponseBody();
 		

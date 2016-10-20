@@ -21,7 +21,7 @@ import com.lesco.diccionario.pojo.AjaxResponseBody;
 import com.lesco.diccionario.pojo.CategoryForm;
 
 @Controller
-@RequestMapping("/admin")
+@RequestMapping("/ingreso")
 public class LoginController {
 	
 	private static final Logger logger = Logger.getLogger(LoginController.class);
