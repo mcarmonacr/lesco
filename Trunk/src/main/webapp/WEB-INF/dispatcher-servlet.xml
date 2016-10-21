@@ -1,0 +1,124 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+http://www.springframework.org/schema/context
+http://www.springframework.org/schema/context/spring-context-3.0.xsd
+http://www.springframework.org/schema/mvc
+http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+http://www.springframework.org/schema/tx 
+http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+    
+    <mvc:default-servlet-handler />
+    <mvc:annotation-driven />
+	<mvc:resources mapping="/resources/**" location="/resources/" />
+
+	<context:component-scan base-package="com.lesco.diccionario" />
+	
+<!-- 	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter"> -->
+<!--         <property name="messageConverters"> -->
+<!--             <list> -->
+<!--                 <ref bean="jsonMessageConverter"/> -->
+<!--             </list> -->
+<!--         </property> -->
+<!--     </bean> -->
+<!--     <bean id="jsonMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"/> -->
+	
+
+<!-- <bean id="jacksonMessageConverter" -->
+<!--     class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter"/> -->
+
+
+<!-- 	<bean -->
+<!--     class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter"> -->
+<!--     <property name="messageConverters"> -->
+<!--         <list> -->
+<!--             <bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter"> -->
+<!--                 <property name="objectMapper" ref="jacksonObjectMapper" /> -->
+<!--             </bean> -->
+<!--         </list> -->
+<!--     </property> -->
+<!-- </bean> -->
+
+<!-- jackson configuration : http://stackoverflow.com/questions/3661769 -->
+<!-- <bean id="jacksonObjectMapper" class="org.codehaus.jackson.map.ObjectMapper" /> -->
+<!-- <bean id="jacksonSerializationConfig" class="org.codehaus.jackson.map.SerializationConfig" -->
+<!--     factory-bean="jacksonObjectMapper" factory-method="getSerializationConfig" /> -->
+<!-- <bean -->
+<!--     class="org.springframework.beans.factory.config.MethodInvokingFactoryBean"> -->
+<!--     <property name="targetObject" ref="jacksonSerializationConfig" /> -->
+<!--     <property name="targetMethod" value="setSerializationInclusion" /> -->
+<!--     <property name="arguments"> -->
+<!--         <list> -->
+<!--             <value type="org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion">NON_DEFAULT</value> -->
+<!--         </list> -->
+<!--     </property> -->
+<!-- </bean> -->
+	 	
+ 	<!-- freemarker config -->
+    <bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+      <property name="templateLoaderPath" value="/WEB-INF/ftl/"/>
+    </bean>
+    
+    <!-- 
+      View resolvers can also be configured with ResourceBundles or XML files. If you need
+      different view resolving based on Locale, you have to use the resource bundle resolver.
+    -->
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+      <property name="cache" value="true"/>
+      <property name="prefix" value=""/>
+      <property name="suffix" value=".ftl"/>
+    </bean>
+ 
+<!-- 	<bean -->
+<!-- 		class="org.springframework.web.servlet.view.InternalResourceViewResolver"> -->
+<!-- 		<property name="prefix"> -->
+<!-- 			<value>/WEB-INF/views/</value> -->
+<!-- 		</property> -->
+<!-- 		<property name="suffix"> -->
+<!-- 			<value>.jsp</value> -->
+<!-- 		</property> -->
+<!-- 	</bean> -->
+
+	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+	    <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+	    <property name="url" value="jdbc:mysql://localhost:3306/world"/>
+	    <property name="username" value="root"/>
+	    <property name="password" value="password"/>
+	</bean>
+	
+	<bean id="sessionFactory"
+    class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+	    <property name="dataSource" ref="dataSource" />
+	    <property name="configLocation" value="classpath:hibernate.cfg.xml" />
+	</bean>
+	
+	<tx:annotation-driven />
+	<bean id="transactionManager"
+	    class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+	    <property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<bean id="cityDao" class="com.lesco.diccionario.dao.CityDAOImpl">
+	    <constructor-arg>
+	        <ref bean="sessionFactory" />
+	    </constructor-arg>
+	</bean>
+	
+	<bean id="categoryDao" class="com.lesco.diccionario.dao.CategoryDAOImpl">
+	    <constructor-arg>
+	        <ref bean="sessionFactory" />
+	    </constructor-arg>
+	</bean>
+	
+	<bean id="UserDao" class="com.lesco.diccionario.dao.UserDAOImpl">
+	    <constructor-arg>
+	        <ref bean="sessionFactory" />
+	    </constructor-arg>
+	</bean>
+	
+</beans>
