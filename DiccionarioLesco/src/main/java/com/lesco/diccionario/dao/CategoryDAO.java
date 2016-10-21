@@ -2,7 +2,7 @@ package com.lesco.diccionario.dao;
 
 import java.util.List;
 
-import com.lesco.diccionario.modelo.Category;
+import com.lesco.diccionario.model.Category;
 
 public interface CategoryDAO {
 	

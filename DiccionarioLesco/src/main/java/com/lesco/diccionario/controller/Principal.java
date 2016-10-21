@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.lesco.diccionario.dao.CityDAO;
-import com.lesco.diccionario.modelo.City;
+import com.lesco.diccionario.model.City;
 
 
 @Controller

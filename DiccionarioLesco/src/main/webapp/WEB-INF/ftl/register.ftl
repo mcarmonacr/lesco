@@ -1,5 +1,5 @@
 <#import "common.ftl" as c/>
-<@c.page css="resources/css/register.css">
+<@c.page css="resources/css/register.css" js="resources/js/register.js">
     <!-- custom page content -->
         
     <h3>Creación de Usuario <span class="label label-default">Nuevo</span></h3>
@@ -17,12 +17,14 @@
 			  <input id="userName" name="userName" placeholder="Nombre de Usuario" class="form-control input-md" required="" type="text">
 <!-- 			  <span class="help-block">Nombre de Usuario</span>   -->
 			  </div>
-			  <div class="col-md-4 bs-example">
-			    <div class="alert alert-info fade in">
-			        <a href="#" class="close" data-dismiss="alert">&times;</a>
-			        <strong>Note!</strong> Please read the comments carefully.
-			    </div>
-			  </div>
+			  
+<!-- 			  <div class="col-md-4 bs-example"> -->
+<!-- 			    <div class="alert alert-info fade in"> -->
+<!-- 			        <a href="#" class="close" data-dismiss="alert">&times;</a> -->
+<!-- 			        <strong>Note!</strong> Please read the comments carefully. -->
+<!-- 			    </div> -->
+<!-- 			  </div> -->
+			  
 			</div>
 			
 			<!-- Text input-->
@@ -33,6 +35,14 @@
 <!-- 			  <span class="help-block">Correo Electrónico</span>   -->
 			  </div>
 			</div>
+			
+<!-- 			<div class="form-group has-success has-feedback"> -->
+<!-- 		      <label class="col-sm-2 control-label" for="inputSuccess">Input with success and glyphicon</label> -->
+<!-- 		      <div class="col-sm-10"> -->
+<!-- 		        <input type="text" class="form-control" id="inputSuccess"> -->
+<!-- 		        <span class="glyphicon glyphicon-ok form-control-feedback"></span> -->
+<!-- 		      </div> -->
+<!-- 		    </div> -->
 			
 			<!-- Password input-->
 			<div class="form-group">
@@ -54,7 +64,7 @@
 			
 			<!-- Password input-->
 			<div class="form-group">
-			  <label class="col-md-4 control-label" for="passwordinput">Fecha de Nacimiento</label>
+			  <label class="col-md-4 control-label" for="birthdate">Fecha de Nacimiento</label>
 			  <div class="col-md-4">
 			  <div class="input-group input-append date" id="datePicker">
 			    <input type="text" class="form-control" id="birthdate" name="birthdate" value="10/24/2000" />
@@ -65,88 +75,13 @@
 			  </div>
 			</div>
 			
-			 
-			<script type="text/javascript">
-			$(function() {
-			    $('input[name="birthdate"]').daterangepicker({
-			        singleDatePicker: true,
-			        showDropdowns: true
-			    }, 
-			    function(start, end, label) {
-			        var years = moment().diff(start, 'years');
-			        //alert("You are " + years + " years old.");
-			    });
-			});
-			
-			
-			jQuery(document).ready(function($) {
-
-// 				$("#registerForm").submit(function(event) {
-
-// 					// Disble the search button
-// 					//enableSearchButton(false);
-
-// 					// Prevent the form from submitting via the browser.
-// 					//event.preventDefault();
-
-// 					submitdata();
-
-// 				});
-
-				$("#userName").keyup(function(){
-					submitdata();
-				});
-
-			});
-			
-			
-			function submitdata() {
-
-				  var userName=document.getElementById("userName");
-				  
-				  var search = {
-				            "userName":userName.value
-				    }
-
-				  $.ajax({
-				  	headers: { 
-				        'Accept': 'application/json',
-				        'Content-Type': 'application/json' 
-				    },
-					type: 'post',
-				    contentType : "application/json",
-				    //url: "http://localhost:8080/DiccionarioLesco/registro/verificarUsuario",
-				    url: "/DiccionarioLesco/registro/verificarUsuario",
-				    data : JSON.stringify(search),
-				    dataType : 'json',
-				    success : function(data) {
-						console.log("SUCCESS: ", data);
-						//display(data);
-					},
-					error : function(e) {
-						console.log("ERROR: ", e);
-						//display(e);
-					},
-					done : function(e) {
-						//console.log("DONE");
-						//enableSearchButton(true);
-					}
-				  });
-
-				  //return false;
-
-				}
-			
-			</script>
-			
-			
 			<!-- Multiple Checkboxes -->
 			<div class="form-group">
 			  <label class="col-md-4 control-label" for="checkboxes">Aceptación Términos y Condiciones</label>
 			  <div class="col-md-4">
 			  <div class="checkbox">
 			    <label for="checkboxes-0">
-			      <input name="checkboxes" id="checkboxes-0" value="1" type="checkbox">
+			      <input name="termsAndConditions" id="checkboxes-0" value="1" type="checkbox">
 			      He leído y acepto los <a href="#">Términos Y Condiciones</a>
 			    </label>
 				</div>

@@ -16,4 +16,11 @@
 			 </div>
 		</footer>  
 	
+	<!-- For performance it is a good practice to place the scripts at the end of the page -->
+	
+	<#if js??>
+ 	 <script type="text/javascript" src=${js}></script>
+	</#if>
+	
+	
 </div>

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.lesco.diccionario.utilitarios;
+package com.lesco.diccionario.utils;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

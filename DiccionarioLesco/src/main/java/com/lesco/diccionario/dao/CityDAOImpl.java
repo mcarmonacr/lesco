@@ -6,7 +6,7 @@ import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.lesco.diccionario.modelo.City;
+import com.lesco.diccionario.model.City;
 
 public class CityDAOImpl implements CityDAO {
 	

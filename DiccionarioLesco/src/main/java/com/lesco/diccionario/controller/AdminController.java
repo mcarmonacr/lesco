@@ -15,8 +15,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.lesco.diccionario.dao.CategoryDAO;
 import com.lesco.diccionario.dao.CityDAO;
-import com.lesco.diccionario.modelo.Category;
-import com.lesco.diccionario.modelo.City;
+import com.lesco.diccionario.model.Category;
+import com.lesco.diccionario.model.City;
 import com.lesco.diccionario.pojo.AjaxResponseBody;
 import com.lesco.diccionario.pojo.CategoryForm;
 

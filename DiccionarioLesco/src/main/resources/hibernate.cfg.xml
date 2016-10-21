@@ -6,9 +6,9 @@
   <session-factory>
     <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
     <property name="show_sql">true</property> 
-    <mapping resource="com/lesco/diccionario/modelo/City.hbm.xml"/>
-    <mapping resource="com/lesco/diccionario/modelo/UserProfile.hbm.xml"/>
-    <mapping resource="com/lesco/diccionario/modelo/ProfileDetail.hbm.xml"/>
-    <mapping resource="com/lesco/diccionario/modelo/Category.hbm.xml"/>
+    <mapping resource="com/lesco/diccionario/model/City.hbm.xml"/>
+    <mapping resource="com/lesco/diccionario/model/UserProfile.hbm.xml"/>
+    <mapping resource="com/lesco/diccionario/model/ProfileDetail.hbm.xml"/>
+    <mapping resource="com/lesco/diccionario/model/Category.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

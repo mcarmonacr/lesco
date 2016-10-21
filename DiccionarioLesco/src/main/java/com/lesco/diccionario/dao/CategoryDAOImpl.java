@@ -9,8 +9,7 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.lesco.diccionario.modelo.Category;
-import com.lesco.diccionario.modelo.City;
+import com.lesco.diccionario.model.Category;
 
 public class CategoryDAOImpl implements CategoryDAO {
 	

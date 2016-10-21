@@ -1,4 +1,4 @@
-package com.lesco.diccionario.modelo;
+package com.lesco.diccionario.model;
 
 public class UserProfile {
 

@@ -1,4 +1,4 @@
-<#macro page css>
+<#macro page css js>
 	<!DOCTYPE html>
 	<html lang="en">
 

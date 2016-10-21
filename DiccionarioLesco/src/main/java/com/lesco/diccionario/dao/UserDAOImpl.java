@@ -10,7 +10,7 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.lesco.diccionario.modelo.UserProfile;
+import com.lesco.diccionario.model.UserProfile;
 
 public class UserDAOImpl implements UserDAO {
 	

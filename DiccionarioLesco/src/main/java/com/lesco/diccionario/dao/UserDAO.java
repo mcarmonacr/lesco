@@ -1,6 +1,6 @@
 package com.lesco.diccionario.dao;
 
-import com.lesco.diccionario.modelo.UserProfile;
+import com.lesco.diccionario.model.UserProfile;
 
 public interface UserDAO {
 	
