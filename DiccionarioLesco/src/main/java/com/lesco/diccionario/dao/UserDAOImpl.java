@@ -40,6 +40,7 @@ public class UserDAOImpl implements UserDAO {
 //        return listCategories;
 //	}
 	
+	@SuppressWarnings("unchecked")
 	@Transactional
 	public UserProfile findByUserName(String userName){
 		
@@ -48,9 +49,9 @@ public class UserDAOImpl implements UserDAO {
 //        return (UserProfile) criteria.uniqueResult();
         
         
-        Query query = sessionFactory.getCurrentSession().createQuery("from UserProfile where userName = :userName ");
-        query.setParameter("userName", userName);
-        List list = query.list();
+        Query query = sessionFactory.getCurrentSession().createQuery("from UserProfile where userName like :userName");
+        query.setParameter("userName", userName + "%");
+        List<UserProfile> userList= query.list();
         
 		return null;
 	}

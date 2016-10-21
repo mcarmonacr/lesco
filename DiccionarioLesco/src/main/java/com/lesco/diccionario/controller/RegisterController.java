@@ -112,7 +112,7 @@ public class RegisterController {
 	
 	
 	/**
-	 * Verifica si el usuario ya se encuentra en la base de datos
+	 * Verifica si el nombre de usuario ya se encuentra en la base de datos
 	 * 
 	 * Json POST method
 	 * 
@@ -129,23 +129,21 @@ public class RegisterController {
 			System.out.println("Form text: " + registerForm.getUserName());
 			
 			//Checks if the category already exists
-			if(userDAO.findByUserName(registerForm.getUserName()) == null){
-				//Category category = new Category();
-				//category.setCategoryName(categoryForm.getCategoryName());
-				//userDAO.save(category);
-				
-				//Si quisiera obtener el ID nada más tendría que hacer:
-				//category.getId();
+			if(userDAO.findByUserName(registerForm.getUserName().trim()) == null){			
+				result.setMessage("Sucess");
+				result.setCode("000");
+			}else{
+				result.setMessage("Failure");
+				result.setCode("001");
 			}
-
-			
-			result.setMessage("Sucess");
 		}else{
 			result.setMessage("Failure");
+			result.setCode("001");
 		}
-
 		return result;
 	}
+	
+	
 	
 	
 	

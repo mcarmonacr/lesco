@@ -17,13 +17,19 @@
 			  <input id="userName" name="userName" placeholder="Nombre de Usuario" class="form-control input-md" required="" type="text">
 <!-- 			  <span class="help-block">Nombre de Usuario</span>   -->
 			  </div>
+			  <div class="col-md-4 bs-example">
+			    <div class="alert alert-info fade in">
+			        <a href="#" class="close" data-dismiss="alert">&times;</a>
+			        <strong>Note!</strong> Please read the comments carefully.
+			    </div>
+			  </div>
 			</div>
 			
 			<!-- Text input-->
 			<div class="form-group">
 			  <label class="col-md-4 control-label" for="textinput">Correo Electrónico</label>  
 			  <div class="col-md-4">
-			  <input id="emailAddress" name="emailAddress" placeholder="Correo Electrónico" class="form-control input-md" required="" type="text">
+			  <input id="emailAddress" name="emailAddress" placeholder="Correo Electrónico" class="form-control input-md" required="" type="email">
 <!-- 			  <span class="help-block">Correo Electrónico</span>   -->
 			  </div>
 			</div>
@@ -115,15 +121,15 @@
 				    dataType : 'json',
 				    success : function(data) {
 						console.log("SUCCESS: ", data);
-						display(data);
+						//display(data);
 					},
 					error : function(e) {
 						console.log("ERROR: ", e);
-						display(e);
+						//display(e);
 					},
 					done : function(e) {
-						console.log("DONE");
-						enableSearchButton(true);
+						//console.log("DONE");
+						//enableSearchButton(true);
 					}
 				  });
 
