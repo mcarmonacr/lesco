@@ -21,6 +21,7 @@ import com.lesco.diccionario.model.City;
 import com.lesco.diccionario.pojo.AjaxResponseBody;
 import com.lesco.diccionario.pojo.CategoryForm;
 import com.lesco.diccionario.pojo.RegisterForm;
+import com.lesco.diccionario.utils.SHAEncryption;
 
 /**
  * 
@@ -37,6 +38,9 @@ public class RegisterController {
 
 	@Autowired
 	private UserDAO userDAO;
+	
+	@Autowired
+	private SHAEncryption shaEncryption;
 	
 	/**
 	 * Home page
@@ -55,6 +59,9 @@ public class RegisterController {
 		ModelAndView mv = new ModelAndView("admin");
 		
 //		mv.addObject("listCategories", listCategories);
+		
+		//shaEncryption.getHashedPassword("password");
+		
 		
 		return mv;
 	}

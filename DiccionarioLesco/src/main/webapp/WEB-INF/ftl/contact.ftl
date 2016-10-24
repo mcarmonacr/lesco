@@ -64,15 +64,15 @@
             <legend><span class="glyphicon glyphicon-globe"></span> Nuestra Ubicación</legend>
             <address>
                 <strong>Diccionario Lesco</strong><br>
-                795 Folsom Ave, Suite 600<br>
-                San Francisco, CA 94107<br>
+                4 Reinas<br>
+                Tibás, San José 11305<br>
                 <abbr title="Phone">
                     P:</abbr>
                 (123) 456-7890
             </address>
             <address>
                 <strong>Dirección Electrónica</strong><br>
-                <a href="mailto:#">first.last@example.com</a>
+                <a href="mailto:#">monacar89@hotmail.com</a>
             </address>
             </form>
         </div>
