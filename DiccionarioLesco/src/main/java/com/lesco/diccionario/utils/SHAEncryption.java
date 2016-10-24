@@ -14,11 +14,13 @@ import java.security.SecureRandom;
  */
 public class SHAEncryption {
 	
-	public void getHashedPassword(String passwordToHash) {
-        byte[] salt = getSalt();
+	public String getHashedPassword(String passwordToHash, byte[] salt) {
+        //byte[] salt = getSalt();
          
         String securePassword = get_SHA_512_SecurePassword(passwordToHash, salt);
         System.out.println(securePassword);
+        
+        return securePassword;
     }
  
     private static String get_SHA_512_SecurePassword(String passwordToHash, byte[] salt)
@@ -41,9 +43,13 @@ public class SHAEncryption {
         }
         return generatedPassword;
     }
-     
-    //Add salt
-    private static byte[] getSalt()
+
+    /**
+     * Get random Salt value
+     * 
+     * @return
+     */
+    public static byte[] getSalt()
     {
         SecureRandom sr;
         byte[] salt = new byte[16];

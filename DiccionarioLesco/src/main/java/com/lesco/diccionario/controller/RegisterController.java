@@ -18,6 +18,8 @@ import com.lesco.diccionario.dao.CityDAO;
 import com.lesco.diccionario.dao.UserDAO;
 import com.lesco.diccionario.model.Category;
 import com.lesco.diccionario.model.City;
+import com.lesco.diccionario.model.ProfileDetail;
+import com.lesco.diccionario.model.UserProfile;
 import com.lesco.diccionario.pojo.AjaxResponseBody;
 import com.lesco.diccionario.pojo.CategoryForm;
 import com.lesco.diccionario.pojo.RegisterForm;
@@ -84,25 +86,54 @@ public class RegisterController {
 	
 	
 	/**
-	 * Json POST method
+	 * Service that registers the user into the site
+	 * Type: Json POST method
 	 * 
-	 * @param registerForm
+	 * @param registerForm. Contains fields: userName, emailAddress, password, passwordConfirmation, private String birthdate ,termsAndConditions.
 	 */
 	@RequestMapping(value= "/agregarUsuario", method = RequestMethod.POST, headers = "Accept=application/json", consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody AjaxResponseBody agregarUsuario(@RequestBody RegisterForm registerForm){
 		
 		AjaxResponseBody result = new AjaxResponseBody();
 		
-		logger.debug("AdminController - agregarCategoria() - Starting method");
+		logger.debug("RegisterController - agregarCategoria() - Method start");
 		
-		if(registerForm.getUserName() != null){
+		
+		System.out.println("getBirthdate: " + registerForm.getBirthDate());
+		System.out.println("getBirthdate: " + registerForm.getEmailAddress());
+		System.out.println("getBirthdate: " + registerForm.getPassword());
+		System.out.println("getBirthdate: " + registerForm.getPasswordConfirmation());
+		System.out.println("getBirthdate: " + registerForm.getUserName());
+		System.out.println("getBirthdate: " + registerForm.getTermsAndConditions());
+	
+		//Validates that all values come from the form
+		if(registerForm.getUserName() != null && registerForm.getEmailAddress() != null && registerForm.getPassword() != null && 
+				registerForm.getPasswordConfirmation() != null	&& registerForm.getBirthDate() != null && registerForm.getTermsAndConditions() != null){
+			
 			System.out.println("Form text: " + registerForm.getUserName());
 			
-			//Checks if the category already exists
+			//Checks if the userName already exists
+			//TODO Add the validation of the email
 			if(userDAO.findByUserName(registerForm.getUserName()) == null){
 				//Category category = new Category();
 				//category.setCategoryName(categoryForm.getCategoryName());
 				//userDAO.save(category);
+				
+				//Get unique random salt which will be used to encryp the user password
+				byte[] salt= SHAEncryption.getSalt();
+				
+				ProfileDetail profileDetail = new ProfileDetail();
+				profileDetail.setBirthDate(registerForm.getBirthDate());
+				profileDetail.setTermsAndConditions(registerForm.getTermsAndConditions());
+				profileDetail.setEmail(registerForm.getEmailAddress());
+				
+				UserProfile userProfile = new UserProfile();
+				
+				userProfile.setSalt(salt);
+				userProfile.setUserName(registerForm.getUserName());
+				userProfile.setUserPassword(shaEncryption.getHashedPassword(registerForm.getPassword(), salt));
+				
+				
 				
 				//Si quisiera obtener el ID nada más tendría que hacer:
 				//category.getId();

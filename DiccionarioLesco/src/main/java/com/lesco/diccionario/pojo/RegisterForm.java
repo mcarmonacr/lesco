@@ -3,6 +3,8 @@
  */
 package com.lesco.diccionario.pojo;
 
+import java.util.Date;
+
 /**
  * @author Mario Alonso Carmona Dinarte
  *
@@ -13,7 +15,9 @@ public class RegisterForm{
 	private String emailAddress;
 	private String password;
 	private String passwordConfirmation;
-	private String birthdate;
+	private Date birthDate;
+	private Boolean termsAndConditions;
+	
 	/**
 	 * @return the userName
 	 */
@@ -63,16 +67,28 @@ public class RegisterForm{
 		this.passwordConfirmation = passwordConfirmation;
 	}
 	/**
-	 * @return the birthdate
+	 * @return the birthDate
 	 */
-	public String getBirthdate() {
-		return birthdate;
+	public Date getBirthDate() {
+		return birthDate;
 	}
 	/**
-	 * @param birthdate the birthdate to set
+	 * @param birthDate the birthDate to set
 	 */
-	public void setBirthdate(String birthdate) {
-		this.birthdate = birthdate;
+	public void setBirthDate(Date birthDate) {
+		this.birthDate = birthDate;
 	}
-
+	/**
+	 * @return the termsAndConditions
+	 */
+	public Boolean getTermsAndConditions() {
+		return termsAndConditions;
+	}
+	/**
+	 * @param termsAndConditions the termsAndConditions to set
+	 */
+	public void setTermsAndConditions(Boolean termsAndConditions) {
+		this.termsAndConditions = termsAndConditions;
+	}
+	
 }

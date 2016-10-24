@@ -62,14 +62,19 @@ $(function() {
 			function submitform() {
 
 				  var userName=document.getElementById("userName");
-				  var userName=document.getElementById("emailAddress");
-				  var userName=document.getElementById("password");
-				  var userName=document.getElementById("passwordConfirmation");
-				  var userName=document.getElementById("birthdate");
-				  var userName=document.getElementById("termsAndConditions");
+				  var emailAddress=document.getElementById("emailAddress");
+				  var password=document.getElementById("password");
+				  var passwordConfirmation=document.getElementById("passwordConfirmation");
+				  var birthDate=document.getElementById("birthDate");
+				  var termsAndConditions=document.getElementById("termsAndConditions");
 				  
 				  var search = {
-				            "userName":userName.value
+				            "userName":userName.value,
+				            "emailAddress":emailAddress.value,
+				            "password":password.value,
+				            "passwordConfirmation":passwordConfirmation.value,
+				            "birthDate":birthDate.value,
+				            "termsAndConditions":termsAndConditions.checked
 				    }
 
 				  $.ajax({
@@ -80,7 +85,7 @@ $(function() {
 					type: 'post',
 				    contentType : "application/json",
 				    //url: "http://localhost:8080/DiccionarioLesco/registro/verificarUsuario",
-				    url: "/DiccionarioLesco/registro/verificarUsuario",
+				    url: "/DiccionarioLesco/registro/agregarUsuario",
 				    data : JSON.stringify(search),
 				    dataType : 'json',
 				    success : function(data) {

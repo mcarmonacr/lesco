@@ -5,7 +5,7 @@ public class UserProfile {
 	private Integer id;
 	private String userName;
 	private String userPassword;
-	private String salt;
+	private byte[] salt;
 	private ProfileDetail profileDetail;
 	/**
 	 * @return the id
@@ -46,13 +46,13 @@ public class UserProfile {
 	/**
 	 * @return the salt
 	 */
-	public String getSalt() {
+	public byte[] getSalt() {
 		return salt;
 	}
 	/**
 	 * @param salt the salt to set
 	 */
-	public void setSalt(String salt) {
+	public void setSalt(byte[] salt) {
 		this.salt = salt;
 	}
 	/**

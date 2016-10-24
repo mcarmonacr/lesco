@@ -67,7 +67,7 @@
 			  <label class="col-md-4 control-label" for="birthdate">Fecha de Nacimiento</label>
 			  <div class="col-md-4">
 			  <div class="input-group input-append date" id="datePicker">
-			    <input type="text" class="form-control" id="birthdate" name="birthdate" value="10/24/2000" />
+			    <input type="text" class="form-control" id="birthDate" name="birthDate" value="10/24/2000" />
 			    	<span class="input-group-addon">
 			            <span class="glyphicon glyphicon-calendar"></span>
 			        </span>
@@ -81,7 +81,7 @@
 			  <div class="col-md-4">
 			  <div class="checkbox">
 			    <label for="checkboxes-0">
-			      <input name="termsAndConditions" id="checkboxes-0" value="1" type="checkbox">
+			      <input name="termsAndConditions" id="termsAndConditions" type="checkbox">
 			      He leído y acepto los <a href="#">Términos Y Condiciones</a>
 			    </label>
 				</div>
@@ -92,7 +92,7 @@
 			<div class="form-group">
 			  <label class="col-md-4 control-label" for="button1id"></label>
 			  <div class="col-md-8">
-			    <button id="button1id" name="button1id" class="btn btn-primary">Registrar</button>
+			    <button type="submit" id="button1id" name="button1id" class="btn btn-primary">Registrar</button>
 			    <button id="button2id" name="button2id" class="btn btn-danger">Descartar</button>
 			  </div>
 			</div>
