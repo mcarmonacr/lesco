@@ -4,7 +4,7 @@ CREATE TABLE UserProfile
 ID INT NOT NULL AUTO_INCREMENT,
 UserName VARCHAR(100) NOT NULL,
 UserPassword VARCHAR(128) NOT NULL, -- SHA-512 password
-Salt VARCHAR(16) NOT NULL, -- Used to generate a stronger SHA-512
+Salt VARBINARY(32) NOT NULL, -- Used to generate a stronger SHA-512
 PRIMARY KEY (ID)
 );
 
