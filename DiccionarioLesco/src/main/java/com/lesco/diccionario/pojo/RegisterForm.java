@@ -5,16 +5,21 @@ package com.lesco.diccionario.pojo;
 
 import java.util.Date;
 
+import com.lesco.diccionario.utils.CustomerDateAndTimeDeserialize;
+
 /**
  * @author Mario Alonso Carmona Dinarte
  *
  */
+
 public class RegisterForm{
 
 	private String userName;
 	private String emailAddress;
 	private String password;
 	private String passwordConfirmation;
+	@com.fasterxml.jackson.databind.annotation.JsonDeserialize(using=CustomerDateAndTimeDeserialize.class)
+	//@JsonDeserialize(using=CustomerDateAndTimeDeserialize.class)
 	private Date birthDate;
 	private Boolean termsAndConditions;
 	

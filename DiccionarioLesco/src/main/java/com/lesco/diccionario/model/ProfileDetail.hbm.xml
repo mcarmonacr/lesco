@@ -16,7 +16,7 @@
         
         <property name="email" column="Email" />
         <property name="birthDate" column="BirthDate" />
-        <property name="termsAndConditions" column="Salt" />
+        <property name="termsAndConditions" column="TermsnAndConditions" />
         
     </class> 
 </hibernate-mapping>

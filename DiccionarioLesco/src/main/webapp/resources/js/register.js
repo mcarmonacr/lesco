@@ -97,7 +97,7 @@ $(function() {
 						//display(e);
 					},
 					done : function(e) {
-						//console.log("DONE");
+						console.log("DONE");
 						//enableSearchButton(true);
 					}
 				  });

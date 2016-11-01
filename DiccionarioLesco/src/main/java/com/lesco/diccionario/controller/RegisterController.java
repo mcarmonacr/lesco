@@ -101,10 +101,12 @@ public class RegisterController {
 	
 		String resultadoSalvar= salvarUsuario(registerForm);
 		
-		if("Sucess".equals(resultadoSalvar)){
-			
+		if("Success".equals(resultadoSalvar)){
+			respuesta.setCode("000");
+			respuesta.setMessage("Success");
 		}else{
-			
+			respuesta.setCode("999");
+			respuesta.setMessage("Failure");
 		}
 		
 
@@ -126,7 +128,7 @@ public class RegisterController {
 		
 		logger.debug("AdminController - agregarCategoria() - Starting method");
 		
-		if(registerForm.getUserName() != null){
+		if(registerForm.getUserName() != null && registerForm.getUserName().length() != 0){
 			System.out.println("Form text: " + registerForm.getUserName());
 			
 			//Checks if the category already exists
@@ -174,21 +176,20 @@ public class RegisterController {
 						profileDetail.setEmail(registerForm.getEmailAddress());
 						
 						UserProfile userProfile = new UserProfile();
-						
 						userProfile.setSalt(salt);
 						userProfile.setUserName(registerForm.getUserName());
 						userProfile.setUserPassword(shaEncryption.getHashedPassword(registerForm.getPassword(), salt));
 						
+						userProfile.setProfileDetail(profileDetail);
+						profileDetail.setUserProfile(userProfile);
+						
 						userDAO.save(userProfile);
-						
-						
-						
+
 						//Si quisiera obtener el ID nada más tendría que hacer:
 						//category.getId();
 					}
 
-					
-					return "Sucess";
+					return "Success";
 				}else{
 					return"Failure";
 				}
