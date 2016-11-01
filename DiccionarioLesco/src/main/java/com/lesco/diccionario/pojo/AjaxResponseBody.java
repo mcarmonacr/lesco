@@ -4,7 +4,10 @@
 package com.lesco.diccionario.pojo;
 
 /**
- * @author mario
+ * 
+ * Generic Response Body for all Ajax request
+ * 
+ * @author Mario Carmona Dinarte
  *
  */
 public class AjaxResponseBody{
