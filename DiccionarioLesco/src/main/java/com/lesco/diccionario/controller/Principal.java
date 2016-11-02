@@ -1,28 +1,28 @@
 package com.lesco.diccionario.controller;
 
-import java.util.List;
-
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.lesco.diccionario.dao.CityDAO;
-import com.lesco.diccionario.model.City;
-
-
+/**
+ * 
+ * 
+ * 
+ * @author Mario Alonso Carmona Dinarte
+ * @email monacar89@hotmail.com
+ * @since 2016
+ *
+ */
 @Controller
 public class Principal {
 
 	String message = "Welcome to Spring MVC!";
 	
+	//Log4J class logger instance
 	private static final Logger logger = Logger.getLogger(Principal.class);
 	
-	
-	@Autowired
-	private CityDAO cityDAO;
 	
 	@RequestMapping("/login")
 	public ModelAndView login(
@@ -71,10 +71,6 @@ public class Principal {
 		if(logger.isDebugEnabled()){
 			logger.debug("getWelcome is executed!");
 		}
-		
-		List<City> listCities = cityDAO.list();
-		
-		System.out.println("List of cities " + listCities);
 		
 		//logs exception
 		logger.error("This is Error message", new Exception("Testing"));

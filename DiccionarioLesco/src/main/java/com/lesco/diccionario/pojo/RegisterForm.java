@@ -8,7 +8,11 @@ import java.util.Date;
 import com.lesco.diccionario.utils.CustomerDateAndTimeDeserialize;
 
 /**
+ * RegisterForm POJO
+ * 
  * @author Mario Alonso Carmona Dinarte
+ * @email monacar89@hotmail.com
+ * @since 2016
  *
  */
 
@@ -18,9 +22,10 @@ public class RegisterForm{
 	private String emailAddress;
 	private String password;
 	private String passwordConfirmation;
+	
 	@com.fasterxml.jackson.databind.annotation.JsonDeserialize(using=CustomerDateAndTimeDeserialize.class)
-	//@JsonDeserialize(using=CustomerDateAndTimeDeserialize.class)
 	private Date birthDate;
+	
 	private Boolean termsAndConditions;
 	
 	/**

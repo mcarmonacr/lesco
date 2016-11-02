@@ -2,6 +2,14 @@ package com.lesco.diccionario.model;
 
 import java.util.Date;
 
+/**
+ * ProfileDetail POJO
+ * 
+ * @author Mario Alonso Carmona Dinarte
+ * @email monacar89@hotmail.com
+ * @since 2016
+ *
+ */
 public class ProfileDetail {
 
 	private Integer id;

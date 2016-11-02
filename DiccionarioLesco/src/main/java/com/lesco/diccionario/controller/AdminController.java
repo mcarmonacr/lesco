@@ -2,12 +2,10 @@ package com.lesco.diccionario.controller;
 
 import java.util.List;
 
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -15,9 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.lesco.diccionario.dao.CategoryDAO;
-import com.lesco.diccionario.dao.CityDAO;
 import com.lesco.diccionario.model.Category;
-import com.lesco.diccionario.model.City;
 import com.lesco.diccionario.pojo.AjaxResponseBody;
 import com.lesco.diccionario.pojo.CategoryForm;
 
@@ -25,14 +21,16 @@ import com.lesco.diccionario.pojo.CategoryForm;
  * Admin class
  * Will handle all the operations that can be performed by users with administrative privileges.
  * 
- * @author m.carmona.dinarte
+ * @author Mario Alonso Carmona Dinarte
+ * @email monacar89@hotmail.com
+ * @since 2016
  *
  */
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
 	
-	//AdminController Log4J class logger instance
+	//Log4J class logger instance
 	private static final Logger logger = Logger.getLogger(AdminController.class);
 
 	@Autowired
@@ -46,7 +44,7 @@ public class AdminController {
 	@RequestMapping("")
 	public ModelAndView admin() {
 		
-		logger.debug("AdminController - admin() - Start of the method");
+		logger.debug("AdminController - admin() - Start");
 		
 		ModelAndView mv = new ModelAndView("admin");
 		
@@ -55,7 +53,7 @@ public class AdminController {
 		 
 		mv.addObject("listCategories", listCategories);
 		
-		logger.debug("AdminController - admin() - End of the method");
+		logger.debug("AdminController - admin() - End");
 		
 		return mv;
 	}
@@ -72,8 +70,9 @@ public class AdminController {
 		//Generic Response Body for all Ajax request
 		AjaxResponseBody result = new AjaxResponseBody();
 		
-		logger.debug("AdminController - agregarCategoria() - Starting method");
+		logger.debug("AdminController - agregarCategoria() - Start");
 		
+		//Check if the category name coming form the form is not null
 		if(categoryForm.getCategoryName() != null){
 			System.out.println("Form text: " + categoryForm.getCategoryName());
 			
@@ -83,20 +82,16 @@ public class AdminController {
 				category.setCategoryName(categoryForm.getCategoryName());
 				categoryDAO.save(category);
 				
-				//Si quisiera obtener el ID nada más tendría que hacer:
+				//If I wanted to get the ID from the category, I'd have to do something like:
 				//category.getId();
 			}
-
-			
 			result.setMessage("Sucess");
 		}else{
 			result.setMessage("Failure");
 		}
-
+		
+		logger.debug("AdminController - agregarCategoria() - End");
+		
 		return result;
 	}
-	
-	
-	
-	
 }

@@ -7,7 +7,9 @@ package com.lesco.diccionario.pojo;
  * 
  * Generic Response Body for all Ajax request
  * 
- * @author Mario Carmona Dinarte
+ * @author Mario Alonso Carmona Dinarte
+ * @email monacar89@hotmail.com
+ * @since 2016
  *
  */
 public class AjaxResponseBody{

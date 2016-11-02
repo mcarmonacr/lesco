@@ -2,6 +2,7 @@ package com.lesco.diccionario.dao;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -12,14 +13,29 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.lesco.diccionario.model.UserProfile;
 
+/**
+ * User Table Data Access Object Implementation
+ * 
+ * @author Mario Alonso Carmona Dinarte
+ * @email monacar89@hotmail.com
+ * @since 2016
+ *
+ */
 public class UserDAOImpl implements UserDAO {
 	
+	//Session factory injection
 	private SessionFactory sessionFactory;
 
 	public UserDAOImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 	
+	//Log4J class logger instance
+	private static final Logger logger = Logger.getLogger(UserDAOImpl.class);
+	
+	/**
+	 * Save new user to the DB
+	 */
 	@Transactional
 	public void save(UserProfile userProfile) {
 		Session session = this.sessionFactory.openSession();
@@ -40,6 +56,9 @@ public class UserDAOImpl implements UserDAO {
 //        return listCategories;
 //	}
 	
+	/**
+	 * Find a particular user by its userName
+	 */
 	@SuppressWarnings("unchecked")
 	@Transactional
 	public UserProfile findByUserName(String userName){

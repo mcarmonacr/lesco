@@ -4,7 +4,11 @@
 package com.lesco.diccionario.pojo;
 
 /**
- * @author mario
+ * CategoryForm POJO
+ * 
+ * @author Mario Alonso Carmona Dinarte
+ * @email monacar89@hotmail.com
+ * @since 2016
  *
  */
 public class CategoryForm{

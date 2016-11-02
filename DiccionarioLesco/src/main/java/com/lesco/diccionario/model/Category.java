@@ -1,5 +1,13 @@
 package com.lesco.diccionario.model;
 
+/**
+ * Category POJO
+ * 
+ * @author Mario Alonso Carmona Dinarte
+ * @email monacar89@hotmail.com
+ * @since 2016
+ *
+ */
 public class Category {
 
 	private Integer id;
