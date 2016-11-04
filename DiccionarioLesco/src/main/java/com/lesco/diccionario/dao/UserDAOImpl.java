@@ -3,12 +3,10 @@ package com.lesco.diccionario.dao;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.lesco.diccionario.model.UserProfile;
@@ -61,17 +59,26 @@ public class UserDAOImpl implements UserDAO {
 	 */
 	@SuppressWarnings("unchecked")
 	@Transactional
-	public UserProfile findByUserName(String userName){
+	public Boolean findByUserName(String userName){
 		
 //		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(UserProfile.class);
 //        criteria.add(Restrictions.eq("userName",userName));
 //        return (UserProfile) criteria.uniqueResult();
-        
-        
+
+		logger.debug("UserDAOImpl - findByUserName() - Start");
+		
         Query query = sessionFactory.getCurrentSession().createQuery("from UserProfile where userName like :userName");
         query.setParameter("userName", userName + "%");
         List<UserProfile> userList= query.list();
-        
-		return null;
+
+        if(!userList.isEmpty()) {      
+        	logger.debug("UserDAOImpl - findByUserName() - End");
+        	return true;
+        }
+        else{
+        	logger.debug("UserDAOImpl - findByUserName() - End");
+        	return false;
+        }
+
 	}
 }

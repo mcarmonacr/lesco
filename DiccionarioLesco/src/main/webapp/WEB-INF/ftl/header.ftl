@@ -40,7 +40,7 @@
 	            </div>
 	            <button type="submit" class="btn btn-primary">Ingresar</button>
 <!-- 	            <button type="submit" class="btn btn-success" href="/registrarse/">Registrarse</button> -->
-	            <a href="/DiccionarioLesco/registrarse/" class="btn btn-primary">
+	            <a href="/DiccionarioLesco/registrarse" class="btn btn-primary">
 			      <span class="glyphicon glyphicon-user"></span> Registrarse 
 			    </a>
 	          </form>

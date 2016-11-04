@@ -86,12 +86,12 @@ public class RegisterController {
 		//Validate input
 		if(registerForm.getUserName() != null && registerForm.getUserName().length() != 0){
 			
-			//Checks if the category already exists
-			if(userDAO.findByUserName(registerForm.getUserName().trim()) == null){			
+			//Checks if the input user name already exists in the database
+			if(userDAO.findByUserName(registerForm.getUserName().trim()) == false){			
 				result.setMessage("Sucess");
 				result.setCode("000");
 			}else{
-				result.setMessage("Failure");
+				result.setMessage("The user already exists");
 				result.setCode("001");
 			}
 		}else{

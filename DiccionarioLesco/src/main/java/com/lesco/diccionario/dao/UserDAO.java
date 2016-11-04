@@ -26,5 +26,5 @@ public interface UserDAO {
 	 * @param userName
 	 * @return
 	 */
-	public UserProfile findByUserName(String userName);
+	public Boolean findByUserName(String userName);
 }

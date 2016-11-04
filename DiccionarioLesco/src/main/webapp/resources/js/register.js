@@ -18,13 +18,13 @@ $(function() {
  				});
 
 				$("#userName").keyup(function(){
-					submitdata();
+					verifyUserName();
 				});
 
 			});
 			
 			
-			function submitdata() {
+			function verifyUserName() {
 
 				  var userName=document.getElementById("userName");
 				  
@@ -39,7 +39,6 @@ $(function() {
 				    },
 					type: 'post',
 				    contentType : "application/json",
-				    //url: "http://localhost:8080/DiccionarioLesco/registro/verificarUsuario",
 				    url: "/DiccionarioLesco/registro/verificarUsuario",
 				    data : JSON.stringify(search),
 				    dataType : 'json',
