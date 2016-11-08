@@ -22,9 +22,16 @@ public interface UserDAO {
 	//public List<Category> list();
 	
 	/**
-	 * Find a particular user by its userName
+	 * Check if the given user name already exists
 	 * @param userName
 	 * @return
 	 */
-	public Boolean findByUserName(String userName);
+	public Boolean checkUserName(String userName);
+	
+	/**
+	 * Check if the given email address already exists
+	 * @param userName
+	 * @return
+	 */
+	public Boolean checkEmailAddress(String emailAddress);
 }

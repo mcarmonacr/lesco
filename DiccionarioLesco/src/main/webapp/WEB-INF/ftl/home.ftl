@@ -1,5 +1,5 @@
 <#import "common.ftl" as c/>
-<@c.page css="resources/css/home.css">
+<@c.page css="resources/css/home.css" js="resources/js/home.js">
     <!-- custom page content -->
     
     <div id= "main-content">
@@ -24,11 +24,17 @@
 		    <span class="caret"></span>
 		  </button>
 		  <ul class="dropdown-menu dropdown-ul-home" aria-labelledby="dropdownMenu1">
-		    <li><a href="#">Action</a></li>
-		    <li><a href="#">Another action</a></li>
-		    <li><a href="#">Something else here</a></li>
-		    <li role="separator" class="divider"></li>
-		    <li><a href="#">Separated link</a></li>
+		  <#list listCategories as category>
+<!-- 	    	<li class="list-group-item list-group-item-info"><a href="#">${category.categoryName}</a></li> -->
+				<li onclick="assignCategory($(this).text())"><a href="#">${category.categoryName}</a></li>
+				
+<!-- 				<li onclick="assignCategory(this.value)" id="1">1</li> -->
+	  	</#list>
+<!-- 		    <li><a href="#">Action</a></li> -->
+<!-- 		    <li><a href="#">Another action</a></li> -->
+<!-- 		    <li><a href="#">Something else here</a></li> -->
+<!-- 		    <li role="separator" class="divider"></li> -->
+<!-- 		    <li><a href="#">Separated link</a></li> -->
 		  </ul>
 		</div>
 
@@ -70,38 +76,52 @@
 <!-- 			  Your browser does not support HTML5 video. -->
 			</video>
 			
-			<div class="panel panel-primary">
-			  <div class="panel-heading">
-			    <h3 class="panel-title">Definición</h3>
-			  </div>
-			  <div class="panel-body">
-			    Panel content Panel content Panel content Panel content Panel content Panel content
-			  </div>
-			</div>
-			
-			<div class="panel panel-primary">
-			  <div class="panel-heading">
-			    <h3 class="panel-title">Explicación | Ejemplos</h3>
-			  </div>
-			  <div class="panel-body">
-			    Panel content Panel content Panel content Panel content Panel content Panel content
-			  </div>
-			</div>
-			
-			 <div class="panel-group">
+			<div class="panel-group">
 			  <div class="panel panel-default">
 			    <div class="panel-heading">
 			      <h4 class="panel-title">
-			        <a data-toggle="collapse" href="#collapse1">Collapsible panel</a>
+			        <a data-toggle="collapse" href="#collapse2">Definición</a>
 			      </h4>
 			    </div>
-			    <div id="collapse1" class="panel-collapse collapse">
-			      <div class="panel-body">Panel Body</div>
-			      <div class="panel-footer">Panel Footer</div>
+			    <div id="collapse2" class="panel-collapse collapse">
+			      <div class="panel-body">Panel content Panel content Panel content Panel content Panel content Panel content</div>
+<!-- 			      <div class="panel-footer">Panel Footer</div> -->
 			    </div>
 			  </div>
 			</div>
 			
+			<div class="panel-group">
+			  <div class="panel panel-default">
+			    <div class="panel-heading">
+			      <h4 class="panel-title">
+			        <a data-toggle="collapse" href="#collapse1">Explicación | Ejemplos</a>
+			      </h4>
+			    </div>
+			    <div id="collapse1" class="panel-collapse collapse">
+			      <div class="panel-body">Panel content Panel content Panel content Panel content Panel content Panel content</div>
+<!-- 			      <div class="panel-footer">Panel Footer</div> -->
+			    </div>
+			  </div>
+			</div>
+			
+<!-- 			<div id="collapse2" class="panel-collapse collapse"> -->
+<!-- 			  <div class="panel-heading"> -->
+<!-- 			    <h3 class="panel-title">Definición</h3> -->
+<!-- 			  </div> -->
+<!-- 			  <div class="panel-body"> -->
+<!-- 			    Panel content Panel content Panel content Panel content Panel content Panel content -->
+<!-- 			  </div> -->
+<!-- 			</div> -->
+			
+<!-- 			<div class="panel panel-primary" id="collapse3" class="panel-collapse collapse"> -->
+<!-- 			  <div class="panel-heading"> -->
+<!-- 			    <h3 class="panel-title">Explicación | Ejemplos</h3> -->
+<!-- 			  </div> -->
+<!-- 			  <div class="panel-body"> -->
+<!-- 			    Panel content Panel content Panel content Panel content Panel content Panel content -->
+<!-- 			  </div> -->
+<!-- 			</div> -->
+
 			<h2>
 				<span class="label label-primary punctuation glyphicon glyphicon-star"> Puntuación: 4.5</span>
 				<span class="label label-primary visits glyphicon glyphicon-eye-open"> Visitas: 35</span>

@@ -9,6 +9,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.lesco.diccionario.model.ProfileDetail;
 import com.lesco.diccionario.model.UserProfile;
 
 /**
@@ -55,30 +56,52 @@ public class UserDAOImpl implements UserDAO {
 //	}
 	
 	/**
-	 * Find a particular user by its userName
+	 * Check if the given user name already exists
 	 */
 	@SuppressWarnings("unchecked")
 	@Transactional
-	public Boolean findByUserName(String userName){
+	public Boolean checkUserName(String userName){
 		
 //		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(UserProfile.class);
 //        criteria.add(Restrictions.eq("userName",userName));
 //        return (UserProfile) criteria.uniqueResult();
 
-		logger.debug("UserDAOImpl - findByUserName() - Start");
+		logger.debug("UserDAOImpl - checkUserName() - Start");
 		
         Query query = sessionFactory.getCurrentSession().createQuery("from UserProfile where userName like :userName");
         query.setParameter("userName", userName + "%");
         List<UserProfile> userList= query.list();
 
         if(!userList.isEmpty()) {      
-        	logger.debug("UserDAOImpl - findByUserName() - End");
+        	logger.debug("UserDAOImpl - checkUserName() - End");
         	return true;
         }
         else{
-        	logger.debug("UserDAOImpl - findByUserName() - End");
+        	logger.debug("UserDAOImpl - checkUserName() - End");
         	return false;
         }
+	}
 
+	/**
+	 * Check if the given email address already exists
+	 */
+	@SuppressWarnings("unchecked")
+	@Transactional
+	public Boolean checkEmailAddress(String emailAddress) {
+		
+		logger.debug("UserDAOImpl - checkEmailAddress() - Start");
+		
+        Query query = sessionFactory.getCurrentSession().createQuery("from ProfileDetail where email like :emailAddress");
+        query.setParameter("emailAddress", emailAddress + "%");
+        List<ProfileDetail> profileDetailList= query.list();
+
+        if(!profileDetailList.isEmpty()) {      
+        	logger.debug("UserDAOImpl - checkEmailAddress() - End");
+        	return true;
+        }
+        else{
+        	logger.debug("UserDAOImpl - checkEmailAddress() - End");
+        	return false;
+        }
 	}
 }

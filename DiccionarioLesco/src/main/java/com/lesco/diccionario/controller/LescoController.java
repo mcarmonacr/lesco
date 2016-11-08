@@ -1,9 +1,15 @@
 package com.lesco.diccionario.controller;
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.lesco.diccionario.dao.CategoryDAO;
+import com.lesco.diccionario.model.Category;
 
 /**
  * 
@@ -18,6 +24,9 @@ public class LescoController {
 	//Log4J class logger instance
 	private static final Logger logger = Logger.getLogger(Principal.class);
 	
+	@Autowired
+	private CategoryDAO categoryDAO;
+	
 	/**
 	 * DiccioanrioLesco Home Page
 	 * 
@@ -31,6 +40,11 @@ public class LescoController {
 		ModelAndView mv = new ModelAndView("home");
 		//mv.addObject("message", message);
 		//mv.addObject("name", name);
+		
+		//Get all the categories
+		List<Category> listCategories = categoryDAO.list();
+		 
+		mv.addObject("listCategories", listCategories);
 		
 		logger.debug("LescoController - diccionarioLesco() - End");
 		

@@ -11,36 +11,31 @@
 			<legend>Formulario de Registro</legend>
 			
 			<!-- Text input-->
-			<div class="form-group">
+			<div id="divUserName" class="form-group has-feedback">
 			  <label class="col-md-4 control-label" for="textinput">Nombre de Usuario</label>  
 			  <div class="col-md-4">
-			  <input id="userName" name="userName" placeholder="Nombre de Usuario" class="form-control input-md" required="" type="text">
-<!-- 			  <span class="help-block">Nombre de Usuario</span>   -->
+				  <input id="userName" name="userName" placeholder="Nombre de Usuario" class="form-control input-md" required="" type="text">
+				  <span class="glyphicon form-control-feedback"></span>
 			  </div>
 			  
-<!-- 			  <div class="col-md-4 bs-example"> -->
-<!-- 			    <div class="alert alert-info fade in"> -->
-<!-- 			        <a href="#" class="close" data-dismiss="alert">&times;</a> -->
-<!-- 			        <strong>Note!</strong> Please read the comments carefully. -->
-<!-- 			    </div> -->
-<!-- 			  </div> -->
 			  
 			</div>
 			
 			<!-- Text input-->
-			<div class="form-group">
+			<div id="divEmailAddress" class="form-group has-feedback">
 			  <label class="col-md-4 control-label" for="textinput">Correo Electrónico</label>  
 			  <div class="col-md-4">
 			  <input id="emailAddress" name="emailAddress" placeholder="Correo Electrónico" class="form-control input-md" required="" type="email">
-<!-- 			  <span class="help-block">Correo Electrónico</span>   -->
+				<!-- 			  <span class="help-block">Correo Electrónico</span>   -->
+				<span class="glyphicon form-control-feedback"></span>
 			  </div>
 			</div>
 			
-<!-- 			<div class="form-group has-success has-feedback"> -->
+<!-- 			<div class="form-group has-error has-feedback"> -->
 <!-- 		      <label class="col-sm-2 control-label" for="inputSuccess">Input with success and glyphicon</label> -->
 <!-- 		      <div class="col-sm-10"> -->
 <!-- 		        <input type="text" class="form-control" id="inputSuccess"> -->
-<!-- 		        <span class="glyphicon glyphicon-ok form-control-feedback"></span> -->
+<!-- 		        <span class="glyphicon glyphicon-remove form-control-feedback"></span> -->
 <!-- 		      </div> -->
 <!-- 		    </div> -->
 			
@@ -81,7 +76,7 @@
 			  <div class="col-md-4">
 			  <div class="checkbox">
 			    <label for="checkboxes-0">
-			      <input name="termsAndConditions" id="termsAndConditions" type="checkbox">
+			      <input name="termsAndConditions" id="termsAndConditions" type="checkbox" required="">
 			      He leído y acepto los <a href="#">Términos Y Condiciones</a>
 			    </label>
 				</div>

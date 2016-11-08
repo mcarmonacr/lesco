@@ -81,13 +81,13 @@ public class RegisterController {
 		
 		AjaxResponseBody result = new AjaxResponseBody();
 		
-		logger.debug("AdminController - verificarUsuario() - Start");
+		logger.debug("RegisterController - verificarUsuario() - Start");
 		
 		//Validate input
 		if(registerForm.getUserName() != null && registerForm.getUserName().length() != 0){
 			
 			//Checks if the input user name already exists in the database
-			if(userDAO.findByUserName(registerForm.getUserName().trim()) == false){			
+			if(userDAO.checkUserName(registerForm.getUserName().trim()) == false){			
 				result.setMessage("Sucess");
 				result.setCode("000");
 			}else{
@@ -99,7 +99,43 @@ public class RegisterController {
 			result.setCode("001");
 		}
 		
-		logger.debug("AdminController - verificarUsuario() - End");
+		logger.debug("RegisterController - verificarUsuario() - End");
+		
+		return result;
+	}
+	
+	/**
+	 * 
+	 * Verifies is the emailAddress entered already exists in the database
+	 * 
+	 * Type: Json POST method
+	 * 
+	 * @param registerForm. Contains fields: userName, emailAddress, password, passwordConfirmation, private String birthdate ,termsAndConditions.
+	 */
+	@RequestMapping(value= "/verificarCorreo", method = RequestMethod.POST, headers = "Accept=application/json", consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody AjaxResponseBody verificarCorreo(@RequestBody RegisterForm registerForm){
+		
+		AjaxResponseBody result = new AjaxResponseBody();
+		
+		logger.debug("RegisterController - verificarCorreo() - Start");
+		
+		//Validate input
+		if(registerForm.getEmailAddress() != null && registerForm.getEmailAddress().length() != 0){
+			
+			//Checks if the input user name already exists in the database
+			if(userDAO.checkEmailAddress(registerForm.getEmailAddress().trim()) == false){			
+				result.setMessage("Sucess");
+				result.setCode("000");
+			}else{
+				result.setMessage("The user already exists");
+				result.setCode("001");
+			}
+		}else{
+			result.setMessage("Failure");
+			result.setCode("001");
+		}
+		
+		logger.debug("RegisterController - verificarCorreo() - End");
 		
 		return result;
 	}
@@ -118,7 +154,7 @@ public class RegisterController {
 					
 			//Checks if the userName already exists
 			//TODO Add the validation of the email
-			if(userDAO.findByUserName(registerForm.getUserName()) == null){
+			if(userDAO.checkUserName(registerForm.getUserName()) == null){
 			
 			//Get unique random salt which will be used to encryp the user password
 			byte[] salt= SHAEncryption.getSalt();
