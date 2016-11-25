@@ -14,7 +14,8 @@
         
         <div id="navbar" class="navbar-collapse collapse">
 	        <ul class="nav navbar-nav">
-	            <li class="active"><a href="#">Diccionario</a></li>
+<!-- 	            <li class="active"><a href="#">Diccionario</a></li> -->
+<!-- 	             <li><a href="#">Diccionario</a></li> -->
 	            <li><a href="/DiccionarioLesco/acerca">Acerca Del Proyecto</a></li>
 	            <li><a href="/DiccionarioLesco/contacto">Contacto</a></li>
 <!-- 	            <li class="dropdown"> -->

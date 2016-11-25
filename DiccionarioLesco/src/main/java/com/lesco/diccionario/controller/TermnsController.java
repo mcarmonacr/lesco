@@ -25,11 +25,11 @@ import com.lesco.diccionario.utils.SHAEncryption;
  *
  */
 @Controller
-@RequestMapping("/registro")
-public class RegisterController {
+@RequestMapping("/termino")
+public class TermnsController {
 	
 	//Log4J class logger instance
-	private static final Logger logger = Logger.getLogger(TermnsController.class);
+	private static final Logger logger = Logger.getLogger(RegisterController.class);
 
 	@Autowired
 	private UserDAO userDAO;

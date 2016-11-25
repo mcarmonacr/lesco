@@ -41,23 +41,33 @@ http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
       <property name="cache" value="true"/>
       <property name="prefix" value=""/>
       <property name="suffix" value=".ftl"/>
+<!--       <property name="contentType" value="text/html;charset=UTF-8"/> -->
+      <property name="contentType" value="text/html;charset=ISO-8859-1"/>
     </bean>
  
-<!-- 	<bean -->
-<!-- 		class="org.springframework.web.servlet.view.InternalResourceViewResolver"> -->
-<!-- 		<property name="prefix"> -->
-<!-- 			<value>/WEB-INF/views/</value> -->
-<!-- 		</property> -->
-<!-- 		<property name="suffix"> -->
-<!-- 			<value>.jsp</value> -->
-<!-- 		</property> -->
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix">
+			<value>/WEB-INF/views/</value>
+		</property>
+		<property name="suffix">
+			<value>.jsp</value>
+		</property>
+	</bean>
+
+<!-- 	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close"> -->
+<!-- 	    <property name="driverClassName" value="com.mysql.jdbc.Driver"/> -->
+<!-- 	    <property name="url" value="jdbc:mysql://localhost:3306/world"/> -->
+<!-- 	    <property name="username" value="root"/> -->
+<!-- 	    <property name="password" value="password"/> -->
 <!-- 	</bean> -->
+
 
 	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
 	    <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-	    <property name="url" value="jdbc:mysql://localhost:3306/world"/>
-	    <property name="username" value="root"/>
-	    <property name="password" value="password"/>
+	    <property name="url" value="jdbc:mysql://127.13.22.2:3306/lesco"/>
+	    <property name="username" value="adminbQkuwea"/>
+	    <property name="password" value="7Pq9FjVEWDGW"/>
 	</bean>
 	
 	<bean id="sessionFactory"

@@ -14,32 +14,33 @@
       </ol>
       <div class="carousel-inner" role="listbox">
         <div class="item active">
-          <img class="first-slide" src="resources/images/logoUCR_0.png" alt="First slide">
+<!--           <img class="first-slide" src="resources/images/logo-ucr2.png" alt="First slide"> -->
+          <img class="first-slide" src="resources/images/free-background-wallpaper.jpg" alt="First slide">
           <div class="container">
             <div class="carousel-caption">
-              <h1>Example headline.</h1>
-              <p>Note: If you're viewing this page via a <code>file://</code> URL, the "next" and "previous" Glyphicon buttons on the left and right might not load/display properly due to web browser security rules.</p>
-              <p><a class="btn btn-lg btn-primary" href="#" role="button">Sign up today</a></p>
+              <h1>Universidad de Costa Rica</h1>
+              <p>La Universidad de Costa Rica (también llamada por sus siglas, UCR) es una de las cinco universidades públicas de la República de Costa Rica y una de las más prestigiosas y reconocidas de América Latina.</p>
+              <p><a class="btn btn-lg btn-primary" href="/DiccionarioLesco/acerca/ucr" role="button">Conocer Más</a></p>
             </div>
           </div>
         </div>
         <div class="item">
-          <img class="second-slide" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Second slide">
+          <img class="second-slide" src="resources/images/free-background-wallpaper.jpg" alt="Second slide">
           <div class="container">
             <div class="carousel-caption">
-              <h1>Another example headline.</h1>
-              <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-              <p><a class="btn btn-lg btn-primary" href="#" role="button">Learn more</a></p>
+              <h1>LESCO</h1>
+              <p>El LESCO es el  Lenguaje de Señas Costarricense. También es conocido como el Lenguaje de Signos Costarricense que es utilizado para comunicarse con personas sordas.</p>
+              <p><a class="btn btn-lg btn-primary" href="#" role="button">Conocer Más</a></p>
             </div>
           </div>
         </div>
         <div class="item">
-          <img class="third-slide" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Third slide">
+          <img class="third-slide" src="resources/images/free-background-wallpaper.jpg" alt="Third slide">
           <div class="container">
             <div class="carousel-caption">
-              <h1>One more for good measure.</h1>
-              <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-              <p><a class="btn btn-lg btn-primary" href="#" role="button">Browse gallery</a></p>
+              <h1>ECCI</h1>
+              <p>La Escuela de Ciencias de la Computación e Infomática de la Universidad de Costa Rica se fundó en 1981, como resultado de la fusión de dos programas distintos pero relacionados, el de Bachillerato en Informática y el de Bachillerato y Licenciatura en Computación</p>
+              <p><a class="btn btn-lg btn-primary" href="#" role="button">Conocer Más</a></p>
             </div>
           </div>
         </div>
@@ -63,8 +64,13 @@
 
       <!-- Three columns of text below the carousel -->
       <div class="row">
+      
+      <h1 class="autores">Autores</h1>
+      
+      <br>
+      
         <div class="col-lg-4">
-          <img class="img-circle" src="resources/images/marioCarmona.JPG" alt="Mario Alonso Carmona Dinarte" width="140" height="140">
+          <img class="img-circle" src="resources/images/marioCarmona2.PNG" alt="Mario Alonso Carmona Dinarte" width="140" height="140">
           <h2>Mario Alonso Carmona Dinarte</h2>
           <p>Bachiller y estudiante del grado de licenciatura de la Escuela de Ciencias de la Computación e Informática (ECCI) de la Universidad de Costa Rica.</p>
 <!--           <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p> -->
@@ -76,7 +82,7 @@
 <!--           <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p> -->
         </div><!-- /.col-lg-4 -->
         <div class="col-lg-4">
-          <img class="img-circle" src="resources/images/luisQuesada.jpg" alt="Luis Quesada Quirós" width="140" height="140">
+          <img class="img-circle" src="resources/images/luisQuesada2.jpg" alt="Luis Quesada Quirós" width="140" height="140">
           <h2>Luis Quesada Quirós</h2>
           <p>Profesor e Investigador de la Escuela de Ciencias de la Computación e Informática (ECCI) de la Universidad de Costa Rica.</p>
 <!--           <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p> -->
@@ -94,7 +100,8 @@
           <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
         </div>
         <div class="col-md-5">
-          <img class="featurette-image img-responsive center-block" data-src="holder.js/500x500/auto" alt="Generic placeholder image">
+          <img class="featurette-image img-responsive center-block" data-src="holder.js/500x500/auto" src="resources/images/Sign_language_families.png" alt="Generic placeholder image">
+<!--           https://upload.wikimedia.org/wikipedia/en/2/2f/Sign_language_families.png -->
         </div>
       </div>
 
@@ -106,7 +113,8 @@
           <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
         </div>
         <div class="col-md-5 col-md-pull-7">
-          <img class="featurette-image img-responsive center-block" data-src="holder.js/500x500/auto" alt="Generic placeholder image">
+          <img class="featurette-image img-responsive center-block" data-src="holder.js/500x500/auto" src="resources/images/sign-language.jpg" alt="Generic placeholder image">
+<!--           https://s-media-cache-ak0.pinimg.com/736x/09/53/50/095350844e504af390b80bd7a30e7142.jpg -->
         </div>
       </div>
 
@@ -118,7 +126,8 @@
           <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
         </div>
         <div class="col-md-5">
-          <img class="featurette-image img-responsive center-block" data-src="holder.js/500x500/auto" alt="Generic placeholder image">
+          <img class="featurette-image img-responsive center-block" data-src="holder.js/500x500/auto" src="resources/images/dictionary.jpg" alt="Generic placeholder image">
+<!--           http://websearch.com/cms/imgfolder/dictionary2-flash.jpg -->
         </div>
       </div>
 

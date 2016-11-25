@@ -10,7 +10,7 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.lesco.diccionario.controller.RegisterController;
+import com.lesco.diccionario.controller.AboutController;
 import com.lesco.diccionario.model.Category;
 
 /**
