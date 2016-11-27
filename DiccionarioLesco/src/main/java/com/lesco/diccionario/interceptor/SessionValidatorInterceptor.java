@@ -28,6 +28,10 @@ public class SessionValidatorInterceptor extends HandlerInterceptorAdapter {
 		logger.info("Request URL::" + request.getRequestURL().toString()
 				+ ":: Start Time=" + System.currentTimeMillis());
 		request.setAttribute("startTime", startTime);
+		
+		request.setCharacterEncoding("ISO-8859-1");
+		response.setCharacterEncoding("ISO-8859-1");
+		
 		//if returned false, we need to make sure 'response' is sent
 		
 		//TODO Work this logic
@@ -51,6 +55,8 @@ public class SessionValidatorInterceptor extends HandlerInterceptorAdapter {
 			ModelAndView modelAndView) throws Exception {
 		System.out.println("Request URL::" + request.getRequestURL().toString()
 				+ " Sent to Handler :: Current Time=" + System.currentTimeMillis());
+		request.setCharacterEncoding("ISO-8859-1");
+		response.setCharacterEncoding("ISO-8859-1");
 		//we can add attributes in the modelAndView and use that in the view page
 	}
 	
@@ -63,6 +69,9 @@ public class SessionValidatorInterceptor extends HandlerInterceptorAdapter {
 				+ ":: End Time=" + System.currentTimeMillis());
 		logger.info("Request URL::" + request.getRequestURL().toString()
 				+ ":: Time Taken=" + (System.currentTimeMillis() - startTime));
+		
+		request.setCharacterEncoding("ISO-8859-1");
+		response.setCharacterEncoding("ISO-8859-1");
 	}
 	
 }

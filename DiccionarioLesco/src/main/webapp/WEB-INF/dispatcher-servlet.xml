@@ -31,7 +31,13 @@ http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
  	<!-- freemarker config -->
     <bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
       <property name="templateLoaderPath" value="/WEB-INF/ftl/"/>
-    </bean>
+      <property name="freemarkerSettings">
+		<props>
+			<prop key="default_encoding">ISO-8859-1</prop>
+		</props>
+		</property>
+    </bean>    	
+    
     
     <!-- 
       View resolvers can also be configured with ResourceBundles or XML files. If you need
@@ -48,10 +54,12 @@ http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix">
-			<value>/WEB-INF/views/</value>
+<!-- 			<value>/WEB-INF/views/</value> -->
+		<value>/WEB-INF/ftl/</value>
 		</property>
 		<property name="suffix">
-			<value>.jsp</value>
+<!-- 			<value>.jsp</value> -->
+			<value>.ftl</value>
 		</property>
 	</bean>
 

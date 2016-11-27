@@ -16,8 +16,12 @@
 
 <link rel="stylesheet" type="text/css" href="resources/css/jumbotron.css">
 
-	<#if parameters.css??>
- 	 	<link rel="stylesheet" type="text/css" href=${parameters.css}>
+	<#if (parameters??)>
+		<#if (parameters?size > 0)>
+			<#if parameters.css??>
+		 	 	<link rel="stylesheet" type="text/css" href=${parameters.css}>
+			</#if>
+		</#if>
 	</#if>
 
 
