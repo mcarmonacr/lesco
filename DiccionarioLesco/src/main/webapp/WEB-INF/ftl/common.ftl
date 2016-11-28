@@ -12,7 +12,6 @@
 	
 	    <body>
 
-	    
 		    <div class="container-fluid">
 			    <!-- header section -->
 			    <#include "/header.ftl">			    

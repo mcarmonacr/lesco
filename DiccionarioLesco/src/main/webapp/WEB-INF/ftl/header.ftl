@@ -1,4 +1,5 @@
-<div class="page-header">
+<!-- <div class="page-header"> -->
+<div class="row" id="header"> 
    <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container-fluid">
       
@@ -45,10 +46,10 @@
 			      <span class="glyphicon glyphicon-user"></span> Registrarse 
 			    </a>
 	          </form>
-
-	          
 	          
         </div><!--/.navbar-collapse -->
       </div>
     </nav>
+    <!-- Space between the header and the content -->
+    <br>
 </div>

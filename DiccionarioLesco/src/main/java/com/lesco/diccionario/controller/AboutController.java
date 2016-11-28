@@ -51,6 +51,45 @@ public class AboutController {
 		
 		return mv;
 	}
+	
+	/**
+	 * Escuela de ciencias de la computación e informática detail page
+	 * 
+	 * @return
+	 */
+	@RequestMapping("/ecci")
+	public ModelAndView ecci() {
+		
+		logger.debug("AboutController - ecci() - Start");
+ 
+		ModelAndView mv = new ModelAndView("/about/ecci");
+		//mv.addObject("message", message);
+		//mv.addObject("name", name);
+		
+		logger.debug("AboutController - ecci() - End");
+		
+		return mv;
+	}
+	
+	
+	/**
+	 * LESCO detail page
+	 * 
+	 * @return
+	 */
+	@RequestMapping("/lesco")
+	public ModelAndView lesco() {
+		
+		logger.debug("AboutController - lesco() - Start");
+ 
+		ModelAndView mv = new ModelAndView("/about/lesco");
+		//mv.addObject("message", message);
+		//mv.addObject("name", name);
+		
+		logger.debug("AboutController - lesco() - End");
+		
+		return mv;
+	}
 //	
 //
 //	@Autowired

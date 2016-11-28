@@ -1,9 +1,10 @@
-  <div class ="footer">
+<!--   <div class ="footer"> -->
 	 
+	 <div  class="row" id="footer">
 		<footer class="navbar navbar-default navbar-fixed-bottom">
 			<div class="container-fluid">
 			  <div class="row">
-			  	<hr>
+<!-- 			  	<hr> -->
 			    <div class="col-lg-12">
 			      <div class="col-md-8">
 			        <a href="#">Términos De Servicio</a> | <a href="#">Privacidad</a>    

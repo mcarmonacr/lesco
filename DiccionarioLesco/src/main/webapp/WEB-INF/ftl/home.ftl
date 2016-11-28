@@ -2,23 +2,29 @@
 <@c.page css="resources/css/home.css" js="resources/js/home.js">
     <!-- custom page content -->
     
-    <div id= "main-content">
+    <!-- Whole content row -->
+    <div class="row" id="main-content">
     
-    <div class="panel panel-default terms">
+    <!-- Terms column -->
+    <div class="col-md-3">
+    
+    <div class="panel panel-default">
 		  <div class="panel-body">
 
     	<!-- Terms Section -->
 	    <div class="list-group">
 	    
-	    <h1><span class="label label-primary terms-header">Términos</span></h1>
+	    <div class="row">
+	    	<h1><span class="label label-primary terms-header">Términos</span></h1>
+	    </div>
 	    
-	    <div class="input-group search-text-box">
+	    <div class="row input-group search-text-box">
 		  <span class="glyphicon glyphicon-search input-group-addon home-search-glyphicon"></span>
 <!-- 		   <span class="input-group-addon" id="basic-addon1">@</span> -->
 		  <input type="text" class="form-control" placeholder="Buscar" aria-describedby="sizing-addon2">
 		</div>
 	    
-	    <div class="dropdown dropdown-container-home">
+	    <div class="row dropdown dropdown-container-home">
 		  <button class="btn btn-default dropdown-toggle dropdown-button-home" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
 		    Categoría
 		    <span class="caret"></span>
@@ -38,7 +44,7 @@
 		  </ul>
 		</div>
 
-	    <div class="terms-list">
+	    <div class="row terms-list">
 		  <a href="#" class="list-group-item active">
 		    Cras justo odio
 		  </a>
@@ -57,25 +63,35 @@
 		  
 		  </div>
 		  
-		  <h1><span class="label label-primary terms-header">Total: 250</span></h1>
-		  
+		  <div class="row">
+		  	<h1><span class="label label-primary terms-header">Total: 250</span></h1>
+		  </div>
 		  
 		</div>
 		
 		  </div>
 		</div>
-		
+		    </div>
+
+		 <!-- Video detail column -->
+    <div class="col-md-9">
 		<!-- Video Details Section -->
-		<div class="panel panel-default video-details">
+		<div class="panel panel-default">
 		  <div class="panel-body">
-		    <h1><span class="label label-primary terms-header">Nombre del video</span></h1>
+		  
+		  	<div class="row">
+		    	<h1><span class="label label-primary terms-header">Nombre del video</span></h1>
+		    </div>
 		    
+		    <div class="row">
 		    <video class="video-container" controls>
 			  <source src="resources/videos/Video.mp4" type="video/mp4">
 <!-- 			  <source src="mov_bbb.ogg" type="video/ogg"> -->
 <!-- 			  Your browser does not support HTML5 video. -->
 			</video>
+			</div>
 			
+			<div class="row">
 			<div class="panel-group">
 			  <div class="panel panel-default">
 			    <div class="panel-heading">
@@ -89,7 +105,9 @@
 			    </div>
 			  </div>
 			</div>
+			</div>
 			
+			<div class="row">
 			<div class="panel-group">
 			  <div class="panel panel-default">
 			    <div class="panel-heading">
@@ -102,6 +120,7 @@
 <!-- 			      <div class="panel-footer">Panel Footer</div> -->
 			    </div>
 			  </div>
+			</div>
 			</div>
 			
 <!-- 			<div id="collapse2" class="panel-collapse collapse"> -->
@@ -122,16 +141,23 @@
 <!-- 			  </div> -->
 <!-- 			</div> -->
 
-			<h2>
-				<span class="label label-primary punctuation glyphicon glyphicon-star"> Puntuación: 4.5</span>
-				<span class="label label-primary visits glyphicon glyphicon-eye-open"> Visitas: 35</span>
-			</h2>
-			
+			<div class="row">
+					<div class="col-md-6">
+						<h2>
+							<span class="label label-primary punctuation glyphicon glyphicon-star"> Puntuación: 4.5</span>
+						</h2>
+					</div>
+					<div class="col-md-6">
+						<h2>
+							<span class="label label-primary visits glyphicon glyphicon-eye-open"> Visitas: 35</span>
+						</h2>
+					</div>
+			</div>
 			
 		    
 		  </div>
 		</div>
-
+  </div>
 </div>
     
 </@c.page>

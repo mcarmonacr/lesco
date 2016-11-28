@@ -1,10 +1,13 @@
 <#import "../common.ftl" as c/>
-<@c.page css="../resources/css/about.css">
+<@c.page css="../resources/css/about-detail-page.css">
     <!-- custom page content -->
     
     <div class="container">
 
       <div class="starter-template">
+      
+      <img src="../resources/images/logoUCR_0.png" alt="..." class="img-rounded img-responsive center-block">
+      
         <h1>Universidad de Costa Rica</h1>
         
         <br>

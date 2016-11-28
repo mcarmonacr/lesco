@@ -30,7 +30,7 @@
             <div class="carousel-caption">
               <h1>LESCO</h1>
               <p>El LESCO es el  Lenguaje de Señas Costarricense. También es conocido como el Lenguaje de Signos Costarricense que es utilizado para comunicarse con personas sordas.</p>
-              <p><a class="btn btn-lg btn-primary" href="#" role="button">Conocer Más</a></p>
+              <p><a class="btn btn-lg btn-primary" href="/DiccionarioLesco/acerca/lesco" role="button">Conocer Más</a></p>
             </div>
           </div>
         </div>
@@ -40,7 +40,7 @@
             <div class="carousel-caption">
               <h1>ECCI</h1>
               <p>La Escuela de Ciencias de la Computación e Infomática de la Universidad de Costa Rica se fundó en 1981, como resultado de la fusión de dos programas distintos pero relacionados, el de Bachillerato en Informática y el de Bachillerato y Licenciatura en Computación</p>
-              <p><a class="btn btn-lg btn-primary" href="#" role="button">Conocer Más</a></p>
+              <p><a class="btn btn-lg btn-primary" href="/DiccionarioLesco/acerca/ecci" role="button">Conocer Más</a></p>
             </div>
           </div>
         </div>
