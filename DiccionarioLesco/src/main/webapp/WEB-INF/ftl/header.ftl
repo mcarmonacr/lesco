@@ -18,6 +18,7 @@
 <!-- 	            <li class="active"><a href="#">Diccionario</a></li> -->
 <!-- 	             <li><a href="#">Diccionario</a></li> -->
 	            <li><a href="/DiccionarioLesco/acerca">Acerca Del Proyecto</a></li>
+	            <li><a href="/DiccionarioLesco/agregar">Agregar Término</a></li>
 	            <li><a href="/DiccionarioLesco/contacto">Contacto</a></li>
 <!-- 	            <li class="dropdown"> -->
 <!-- 	              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a> -->

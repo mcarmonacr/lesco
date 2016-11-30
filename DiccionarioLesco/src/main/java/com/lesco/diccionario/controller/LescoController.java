@@ -70,6 +70,48 @@ public class LescoController {
 		return mv;
 	}
 	
+	/**
+	 * About page
+	 * 
+	 * @return
+	 */
+	@RequestMapping("/acerca")
+	public ModelAndView acerca() {
+		
+		logger.debug("LescoController - acerca() - Start");
+ 
+		ModelAndView mv = new ModelAndView("about");
+		//mv.addObject("message", message);
+		//mv.addObject("name", name);
+		
+		logger.debug("LescoController - acerca() - End");
+		
+		return mv;
+	}
+	
+	/**
+	 * Add term page
+	 * 
+	 * @return
+	 */
+	@RequestMapping("/agregar")
+	public ModelAndView agregar() {
+		
+		logger.debug("LescoController - agregar() - Start");
+ 
+		ModelAndView mv = new ModelAndView("addTerm");
+		//mv.addObject("message", message);
+		//mv.addObject("name", name);
+		
+		List<Category> listCategories = categoryDAO.list();
+		 
+		mv.addObject("listCategories", listCategories);
+		
+		logger.debug("LescoController - agregar() - End");
+		
+		return mv;
+	}
+	
 	
 	/**
 	 * Contact page
@@ -91,23 +133,6 @@ public class LescoController {
 	}
 	
 	
-	/**
-	 * About page
-	 * 
-	 * @return
-	 */
-	@RequestMapping("/acerca")
-	public ModelAndView acerca() {
-		
-		logger.debug("LescoController - acerca() - Start");
- 
-		ModelAndView mv = new ModelAndView("about");
-		//mv.addObject("message", message);
-		//mv.addObject("name", name);
-		
-		logger.debug("LescoController - acerca() - End");
-		
-		return mv;
-	}
+	
 	
 }
