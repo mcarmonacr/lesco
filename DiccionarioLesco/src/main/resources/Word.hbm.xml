@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.lesco.diccionario.model">
+    <class name="Word" table="Word">
+            
+        <id name="wordId" type="java.lang.Integer" column="Word_ID">
+            <generator class="native"/>
+        </id>
+			
+		<many-to-one name="userProfile" class="UserProfile" fetch="select">
+			<column name="UserProfile_ID" not-null="true" />
+		</many-to-one>
+		
+		<one-to-one name="video" class="Video"
+			cascade="save-update"></one-to-one>
+			
+		<set name="categories" table="WordCategory"
+        	inverse="false" lazy="true" fetch="select" cascade="all" >
+            <key>
+                <column name="Word_ID" not-null="true" />
+            </key>
+            <many-to-many entity-name="com.lesco.diccionario.model.Category">
+                <column name="Category_ID" not-null="true" />
+            </many-to-many>
+        </set>
+        
+        <property name="wordName" column="WordName" />
+        <property name="description" column="Description" />
+        <property name="explanation" column="Explanation" />
+        <property name="example" column="Example" />
+        <property name="numberOfVisits" column="NumberOfVisits" />
+                
+    </class> 
+</hibernate-mapping>

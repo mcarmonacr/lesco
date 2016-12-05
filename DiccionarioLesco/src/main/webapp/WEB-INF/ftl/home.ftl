@@ -30,7 +30,10 @@
 		    <span class="caret"></span>
 		  </button>
 		  <ul class="dropdown-menu dropdown-ul-home" aria-labelledby="dropdownMenu1">
+		  		<li onclick="assignCategory($(this).text())"><a href="#">Cualquiera</a></li>
+		  		<li role="separator" class="divider"></li>
 		  <#list listCategories as category>
+		  		
 <!-- 	    	<li class="list-group-item list-group-item-info"><a href="#">${category.categoryName}</a></li> -->
 				<li onclick="assignCategory($(this).text())"><a href="#">${category.categoryName}</a></li>
 				
@@ -112,10 +115,26 @@
 			  <div class="panel panel-default">
 			    <div class="panel-heading">
 			      <h4 class="panel-title">
-			        <a data-toggle="collapse" href="#collapse1">Explicación | Ejemplos</a>
+			        <a data-toggle="collapse" href="#collapse1">Explicación</a>
 			      </h4>
 			    </div>
 			    <div id="collapse1" class="panel-collapse collapse">
+			      <div class="panel-body">Panel content Panel content Panel content Panel content Panel content Panel content</div>
+<!-- 			      <div class="panel-footer">Panel Footer</div> -->
+			    </div>
+			  </div>
+			</div>
+			</div>
+			
+			<div class="row">
+			<div class="panel-group">
+			  <div class="panel panel-default">
+			    <div class="panel-heading">
+			      <h4 class="panel-title">
+			        <a data-toggle="collapse" href="#collapse3">Ejemplos</a>
+			      </h4>
+			    </div>
+			    <div id="collapse3" class="panel-collapse collapse">
 			      <div class="panel-body">Panel content Panel content Panel content Panel content Panel content Panel content</div>
 <!-- 			      <div class="panel-footer">Panel Footer</div> -->
 			    </div>

@@ -5,7 +5,7 @@
 <hibernate-mapping package="com.lesco.diccionario.model">
     <class name="Category" table="Category">
     
-        <id name="id" type="java.lang.Integer" column="ID">
+        <id name="categoryId" type="java.lang.Integer" column="Category_ID">
             <generator class="native"/>
         </id>
         
@@ -13,6 +13,15 @@
         
 <!--         <one-to-one name="profileDetail" class="ProfileDetail" -->
 <!-- 			cascade="save-update"></one-to-one> -->
+
+		<set name="words" table="WordCategory" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="Category_ID" not-null="true" />
+            </key>
+            <many-to-many entity-name="com.lesco.diccionario.model.Word">
+                <column name="Word_ID" not-null="true" />
+            </many-to-many>
+        </set>
         
     </class> 
 </hibernate-mapping>

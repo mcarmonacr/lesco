@@ -15,7 +15,7 @@
 	    <div class="list-group">
 	    
 	    <div class="row">
-	    	<h1><span class="label label-primary terms-header">Términos Solicitados</span></h1>
+	    	<h1><span class="label label-primary terms-header">Solicitudes</span></h1>
 	    </div>
 	    
 	    <div class="row input-group search-text-box">
@@ -69,8 +69,8 @@
 					<div class="form-group">
 					  <label class="col-md-4 control-label" for="textinput">Término</label>  
 					  <div class="col-md-4">
-					  <input id="textinput" name="textinput" placeholder="placeholder" class="form-control input-md" type="text">
-					  <span class="help-block">help</span>  
+					  <input id="textinput" name="textinput" placeholder="Término" class="form-control input-md" type="text">
+<!-- 					  <span class="help-block">help</span>   -->
 					  </div>
 					</div>
 					
@@ -80,6 +80,7 @@
 					  <label class="col-md-4 control-label" for="selectbasic">Categoría</label>
 					  <div class="col-md-4">
 					    <select id="selectbasic" name="selectbasic" class="form-control">
+					    	<option value=""></option>
 					    	<#list listCategories as category>
 					     		<option value="${category.categoryName}">${category.categoryName}</option>
 					     	 </#list>
@@ -95,15 +96,23 @@
 					<div class="form-group">
 					  <label class="col-md-4 control-label" for="textarea">Definición</label>
 					  <div class="col-md-4">                     
-					    <textarea class="form-control" id="textarea" name="textarea">default text</textarea>
+					    <textarea class="form-control" placeholder="Definición" id="textarea" name="textarea"></textarea>
 					  </div>
 					</div>
 					
 					<!-- Textarea -->
 					<div class="form-group">
-					  <label class="col-md-4 control-label" for="textarea">Explicación | Ejemplos</label>
+					  <label class="col-md-4 control-label" for="textarea">Explicación</label>
 					  <div class="col-md-4">                     
-					    <textarea class="form-control" id="textarea" name="textarea">default text</textarea>
+					    <textarea class="form-control" id="textarea" placeholder="Explicación" name="textarea"></textarea>
+					  </div>
+					</div>
+					
+					<!-- Textarea -->
+					<div class="form-group">
+					  <label class="col-md-4 control-label" for="textarea">Ejemplos</label>
+					  <div class="col-md-4">                     
+					    <textarea class="form-control" id="textarea" placeholder="Ejemplos" name="textarea"></textarea>
 					  </div>
 					</div>
 					

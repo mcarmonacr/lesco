@@ -12,22 +12,25 @@ import java.util.Date;
  */
 public class ProfileDetail {
 
-	private Integer id;
+	private Integer profileDetailId;
 	private String email;
 	private Date birthDate;
 	private Boolean termsAndConditions;
 	private UserProfile userProfile;
+
+
+	
 	/**
-	 * @return the id
+	 * @return the profileDetailId
 	 */
-	public Integer getId() {
-		return id;
+	public Integer getProfileDetailId() {
+		return profileDetailId;
 	}
 	/**
-	 * @param id the id to set
+	 * @param profileDetailId the profileDetailId to set
 	 */
-	public void setId(Integer id) {
-		this.id = id;
+	public void setProfileDetailId(Integer profileDetailId) {
+		this.profileDetailId = profileDetailId;
 	}
 	/**
 	 * @return the email

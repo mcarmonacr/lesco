@@ -1,15 +1,17 @@
 $(function() {
-			    $('input[name="birthdate"]').daterangepicker({
+			    $('input[name="birthDate"]').daterangepicker({
 			        singleDatePicker: true,
 			        showDropdowns: true
+//			        locale: {
+//			            format: 'YYYY-MM-DD'
+//			          },
 			    }, 
 			    function(start, end, label) {
-			        var years = moment().diff(start, 'years');
+			        //var years = moment().diff(start, 'years');
 			        //alert("You are " + years + " years old.");
 			    });
 			});
-			
-			
+
 			jQuery(document).ready(function($) {
 
  				$("#registerForm").submit(function(event) {

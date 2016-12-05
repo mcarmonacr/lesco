@@ -59,16 +59,18 @@
 			
 			<!-- Password input-->
 			<div class="form-group">
-			  <label class="col-md-4 control-label" for="birthdate">Fecha de Nacimiento</label>
+			  <label class="col-md-4 control-label" for="birthDate">Fecha de Nacimiento</label>
 			  <div class="col-md-4">
 			  <div class="input-group input-append date" id="datePicker">
 			    <input type="text" class="form-control" id="birthDate" name="birthDate" value="10/24/2000" />
+			    <!-- 			http://www.daterangepicker.com/ -->
 			    	<span class="input-group-addon">
 			            <span class="glyphicon glyphicon-calendar"></span>
 			        </span>
 			        </div>
 			  </div>
 			</div>
+			
 			
 			<!-- Multiple Checkboxes -->
 			<div class="form-group">
@@ -77,7 +79,7 @@
 			  <div class="checkbox">
 			    <label for="checkboxes-0">
 			      <input name="termsAndConditions" id="termsAndConditions" type="checkbox" required="">
-			      He leído y acepto los <a href="#">Términos Y Condiciones</a>
+			      He leído y acepto los <a href="/DiccionarioLesco/legal/terminos-de-servicio">Términos Y Condiciones</a>
 			    </label>
 				</div>
 			  </div>

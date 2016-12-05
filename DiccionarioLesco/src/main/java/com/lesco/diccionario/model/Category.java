@@ -1,5 +1,8 @@
 package com.lesco.diccionario.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Category POJO
  * 
@@ -10,19 +13,23 @@ package com.lesco.diccionario.model;
  */
 public class Category {
 
-	private Integer id;
+	private Integer categoryId;
 	private String categoryName;
+	
+	//Foreign key
+	private Set<Word> words = new HashSet<Word>(0); 
+	
 	/**
-	 * @return the id
+	 * @return the categoryId
 	 */
-	public Integer getId() {
-		return id;
+	public Integer getCategoryId() {
+		return categoryId;
 	}
 	/**
-	 * @param id the id to set
+	 * @param categoryId the categoryId to set
 	 */
-	public void setId(Integer id) {
-		this.id = id;
+	public void setCategoryId(Integer categoryId) {
+		this.categoryId = categoryId;
 	}
 	/**
 	 * @return the categoryName
@@ -35,6 +42,19 @@ public class Category {
 	 */
 	public void setCategoryName(String categoryName) {
 		this.categoryName = categoryName;
+	}
+	
+	/**
+	 * @return the words
+	 */
+	public Set<Word> getWords() {
+		return words;
+	}
+	/**
+	 * @param words the words to set
+	 */
+	public void setWords(Set<Word> words) {
+		this.words = words;
 	}
 	
 }

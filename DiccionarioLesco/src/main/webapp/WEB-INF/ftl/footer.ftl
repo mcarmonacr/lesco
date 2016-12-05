@@ -7,7 +7,7 @@
 <!-- 			  	<hr> -->
 			    <div class="col-lg-12">
 			      <div class="col-md-8">
-			        <a href="/DiccionarioLesco/legal/terminos-de-servicio">Términos De Servicio</a> | <a href="/DiccionarioLesco/legal/privacidad">Privacidad</a>    
+			        <a href="/DiccionarioLesco/legal/terminos-de-servicio">Términos Y Condiciones</a> | <a href="/DiccionarioLesco/legal/privacidad">Privacidad</a>    
 			      </div>
 			      <div class="col-md-4">
 			        <p class="muted pull-right">© 2016 Diccionario Lesco. Todos los derechos reservados</p>

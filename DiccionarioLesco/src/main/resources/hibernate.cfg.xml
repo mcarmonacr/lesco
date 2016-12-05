@@ -9,5 +9,7 @@
     <mapping resource="UserProfile.hbm.xml"/>
     <mapping resource="ProfileDetail.hbm.xml"/>
     <mapping resource="Category.hbm.xml"/>
+    <mapping resource="Word.hbm.xml"/>
+    <mapping resource="Video.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

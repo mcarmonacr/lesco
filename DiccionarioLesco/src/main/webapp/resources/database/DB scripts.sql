@@ -1,100 +1,98 @@
 -- Users table
 CREATE TABLE UserProfile
 (
-ID INT NOT NULL AUTO_INCREMENT,
+UserProfile_ID INT NOT NULL AUTO_INCREMENT,
 UserName VARCHAR(100) NOT NULL,
 UserPassword VARCHAR(128) NOT NULL, -- SHA-512 password
 Salt VARBINARY(32) NOT NULL, -- Used to generate a stronger SHA-512
-PRIMARY KEY (ID)
+PRIMARY KEY (UserProfile_ID)
 );
 
 -- UserProfile table
 CREATE TABLE ProfileDetail
 (
-ID INT NOT NULL,
+ProfileDetail_ID INT NOT NULL,
 Email VARCHAR(100) NOT NULL,
 TermsnAndConditions BIT (1) DEFAULT 0,
 BirthDate DATE NOT NULL,
-PRIMARY KEY (ID),
-FOREIGN KEY (ID) REFERENCES UserProfile(ID) -- One-To-One with the Table UserProfile
+PRIMARY KEY (ProfileDetail_ID),
+FOREIGN KEY (ProfileDetail_ID) REFERENCES UserProfile(UserProfile_ID) -- One-To-One with the Table UserProfile
 );
 
 -- Words table
 CREATE TABLE Word
 (
-ID INT NOT NULL AUTO_INCREMENT,
-User_ID INT,
+Word_ID INT NOT NULL AUTO_INCREMENT,
+UserProfile_ID INT,
 WordName VARCHAR(100) NOT NULL,
 Description VARCHAR(2048) NOT NULL,
 Explanation VARCHAR(2048),
 Example VARCHAR(2048),
 NumberOfVisits INT DEFAULT 0,
-PRIMARY KEY (ID),
-FOREIGN KEY (User_ID) REFERENCES UserProfile(ID)
+PRIMARY KEY (Word_ID),
+FOREIGN KEY (UserProfile_ID) REFERENCES UserProfile(UserProfile_ID)
 );
 
 -- UserWordsList table
 CREATE TABLE UserWordList
 (
-ID INT NOT NULL AUTO_INCREMENT,
-User_ID INT,
-Word_ID INT,
-PRIMARY KEY (ID),
-FOREIGN KEY (User_ID) REFERENCES UserProfile(ID),
-FOREIGN KEY (Word_ID) REFERENCES Word(ID)
+UserProfile_ID NOT NULL,
+Word_ID NOT NULL,
+PRIMARY KEY (UserProfile_ID, Word_ID),
+FOREIGN KEY (UserProfile_ID) REFERENCES UserProfile(UserProfile_ID),
+FOREIGN KEY (Word_ID) REFERENCES Word(Word_ID)
 );
 
 -- Videos table
 CREATE TABLE Video
 (
-ID INT NOT NULL AUTO_INCREMENT,
-Word_ID INT,
+Video_ID INT NOT NULL AUTO_INCREMENT,
 URL VARCHAR(100) NOT NULL,
 DirectoryPath VARCHAR(300) NOT NULL,
-PRIMARY KEY (ID),
-FOREIGN KEY (Word_ID) REFERENCES Word(ID)
+VideoType VARCHAR (20) NOT NULL,
+PRIMARY KEY (Video_ID),
+FOREIGN KEY (Video_ID) REFERENCES Word(Word_ID)
 );
 
 -- Ratings table
 CREATE TABLE Rating
 (
-ID INT NOT NULL AUTO_INCREMENT,
-User_ID INT,
+Rating_ID INT NOT NULL AUTO_INCREMENT,
+UserProfile_ID INT,
 Word_ID INT,
 Rating INT NOT NULL,
-PRIMARY KEY (ID),
-FOREIGN KEY (User_ID) REFERENCES UserProfile(ID),
-FOREIGN KEY (Word_ID) REFERENCES Word(ID)
+PRIMARY KEY (Rating_ID),
+FOREIGN KEY (UserProfile_ID) REFERENCES UserProfile(UserProfile_ID),
+FOREIGN KEY (Word_ID) REFERENCES Word(Word_ID)
 );
 
 -- WishList table
 CREATE TABLE WishList
 (
-ID INT NOT NULL AUTO_INCREMENT,
-User_ID INT,
+WishList_ID INT NOT NULL AUTO_INCREMENT,
+UserProfile_ID INT,
 Word_ID INT,
 WordName VARCHAR(100) NOT NULL,
 Description VARCHAR(2048) NOT NULL,
-PRIMARY KEY (ID),
-FOREIGN KEY (User_ID) REFERENCES UserProfile(ID),
+PRIMARY KEY (WishList_ID),
+FOREIGN KEY (UserProfile_ID) REFERENCES UserProfile(UserProfile_ID),
 FOREIGN KEY (Word_ID) REFERENCES Word(ID)
 );
 
 -- Categories table
 CREATE TABLE Category
 (
-ID INT NOT NULL AUTO_INCREMENT,
+Category_ID INT NOT NULL AUTO_INCREMENT,
 CategoryName VARCHAR(100) NOT NULL,
-PRIMARY KEY (ID)
+PRIMARY KEY (Category_ID)
 );
 
 -- WordsCategories table
 CREATE TABLE WordCategory
 (
-ID INT NOT NULL AUTO_INCREMENT,
-Category_ID INT,
-Word_ID INT,
-PRIMARY KEY (ID),
+Category_ID INT NOT NULL,
+Word_ID INT NOT NULL,
+PRIMARY KEY (Category_ID, Word_ID),
 FOREIGN KEY (Category_ID) REFERENCES Category(ID),
 FOREIGN KEY (Word_ID) REFERENCES Word(ID)
 )

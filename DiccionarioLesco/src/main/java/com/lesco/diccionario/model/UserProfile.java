@@ -1,5 +1,8 @@
 package com.lesco.diccionario.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * UserProfile Pojo
  * 
@@ -10,22 +13,27 @@ package com.lesco.diccionario.model;
  */
 public class UserProfile {
 
-	private Integer id;
+	private Integer userProfileId;
 	private String userName;
 	private String userPassword;
 	private byte[] salt;
+	
+	//Foreign Key's
 	private ProfileDetail profileDetail;
+	private Set<Word> words = new HashSet<Word>(0);
+
+	
 	/**
-	 * @return the id
+	 * @return the userProfileId
 	 */
-	public Integer getId() {
-		return id;
+	public Integer getUserProfileId() {
+		return userProfileId;
 	}
 	/**
-	 * @param id the id to set
+	 * @param userProfileId the userProfileId to set
 	 */
-	public void setId(Integer id) {
-		this.id = id;
+	public void setUserProfileId(Integer userProfileId) {
+		this.userProfileId = userProfileId;
 	}
 	/**
 	 * @return the userName
@@ -75,5 +83,17 @@ public class UserProfile {
 	public void setProfileDetail(ProfileDetail profileDetail) {
 		this.profileDetail = profileDetail;
 	}
-
+	/**
+	 * @return the words
+	 */
+	public Set<Word> getWords() {
+		return words;
+	}
+	/**
+	 * @param words the words to set
+	 */
+	public void setWords(Set<Word> words) {
+		this.words = words;
+	}
+	
 }
