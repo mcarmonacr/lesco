@@ -1,8 +1,5 @@
 package com.lesco.diccionario.model;
 
-import java.util.HashSet;
-import java.util.Set;
-
 /**
  * Word POJO
  * 
@@ -23,7 +20,7 @@ public class Word {
 	//Foreign Key
 	private UserProfile userProfile;
 	private Video video;
-	private Set<Category> categories = new HashSet<Category>(0);
+	private Category category;
 
 	
 	/**
@@ -139,17 +136,17 @@ public class Word {
 	}
 
 	/**
-	 * @return the categories
+	 * @return the category
 	 */
-	public Set<Category> getCategories() {
-		return categories;
+	public Category getCategory() {
+		return category;
 	}
 
 	/**
-	 * @param categories the categories to set
+	 * @param category the category to set
 	 */
-	public void setCategories(Set<Category> categories) {
-		this.categories = categories;
+	public void setCategory(Category category) {
+		this.category = category;
 	}
 	
 }

@@ -1,5 +1,5 @@
 <#import "common.ftl" as c/>
-<@c.page css="resources/css/home.css" js="resources/js/home.js">
+<@c.page css="resources/css/home.css" js="resources/js/addTerm.js">
     <!-- custom page content -->
     
     <!-- Whole content row -->
@@ -59,7 +59,7 @@
 		<div class="panel panel-default">
 		  <div class="panel-body">
 		  
-		  	<form class="form-horizontal">
+		  	<form class="form-horizontal" name="addTermForm" id="addTermForm">
 				<fieldset>
 				
 					<!-- Form Name -->
@@ -69,7 +69,7 @@
 					<div class="form-group">
 					  <label class="col-md-4 control-label" for="textinput">Término</label>  
 					  <div class="col-md-4">
-					  <input id="textinput" name="textinput" placeholder="Término" class="form-control input-md" type="text">
+					  <input id="wordName" name="wordName" placeholder="Término" class="form-control input-md" type="text" required="required">
 <!-- 					  <span class="help-block">help</span>   -->
 					  </div>
 					</div>
@@ -77,9 +77,9 @@
 					
 					<!-- Select Basic -->
 					<div class="form-group">
-					  <label class="col-md-4 control-label" for="selectbasic">Categoría</label>
+					  <label class="col-md-4 control-label" for="categoryName">Categoría</label>
 					  <div class="col-md-4">
-					    <select id="selectbasic" name="selectbasic" class="form-control">
+					    <select id="categoryName" name="categoryName" class="form-control">
 					    	<option value=""></option>
 					    	<#list listCategories as category>
 					     		<option value="${category.categoryName}">${category.categoryName}</option>
@@ -95,24 +95,24 @@
 					<!-- Textarea -->
 					<div class="form-group">
 					  <label class="col-md-4 control-label" for="textarea">Definición</label>
-					  <div class="col-md-4">                     
-					    <textarea class="form-control" placeholder="Definición" id="textarea" name="textarea"></textarea>
+					  <div class="col-md-6">                     
+					    <textarea class="form-control" placeholder="Definición" id="definition" name="definition" required="required"></textarea>
 					  </div>
 					</div>
 					
 					<!-- Textarea -->
 					<div class="form-group">
 					  <label class="col-md-4 control-label" for="textarea">Explicación</label>
-					  <div class="col-md-4">                     
-					    <textarea class="form-control" id="textarea" placeholder="Explicación" name="textarea"></textarea>
+					  <div class="col-md-6">                     
+					    <textarea class="form-control" id="explanation" placeholder="Explicación" name="explanation"></textarea>
 					  </div>
 					</div>
 					
 					<!-- Textarea -->
 					<div class="form-group">
 					  <label class="col-md-4 control-label" for="textarea">Ejemplos</label>
-					  <div class="col-md-4">                     
-					    <textarea class="form-control" id="textarea" placeholder="Ejemplos" name="textarea"></textarea>
+					  <div class="col-md-6">                     
+					    <textarea class="form-control" id="example" placeholder="Ejemplos" name="example"></textarea>
 					  </div>
 					</div>
 					
@@ -121,14 +121,14 @@
 					  <label class="col-md-4 control-label" for="radios">Tipo de Archivo</label>
 					  <div class="col-md-4">
 					  <div class="radio">
-					    <label for="radios-0">
-					      <input name="radios" id="radios-0" value="1" checked="checked" type="radio">
+					    <label for="youtubeType">
+					      <input name="youtubeType" id="youtubeType" value="1" checked="checked" type="radio">
 					      Video de YouTube
 					    </label>
 						</div>
 					  <div class="radio">
-					    <label for="radios-1">
-					      <input name="radios" id="radios-1" value="2" type="radio">
+					    <label for="fileType">
+					      <input name="fileType" id="fileType" value="2" type="radio" disabled="disabled">
 					      Archivo Del Dispositivo
 					    </label>
 						</div>
@@ -137,18 +137,18 @@
 					
 					<!-- Text input-->
 					<div class="form-group">
-					  <label class="col-md-4 control-label" for="textinput">URL</label>  
-					  <div class="col-md-4">
-					  <input id="textinput" name="textinput" placeholder="URL de YouTube" class="form-control input-md" type="text">
+					  <label class="col-md-4 control-label" for="videoURL">URL</label>  
+					  <div class="col-md-5">
+					  <input id="videoURL" name="videoURL" placeholder="URL de YouTube" class="form-control input-md" type="text">
 <!-- 					  <span class="help-block">help</span>   -->
 					  </div>
 					</div>
 					
 					<!-- File Button --> 
 					<div class="form-group">
-					  <label class="col-md-4 control-label" for="filebutton">Archivo</label>
+					  <label class="col-md-4 control-label" for="filePath">Archivo</label>
 					  <div class="col-md-4">
-					    <input id="filebutton" name="filebutton" class="input-file" type="file">
+					    <input id="filePath" name="filePath" class="input-file" type="file" disabled="disabled">
 					  </div>
 					</div>
 					

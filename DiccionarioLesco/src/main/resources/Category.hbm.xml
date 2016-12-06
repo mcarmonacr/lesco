@@ -14,13 +14,11 @@
 <!--         <one-to-one name="profileDetail" class="ProfileDetail" -->
 <!-- 			cascade="save-update"></one-to-one> -->
 
-		<set name="words" table="WordCategory" inverse="true" lazy="true" fetch="select">
+		<set name="words" table="Word" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="Category_ID" not-null="true" />
             </key>
-            <many-to-many entity-name="com.lesco.diccionario.model.Word">
-                <column name="Word_ID" not-null="true" />
-            </many-to-many>
+            <one-to-many class="Word" />
         </set>
         
     </class> 

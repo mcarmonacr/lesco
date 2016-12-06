@@ -1,5 +1,6 @@
 package com.lesco.diccionario.dao;
 
+import com.lesco.diccionario.model.ProfileDetail;
 import com.lesco.diccionario.model.UserProfile;
 
 
@@ -34,4 +35,11 @@ public interface UserDAO {
 	 * @return
 	 */
 	public Boolean checkEmailAddress(String emailAddress);
+	
+	/**
+	 * Find a particular category by its name
+	 * @param categoryName
+	 * @return
+	 */
+	public ProfileDetail findByEmailAddress(String emailAddress);
 }

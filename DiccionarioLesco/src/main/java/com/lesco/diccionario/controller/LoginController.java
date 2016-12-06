@@ -48,7 +48,7 @@ public class LoginController {
 		
 		//Create user session
 		HttpSession session = request.getSession();
-		//session.setAttribute("user", "Pankaj");
+		session.setAttribute("userEmail", loginForm.getEmailAddress().toString());
 		
 		//setting session to expiry in 15 mins
 		session.setMaxInactiveInterval(15*60);

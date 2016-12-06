@@ -3,12 +3,15 @@ package com.lesco.diccionario.dao;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.lesco.diccionario.model.Category;
 import com.lesco.diccionario.model.ProfileDetail;
 import com.lesco.diccionario.model.UserProfile;
 
@@ -103,5 +106,18 @@ public class UserDAOImpl implements UserDAO {
         	logger.debug("UserDAOImpl - checkEmailAddress() - End");
         	return false;
         }
+	}
+	
+	
+	/**
+	 * Find a particular category by its name
+	 */
+	@Transactional
+	public ProfileDetail findByEmailAddress(String emailAddress){
+		
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(ProfileDetail.class);
+        criteria.add(Restrictions.eq("email",emailAddress));
+        return (ProfileDetail) criteria.uniqueResult();
+		
 	}
 }

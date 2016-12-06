@@ -1,5 +1,12 @@
 package com.lesco.diccionario.controller;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -9,15 +16,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.lesco.diccionario.dao.CategoryDAO;
 import com.lesco.diccionario.dao.UserDAO;
+import com.lesco.diccionario.model.Category;
 import com.lesco.diccionario.model.ProfileDetail;
 import com.lesco.diccionario.model.UserProfile;
+import com.lesco.diccionario.model.Video;
+import com.lesco.diccionario.model.Word;
+import com.lesco.diccionario.pojo.AddTermForm;
 import com.lesco.diccionario.pojo.AjaxResponseBody;
 import com.lesco.diccionario.pojo.RegisterForm;
 import com.lesco.diccionario.utils.SHAEncryption;
 
 /**
- * Handles all the registry related operations
+ * Handles all the terms related operations
  * 
  * @author Mario Alonso Carmona Dinarte
  * @email monacar89@hotmail.com
@@ -29,42 +41,48 @@ import com.lesco.diccionario.utils.SHAEncryption;
 public class TermnsController {
 	
 	//Log4J class logger instance
-	private static final Logger logger = Logger.getLogger(RegisterController.class);
+	private static final Logger logger = Logger.getLogger(TermnsController.class);
 
 	@Autowired
 	private UserDAO userDAO;
 	
 	@Autowired
+	private CategoryDAO categoryDAO;
+	
+	@Autowired
 	private SHAEncryption shaEncryption;
 	
 	/**
-	 * Service that registers the user into the site
+	 * Service that stores a new term into the site
 	 * Type: Json POST method
 	 * 
-	 * @param registerForm. Contains fields: userName, emailAddress, password, passwordConfirmation, private String birthdate ,termsAndConditions.
+	 * @param registerForm. Contains fields: wordName, categoryName, definition, explanation ,example, youtubeType, fileType, videoURL, filePath.
+	 * 
+	 * 
 	 */
-	@RequestMapping(value= "/agregarUsuario", method = RequestMethod.POST, headers = "Accept=application/json", consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody AjaxResponseBody agregarUsuario(@RequestBody RegisterForm registerForm){
+	@RequestMapping(value= "/agregarTermino", method = RequestMethod.POST, headers = "Accept=application/json", consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody AjaxResponseBody agregarTermino(@RequestBody AddTermForm addTermForm, HttpServletRequest request, 
+	        HttpServletResponse response){
 		
-		logger.debug("RegisterController - agregarUsuario() - Start");
+		logger.debug("TermnsController - agregarTermino() - Start");
 		
-		AjaxResponseBody response = new AjaxResponseBody();
+		AjaxResponseBody ajaxResponse = new AjaxResponseBody();
 
 		//Saves the user to the database
-		String resultadoSalvar= salvarUsuario(registerForm);
+		String resultadoSalvar= salvarTermino(addTermForm, request);
 		
 		//Response toggle based on the save return
 		if("Success".equals(resultadoSalvar)){
-			response.setCode("000");
-			response.setMessage("Success");
+			ajaxResponse.setCode("000");
+			ajaxResponse.setMessage("Success");
 		}else{
-			response.setCode("999");
-			response.setMessage("Failure");
+			ajaxResponse.setCode("999");
+			ajaxResponse.setMessage("Failure");
 		}
 		
-		logger.debug("RegisterController - agregarUsuario() - End");
+		logger.debug("TermnsController - agregarTermino() - End");
 		
-		return response;
+		return ajaxResponse;
 	}
 	
 	
@@ -144,43 +162,72 @@ public class TermnsController {
 	/**
 	 * Stores the new user into the database
 	 * 
-	 * @param registerForm. Contains fields: userName, emailAddress, password, passwordConfirmation, private String birthdate ,termsAndConditions.
+	 * @param registerForm. Contains fields: wordName, categoryName, definition, explanation ,example, youtubeType, fileType, videoURL, filePath.
 	 */
-	private String salvarUsuario(RegisterForm registerForm){
+	private String salvarTermino(AddTermForm addTermForm, HttpServletRequest request){
 		
 		//Validates that all values come from the form
-		if(registerForm.getUserName() != null && registerForm.getEmailAddress() != null && registerForm.getPassword() != null && 
-				registerForm.getPasswordConfirmation() != null	&& registerForm.getBirthDate() != null && registerForm.getTermsAndConditions() != null){
+		if(addTermForm.getWordName() != null && addTermForm.getCategoryName() != null && addTermForm.getDefinition() != null && 
+				addTermForm.getExplanation() != null	&& addTermForm.getExample() != null && addTermForm.getYoutubeType() != null
+				&& addTermForm.getFileType() != null && addTermForm.getVideoURL() != null && addTermForm.getFilePath() != null){
 					
-			//Checks if the userName already exists
-			//TODO Add the validation of the email
-			if(userDAO.checkUserName(registerForm.getUserName()) == null){
 			
-			//Get unique random salt which will be used to encryp the user password
-			byte[] salt= SHAEncryption.getSalt();
+			//Get user session
+			HttpSession session = request.getSession();
 			
-			//New Profile Detail
-			ProfileDetail profileDetail = new ProfileDetail();
-			profileDetail.setBirthDate(registerForm.getBirthDate());
-			profileDetail.setTermsAndConditions(registerForm.getTermsAndConditions());
-			profileDetail.setEmail(registerForm.getEmailAddress());
+			//Get the current logged in user emailAddress
+			String userEmail = session.getAttribute("userEmail").toString();
 			
-			//New User Profile
-			UserProfile userProfile = new UserProfile();
-			userProfile.setSalt(salt);
-			userProfile.setUserName(registerForm.getUserName());
-			userProfile.setUserPassword(shaEncryption.getHashedPassword(registerForm.getPassword(), salt));
+			ProfileDetail profileDetail = userDAO.findByEmailAddress(userEmail);
 			
-			//Because this two instances have a one-to-one relationship, this needs to be done
-			userProfile.setProfileDetail(profileDetail);
-			profileDetail.setUserProfile(userProfile);
+			UserProfile userProfile = profileDetail.getUserProfile();
 			
-			//This saves both, the User Profile and the Profile Detail instances into the DB
+			//TODO: Complete the remaining fields || Add the remaining entities relationships
+			//New Word
+			Word word = new Word();
+			word.setWordName(addTermForm.getWordName());
+			
+			//New Video
+			Video video = new Video();
+			video.setWord(word);
+			
+			Category category = categoryDAO.findByCategoryName(addTermForm.getCategoryName());
+			
+			
+			word.setCategory(category);
+			word.setVideo(video);
+			
+			Set<Word> words = new HashSet<Word>();
+			words.add(word);
+			
+			category.setWords(words);
+			userProfile.setWords(words);
+			
+			//Saves the new entities Word and Video, linked to the existing UserProfile and Category
 			userDAO.save(userProfile);
+			
+//			//New Profile Detail
+//			ProfileDetail profileDetail = new ProfileDetail();
+//			profileDetail.setBirthDate(addTermForm.getBirthDate());
+//			profileDetail.setTermsAndConditions(addTermForm.getTermsAndConditions());
+//			profileDetail.setEmail(addTermForm.getEmailAddress());
+//			
+//			//New User Profile
+//			UserProfile userProfile = new UserProfile();
+//			userProfile.setSalt(salt);
+//			userProfile.setUserName(addTermForm.getUserName());
+//			userProfile.setUserPassword(shaEncryption.getHashedPassword(addTermForm.getPassword(), salt));
+//			
+//			//Because this two instances have a one-to-one relationship, this needs to be done
+//			userProfile.setProfileDetail(profileDetail);
+//			profileDetail.setUserProfile(userProfile);
+//			
+//			//This saves both, the User Profile and the Profile Detail instances into the DB
+//			userDAO.save(userProfile);
 			
 			//If I wanted to get the ID, I'd have to do something like:
 			//category.getId();
-			}
+			
 			return "Success";
 		}else{
 			return"Failure";

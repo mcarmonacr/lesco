@@ -15,16 +15,10 @@
 		
 		<one-to-one name="video" class="Video"
 			cascade="save-update"></one-to-one>
-			
-		<set name="categories" table="WordCategory"
-        	inverse="false" lazy="true" fetch="select" cascade="all" >
-            <key>
-                <column name="Word_ID" not-null="true" />
-            </key>
-            <many-to-many entity-name="com.lesco.diccionario.model.Category">
-                <column name="Category_ID" not-null="true" />
-            </many-to-many>
-        </set>
+			        
+        <many-to-one name="category" class="Category" fetch="select">
+			<column name="Category_ID" not-null="true" />
+		</many-to-one>
         
         <property name="wordName" column="WordName" />
         <property name="description" column="Description" />

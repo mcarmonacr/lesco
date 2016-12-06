@@ -24,13 +24,15 @@ CREATE TABLE Word
 (
 Word_ID INT NOT NULL AUTO_INCREMENT,
 UserProfile_ID INT,
+Category_ID INT,
 WordName VARCHAR(100) NOT NULL,
 Description VARCHAR(2048) NOT NULL,
 Explanation VARCHAR(2048),
 Example VARCHAR(2048),
 NumberOfVisits INT DEFAULT 0,
 PRIMARY KEY (Word_ID),
-FOREIGN KEY (UserProfile_ID) REFERENCES UserProfile(UserProfile_ID)
+FOREIGN KEY (UserProfile_ID) REFERENCES UserProfile(UserProfile_ID),
+FOREIGN KEY (Category_ID) REFERENCES Category(Category_ID)
 );
 
 -- UserWordsList table
@@ -87,15 +89,6 @@ CategoryName VARCHAR(100) NOT NULL,
 PRIMARY KEY (Category_ID)
 );
 
--- WordsCategories table
-CREATE TABLE WordCategory
-(
-Category_ID INT NOT NULL,
-Word_ID INT NOT NULL,
-PRIMARY KEY (Category_ID, Word_ID),
-FOREIGN KEY (Category_ID) REFERENCES Category(ID),
-FOREIGN KEY (Word_ID) REFERENCES Word(ID)
-)
 
 -- ********************************************* --
 
