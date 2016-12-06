@@ -19,6 +19,14 @@ PRIMARY KEY (ProfileDetail_ID),
 FOREIGN KEY (ProfileDetail_ID) REFERENCES UserProfile(UserProfile_ID) -- One-To-One with the Table UserProfile
 );
 
+-- Categories table
+CREATE TABLE Category
+(
+Category_ID INT NOT NULL AUTO_INCREMENT,
+CategoryName VARCHAR(100) NOT NULL,
+PRIMARY KEY (Category_ID)
+);
+
 -- Words table
 CREATE TABLE Word
 (
@@ -35,16 +43,6 @@ FOREIGN KEY (UserProfile_ID) REFERENCES UserProfile(UserProfile_ID),
 FOREIGN KEY (Category_ID) REFERENCES Category(Category_ID)
 );
 
--- UserWordsList table
-CREATE TABLE UserWordList
-(
-UserProfile_ID NOT NULL,
-Word_ID NOT NULL,
-PRIMARY KEY (UserProfile_ID, Word_ID),
-FOREIGN KEY (UserProfile_ID) REFERENCES UserProfile(UserProfile_ID),
-FOREIGN KEY (Word_ID) REFERENCES Word(Word_ID)
-);
-
 -- Videos table
 CREATE TABLE Video
 (
@@ -54,6 +52,16 @@ DirectoryPath VARCHAR(300) NOT NULL,
 VideoType VARCHAR (20) NOT NULL,
 PRIMARY KEY (Video_ID),
 FOREIGN KEY (Video_ID) REFERENCES Word(Word_ID)
+);
+
+-- UserWordsList table
+CREATE TABLE UserWordList
+(
+UserProfile_ID NOT NULL,
+Word_ID NOT NULL,
+PRIMARY KEY (UserProfile_ID, Word_ID),
+FOREIGN KEY (UserProfile_ID) REFERENCES UserProfile(UserProfile_ID),
+FOREIGN KEY (Word_ID) REFERENCES Word(Word_ID)
 );
 
 -- Ratings table
@@ -81,13 +89,7 @@ FOREIGN KEY (UserProfile_ID) REFERENCES UserProfile(UserProfile_ID),
 FOREIGN KEY (Word_ID) REFERENCES Word(ID)
 );
 
--- Categories table
-CREATE TABLE Category
-(
-Category_ID INT NOT NULL AUTO_INCREMENT,
-CategoryName VARCHAR(100) NOT NULL,
-PRIMARY KEY (Category_ID)
-);
+
 
 
 -- ********************************************* --
