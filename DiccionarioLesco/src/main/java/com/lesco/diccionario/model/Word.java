@@ -12,7 +12,7 @@ public class Word {
 
 	private Integer wordId;
 	private String wordName;
-	private String description;
+	private String definition;
 	private String explanation;
 	private String example;
 	private Integer numberOfVisits;
@@ -52,17 +52,17 @@ public class Word {
 	}
 
 	/**
-	 * @return the description
+	 * @return the definition
 	 */
-	public String getDescription() {
-		return description;
+	public String getDefinition() {
+		return definition;
 	}
 
 	/**
-	 * @param description the description to set
+	 * @param definition the definition to set
 	 */
-	public void setDescription(String description) {
-		this.description = description;
+	public void setDefinition(String definition) {
+		this.definition = definition;
 	}
 
 	/**

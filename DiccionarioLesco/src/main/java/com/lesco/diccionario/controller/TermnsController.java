@@ -169,8 +169,7 @@ public class TermnsController {
 		//Validates that all values come from the form
 		if(addTermForm.getWordName() != null && addTermForm.getCategoryName() != null && addTermForm.getDefinition() != null && 
 				addTermForm.getExplanation() != null	&& addTermForm.getExample() != null && addTermForm.getYoutubeType() != null
-				&& addTermForm.getFileType() != null && addTermForm.getVideoURL() != null && addTermForm.getFilePath() != null){
-					
+				&& addTermForm.getFileType() != null && addTermForm.getVideoURL() != null && addTermForm.getFilePath() != null){		
 			
 			//Get user session
 			HttpSession session = request.getSession();
@@ -178,55 +177,51 @@ public class TermnsController {
 			//Get the current logged in user emailAddress
 			String userEmail = session.getAttribute("userEmail").toString();
 			
+			//Obtain the User that belogns to the email
 			ProfileDetail profileDetail = userDAO.findByEmailAddress(userEmail);
-			
 			UserProfile userProfile = profileDetail.getUserProfile();
 			
-			//TODO: Complete the remaining fields || Add the remaining entities relationships
 			//New Word
 			Word word = new Word();
 			word.setWordName(addTermForm.getWordName());
+			//word.setCategory(addTermForm.getCategoryName());
+			word.setDefinition(addTermForm.getDefinition());
+			word.setExplanation(addTermForm.getExplanation());
+			word.setExample(addTermForm.getExample());
+			word.setNumberOfVisits(0);
 			
 			//New Video
 			Video video = new Video();
+			if(addTermForm.getYoutubeType().equals(1)){
+				video.setUrl(addTermForm.getVideoURL());
+				video.setVideoType("youtube");
+			}else {
+				video.setDirectotyPath(addTermForm.getFilePath());
+				video.setVideoType("file");
+			}
+			
+			//Relationship references
 			video.setWord(word);
-			
-			Category category = categoryDAO.findByCategoryName(addTermForm.getCategoryName());
-			
-			
-			word.setCategory(category);
 			word.setVideo(video);
 			
 			Set<Word> words = new HashSet<Word>();
 			words.add(word);
 			
-			category.setWords(words);
+			//Relationship references
 			userProfile.setWords(words);
+			word.setUserProfile(userProfile);
 			
-			//Saves the new entities Word and Video, linked to the existing UserProfile and Category
+			//Get the category
+			if(addTermForm.getCategoryName().trim().length() != 0){
+				Category category = categoryDAO.findByCategoryName(addTermForm.getCategoryName());
+				
+				//Relationship references
+				category.setWords(words);
+				word.setCategory(category);
+			}
+			
+			//Saves the new entities Word and Video, linked to the existing UserProfile and Category. 
 			userDAO.save(userProfile);
-			
-//			//New Profile Detail
-//			ProfileDetail profileDetail = new ProfileDetail();
-//			profileDetail.setBirthDate(addTermForm.getBirthDate());
-//			profileDetail.setTermsAndConditions(addTermForm.getTermsAndConditions());
-//			profileDetail.setEmail(addTermForm.getEmailAddress());
-//			
-//			//New User Profile
-//			UserProfile userProfile = new UserProfile();
-//			userProfile.setSalt(salt);
-//			userProfile.setUserName(addTermForm.getUserName());
-//			userProfile.setUserPassword(shaEncryption.getHashedPassword(addTermForm.getPassword(), salt));
-//			
-//			//Because this two instances have a one-to-one relationship, this needs to be done
-//			userProfile.setProfileDetail(profileDetail);
-//			profileDetail.setUserProfile(userProfile);
-//			
-//			//This saves both, the User Profile and the Profile Detail instances into the DB
-//			userDAO.save(userProfile);
-			
-			//If I wanted to get the ID, I'd have to do something like:
-			//category.getId();
 			
 			return "Success";
 		}else{

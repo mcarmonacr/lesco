@@ -19,11 +19,10 @@ public class AddTermForm{
 	private String definition;
 	private String explanation;
 	private String example;
-	private String youtubeType;
-	private String fileType;
+	private Integer youtubeType;
+	private Integer fileType;
 	private String videoURL;
-	private Boolean filePath;
-	
+	private String filePath;
 	/**
 	 * @return the wordName
 	 */
@@ -87,25 +86,25 @@ public class AddTermForm{
 	/**
 	 * @return the youtubeType
 	 */
-	public String getYoutubeType() {
+	public Integer getYoutubeType() {
 		return youtubeType;
 	}
 	/**
 	 * @param youtubeType the youtubeType to set
 	 */
-	public void setYoutubeType(String youtubeType) {
+	public void setYoutubeType(Integer youtubeType) {
 		this.youtubeType = youtubeType;
 	}
 	/**
 	 * @return the fileType
 	 */
-	public String getFileType() {
+	public Integer getFileType() {
 		return fileType;
 	}
 	/**
 	 * @param fileType the fileType to set
 	 */
-	public void setFileType(String fileType) {
+	public void setFileType(Integer fileType) {
 		this.fileType = fileType;
 	}
 	/**
@@ -123,14 +122,13 @@ public class AddTermForm{
 	/**
 	 * @return the filePath
 	 */
-	public Boolean getFilePath() {
+	public String getFilePath() {
 		return filePath;
 	}
 	/**
 	 * @param filePath the filePath to set
 	 */
-	public void setFilePath(Boolean filePath) {
+	public void setFilePath(String filePath) {
 		this.filePath = filePath;
 	}
-
 }

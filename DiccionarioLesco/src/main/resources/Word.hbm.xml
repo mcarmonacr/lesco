@@ -21,7 +21,7 @@
 		</many-to-one>
         
         <property name="wordName" column="WordName" />
-        <property name="description" column="Description" />
+        <property name="definition" column="Definition" />
         <property name="explanation" column="Explanation" />
         <property name="example" column="Example" />
         <property name="numberOfVisits" column="NumberOfVisits" />
