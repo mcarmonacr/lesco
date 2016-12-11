@@ -59,7 +59,7 @@
 		<div class="panel panel-default">
 		  <div class="panel-body">
 		  
-		  	<form class="form-horizontal" name="addTermForm" id="addTermForm">
+		  	<form class="form-horizontal" name="addTermForm" id="addTermForm" enctype="multipart/form-data">
 				<fieldset>
 				
 					<!-- Form Name -->
@@ -116,39 +116,39 @@
 					  </div>
 					</div>
 					
-					<!-- Multiple Radios -->
-					<div class="form-group">
-					  <label class="col-md-4 control-label" for="radios">Tipo de Archivo</label>
-					  <div class="col-md-4">
-					  <div class="radio">
-					    <label for="youtubeType">
-					      <input name="youtubeType" id="youtubeType" value="1" checked="checked" type="radio">
-					      Video de YouTube
-					    </label>
-						</div>
-					  <div class="radio">
-					    <label for="fileType">
-					      <input name="fileType" id="fileType" value="2" type="radio" disabled="disabled">
-					      Archivo Del Dispositivo
-					    </label>
-						</div>
-					  </div>
-					</div>
+<!-- 					Multiple Radios -->
+<!-- 					<div class="form-group"> -->
+<!-- 					  <label class="col-md-4 control-label" for="radios">Tipo de Archivo</label> -->
+<!-- 					  <div class="col-md-4"> -->
+<!-- 					  <div class="radio"> -->
+<!-- 					    <label for="youtubeType"> -->
+<!-- 					      <input name="youtubeType" id="youtubeType" value="1" checked="checked" type="radio"> -->
+<!-- 					      Video de YouTube -->
+<!-- 					    </label> -->
+<!-- 						</div> -->
+<!-- 					  <div class="radio"> -->
+<!-- 					    <label for="fileType"> -->
+<!-- 					      <input name="fileType" id="fileType" value="2" type="radio" disabled="disabled"> -->
+<!-- 					      Archivo Del Dispositivo -->
+<!-- 					    </label> -->
+<!-- 						</div> -->
+<!-- 					  </div> -->
+<!-- 					</div> -->
 					
 					<!-- Text input-->
-					<div class="form-group">
-					  <label class="col-md-4 control-label" for="videoURL">URL</label>  
-					  <div class="col-md-5">
-					  <input id="videoURL" name="videoURL" placeholder="URL de YouTube" class="form-control input-md" type="text">
+<!-- 					<div class="form-group"> -->
+<!-- 					  <label class="col-md-4 control-label" for="videoURL">URL</label>   -->
+<!-- 					  <div class="col-md-5"> -->
+<!-- 					  <input id="videoURL" name="videoURL" placeholder="URL de YouTube" class="form-control input-md" type="text"> -->
 <!-- 					  <span class="help-block">help</span>   -->
-					  </div>
-					</div>
+<!-- 					  </div> -->
+<!-- 					</div> -->
 					
 					<!-- File Button --> 
 					<div class="form-group">
 					  <label class="col-md-4 control-label" for="filePath">Archivo</label>
 					  <div class="col-md-4">
-					    <input id="filePath" name="filePath" class="input-file" type="file" disabled="disabled">
+					    <input id="filePath" name="filePath" class="input-file" type="file">
 					  </div>
 					</div>
 					

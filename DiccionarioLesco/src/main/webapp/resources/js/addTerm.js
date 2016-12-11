@@ -59,39 +59,55 @@ function checkUserName() {
 
 function submitform() {
 
-	  var userName=document.getElementById("wordName");
-	  var emailAddress=document.getElementById("categoryName");
-	  var password=document.getElementById("definition");
-	  var passwordConfirmation=document.getElementById("explanation");
-	  var birthDate=document.getElementById("example");
-	  var termsAndConditions=document.getElementById("youtubeType");
-	  var termsAndConditions=document.getElementById("fileType");
-	  var termsAndConditions=document.getElementById("videoURL");
-	  var termsAndConditions=document.getElementById("filePath");
+	
+	  var formData= new FormData();
+	
+	  var wordName=document.getElementById("wordName");
+	  var categoryName=document.getElementById("categoryName");
+	  var definition=document.getElementById("definition");
+	  var explanation=document.getElementById("explanation");
+	  var example=document.getElementById("example");
+	  //var termsAndConditions=document.getElementById("youtubeType");
+	  //var termsAndConditions=document.getElementById("fileType");
+	  //var termsAndConditions=document.getElementById("videoURL");
+	  var filePath=document.getElementById("filePath");
 	  
-	  var formData = {
+	  var formParameters = {
 	            "wordName":wordName.value,
 	            "categoryName":categoryName.value,
 	            "definition":definition.value,
 	            "explanation":explanation.value,
-	            "example":example.value,
-	            "youtubeType":youtubeType.checked,
-	            "fileType":fileType.checked,
-	            "videoURL":videoURL.checked,
-	            "filePath":filePath.checked
+	            "example":example.value
+//	            "youtubeType":youtubeType.checked,
+//	            "fileType":fileType.checked,
+//	            "videoURL":videoURL.checked,
+//	            "filePath":filePath
 	    }
+	  
+	  
+	  
+	  formData.append("data", new Blob([JSON.stringify(formParameters)], { type: "application/json"})); 
+	  formData.append("video", filePath.files[0]);
+	  //formData.append("data", JSON.stringify(formParameters)); 
+	  
+	  //formData.serialize();
+	  
 
 	  $.ajax({
-	  	headers: { 
-	        'Accept': 'application/json',
-	        'Content-Type': 'application/json' 
-	    },
+//	  	headers: { 
+//	        'Accept': 'application/json',
+//	        'Content-Type': 'application/json' 
+//	    },
 		type: 'post',
-	    contentType : "application/json",
+	    //contentType : "application/json",
 	    //url: "http://localhost:8080/DiccionarioLesco/registro/verificarUsuario",
-	    url: "/DiccionarioLesco/registro/agregarUsuario",
-	    data : JSON.stringify(formData),
-	    dataType : 'json',
+	    url: "/DiccionarioLesco/termino/agregarTermino",
+	    processData: false,
+        contentType: false,
+	    //contentType: 'multipart/form-data;boundary=----WebKitFormBoundary0XBBar2mAFEE8zbv',
+        //headers: {'Content-Type': undefined},
+	    data : formData,
+	    //dataType : 'json',
 	    success : function(data) {
 			console.log("SUCCESS: ", data);
 			//display(data);

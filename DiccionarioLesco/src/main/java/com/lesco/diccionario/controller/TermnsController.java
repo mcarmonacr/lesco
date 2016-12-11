@@ -14,7 +14,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.lesco.diccionario.dao.CategoryDAO;
 import com.lesco.diccionario.dao.UserDAO;
@@ -60,24 +62,34 @@ public class TermnsController {
 	 * 
 	 * 
 	 */
-	@RequestMapping(value= "/agregarTermino", method = RequestMethod.POST, headers = "Accept=application/json", consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody AjaxResponseBody agregarTermino(@RequestBody AddTermForm addTermForm, HttpServletRequest request, 
+	@RequestMapping(value= "/agregarTermino", method = RequestMethod.POST/*, headers = "Accept=application/json", consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE*/)
+	public @ResponseBody AjaxResponseBody agregarTermino(@RequestPart(value = "data", required = false) AddTermForm addTermForm, @RequestPart(value = "video") MultipartFile videoFile, HttpServletRequest request, 
 	        HttpServletResponse response){
 		
-		logger.debug("TermnsController - agregarTermino() - Start");
-		
 		AjaxResponseBody ajaxResponse = new AjaxResponseBody();
-
-		//Saves the user to the database
-		String resultadoSalvar= salvarTermino(addTermForm, request);
-		
-		//Response toggle based on the save return
-		if("Success".equals(resultadoSalvar)){
+		try{
+			logger.debug("TermnsController - agregarTermino() - Start");
+			
+			
+			
 			ajaxResponse.setCode("000");
 			ajaxResponse.setMessage("Success");
-		}else{
-			ajaxResponse.setCode("999");
-			ajaxResponse.setMessage("Failure");
+
+//			//Saves the user to the database
+//			String resultadoSalvar= salvarTermino(addTermForm, videoFile, request);
+//			
+//			//Response toggle based on the save return
+//			if("Success".equals(resultadoSalvar)){
+//				ajaxResponse.setCode("000");
+//				ajaxResponse.setMessage("Success");
+//			}else{
+//				ajaxResponse.setCode("999");
+//				ajaxResponse.setMessage("Failure");
+//			}
+			
+			
+		} catch (Exception e){
+			logger.error("TermnsController - agregarTermino() - ERROR",e);
 		}
 		
 		logger.debug("TermnsController - agregarTermino() - End");
@@ -164,12 +176,12 @@ public class TermnsController {
 	 * 
 	 * @param registerForm. Contains fields: wordName, categoryName, definition, explanation ,example, youtubeType, fileType, videoURL, filePath.
 	 */
-	private String salvarTermino(AddTermForm addTermForm, HttpServletRequest request){
+	private String salvarTermino(AddTermForm addTermForm, MultipartFile videoFile, HttpServletRequest request){
 		
 		//Validates that all values come from the form
 		if(addTermForm.getWordName() != null && addTermForm.getCategoryName() != null && addTermForm.getDefinition() != null && 
-				addTermForm.getExplanation() != null	&& addTermForm.getExample() != null && addTermForm.getYoutubeType() != null
-				&& addTermForm.getFileType() != null && addTermForm.getVideoURL() != null && addTermForm.getFilePath() != null){		
+				addTermForm.getExplanation() != null	&& addTermForm.getExample() != null /*&& addTermForm.getYoutubeType() != null
+				&& addTermForm.getFileType() != null && addTermForm.getVideoURL() != null&& addTermForm.getFilePath() != null */){		
 			
 			//Get user session
 			HttpSession session = request.getSession();
@@ -190,15 +202,16 @@ public class TermnsController {
 			word.setExample(addTermForm.getExample());
 			word.setNumberOfVisits(0);
 			
+			//TODO
 			//New Video
 			Video video = new Video();
-			if(addTermForm.getYoutubeType().equals(1)){
-				video.setUrl(addTermForm.getVideoURL());
-				video.setVideoType("youtube");
-			}else {
-				video.setDirectotyPath(addTermForm.getFilePath());
-				video.setVideoType("file");
-			}
+//			if(addTermForm.getYoutubeType().equals(1)){
+//				video.setUrl(addTermForm.getVideoURL());
+//				video.setVideoType("youtube");
+//			}else {
+//				video.setDirectotyPath(addTermForm.getFilePath());
+//				video.setVideoType("file");
+//			}
 			
 			//Relationship references
 			video.setWord(word);
