@@ -31,6 +31,7 @@ http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
 	<!-- Support for file uploads -->
 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">          
     	<property name="maxUploadSize" value="200000000" />
+    	<!-- 200000000 = 190.73486 MegaBytes -->
 	</bean>
 
 	 	
@@ -109,7 +110,9 @@ http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
 	</bean>
 	
 	<bean id="shaEncryption" class="com.lesco.diccionario.utils.SHAEncryption">
+	</bean>
 	
+	<bean id="uploadVideo" class="com.lesco.diccionario.helper.UploadVideo">
 	</bean>
 	
 </beans>

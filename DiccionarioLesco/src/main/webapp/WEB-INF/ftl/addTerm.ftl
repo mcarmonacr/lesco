@@ -148,7 +148,7 @@
 					<div class="form-group">
 					  <label class="col-md-4 control-label" for="filePath">Archivo</label>
 					  <div class="col-md-4">
-					    <input id="filePath" name="filePath" class="input-file" type="file">
+					    <input id="filePath" name="filePath" class="input-file" type="file" accept="video/*">
 					  </div>
 					</div>
 					

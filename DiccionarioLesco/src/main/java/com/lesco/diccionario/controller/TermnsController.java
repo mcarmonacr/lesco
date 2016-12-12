@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.lesco.diccionario.dao.CategoryDAO;
 import com.lesco.diccionario.dao.UserDAO;
+import com.lesco.diccionario.helper.UploadVideo;
 import com.lesco.diccionario.model.Category;
 import com.lesco.diccionario.model.ProfileDetail;
 import com.lesco.diccionario.model.UserProfile;
@@ -54,6 +55,9 @@ public class TermnsController {
 	@Autowired
 	private SHAEncryption shaEncryption;
 	
+	@Autowired
+	private UploadVideo uploadVideo;
+	
 	/**
 	 * Service that stores a new term into the site
 	 * Type: Json POST method
@@ -74,18 +78,21 @@ public class TermnsController {
 			
 			ajaxResponse.setCode("000");
 			ajaxResponse.setMessage("Success");
+			
+			//videoFile.getInputStream()
+			
 
-//			//Saves the user to the database
-//			String resultadoSalvar= salvarTermino(addTermForm, videoFile, request);
-//			
-//			//Response toggle based on the save return
-//			if("Success".equals(resultadoSalvar)){
-//				ajaxResponse.setCode("000");
-//				ajaxResponse.setMessage("Success");
-//			}else{
-//				ajaxResponse.setCode("999");
-//				ajaxResponse.setMessage("Failure");
-//			}
+			//Saves the user to the database
+			String resultadoSalvar= salvarTermino(addTermForm, videoFile, request);
+			
+			//Response toggle based on the save return
+			if("Success".equals(resultadoSalvar)){
+				ajaxResponse.setCode("000");
+				ajaxResponse.setMessage("Success");
+			}else{
+				ajaxResponse.setCode("999");
+				ajaxResponse.setMessage("Failure");
+			}
 			
 			
 		} catch (Exception e){
@@ -182,6 +189,16 @@ public class TermnsController {
 		if(addTermForm.getWordName() != null && addTermForm.getCategoryName() != null && addTermForm.getDefinition() != null && 
 				addTermForm.getExplanation() != null	&& addTermForm.getExample() != null /*&& addTermForm.getYoutubeType() != null
 				&& addTermForm.getFileType() != null && addTermForm.getVideoURL() != null&& addTermForm.getFilePath() != null */){		
+			
+			//First step is to upload the video to Youtube
+			String youtubeResponse= uploadVideo.upload(addTermForm, videoFile);
+			
+			if("success".equals(youtubeResponse)){
+				
+			} else {
+				
+			}
+			
 			
 			//Get user session
 			HttpSession session = request.getSession();
