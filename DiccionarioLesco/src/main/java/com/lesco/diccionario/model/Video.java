@@ -11,9 +11,7 @@ package com.lesco.diccionario.model;
 public class Video {
 
 	private Integer videoId;
-	private String directotyPath;
-	private String url;
-	private String videoType;
+	private String youtubeVideoID;
 	
 	//Foreign Key
 	private Word word;
@@ -34,45 +32,17 @@ public class Video {
 	}
 
 	/**
-	 * @return the directotyPath
+	 * @return the youtubeVideoID
 	 */
-	public String getDirectotyPath() {
-		return directotyPath;
+	public String getYoutubeVideoID() {
+		return youtubeVideoID;
 	}
 
 	/**
-	 * @param directotyPath the directotyPath to set
+	 * @param youtubeVideoID the youtubeVideoID to set
 	 */
-	public void setDirectotyPath(String directotyPath) {
-		this.directotyPath = directotyPath;
-	}
-
-	/**
-	 * @return the url
-	 */
-	public String getUrl() {
-		return url;
-	}
-
-	/**
-	 * @param url the url to set
-	 */
-	public void setUrl(String url) {
-		this.url = url;
-	}
-
-	/**
-	 * @return the videoType
-	 */
-	public String getVideoType() {
-		return videoType;
-	}
-
-	/**
-	 * @param videoType the videoType to set
-	 */
-	public void setVideoType(String videoType) {
-		this.videoType = videoType;
+	public void setYoutubeVideoID(String youtubeVideoID) {
+		this.youtubeVideoID = youtubeVideoID;
 	}
 
 	/**

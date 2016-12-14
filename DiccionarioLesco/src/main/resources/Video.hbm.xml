@@ -14,9 +14,7 @@
         <one-to-one name="word" class="Word"
 			constrained="true"></one-to-one>
         
-        <property name="directotyPath" column="DirectotyPath" />
-        <property name="url" column="URL" />
-        <property name="videoType" column="VideoType" />
+        <property name="youtubeVideoID" column="YoutubeVideoID" />
         
     </class> 
 </hibernate-mapping>

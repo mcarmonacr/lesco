@@ -72,7 +72,7 @@
             </address>
             <address>
                 <strong>Dirección Electrónica</strong><br>
-                <a href="mailto:#">monacar89@hotmail.com</a>
+                <a href="mailto:#">diccionariolesco@gmail.com</a>
             </address>
             </form>
         </div>

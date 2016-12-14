@@ -93,8 +93,6 @@ public class TermnsController {
 				ajaxResponse.setCode("999");
 				ajaxResponse.setMessage("Failure");
 			}
-			
-			
 		} catch (Exception e){
 			logger.error("TermnsController - agregarTermino() - ERROR",e);
 		}
@@ -191,68 +189,60 @@ public class TermnsController {
 				&& addTermForm.getFileType() != null && addTermForm.getVideoURL() != null&& addTermForm.getFilePath() != null */){		
 			
 			//First step is to upload the video to Youtube
-			String youtubeResponse= uploadVideo.upload(addTermForm, videoFile);
+			//String youtubeVideoID= uploadVideo.upload(addTermForm, videoFile);
+			String youtubeVideoID = "xy6IFAzuMSI";
 			
-			if("success".equals(youtubeResponse)){
+			if(!youtubeVideoID.isEmpty()){
+				//Get user session
+				HttpSession session = request.getSession();
 				
-			} else {
+				//Get the current logged in user emailAddress
+				String userEmail = session.getAttribute("userEmail").toString();
 				
-			}
-			
-			
-			//Get user session
-			HttpSession session = request.getSession();
-			
-			//Get the current logged in user emailAddress
-			String userEmail = session.getAttribute("userEmail").toString();
-			
-			//Obtain the User that belogns to the email
-			ProfileDetail profileDetail = userDAO.findByEmailAddress(userEmail);
-			UserProfile userProfile = profileDetail.getUserProfile();
-			
-			//New Word
-			Word word = new Word();
-			word.setWordName(addTermForm.getWordName());
-			//word.setCategory(addTermForm.getCategoryName());
-			word.setDefinition(addTermForm.getDefinition());
-			word.setExplanation(addTermForm.getExplanation());
-			word.setExample(addTermForm.getExample());
-			word.setNumberOfVisits(0);
-			
-			//TODO
-			//New Video
-			Video video = new Video();
-//			if(addTermForm.getYoutubeType().equals(1)){
-//				video.setUrl(addTermForm.getVideoURL());
-//				video.setVideoType("youtube");
-//			}else {
-//				video.setDirectotyPath(addTermForm.getFilePath());
-//				video.setVideoType("file");
-//			}
-			
-			//Relationship references
-			video.setWord(word);
-			word.setVideo(video);
-			
-			Set<Word> words = new HashSet<Word>();
-			words.add(word);
-			
-			//Relationship references
-			userProfile.setWords(words);
-			word.setUserProfile(userProfile);
-			
-			//Get the category
-			if(addTermForm.getCategoryName().trim().length() != 0){
-				Category category = categoryDAO.findByCategoryName(addTermForm.getCategoryName());
+				//Obtain the User that belongs to the email
+				ProfileDetail profileDetail = userDAO.findByEmailAddress(userEmail);
+				UserProfile userProfile = profileDetail.getUserProfile();
+				
+				//New Word
+				Word word = new Word();
+				word.setWordName(addTermForm.getWordName());
+				//word.setCategory(addTermForm.getCategoryName());
+				word.setDefinition(addTermForm.getDefinition());
+				word.setExplanation(addTermForm.getExplanation());
+				word.setExample(addTermForm.getExample());
+				word.setNumberOfVisits(0);
+				
+				//TODO
+				//New Video
+				Video video = new Video();
+				video.setYoutubeVideoID(youtubeVideoID);
+				
 				
 				//Relationship references
-				category.setWords(words);
-				word.setCategory(category);
+				video.setWord(word);
+				word.setVideo(video);
+				
+				Set<Word> words = new HashSet<Word>();
+				words.add(word);
+				
+				//Relationship references
+				userProfile.setWords(words);
+				word.setUserProfile(userProfile);
+				
+				//Get the category
+				if(addTermForm.getCategoryName().trim().length() != 0){
+					Category category = categoryDAO.findByCategoryName(addTermForm.getCategoryName());
+					
+					//Relationship references
+					category.setWords(words);
+					word.setCategory(category);
+				}
+				
+				//Saves the new entities Word and Video, linked to the existing UserProfile and Category. 
+				userDAO.save(userProfile);
+			} else {
+				return"Failure";
 			}
-			
-			//Saves the new entities Word and Video, linked to the existing UserProfile and Category. 
-			userDAO.save(userProfile);
-			
 			return "Success";
 		}else{
 			return"Failure";

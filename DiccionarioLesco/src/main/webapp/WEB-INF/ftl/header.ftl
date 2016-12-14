@@ -35,12 +35,12 @@
 <!-- 	            </li> -->
 	          </ul>
 	        
-	          <form class="navbar-form navbar-right">
+	          <form class="navbar-form navbar-right" id="loginForm" name="loginForm">
 	            <div class="form-group">
-	              <input type="text" placeholder="Email" class="form-control">
+	              <input type="text" placeholder="Email" class="form-control" id="loginEmailAddress" name="loginEmailAddress">
 	            </div>
 	            <div class="form-group">
-	              <input type="password" placeholder="Password" class="form-control">
+	              <input type="password" placeholder="Password" class="form-control" id="loginPassword" name="loginPassword">
 	            </div>
 	            <button type="submit" class="btn btn-primary">Ingresar</button>
 <!-- 	            <button type="submit" class="btn btn-success" href="/registrarse/">Registrarse</button> -->

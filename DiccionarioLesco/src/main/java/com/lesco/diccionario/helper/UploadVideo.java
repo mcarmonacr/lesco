@@ -73,6 +73,7 @@ public class UploadVideo {
         // to the authenticated user's YouTube channel, but doesn't allow
         // other types of access.
         List<String> scopes = Lists.newArrayList("https://www.googleapis.com/auth/youtube.upload");
+        String response;
 
         try {
             // Authorize the request.
@@ -101,17 +102,19 @@ public class UploadVideo {
             // multiple files. You should remove this code from your project
             // and use your own standard names instead.
             Calendar cal = Calendar.getInstance();
-            snippet.setTitle("Test Upload via Java on " + cal.getTime());
-            snippet.setDescription(
-                    "Video uploaded via YouTube Data API V3 using the Java library " + "on " + cal.getTime());
+            //snippet.setTitle("Upload via Diccionario Lesco on " + cal.getTime());
+            //snippet.setDescription("Video uploaded via YouTube Data API V3 using the Java library " + "on " + cal.getTime());
+            
+            snippet.setTitle(addTermForm.getWordName() + "Diccionario LESCO");
+            snippet.setDescription("Definición: " + addTermForm.getDefinition() + "\n" + 
+            		"Explicación: " + addTermForm.getExplanation() + "\n" + "Ejemplo: " + addTermForm.getExample());
 
             // Set the keyword tags that you want to associate with the video.
             List<String> tags = new ArrayList<String>();
-            tags.add("test");
-            tags.add("example");
-            tags.add("java");
-            tags.add("YouTube Data API V3");
-            tags.add("erase me");
+            tags.add("LESCO");
+            tags.add("Lenguaje de Señas Costarricense");
+            tags.add("Diccionario");
+            tags.add("Costa Rica");
             snippet.setTags(tags);
 
             // Add the completed snippet object to the video resource.
@@ -178,6 +181,8 @@ public class UploadVideo {
 
             // Call the API and upload the video.
             Video returnedVideo = videoInsert.execute();
+            
+            response = returnedVideo.getId();
 
             // Print data about the newly inserted video from the API response.
             System.out.println("\n================== Returned Video ==================\n");
@@ -191,15 +196,18 @@ public class UploadVideo {
             System.err.println("GoogleJsonResponseException code: " + e.getDetails().getCode() + " : "
                     + e.getDetails().getMessage());
             e.printStackTrace();
+            return "failure";
         } catch (IOException e) {
             System.err.println("IOException: " + e.getMessage());
             e.printStackTrace();
+            return "failure";
         } catch (Throwable t) {
             System.err.println("Throwable: " + t.getMessage());
             t.printStackTrace();
+            return "failure";
         }
         
-        return "success";
+        return response;
     }
     
     public File multipartToFile(MultipartFile multipart) throws IllegalStateException, IOException 
