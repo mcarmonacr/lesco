@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.lesco.diccionario.dao.CategoryDAO;
 import com.lesco.diccionario.dao.UserDAO;
+import com.lesco.diccionario.dao.WordDAO;
 import com.lesco.diccionario.helper.UploadVideo;
 import com.lesco.diccionario.model.Category;
 import com.lesco.diccionario.model.ProfileDetail;
@@ -51,6 +52,9 @@ public class TermnsController {
 	
 	@Autowired
 	private CategoryDAO categoryDAO;
+	
+	@Autowired
+	private WordDAO wordDAO;
 	
 	@Autowired
 	private SHAEncryption shaEncryption;
@@ -203,6 +207,8 @@ public class TermnsController {
 				ProfileDetail profileDetail = userDAO.findByEmailAddress(userEmail);
 				UserProfile userProfile = profileDetail.getUserProfile();
 				
+				userProfile.setUserName("Test");
+				
 				//New Word
 				Word word = new Word();
 				word.setWordName(addTermForm.getWordName());
@@ -216,7 +222,6 @@ public class TermnsController {
 				//New Video
 				Video video = new Video();
 				video.setYoutubeVideoID(youtubeVideoID);
-				
 				
 				//Relationship references
 				video.setWord(word);
@@ -239,7 +244,9 @@ public class TermnsController {
 				}
 				
 				//Saves the new entities Word and Video, linked to the existing UserProfile and Category. 
-				userDAO.save(userProfile);
+				//userDAO.update(userProfile);
+				wordDAO.save(word);
+				
 			} else {
 				return"Failure";
 			}

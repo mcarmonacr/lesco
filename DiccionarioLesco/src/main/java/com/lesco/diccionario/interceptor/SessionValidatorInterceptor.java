@@ -28,6 +28,8 @@ public class SessionValidatorInterceptor extends HandlerInterceptorAdapter {
 		logger.info("Request URL::" + request.getRequestURL().toString()
 				+ ":: Start Time=" + System.currentTimeMillis());
 		request.setAttribute("startTime", startTime);
+		
+		logger.info("SessionValidatorInterceptor:preHandle- JsessionID" + request.getSession().getId());
 				
 		//if returned false, we need to make sure 'response' is sent
 		

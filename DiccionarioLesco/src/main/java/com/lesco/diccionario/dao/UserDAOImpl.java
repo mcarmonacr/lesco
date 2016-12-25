@@ -47,6 +47,22 @@ public class UserDAOImpl implements UserDAO {
 		session.close();
 	}
 	
+	
+	/**
+	 * Updates a user in the DB
+	 */
+	@Transactional
+	public void update(UserProfile userProfile) {
+		
+		
+		Session session = this.sessionFactory.getCurrentSession();
+		Transaction tx = session.beginTransaction();
+		//session.persist(userProfile);
+		session.update(userProfile);
+		tx.commit();
+		session.close();
+	}
+	
 //	@Transactional
 //	public List<Category> list() {
 //		
@@ -117,7 +133,18 @@ public class UserDAOImpl implements UserDAO {
 		
 		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(ProfileDetail.class);
         criteria.add(Restrictions.eq("email",emailAddress));
-        return (ProfileDetail) criteria.uniqueResult();
+        
+        ProfileDetail tempProfile = (ProfileDetail) criteria.uniqueResult();
+        
+        
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		ProfileDetail emp = (ProfileDetail) session.load(ProfileDetail.class, tempProfile.getProfileDetailId());
+		System.out.println("Employee object loaded. " + emp);
+		tx.commit();
+		//session.close();
+        
+		return emp;
 		
 	}
 }

@@ -19,6 +19,12 @@ public interface UserDAO {
 	 * @param userProfile
 	 */
 	public void save(UserProfile userProfile);
+	
+	/**
+	 * Updates a new user
+	 * @param userProfile
+	 */
+	public void update(UserProfile userProfile);
 
 	//public List<Category> list();
 	

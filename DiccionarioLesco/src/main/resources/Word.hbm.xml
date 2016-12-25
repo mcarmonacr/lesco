@@ -17,7 +17,7 @@
 			cascade="save-update"></one-to-one>
 			        
         <many-to-one name="category" class="Category" fetch="select">
-			<column name="Category_ID" not-null="true" />
+			<column name="Category_ID" />
 		</many-to-one>
         
         <property name="wordName" column="WordName" />

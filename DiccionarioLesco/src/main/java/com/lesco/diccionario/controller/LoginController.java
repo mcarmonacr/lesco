@@ -1,5 +1,6 @@
 package com.lesco.diccionario.controller;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -52,6 +53,10 @@ public class LoginController {
 		
 		//setting session to expiry in 15 mins
 		session.setMaxInactiveInterval(15*60);
+		
+		Cookie cookie = new Cookie("JSESSIONID",session.getId().toString());
+		cookie.setMaxAge(15*60); //1 hour
+		response.addCookie(cookie);
 
 		//Saves the user to the database
 		//String resultadoSalvar= salvarUsuario(loginForm);
