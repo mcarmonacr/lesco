@@ -58,6 +58,7 @@ public class SessionValidatorInterceptor extends HandlerInterceptorAdapter {
 		return true;
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public void postHandle(HttpServletRequest request,
 			HttpServletResponse response, Object handler,
@@ -65,21 +66,26 @@ public class SessionValidatorInterceptor extends HandlerInterceptorAdapter {
 		System.out.println("Request URL::" + request.getRequestURL().toString()
 				+ " Sent to Handler :: Current Time=" + System.currentTimeMillis());
 		
-		
 		if (request.getSession(false).getAttribute("userEmail") != null){
-			Map model = modelAndView.getModel();
-			model.put("isSessionValid", "true");
-			
-			ProfileDetail profileDetailQuery = userDAO.findByEmailAddress(request.getSession(false).getAttribute("userEmail").toString());
-			
-			//Checks the user role
-			if(profileDetailQuery != null) {
+			if(modelAndView != null){
+				Map model = modelAndView.getModel();
+				
+				if(model != null){
+					model.put("isSessionValid", "true");
 					
-				ProfileDetail ProfileDetailReference = userDAO.findById(profileDetailQuery.getProfileDetailId());
-				
-				UserProfile userProfile = ProfileDetailReference.getUserProfile();
-				
-				model.put("userName", userProfile.getUserName());
+					ProfileDetail profileDetailQuery = userDAO.findByEmailAddress(request.getSession(false).getAttribute("userEmail").toString());
+					
+					//Checks the user role and user name
+					if(profileDetailQuery != null) {
+							
+						ProfileDetail ProfileDetailReference = userDAO.findById(profileDetailQuery.getProfileDetailId());
+						
+						UserProfile userProfile = ProfileDetailReference.getUserProfile();
+						
+						model.put("userName", userProfile.getUserName());
+						model.put("userRole", userProfile.getUserRole());
+					}
+				}
 			}
 		}
 		

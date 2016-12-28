@@ -1,21 +1,21 @@
 jQuery(document).ready(function($) {
+	$("#categoryForm").submit(function(event) {
+		// Disble the search button
+		//enableSearchButton(false);
 
-		$("#loginForm").submit(function(event) {
-			submitform();
-
-		});
-
+		// Prevent the form from submitting via the browser.
+		//event.preventDefault();
+		submitdata();
+	});
 });
 
-function submitform() {
 
-	  var loginEmailAddress=document.getElementById("loginEmailAddress");
-	  var loginPassword=document.getElementById("loginPassword");
+function submitdata() {
 
+	  var categoryName=document.getElementById( "categoryName" );
 	  
 	  var search = {
-	            "emailAddress":loginEmailAddress.value,
-	            "password":loginPassword.value
+	            "categoryName":categoryName.value
 	    }
 
 	  $.ajax({
@@ -25,25 +25,29 @@ function submitform() {
 	    },
 		type: 'post',
 	    contentType : "application/json",
-	    //url: "http://localhost:8080/DiccionarioLesco/registro/verificarUsuario",
-	    url: "/DiccionarioLesco/ingreso/iniciarSesion",
+	    url: "/DiccionarioLesco/admin/agregarCategoria",
 	    data : JSON.stringify(search),
 	    dataType : 'json',
 	    success : function(data) {
 			console.log("SUCCESS: ", data);
-			
-			window.location.reload();
-			
 			//display(data);
+			
+			location.reload();
 		},
 		error : function(e) {
 			console.log("ERROR: ", e);
 			//display(e);
+			
+			location.reload();
 		},
 		done : function(e) {
 			console.log("DONE");
-			//enableSearchButton(true);
+			enableSearchButton(true);
+			
+			location.reload();
 		}
 	  });
+
 	  //return false;
+
 	}
