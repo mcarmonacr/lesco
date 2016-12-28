@@ -35,19 +35,33 @@
 <!-- 	            </li> -->
 	          </ul>
 	        
-	          <form class="navbar-form navbar-right" id="loginForm" name="loginForm">
-	            <div class="form-group">
-	              <input type="text" placeholder="Email" class="form-control" id="loginEmailAddress" name="loginEmailAddress">
-	            </div>
-	            <div class="form-group">
-	              <input type="password" placeholder="Password" class="form-control" id="loginPassword" name="loginPassword">
-	            </div>
-	            <button type="submit" class="btn btn-primary">Ingresar</button>
-<!-- 	            <button type="submit" class="btn btn-success" href="/registrarse/">Registrarse</button> -->
-	            <a href="/DiccionarioLesco/registrarse" class="btn btn-primary">
-			      <span class="glyphicon glyphicon-user"></span> Registrarse 
-			    </a>
+	       
+	        <#if (isSessionValid??)>
+				<#if (isSessionValid == "true")>
+					<#if (userName??)>
+					<div class="navbar-form navbar-right">
+						<h2 class="text-primary">Bienvenido, ${userName}</h2>
+					</div>
+						
+					</#if>
+				</#if>
+			<#else>
+				<form class="navbar-form navbar-right" id="loginForm" name="loginForm">
+		            <div class="form-group">
+		              <input type="text" placeholder="Email" class="form-control" id="loginEmailAddress" name="loginEmailAddress">
+		            </div>
+		            <div class="form-group">
+		              <input type="password" placeholder="Password" class="form-control" id="loginPassword" name="loginPassword">
+		            </div>
+		            <button type="submit" class="btn btn-primary">Ingresar</button>
+	<!-- 	            <button type="submit" class="btn btn-success" href="/registrarse/">Registrarse</button> -->
+		            <a href="/DiccionarioLesco/registrarse" class="btn btn-primary">
+				      <span class="glyphicon glyphicon-user"></span> Registrarse 
+				    </a>
 	          </form>
+			</#if>
+	        
+	          
 	          
         </div><!--/.navbar-collapse -->
       </div>

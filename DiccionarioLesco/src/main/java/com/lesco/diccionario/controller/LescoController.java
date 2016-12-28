@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.lesco.diccionario.dao.CategoryDAO;
+import com.lesco.diccionario.dao.WordDAO;
 import com.lesco.diccionario.model.Category;
+import com.lesco.diccionario.model.Word;
 
 /**
  * 
@@ -27,6 +29,9 @@ public class LescoController {
 	@Autowired
 	private CategoryDAO categoryDAO;
 	
+	@Autowired
+	private WordDAO wordDAO;
+	
 	/**
 	 * DiccioanrioLesco Home Page
 	 * 
@@ -43,8 +48,12 @@ public class LescoController {
 		
 		//Get all the categories
 		List<Category> listCategories = categoryDAO.list();
+		
+		//Get all the categories
+		List<Word> listWords = wordDAO.list();
 		 
 		mv.addObject("listCategories", listCategories);
+		mv.addObject("listWords", listWords);
 		
 		logger.debug("LescoController - diccionarioLesco() - End");
 		

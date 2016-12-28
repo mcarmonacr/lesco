@@ -3,13 +3,20 @@
  */
 package com.lesco.diccionario.interceptor;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+
+import com.lesco.diccionario.dao.UserDAO;
+import com.lesco.diccionario.model.ProfileDetail;
+import com.lesco.diccionario.model.UserProfile;
 
 /**
  * @author m.carmona.dinarte
@@ -19,6 +26,9 @@ public class SessionValidatorInterceptor extends HandlerInterceptorAdapter {
 
 	//Log4J class logger instance
 	private static final Logger logger = Logger.getLogger(SessionValidatorInterceptor.class);
+	
+	@Autowired
+	private UserDAO userDAO;
 
 	@Override
 	public boolean preHandle(HttpServletRequest request,
@@ -54,7 +64,25 @@ public class SessionValidatorInterceptor extends HandlerInterceptorAdapter {
 			ModelAndView modelAndView) throws Exception {
 		System.out.println("Request URL::" + request.getRequestURL().toString()
 				+ " Sent to Handler :: Current Time=" + System.currentTimeMillis());
-
+		
+		
+		if (request.getSession(false).getAttribute("userEmail") != null){
+			Map model = modelAndView.getModel();
+			model.put("isSessionValid", "true");
+			
+			ProfileDetail profileDetailQuery = userDAO.findByEmailAddress(request.getSession(false).getAttribute("userEmail").toString());
+			
+			//Checks the user role
+			if(profileDetailQuery != null) {
+					
+				ProfileDetail ProfileDetailReference = userDAO.findById(profileDetailQuery.getProfileDetailId());
+				
+				UserProfile userProfile = ProfileDetailReference.getUserProfile();
+				
+				model.put("userName", userProfile.getUserName());
+			}
+		}
+		
 		//we can add attributes in the modelAndView and use that in the view page
 	}
 	

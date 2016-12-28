@@ -12,6 +12,7 @@
         <property name="userName" column="UserName" />
         <property name="userPassword" column="UserPassword" />
         <property name="salt" column="Salt" />
+        <property name="userRole" column="UserRole" />
         
         <one-to-one name="profileDetail" class="ProfileDetail"
 			cascade="save-update"></one-to-one>

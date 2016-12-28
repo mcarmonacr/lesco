@@ -204,10 +204,12 @@ public class TermnsController {
 				String userEmail = session.getAttribute("userEmail").toString();
 				
 				//Obtain the User that belongs to the email
-				ProfileDetail profileDetail = userDAO.findByEmailAddress(userEmail);
-				UserProfile userProfile = profileDetail.getUserProfile();
+				ProfileDetail profileDetailQuery = userDAO.findByEmailAddress(userEmail);
 				
-				userProfile.setUserName("Test");
+				ProfileDetail ProfileDetailReference = userDAO.findById(profileDetailQuery.getProfileDetailId());
+				
+				UserProfile userProfile = ProfileDetailReference.getUserProfile();
+				
 				
 				//New Word
 				Word word = new Word();

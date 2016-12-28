@@ -5,6 +5,7 @@ UserProfile_ID INT NOT NULL AUTO_INCREMENT,
 UserName VARCHAR(100) NOT NULL,
 UserPassword VARCHAR(128) NOT NULL, -- SHA-512 password
 Salt VARBINARY(32) NOT NULL, -- Used to generate a stronger SHA-512
+UserRole VARCHAR(50) DEFAULT 'User',
 PRIMARY KEY (UserProfile_ID)
 );
 

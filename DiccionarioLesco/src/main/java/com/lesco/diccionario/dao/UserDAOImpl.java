@@ -134,17 +134,28 @@ public class UserDAOImpl implements UserDAO {
 		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(ProfileDetail.class);
         criteria.add(Restrictions.eq("email",emailAddress));
         
-        ProfileDetail tempProfile = (ProfileDetail) criteria.uniqueResult();
         
+        ProfileDetail profileDetail = (ProfileDetail) criteria.uniqueResult();
         
+        //sessionFactory.getCurrentSession().close();
+        
+        return 	profileDetail;
+	}
+	
+	/**
+	 * Find a particular category by its name
+	 */
+	@Transactional
+	public ProfileDetail findById(Integer profileDetailId){
+		       
 		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
-		ProfileDetail emp = (ProfileDetail) session.load(ProfileDetail.class, tempProfile.getProfileDetailId());
-		System.out.println("Employee object loaded. " + emp);
+		ProfileDetail profileDetail = (ProfileDetail) session.get(ProfileDetail.class, profileDetailId);
 		tx.commit();
 		//session.close();
         
-		return emp;
-		
+		return profileDetail;
 	}
+	
+	
 }

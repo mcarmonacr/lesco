@@ -17,6 +17,7 @@ public class UserProfile {
 	private String userName;
 	private String userPassword;
 	private byte[] salt;
+	private String userRole;
 	
 	//Foreign Key's
 	private ProfileDetail profileDetail;
@@ -94,6 +95,18 @@ public class UserProfile {
 	 */
 	public void setWords(Set<Word> words) {
 		this.words = words;
+	}
+	/**
+	 * @return the userRole
+	 */
+	public String getUserRole() {
+		return userRole;
+	}
+	/**
+	 * @param userRole the userRole to set
+	 */
+	public void setUserRole(String userRole) {
+		this.userRole = userRole;
 	}
 	
 }

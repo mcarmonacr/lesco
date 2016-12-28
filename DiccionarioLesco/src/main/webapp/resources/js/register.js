@@ -144,6 +144,7 @@ $(function() {
 				  var passwordConfirmation=document.getElementById("passwordConfirmation");
 				  var birthDate=document.getElementById("birthDate");
 				  var termsAndConditions=document.getElementById("termsAndConditions");
+				  var administrator=document.getElementById("administrator");
 				  
 				  var search = {
 				            "userName":userName.value,
@@ -151,7 +152,8 @@ $(function() {
 				            "password":password.value,
 				            "passwordConfirmation":passwordConfirmation.value,
 				            "birthDate":birthDate.value,
-				            "termsAndConditions":termsAndConditions.checked
+				            "termsAndConditions":termsAndConditions.checked,
+				            "administrator":administrator.checked
 				    }
 
 				  $.ajax({

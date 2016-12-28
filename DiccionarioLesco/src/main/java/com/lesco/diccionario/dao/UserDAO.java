@@ -48,4 +48,11 @@ public interface UserDAO {
 	 * @return
 	 */
 	public ProfileDetail findByEmailAddress(String emailAddress);
+	
+	/**
+	 * Find a particular category by its name
+	 * @param categoryName
+	 * @return
+	 */
+	public ProfileDetail findById(Integer profileDetailId);
 }

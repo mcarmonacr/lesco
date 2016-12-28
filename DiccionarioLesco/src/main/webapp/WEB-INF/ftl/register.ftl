@@ -85,6 +85,18 @@
 			  </div>
 			</div>
 			
+			<!-- Multiple Checkboxes -->
+			<div class="form-group">
+			  <label class="col-md-4 control-label" for="checkboxes">Hacer Administrador</label>
+			  <div class="col-md-4">
+			  <div class="checkbox">
+			    <label for="checkboxes-0">
+			      <input name="administrator" id="administrator" type="checkbox" required="">
+			    </label>
+				</div>
+			  </div>
+			</div>
+			
 			<!-- Button (Double) -->
 			<div class="form-group">
 			  <label class="col-md-4 control-label" for="button1id"></label>

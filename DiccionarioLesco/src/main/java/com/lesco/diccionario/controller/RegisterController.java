@@ -171,6 +171,10 @@ public class RegisterController {
 			userProfile.setUserName(registerForm.getUserName());
 			userProfile.setUserPassword(shaEncryption.getHashedPassword(registerForm.getPassword(), salt));
 			
+			if(registerForm.getAdministrator()){
+				userProfile.setUserRole("administrator");
+			}
+			
 			//Because this two instances have a one-to-one relationship, this needs to be done
 			userProfile.setProfileDetail(profileDetail);
 			profileDetail.setUserProfile(userProfile);
