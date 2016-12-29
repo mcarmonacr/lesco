@@ -121,4 +121,7 @@ http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
 	<bean id="uploadVideo" class="com.lesco.diccionario.helper.UploadVideo">
 	</bean>
 	
+	<bean id="sendMailTLS" class="com.lesco.diccionario.utils.SendMailTLS">
+	</bean>
+	
 </beans>
