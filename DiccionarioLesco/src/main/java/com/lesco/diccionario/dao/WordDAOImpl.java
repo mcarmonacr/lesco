@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.lesco.diccionario.controller.AboutController;
 import com.lesco.diccionario.model.Category;
+import com.lesco.diccionario.model.ProfileDetail;
 import com.lesco.diccionario.model.Word;
 
 /**
@@ -70,5 +71,21 @@ public class WordDAOImpl implements WordDAO {
         criteria.add(Restrictions.eq("wordName",wordName));
         return (Word) criteria.uniqueResult();
 		
+	}
+	
+	
+	/**
+	 * Find a particular word by its id
+	 */
+	@Transactional
+	public Word findById(Integer wordId){
+		       
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		Word word = (Word) session.get(Word.class, wordId);
+		tx.commit();
+		//session.close();
+        
+		return word;
 	}
 }

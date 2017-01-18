@@ -33,4 +33,12 @@ public interface WordDAO {
 	 * @return
 	 */
 	public Word findByWordName(String wordName);
+	
+	/**
+	 * Find a particular Word by its id
+	 * 
+	 * @param wordId
+	 * @return
+	 */
+	public Word findById(Integer wordId);
 }

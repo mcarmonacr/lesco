@@ -1,6 +1,7 @@
 package com.lesco.diccionario.controller;
 
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -105,6 +106,35 @@ public class TermnsController {
 		
 		return ajaxResponse;
 	}
+	
+	
+	/**
+	 * 
+	 * Get the word corresponding to the sent ID
+	 * 
+	 * Type: Json POST method
+	 * 
+	 * @param registerForm. Contains fields: userName, emailAddress, password, passwordConfirmation, private String birthdate ,termsAndConditions.
+	 */
+	@RequestMapping(value= "/obtenerTermino", method = RequestMethod.POST, headers = "Accept=application/json", consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody AjaxResponseBody obtenerTermino(@RequestBody Map<String, String> json){
+		
+		AjaxResponseBody result = new AjaxResponseBody();
+		
+		logger.debug("RegisterController - obtenerTermino() - Start");
+		
+		//Validate input
+		if(true){
+		}else{
+			result.setMessage("Failure");
+			result.setCode("001");
+		}
+		
+		logger.debug("RegisterController - obtenerTermino() - End");
+		
+		return result;
+	}
+	
 	
 	
 	/**
