@@ -164,7 +164,13 @@
 				</fieldset>
 			</form>
 		  	
+			<div class="alert alert-success">
+			  <strong>Success!</strong> Indicates a successful or positive action.
+			</div>
 			
+			<div class="alert alert-danger">
+			  <strong>Danger!</strong> Indicates a dangerous or potentially negative action.
+			</div>
 		    
 		  </div>
 		</div>

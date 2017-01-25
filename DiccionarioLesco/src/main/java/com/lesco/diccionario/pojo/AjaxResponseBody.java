@@ -3,6 +3,8 @@
  */
 package com.lesco.diccionario.pojo;
 
+import java.util.Map;
+
 /**
  * 
  * Generic Response Body for all Ajax request
@@ -16,6 +18,7 @@ public class AjaxResponseBody{
 	
 	private String code;
 	private String message;
+	private Map <String, String> content;
 
 	/**
 	 * @return the code
@@ -44,7 +47,19 @@ public class AjaxResponseBody{
 	public void setMessage(String message) {
 		this.message = message;
 	}
-	
-	
-	
+
+	/**
+	 * @return the content
+	 */
+	public Map<String, String> getContent() {
+		return content;
+	}
+
+	/**
+	 * @param content the content to set
+	 */
+	public void setContent(Map<String, String> content) {
+		this.content = content;
+	}
+
 }

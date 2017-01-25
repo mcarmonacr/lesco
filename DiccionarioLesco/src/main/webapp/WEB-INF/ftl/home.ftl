@@ -54,8 +54,7 @@
 		  </a>
 	    
 	    <#list listWords as word>
-	    			  
-		  <a href="#" class="list-group-item">${word.wordName}</a>
+		  <a onclick="loadDetail(${word.wordId})" href="#" class="list-group-item">${word.wordName}</a>
 	    </#list>
 
 		  </div>
@@ -77,7 +76,7 @@
 		  <div class="panel-body">
 		  
 		  	<div class="row">
-		    	<h1><span class="label label-primary terms-header">Nombre del video</span></h1>
+		    	<h1><span class="label label-primary terms-header" id="wordName">Nombre del video</span></h1>
 		    </div>
 		    
 		    <div class="row">
@@ -87,7 +86,7 @@
 <!-- 			  Your browser does not support HTML5 video. -->
 <!-- 			</video> -->
 
-			 <iframe class="video-container"
+			 <iframe class="video-container" id="videoIframe"
 			src="https://www.youtube.com/embed/Ke-K5lY0EGk?controls=1">
 			</iframe> 
 			</div>

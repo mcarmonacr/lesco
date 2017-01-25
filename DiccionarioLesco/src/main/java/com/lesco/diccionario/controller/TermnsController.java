@@ -1,5 +1,6 @@
 package com.lesco.diccionario.controller;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -123,9 +124,27 @@ public class TermnsController {
 		
 		logger.debug("RegisterController - obtenerTermino() - Start");
 		
-		//Validate input
-		if(true){
-		}else{
+		if (json.get("wordId") != null){			
+			Integer wordId = Integer.parseInt(json.get("wordId"));
+			if(wordId != null){
+				Word word= wordDAO.findById(wordId);
+				
+				Map <String, String> wordMap = new HashMap <String, String> ();
+								
+				wordMap.put("wordId", wordId.toString());
+				wordMap.put("wordName", word.getWordName());
+				wordMap.put("definition", word.getDefinition());
+				wordMap.put("explanation", word.getExplanation());
+				wordMap.put("example", word.getExample());
+				wordMap.put("numberOfVisits", word.getNumberOfVisits().toString());
+				wordMap.put("youtubeVideoID", word.getVideo().getYoutubeVideoID());
+				
+				result.setContent(wordMap);
+				
+				result.setCode("000");
+			
+			}
+		} else{
 			result.setMessage("Failure");
 			result.setCode("001");
 		}
