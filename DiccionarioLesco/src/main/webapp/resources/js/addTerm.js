@@ -1,6 +1,7 @@
 jQuery(document).ready(function($) {
 
 	$("#addTermForm").submit(function(event) {
+		event.preventDefault();
 		submitform();
 
 	});
@@ -36,6 +37,7 @@ function checkUserName() {
 	    dataType : 'json',
 	    success : function(data) {
 	    	console.log("SUCCESS: ", data);
+	    		    	
 	    	if(data != null && data.code == "000"){
 	    		$('#divUserName').removeClass('has-error').addClass('has-success');
 				$('#divUserName .glyphicon').removeClass('glyphicon-remove').addClass('glyphicon-ok');
@@ -111,6 +113,13 @@ function submitform() {
 	    success : function(data) {
 			console.log("SUCCESS: ", data);
 			//display(data);
+			
+			$('#addTermModal').modal({
+				backdrop: 'static'
+			});
+			
+			$('#addTermModal').modal('show');
+			
 		},
 		error : function(e) {
 			console.log("ERROR: ", e);

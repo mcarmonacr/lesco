@@ -56,6 +56,8 @@ public class ContactController {
 		
 		String sendEmailResponse = sendMailTLS.sendMail(contactForm);
 		
+		//String sendEmailResponse = "success";
+		
 		if("success".equals(sendEmailResponse)){
 			//Response toggle based on the save return
 			ajaxResponse.setCode("000");

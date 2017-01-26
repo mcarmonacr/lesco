@@ -1,10 +1,13 @@
 jQuery(document).ready(function($) {
+	
+	
+	
 	$("#contactForm").submit(function(event) {
 		// Disble the search button
 		//enableSearchButton(false);
 
 		// Prevent the form from submitting via the browser.
-		//event.preventDefault();
+		event.preventDefault();
 		submitdata();
 	});
 });
@@ -38,7 +41,17 @@ function submitdata() {
 			console.log("SUCCESS: ", data);
 			//display(data);
 			
-			location.reload();
+			
+			$('#contactModal').modal({
+				backdrop: 'static'
+			});
+			
+			$('#contactModal').modal('show');
+			
+			
+			//location.reload();
+			
+			
 		},
 		error : function(e) {
 			console.log("ERROR: ", e);
@@ -50,7 +63,7 @@ function submitdata() {
 			console.log("DONE");
 			enableSearchButton(true);
 			
-			location.reload();
+			//location.reload();
 		}
 	  });
 

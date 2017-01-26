@@ -91,6 +91,8 @@ public class TermnsController {
 			//Saves the user to the database
 			String resultadoSalvar= salvarTermino(addTermForm, videoFile, request);
 			
+			//String resultadoSalvar= "success";
+			
 			//Response toggle based on the save return
 			if("Success".equals(resultadoSalvar)){
 				ajaxResponse.setCode("000");

@@ -78,18 +78,26 @@
         </div>
     </div>
     <div class="row">
-    	<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
-		  <div class="modal-dialog modal-sm" role="document">
-		    <div class="modal-content">
-		      ...
+    	<div id="contactModal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+		  <div class="modal-dialog modal-md" role="document">
+		    <div class="modal-content text-center">
+		      ¡Mensaje Enviado Exitosamente!
 		      <div class="modal-footer">
-		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-		        <button type="button" class="btn btn-primary">Save changes</button>
+		        <div class="row">
+		        	<div class="col-md-5 text-center">
+		        		<a href="/DiccionarioLesco/contacto" class="btn btn-info" role="button">Enviar Nuevo Mensaje</a>
+		        	</div>
+		        	<div class="col-md-2"></div>
+			        <div class="col-md-5 text-center">
+			        	<a href="/DiccionarioLesco/" class="btn btn-info" role="button">Página Principal</a>
+			        </div>
+		        </div>
+		        
 		      </div>
 		    </div>
 		  </div>
 		</div>
-    </div>
+    </div> <!-- row div -->
 </div>
    
     
