@@ -60,7 +60,7 @@
 		  </div>
 		  
 		  <div class="row">
-		  	<h1><span class="label label-primary terms-header">Total: 250</span></h1>
+		  	<h1><span class="label label-primary terms-header">Total: ${listWords?size}</span></h1>
 		  </div>
 		  
 		</div>
@@ -100,7 +100,7 @@
 			      </h4>
 			    </div>
 			    <div id="collapse2" class="panel-collapse collapse">
-			      <div class="panel-body">Panel content Panel content Panel content Panel content Panel content Panel content</div>
+			      <div id="definitionDiv" class="panel-body">Panel content Panel content Panel content Panel content Panel content Panel content</div>
 <!-- 			      <div class="panel-footer">Panel Footer</div> -->
 			    </div>
 			  </div>
@@ -116,7 +116,7 @@
 			      </h4>
 			    </div>
 			    <div id="collapse1" class="panel-collapse collapse">
-			      <div class="panel-body">Panel content Panel content Panel content Panel content Panel content Panel content</div>
+			      <div id="explanationDiv" class="panel-body">Panel content Panel content Panel content Panel content Panel content Panel content</div>
 <!-- 			      <div class="panel-footer">Panel Footer</div> -->
 			    </div>
 			  </div>
@@ -132,7 +132,7 @@
 			      </h4>
 			    </div>
 			    <div id="collapse3" class="panel-collapse collapse">
-			      <div class="panel-body">Panel content Panel content Panel content Panel content Panel content Panel content</div>
+			      <div id="exampleDiv" class="panel-body">Panel content Panel content Panel content Panel content Panel content Panel content</div>
 <!-- 			      <div class="panel-footer">Panel Footer</div> -->
 			    </div>
 			  </div>
@@ -165,7 +165,7 @@
 					</div>
 					<div class="col-md-6">
 						<h2>
-							<span class="label label-primary visits glyphicon glyphicon-eye-open"> Visitas: 35</span>
+							<span id="numberOfVisitsSpan" class="label label-primary visits glyphicon glyphicon-eye-open"> Visitas: 35</span>
 						</h2>
 					</div>
 			</div>

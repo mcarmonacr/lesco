@@ -30,8 +30,13 @@ function loadDetail(wordId)
 	    		//console.log("Data: " + data.content.word);
 	    		
 	    		 $("#wordName").text(data.content.wordName);
-	    		 
 	    		 $('#videoIframe').attr('src', "https://www.youtube.com/embed/" + data.content.youtubeVideoID + "?controls=1");
+	    		 $("#definitionDiv").text(data.content.definition);
+	    		 $("#explanationDiv").text(data.content.explanation);
+	    		 $("#exampleDiv").text(data.content.example);
+	    		 $("#numberOfVisitsSpan").text(data.content.numberOfVisits);
+	    		 
+	    		 
 	    		
 	    		
 	    		//$('#divUserName').removeClass('has-error').addClass('has-success');

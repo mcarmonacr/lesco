@@ -53,7 +53,9 @@
 				<#if (isSessionValid == "true")>
 					<#if (userName??)>
 					<div class="navbar-form navbar-right">
-						<h2 class="text-primary">Bienvenido, ${userName}</h2>
+						<strong class="text-primary">Bienvenido, ${userName}</strong>
+<!-- 						<img class="img-circle" src="resources/images/marioCarmona2.PNG" alt="Mario Alonso Carmona Dinarte" width="60" height="60"> -->
+							<p class="text-primary">Salir</p>
 					</div>
 						
 					</#if>
