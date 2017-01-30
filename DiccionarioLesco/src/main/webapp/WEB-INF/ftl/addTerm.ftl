@@ -188,6 +188,10 @@
 		  </div>
 		</div>
   </div>
+  
+	<!-- Common loading modal -->
+	<#include "/loadingModal.ftl">
+  
 </div>
     
 </@c.page>

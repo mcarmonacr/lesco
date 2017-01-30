@@ -12,7 +12,7 @@
         </id>
         
         <one-to-one name="userProfile" class="UserProfile"
-			constrained="true"></one-to-one>
+			constrained="true" lazy="false"></one-to-one>
         
         <property name="email" column="Email" />
         <property name="birthDate" column="BirthDate" />

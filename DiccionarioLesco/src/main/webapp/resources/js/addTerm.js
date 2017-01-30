@@ -13,7 +13,7 @@ jQuery(document).ready(function($) {
 	$("#emailAddress").keyup(function(){
 		checkEmailAddress();
 	});
-
+	
 });
 
 
@@ -61,6 +61,11 @@ function checkUserName() {
 
 function submitform() {
 
+	$('#processing-modal').modal({
+		backdrop: 'static'
+	});
+	
+	$('#processing-modal').modal('show');
 	
 	  var formData= new FormData();
 	
@@ -85,15 +90,12 @@ function submitform() {
 //	            "videoURL":videoURL.checked,
 //	            "filePath":filePath
 	    }
-	  
-	  
-	  
+
 	  formData.append("data", new Blob([JSON.stringify(formParameters)], { type: "application/json"})); 
 	  formData.append("video", filePath.files[0]);
 	  //formData.append("data", JSON.stringify(formParameters)); 
 	  
 	  //formData.serialize();
-	  
 
 	  $.ajax({
 //	  	headers: { 
@@ -113,6 +115,8 @@ function submitform() {
 	    success : function(data) {
 			console.log("SUCCESS: ", data);
 			//display(data);
+			
+			$('#processing-modal').modal('hide');
 			
 			$('#addTermModal').modal({
 				backdrop: 'static'

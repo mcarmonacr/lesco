@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.lesco.diccionario.model.Category;
 import com.lesco.diccionario.model.ProfileDetail;
 import com.lesco.diccionario.model.UserProfile;
+import com.lesco.diccionario.model.Word;
 
 /**
  * User Table Data Access Object Implementation
@@ -146,15 +147,12 @@ public class UserDAOImpl implements UserDAO {
 	 * Find a particular category by its name
 	 */
 	@Transactional
-	public ProfileDetail findById(Integer profileDetailId){
-		       
-		Session session = sessionFactory.openSession();
-		Transaction tx = session.beginTransaction();
-		ProfileDetail profileDetail = (ProfileDetail) session.get(ProfileDetail.class, profileDetailId);
-		tx.commit();
-		//session.close();
-        
-		return profileDetail;
+	public ProfileDetail findById(Integer profileDetailId){		
+		
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(ProfileDetail.class);
+		criteria.setCacheable(true); //Improves performance. The average time drops close to the level of calling get.
+        criteria.add(Restrictions.eq("profileDetailId",profileDetailId));
+        return (ProfileDetail) criteria.uniqueResult();
 	}
 	
 	

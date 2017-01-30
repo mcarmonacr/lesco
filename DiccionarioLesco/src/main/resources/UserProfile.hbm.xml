@@ -18,7 +18,7 @@
 			cascade="save-update"></one-to-one>
 			
 		<set name="words" table="Word"
-			inverse="true" lazy="true" fetch="select">
+			inverse="true" lazy="false" fetch="select">
            <key>
                <column name="UserProfile_ID" not-null="true"/>
            </key>

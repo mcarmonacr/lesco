@@ -68,6 +68,7 @@ public class WordDAOImpl implements WordDAO {
 	public Word findByWordName(String wordName){
 		
 		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Word.class);
+		//criteria.setCacheable(true); //Improves performance. The average time drops close to the level of calling get.
         criteria.add(Restrictions.eq("wordName",wordName));
         return (Word) criteria.uniqueResult();
 		
@@ -79,13 +80,11 @@ public class WordDAOImpl implements WordDAO {
 	 */
 	@Transactional
 	public Word findById(Integer wordId){
+		
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Word.class);
+		criteria.setCacheable(true); //Improves performance. The average time drops close to the level of calling get.
+        criteria.add(Restrictions.eq("wordId",wordId));
+        return (Word) criteria.uniqueResult();
 		       
-		Session session = sessionFactory.openSession();
-		Transaction tx = session.beginTransaction();
-		Word word = (Word) session.get(Word.class, wordId);
-		tx.commit();
-		//session.close();
-        
-		return word;
 	}
 }

@@ -1,6 +1,7 @@
 jQuery(document).ready(function($) {
 
 		$("#loginForm").submit(function(event) {
+			event.preventDefault();
 			submitform();
 
 		});
@@ -32,7 +33,8 @@ function submitform() {
 	    success : function(data) {
 			console.log("SUCCESS: ", data);
 			
-			window.location.reload();
+			//The true parameter forces the page to release it's cache.
+			window.location.reload(true);
 			
 			//display(data);
 		},
