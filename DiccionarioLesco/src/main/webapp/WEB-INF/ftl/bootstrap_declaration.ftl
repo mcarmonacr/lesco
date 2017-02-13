@@ -17,7 +17,7 @@
   
 <!--   <link rel="stylesheet" type="text/css" href="resources/css/common.css"> -->
 
-<link rel="stylesheet" type="text/css" href="resources/css/jumbotron.css">
+<link rel="stylesheet" type="text/css" href="/DiccionarioLesco/resources/css/jumbotron.css">
 
 	<#if (parameters??)>
 		<#if (parameters?size > 0)>

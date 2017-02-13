@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -13,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.lesco.diccionario.controller.AboutController;
 import com.lesco.diccionario.model.Category;
 import com.lesco.diccionario.model.ProfileDetail;
+import com.lesco.diccionario.model.UserProfile;
 import com.lesco.diccionario.model.Word;
 
 /**
@@ -59,6 +61,17 @@ public class WordDAOImpl implements WordDAO {
                 .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
 
         return listWords;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Transactional
+	public List<Word> findByPattern(String termsInput){
+		
+		Query query = sessionFactory.getCurrentSession().createQuery("from Word where wordName like :wordName");
+        query.setParameter("wordName", termsInput + "%");
+        List<Word> wordsList= query.list();
+        
+        return wordsList;
 	}
 	
 	/**

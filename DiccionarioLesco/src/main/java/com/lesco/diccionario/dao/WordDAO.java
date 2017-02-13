@@ -41,4 +41,12 @@ public interface WordDAO {
 	 * @return
 	 */
 	public Word findById(Integer wordId);
+	
+	/**
+	 * Get a list of all the matching terms
+	 * @return
+	 */
+	public List<Word> findByPattern(String termsInput);
+	
+	
 }

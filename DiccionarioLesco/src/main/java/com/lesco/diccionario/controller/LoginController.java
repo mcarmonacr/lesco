@@ -80,6 +80,62 @@ public class LoginController {
 	}
 	
 	/**
+	 * Service that registers the user into the site
+	 * Type: Json POST method
+	 * 
+	 * @param registerForm. Contains fields: userName, emailAddress, password, passwordConfirmation, private String birthdate ,termsAndConditions.
+	 */
+	@RequestMapping(value= "/finalizarSesion", method = RequestMethod.POST, headers = "Accept=application/json", consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody AjaxResponseBody finalizarSesion(HttpServletRequest request, 
+	        HttpServletResponse response){
+		
+		logger.debug("RegisterController - iniciarSesion() - Start");
+		
+		AjaxResponseBody ajaxResponse = new AjaxResponseBody();
+		
+		//Verifies the login
+		if(endUserSession(request, response)){
+			//Validation the session, creates a new one in case there isn't one already created
+			//verifySession(loginForm, request, response);
+			
+			//Response toggle based on the save return
+			ajaxResponse.setCode("000");
+			ajaxResponse.setMessage("Success");
+			
+		} else {
+			//Response toggle based on the save return
+			ajaxResponse.setCode("999");
+			ajaxResponse.setMessage("Error");
+		}
+				
+		logger.debug("RegisterController - iniciarSesion() - End");
+		
+		return ajaxResponse;
+	}
+	
+	/**
+	 * End User Session
+	 */
+	
+	private Boolean endUserSession(HttpServletRequest request, 
+	        HttpServletResponse response){
+		
+		HttpSession session = request.getSession();
+		
+		//Invalidates the current session
+		session.invalidate();
+		
+		
+		//Adds the JSESSIONID cookie to be able to maintain the same session
+		Cookie cookie = new Cookie("JSESSIONID",null);
+		cookie.setMaxAge(0); //15 minutes
+		response.addCookie(cookie);
+		
+		return true;
+		
+	}
+	
+	/**
 	 * 
 	 * 
 	 * @param loginForm

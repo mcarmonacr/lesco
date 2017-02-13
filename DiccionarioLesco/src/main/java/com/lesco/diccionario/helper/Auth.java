@@ -61,6 +61,7 @@ public class Auth {
         }
 
         // This creates the credentials datastore at ~/.oauth-credentials/${credentialDatastore}
+        //FileDataStoreFactory fileDataStoreFactory = new FileDataStoreFactory(new File(System.getProperty("user.home") + "/" + ".auth" + "/" + CREDENTIALS_DIRECTORY));
         FileDataStoreFactory fileDataStoreFactory = new FileDataStoreFactory(new File(System.getProperty("user.home") + "/" + CREDENTIALS_DIRECTORY));
         DataStore<StoredCredential> datastore = fileDataStoreFactory.getDataStore(credentialDatastore);
 

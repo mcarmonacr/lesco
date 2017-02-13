@@ -18,7 +18,7 @@ public class AjaxResponseBody{
 	
 	private String code;
 	private String message;
-	private Map <String, String> content;
+	private Map <String, Object> content;
 
 	/**
 	 * @return the code
@@ -51,14 +51,14 @@ public class AjaxResponseBody{
 	/**
 	 * @return the content
 	 */
-	public Map<String, String> getContent() {
+	public Map<String, Object> getContent() {
 		return content;
 	}
 
 	/**
 	 * @param content the content to set
 	 */
-	public void setContent(Map<String, String> content) {
+	public void setContent(Map<String, Object> content) {
 		this.content = content;
 	}
 

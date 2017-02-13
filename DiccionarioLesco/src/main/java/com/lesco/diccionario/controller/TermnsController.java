@@ -2,6 +2,7 @@ package com.lesco.diccionario.controller;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -91,6 +92,9 @@ public class TermnsController {
 			//Saves the user to the database
 			String resultadoSalvar= salvarTermino(addTermForm, videoFile, request);
 			
+			//Sleep 5 seconds
+			//Thread.currentThread().wait(5000);
+			
 			//String resultadoSalvar= "success";
 			
 			//Response toggle based on the save return
@@ -131,7 +135,7 @@ public class TermnsController {
 			if(wordId != null){
 				Word word= wordDAO.findById(wordId);
 				
-				Map <String, String> wordMap = new HashMap <String, String> ();
+				Map <String, Object> wordMap = new HashMap <String, Object> ();
 								
 				wordMap.put("wordId", wordId.toString());
 				wordMap.put("wordName", word.getWordName());
@@ -152,6 +156,49 @@ public class TermnsController {
 		}
 		
 		logger.debug("RegisterController - obtenerTermino() - End");
+		
+		return result;
+	}
+	
+	/**
+	 * 
+	 * Gets all terms form the DB that match the search input pattern
+	 * 
+	 * Type: Json POST method
+	 * 
+	 * @param registerForm. Contains fields: userName, emailAddress, password, passwordConfirmation, private String birthdate ,termsAndConditions.
+	 */
+	@RequestMapping(value= "/obtenerListaTerminos", method = RequestMethod.POST, headers = "Accept=application/json", consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody AjaxResponseBody obtenerListaTerminos(@RequestBody Map<String, String> json){
+		
+		AjaxResponseBody result = new AjaxResponseBody();
+		
+		logger.debug("RegisterController - obtenerListaTerminos() - Start");
+		
+		//Validate input
+		if (json.get("termsInput") != null){
+			
+			//Get all the categories
+			List<Word> wordsList = wordDAO.findByPattern(json.get("termsInput")); //wordDAO.list();
+			
+			Map <String, Object> wordsMap = new HashMap <String, Object> ();
+			
+			// TODO process wordsMap in order to get only the list of words and its ids 
+			
+			wordsMap.put("wordsList", wordsList);
+			
+			result.setContent(wordsMap);
+					
+			//Checks if the input user name already exists in the database
+			if(wordsList != null && !wordsList.isEmpty()){			
+				result.setMessage("Sucess");
+				result.setCode("000");
+			}else{
+				result.setMessage("List is empty");
+				result.setCode("001");
+			}
+		}
+		logger.debug("RegisterController - verificarUsuario() - End");
 		
 		return result;
 	}
@@ -245,7 +292,8 @@ public class TermnsController {
 			
 			//First step is to upload the video to Youtube
 			//String youtubeVideoID= uploadVideo.upload(addTermForm, videoFile);
-			String youtubeVideoID = "xy6IFAzuMSI";
+			//String youtubeVideoID = "xy6IFAzuMSI";
+			String youtubeVideoID = "X7PpGPOHVrA";
 			
 			if(!youtubeVideoID.isEmpty()){
 				//Get user session

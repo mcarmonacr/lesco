@@ -10,7 +10,7 @@
 			        <a href="/DiccionarioLesco/legal/terminos-de-servicio">Términos Y Condiciones</a> | <a href="/DiccionarioLesco/legal/privacidad">Privacidad</a>    
 			      </div>
 			      <div class="col-md-4">
-			        <p class="muted pull-right">© 2016 Diccionario Lesco. Todos los derechos reservados</p>
+			        <p class="muted pull-right">© ${year} Diccionario Lesco. Todos los derechos reservados</p>
 			      </div>
 			    </div>
 			  </div>

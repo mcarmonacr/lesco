@@ -3,6 +3,8 @@
  */
 package com.lesco.diccionario.interceptor;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -58,6 +60,9 @@ public class SessionValidatorInterceptor extends HandlerInterceptorAdapter {
 		return true;
 	}
 	
+	/**
+	 * 
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public void postHandle(HttpServletRequest request,
@@ -66,27 +71,29 @@ public class SessionValidatorInterceptor extends HandlerInterceptorAdapter {
 		System.out.println("Request URL::" + request.getRequestURL().toString()
 				+ " Sent to Handler :: Current Time=" + System.currentTimeMillis());
 		
-		if (request.getSession(false).getAttribute("userEmail") != null){
-			if(modelAndView != null){
-				Map model = modelAndView.getModel();
-				
-				if(model != null){
-					model.put("isSessionValid", "true");
-					
-					ProfileDetail profileDetailQuery = userDAO.findByEmailAddress(request.getSession(false).getAttribute("userEmail").toString());
-					
-					//Checks the user role and user name
-					if(profileDetailQuery != null) {
+		if(modelAndView != null){
+			Map model = modelAndView.getModel();		
+			model.put("year", Calendar.getInstance().get(Calendar.YEAR));
+			
+			if (request.getSession(false) != null && request.getSession(false).getAttribute("userEmail") != null){
+	
+					if(model != null){
+						model.put("isSessionValid", "true");
+						
+						ProfileDetail profileDetailQuery = userDAO.findByEmailAddress(request.getSession(false).getAttribute("userEmail").toString());
+						
+						//Checks the user role and user name
+						if(profileDetailQuery != null) {
+								
+							ProfileDetail ProfileDetailReference = userDAO.findById(profileDetailQuery.getProfileDetailId());
 							
-						ProfileDetail ProfileDetailReference = userDAO.findById(profileDetailQuery.getProfileDetailId());
-						
-						UserProfile userProfile = ProfileDetailReference.getUserProfile();
-						
-						model.put("userName", userProfile.getUserName());
-						model.put("userRole", userProfile.getUserRole());
+							UserProfile userProfile = ProfileDetailReference.getUserProfile();
+							
+							model.put("userName", userProfile.getUserName());
+							model.put("userRole", userProfile.getUserRole());
+						}
 					}
 				}
-			}
 		}
 		
 		//we can add attributes in the modelAndView and use that in the view page
