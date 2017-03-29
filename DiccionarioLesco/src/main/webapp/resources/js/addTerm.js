@@ -78,6 +78,9 @@ function submitform() {
 	  //var termsAndConditions=document.getElementById("fileType");
 	  //var termsAndConditions=document.getElementById("videoURL");
 	  var filePath=document.getElementById("filePath");
+	  var definitionFilePath=document.getElementById("definitionFilePath");
+	  var explanationFilePath=document.getElementById("explanationFilePath");
+	  var examplesFilePath=document.getElementById("examplesFilePath");
 	  
 	  var formParameters = {
 	            "wordName":wordName.value,
@@ -93,6 +96,9 @@ function submitform() {
 
 	  formData.append("data", new Blob([JSON.stringify(formParameters)], { type: "application/json"})); 
 	  formData.append("video", filePath.files[0]);
+	  formData.append("definitionVideo", definitionFilePath.files[0]);
+	  formData.append("explanationVideo", explanationFilePath.files[0]);
+	  formData.append("examplesVideo", examplesFilePath.files[0]);
 	  //formData.append("data", JSON.stringify(formParameters)); 
 	  
 	  //formData.serialize();

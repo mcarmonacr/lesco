@@ -10,14 +10,14 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="/DiccionarioLesco/">Diccionario Lesco</a>
+          <a class="navbar-brand" href="/DiccionarioLesco/"> <span class="glyphicon glyphicon-home"></span> Diccionario Lesco</a>
         </div>
         
         <div id="navbar" class="navbar-collapse collapse">
 	        <ul class="nav navbar-nav">
 <!-- 	            <li class="active"><a href="#">Diccionario</a></li> -->
 <!-- 	             <li><a href="#">Diccionario</a></li> -->
-	            <li><a href="/DiccionarioLesco/acerca">Acerca Del Proyecto</a></li>
+	            <li><a href="/DiccionarioLesco/acerca"> <span class="glyphicon glyphicon-education"></span> Acerca del Proyecto </a></li>
 	            
 	             <#if (userRole??)>
 					<#if (isSessionValid == "true")>
@@ -25,7 +25,7 @@
 					</#if>
 				</#if>
 	            
-	            <li><a href="/DiccionarioLesco/contacto">Contacto</a></li>
+	            <li><a href="/DiccionarioLesco/contacto"> <span class="glyphicon glyphicon-envelope"></span> Contacto</a></li>
 	            
 	            <#if (isSessionValid??)>
 					<#if (userRole == "administrator")>
@@ -68,7 +68,7 @@
 		            <div class="form-group">
 		              <input type="password" placeholder="Password" class="form-control" id="loginPassword" name="loginPassword">
 		            </div>
-		            <button type="submit" class="btn btn-primary">Ingresar</button>
+		            <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-log-in"></span> Ingresar</button>
 	<!-- 	            <button type="submit" class="btn btn-success" href="/registrarse/">Registrarse</button> -->
 		            <a href="/DiccionarioLesco/registrarse" class="btn btn-primary">
 				      <span class="glyphicon glyphicon-user"></span> Registrarse 

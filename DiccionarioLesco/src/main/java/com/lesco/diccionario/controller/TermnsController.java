@@ -1,5 +1,6 @@
 package com.lesco.diccionario.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -74,8 +75,9 @@ public class TermnsController {
 	 * 
 	 */
 	@RequestMapping(value= "/agregarTermino", method = RequestMethod.POST/*, headers = "Accept=application/json", consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE*/)
-	public @ResponseBody AjaxResponseBody agregarTermino(@RequestPart(value = "data", required = false) AddTermForm addTermForm, @RequestPart(value = "video") MultipartFile videoFile, HttpServletRequest request, 
-	        HttpServletResponse response){
+	public @ResponseBody AjaxResponseBody agregarTermino(@RequestPart(value = "data", required = false) AddTermForm addTermForm, @RequestPart(value = "video") MultipartFile videoFile, 
+			@RequestPart(value = "definitionVideo") MultipartFile definitionVideoFile, @RequestPart(value = "explanationVideo") MultipartFile explanationVideoFile, @RequestPart(value = "examplesVideo") MultipartFile examplesVideo,
+			HttpServletRequest request, HttpServletResponse response){
 		
 		AjaxResponseBody ajaxResponse = new AjaxResponseBody();
 		try{
@@ -185,7 +187,7 @@ public class TermnsController {
 			
 			// TODO process wordsMap in order to get only the list of words and its ids 
 			
-			wordsMap.put("wordsList", wordsList);
+			wordsMap.put("wordsList", processWordList(wordsList));
 			
 			result.setContent(wordsMap);
 					
@@ -355,5 +357,20 @@ public class TermnsController {
 		}else{
 			return"Failure";
 		}
+	}
+	
+	private List processWordList(List<Word> wordList){
+		
+		List result = new ArrayList();
+		
+		for(Word actualWord:wordList){
+			Map actualWordMap = new HashMap();
+			
+			actualWordMap.put("wordId", actualWord.getWordId());
+			actualWordMap.put("wordName", actualWord.getWordName());
+			
+			result.add(actualWordMap);
+		}
+		return result;
 	}
 }

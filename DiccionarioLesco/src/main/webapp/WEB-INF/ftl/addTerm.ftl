@@ -28,18 +28,22 @@
 		  <a href="#" class="list-group-item active">
 		    Cras justo odio
 		  </a>
-		  <a href="#" class="list-group-item">Dapibus ac facilisis in</a>
-		  <a href="#" class="list-group-item">Morbi leo risus</a>
-		  <a href="#" class="list-group-item">Porta ac consectetur ac</a>
-		  <a href="#" class="list-group-item">Vestibulum at eros</a>
-		  <a href="#" class="list-group-item">Dapibus ac facilisis in</a>
-		  <a href="#" class="list-group-item">Morbi leo risus</a>
-		  <a href="#" class="list-group-item">Porta ac consectetur ac</a>
-		  <a href="#" class="list-group-item">Vestibulum at eros</a>
-		  <a href="#" class="list-group-item">Dapibus ac facilisis in</a>
-		  <a href="#" class="list-group-item">Morbi leo risus</a>
-		  <a href="#" class="list-group-item">Porta ac consectetur ac</a>
-		  <a href="#" class="list-group-item">Vestibulum at eros</a>
+		  <a href="#" class="list-group-item">Agua</a>
+		  <a href="#" class="list-group-item">Alajuela</a>
+		  <a href="#" class="list-group-item">Amigo</a>
+		  <a href="#" class="list-group-item">Boda</a>
+		  <a href="#" class="list-group-item">Bosque</a>
+		  <a href="#" class="list-group-item">Camisa</a>
+		  <a href="#" class="list-group-item">Casa</a>
+		  <a href="#" class="list-group-item">Despacio</a>
+		  <a href="#" class="list-group-item">Enero</a>
+		  <a href="#" class="list-group-item">Entender</a>
+		  <a href="#" class="list-group-item">Equipo</a>
+		  <a href="#" class="list-group-item">Gripe</a>
+		  <a href="#" class="list-group-item">Hotel</a>
+		  <a href="#" class="list-group-item">Importante</a>
+		  <a href="#" class="list-group-item">Letra</a>
+		  <a href="#" class="list-group-item">Nunca</a>
 		  
 		  </div>
 		  
@@ -70,6 +74,7 @@
 					  <label class="col-md-4 control-label" for="textinput">Término</label>  
 					  <div class="col-md-4">
 					  <input id="wordName" name="wordName" placeholder="Término" class="form-control input-md" type="text" required="required">
+					  <input id="filePath" name="filePath" class="input-file" type="file" accept="video/*" required="required">
 <!-- 					  <span class="help-block">help</span>   -->
 					  </div>
 					</div>
@@ -97,14 +102,16 @@
 					  <label class="col-md-4 control-label" for="textarea">Definición</label>
 					  <div class="col-md-6">                     
 					    <textarea class="form-control" placeholder="Definición" id="definition" name="definition" required="required"></textarea>
+					    <input id="definitionFilePath" name="definitionFilePath" class="input-file" type="file" accept="video/*">
 					  </div>
 					</div>
-					
+										
 					<!-- Textarea -->
 					<div class="form-group">
 					  <label class="col-md-4 control-label" for="textarea">Explicación</label>
 					  <div class="col-md-6">                     
 					    <textarea class="form-control" id="explanation" placeholder="Explicación" name="explanation"></textarea>
+					    <input id="explanationFilePath" name="explanationFilePath" class="input-file" type="file" accept="video/*">
 					  </div>
 					</div>
 					
@@ -113,9 +120,10 @@
 					  <label class="col-md-4 control-label" for="textarea">Ejemplos</label>
 					  <div class="col-md-6">                     
 					    <textarea class="form-control" id="example" placeholder="Ejemplos" name="example"></textarea>
+					    <input id="examplesFilePath" name="examplesFilePath" class="input-file" type="file" accept="video/*">
 					  </div>
 					</div>
-					
+										
 <!-- 					Multiple Radios -->
 <!-- 					<div class="form-group"> -->
 <!-- 					  <label class="col-md-4 control-label" for="radios">Tipo de Archivo</label> -->
@@ -144,13 +152,7 @@
 <!-- 					  </div> -->
 <!-- 					</div> -->
 					
-					<!-- File Button --> 
-					<div class="form-group">
-					  <label class="col-md-4 control-label" for="filePath">Archivo</label>
-					  <div class="col-md-4">
-					    <input id="filePath" name="filePath" class="input-file" type="file" accept="video/*">
-					  </div>
-					</div>
+					
 					
 					<!-- Button (Double) -->
 					<div class="form-group">

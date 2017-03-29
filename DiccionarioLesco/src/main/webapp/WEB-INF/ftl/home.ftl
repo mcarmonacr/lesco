@@ -7,108 +7,134 @@
     
     		 <!-- Video detail column -->
     <div class="col-md-9">
-		<!-- Video Details Section -->
+	<div>
+
+
+	<!-- Video Details Section -->
 		<div class="panel panel-default">
 		  <div class="panel-body">
 		  
 		  	<div class="row">
-		    	<h1><span class="label label-primary terms-header" id="wordName">Hola</span></h1>
+		    	<h1><span class="label label-primary terms-header glyphicon glyphicon-hand-up" id="wordName"> Hola</span></h1>
 		    </div>
-		    
-		    <div class="row">
-<!-- 		    <video class="video-container" controls> -->
-<!-- 			  <source src="resources/videos/Video.mp4" type="video/mp4"> -->
-<!-- 			  <source src="mov_bbb.ogg" type="video/ogg"> -->
-<!-- 			  Your browser does not support HTML5 video. -->
-<!-- 			</video> -->
 
-			 <iframe class="video-container" id="videoIframe"
-			src="https://www.youtube.com/embed/X7PpGPOHVrA?controls=1">
-			</iframe> 
-			</div>
 			
-			<div class="row">
-			<div class="panel-group">
-			  <div class="panel panel-default">
-			    <div class="panel-heading">
-			      <h4 class="panel-title">
-			        <a data-toggle="collapse" href="#collapse2">Definición</a>
-			      </h4>
-			    </div>
-			    <div id="collapse2" class="panel-collapse collapse">
-			      <div id="definitionDiv" class="panel-body">Es un tipo de saludo.</div>
-<!-- 			      <div class="panel-footer">Panel Footer</div> -->
-			    </div>
+		  <!-- Nav tabs -->
+		  <!-- Usar .col-md-offset-* para correr una columna *  a la derecha. Este es, creo: .col-md-4 .col-md-offset-4 -->
+		  <div class="row">
+			  <div class="col-md-8 col-md-offset-4">
+				  <ul class="nav nav-tabs" role="tablist">
+				    <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Termino</a></li>
+				    <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Definición</a></li>
+				    <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Explicación</a></li>
+				    <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Ejemplo(s)</a></li>
+				  </ul>
 			  </div>
-			</div>
-			</div>
-			
-			<div class="row">
-			<div class="panel-group">
-			  <div class="panel panel-default">
-			    <div class="panel-heading">
-			      <h4 class="panel-title">
-			        <a data-toggle="collapse" href="#collapse1">Explicación</a>
-			      </h4>
-			    </div>
-			    <div id="collapse1" class="panel-collapse collapse">
-			      <div id="explanationDiv" class="panel-body">Es usualemnte utilizado como saludo inicial entre dos o más personas.</div>
-<!-- 			      <div class="panel-footer">Panel Footer</div> -->
-			    </div>
-			  </div>
-			</div>
-			</div>
-			
-			<div class="row">
-			<div class="panel-group">
-			  <div class="panel panel-default">
-			    <div class="panel-heading">
-			      <h4 class="panel-title">
-			        <a data-toggle="collapse" href="#collapse3">Ejemplos</a>
-			      </h4>
-			    </div>
-			    <div id="collapse3" class="panel-collapse collapse">
-			      <div id="exampleDiv" class="panel-body">¡Hola a todos! ¿Cómo están?</div>
-<!-- 			      <div class="panel-footer">Panel Footer</div> -->
-			    </div>
-			  </div>
-			</div>
-			</div>
-			
-<!-- 			<div id="collapse2" class="panel-collapse collapse"> -->
-<!-- 			  <div class="panel-heading"> -->
-<!-- 			    <h3 class="panel-title">Definición</h3> -->
-<!-- 			  </div> -->
-<!-- 			  <div class="panel-body"> -->
-<!-- 			    Panel content Panel content Panel content Panel content Panel content Panel content -->
-<!-- 			  </div> -->
-<!-- 			</div> -->
-			
-<!-- 			<div class="panel panel-primary" id="collapse3" class="panel-collapse collapse"> -->
-<!-- 			  <div class="panel-heading"> -->
-<!-- 			    <h3 class="panel-title">Explicación | Ejemplos</h3> -->
-<!-- 			  </div> -->
-<!-- 			  <div class="panel-body"> -->
-<!-- 			    Panel content Panel content Panel content Panel content Panel content Panel content -->
-<!-- 			  </div> -->
-<!-- 			</div> -->
-
-			<div class="row">
-					<div class="col-md-6">
-						<h2>
-							<span class="label label-primary punctuation glyphicon glyphicon-star"> Puntuación: 4.5</span>
-						</h2>
-					</div>
-					<div class="col-md-6">
-						<h2>
-							<span id="numberOfVisitsSpan" class="label label-primary visits glyphicon glyphicon-eye-open"> Visitas: 35</span>
-						</h2>
-					</div>
-			</div>
-			
-		    
 		  </div>
+		
+		  <!-- Tab panes -->	  
+		  <div class="tab-content">
+		    <div role="tabpanel" class="tab-pane active" id="home">
+		    	<div class="row embed-responsive embed-responsive-16by9">
+					 <iframe class="embed-responsive-item" id="videoIframe"
+					src="https://www.youtube.com/embed/X7PpGPOHVrA?controls=1">
+					</iframe> 
+				</div>
+		    </div>
+		    <div role="tabpanel" class="tab-pane" id="profile">
+		    	<div class="row embed-responsive embed-responsive-16by9">
+					 <iframe class="embed-responsive-item" id="videoIframe"
+					src="https://www.youtube.com/embed/X7PpGPOHVrA?controls=1">
+					</iframe> 
+				</div>
+			    <div class="row">
+			    
+			    <div class="panel panel-primary">
+					<div class="panel-heading">
+					  <h3 class="panel-title">Definición</h3>
+					  </div>
+					  <div class="panel-body">
+					    Es un tipo de saludo.
+					  </div>
+					</div>
+<!-- 					<div class="panel-group"> -->
+<!-- 					  <div class="panel panel-default"> -->
+<!-- 					    <div class="panel-heading"> -->
+<!-- 					      <h4 class="panel-title"> -->
+<!-- 					        <a data-toggle="collapse" href="#collapse2">Definición</a> -->
+<!-- 					      </h4> -->
+<!-- 					    </div> -->
+<!-- 					    <div id="collapse2" class="panel-collapse collapse"> -->
+<!-- 					      <div id="definitionDiv" class="panel-body">Es un tipo de saludo.</div> -->
+<!-- 					      <div class="panel-footer">Panel Footer</div> -->
+<!-- 					    </div> -->
+<!-- 					  </div> -->
+<!-- 					</div> -->
+				</div>
+		    </div>
+		    <div role="tabpanel" class="tab-pane" id="messages">
+			    <div class="row">
+					 <iframe class="video-container" id="videoIframe"
+					src="https://www.youtube.com/embed/X7PpGPOHVrA?controls=1">
+					</iframe> 
+				</div>
+			    <div class="row">
+					<div class="panel-group">
+					  <div class="panel panel-default">
+					    <div class="panel-heading">
+					      <h4 class="panel-title">
+					        <a data-toggle="collapse" href="#collapse1">Explicación</a>
+					      </h4>
+					    </div>
+					    <div id="collapse1" class="panel-collapse collapse">
+					      <div id="explanationDiv" class="panel-body">Es usualemnte utilizado como saludo inicial entre dos o más personas.</div>
+		<!-- 			      <div class="panel-footer">Panel Footer</div> -->
+					    </div>
+					  </div>
+					</div>
+				</div>
+		    </div>
+		    <div role="tabpanel" class="tab-pane" id="settings">
+		    	<div class="row">
+					 <iframe class="video-container" id="videoIframe"
+					src="https://www.youtube.com/embed/X7PpGPOHVrA?controls=1">
+					</iframe> 
+				</div>
+				<div class="row">
+					<div class="panel-group">
+					  <div class="panel panel-default">
+						<div class="panel-heading">
+						  <h4 class="panel-title">
+							<a data-toggle="collapse" href="#collapse3">Ejemplos</a>
+						  </h4>
+						</div>
+						<div id="collapse3" class="panel-collapse collapse">
+						  <div id="exampleDiv" class="panel-body">¡Hola a todos! ¿Cómo están?</div>
+					<!-- 			      <div class="panel-footer">Panel Footer</div> -->
+						</div>
+					  </div>
+					</div>
+				</div>				
+		    </div>
+		  </div>
+		  
+		<div class="row">
+			<div class="col-md-6">
+				<h2>
+					<span class="label label-primary punctuation glyphicon glyphicon-star"> Puntuación: 4.5</span>
+				</h2>
+			</div>
+			<div class="col-md-6">
+				<h2>
+					<span id="numberOfVisitsSpan" class="label label-primary visits glyphicon glyphicon-eye-open"> Visitas: 35</span>
+				</h2>
+			</div>
 		</div>
+		  
+		    </div> 
+		</div> <!-- Closes Video Details Section -->
+
+</div>
   </div>
     
     
@@ -122,7 +148,7 @@
 	    <div class="list-group">
 	    
 	    <div class="row">
-	    	<h1><span class="label label-primary terms-header">Términos</span></h1>
+	    	<h1><span class="label label-primary terms-header glyphicon glyphicon-th-list"> Términos</span></h1>
 	    </div>
 	    
 	    <div class="row input-group search-text-box">
@@ -133,7 +159,7 @@
 	    
 	    <div class="row dropdown dropdown-container-home">
 		  <button class="btn btn-default dropdown-toggle dropdown-button-home" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-		    Categoría
+		    <span class="glyphicon glyphicon-tasks"></span> Categoría
 		    <span class="caret"></span>
 		  </button>
 		  <ul class="dropdown-menu dropdown-ul-home" aria-labelledby="dropdownMenu1">
@@ -160,10 +186,10 @@
 		    Hola
 		  </a>
 		  
-		  <a href="#" class="list-group-item">Hotel</a>
-		  <a href="#" class="list-group-item">Importante</a>
-		  <a href="#" class="list-group-item">Letra</a>
-		  <a href="#" class="list-group-item">Nunca</a>
+<!-- 		  <a href="#" class="list-group-item">Hotel</a> -->
+<!-- 		  <a href="#" class="list-group-item">Importante</a> -->
+<!-- 		  <a href="#" class="list-group-item">Letra</a> -->
+<!-- 		  <a href="#" class="list-group-item">Nunca</a> -->
 	    
 	    <#list listWords as word>
 		  <a onclick="loadDetail(${word.wordId})" href="#" class="list-group-item">${word.wordName}</a>
@@ -172,7 +198,7 @@
 		  </div>
 		  
 		  <div class="row">
-		  	<h1><span class="label label-primary terms-header">Total: ${listWords?size}</span></h1>
+		  	<h1><span class="label label-primary terms-header">Total: ${listWords?size +1} </span></h1>
 		  </div>
 		  
 		</div>

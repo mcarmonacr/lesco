@@ -67,7 +67,7 @@ public class WordDAOImpl implements WordDAO {
 	@Transactional
 	public List<Word> findByPattern(String termsInput){
 		
-		Query query = sessionFactory.getCurrentSession().createQuery("from Word where wordName like :wordName");
+		Query query = sessionFactory.getCurrentSession().createQuery("from Word where wordName like :wordName Order By wordName");
         query.setParameter("wordName", termsInput + "%");
         List<Word> wordsList= query.list();
         
