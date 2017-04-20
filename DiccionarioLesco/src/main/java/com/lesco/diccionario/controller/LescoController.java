@@ -51,6 +51,11 @@ public class LescoController {
 		
 		//Get all the categories
 		List<Word> listWords = wordDAO.list();
+		
+		//Get random video
+		//TODO
+		
+		
 		 
 		mv.addObject("listCategories", listCategories);
 		mv.addObject("listWords", listWords);
