@@ -74,6 +74,18 @@ public class WordDAOImpl implements WordDAO {
         return wordsList;
 	}
 	
+	@SuppressWarnings("unchecked")
+	@Transactional
+	public List<Word> findByPatternAndCategoryId(String termsInput, Integer categoryId){
+		
+		Query query = sessionFactory.getCurrentSession().createQuery("from Word where wordName like :wordName and Category_ID =:categoryId Order By wordName");
+        query.setParameter("wordName", termsInput + "%");
+        query.setParameter("categoryId", categoryId);
+        List<Word> wordsList= query.list();
+        
+        return wordsList;
+	}
+	
 	/**
 	 * Find a particular category by its name
 	 */

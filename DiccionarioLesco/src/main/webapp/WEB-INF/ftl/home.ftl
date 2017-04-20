@@ -15,7 +15,7 @@
 		  <div class="panel-body">
 		  
 		  	<div class="row">
-		    	<h1><span class="label label-primary terms-header glyphicon glyphicon-hand-up" id="wordName"> Hola</span></h1>
+		    	<h1><span class="label label-primary terms-header" id="wordName"> Hola</span></h1>
 		    </div>
 
 			
@@ -161,14 +161,21 @@
 		  <button class="btn btn-default dropdown-toggle dropdown-button-home" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
 		    <span class="glyphicon glyphicon-tasks"></span> Categoría
 		    <span class="caret"></span>
+		    <div id="categoryIdDiv" hidden></div>
 		  </button>
 		  <ul class="dropdown-menu dropdown-ul-home" aria-labelledby="dropdownMenu1">
-		  		<li onclick="assignCategory($(this).text())"><a href="#">Cualquiera</a></li>
+		  		<li onclick="assignCategory($(this).find('a').text(), $(this).find('div').text())">
+		  			<a href="#">Cualquiera</a>
+		  			<div hidden></div>
+		  		</li>
 		  		<li role="separator" class="divider"></li>
 		  <#list listCategories as category>
 		  		
 <!-- 	    	<li class="list-group-item list-group-item-info"><a href="#">${category.categoryName}</a></li> -->
-				<li onclick="assignCategory($(this).text())"><a href="#">${category.categoryName}</a></li>
+				<li onclick="assignCategory($(this).find('a').text(), $(this).find('div').text())">
+					<a href="#">${category.categoryName}</a>
+					<div hidden>${category.categoryId}</div>
+				</li>
 				
 <!-- 				<li onclick="assignCategory(this.value)" id="1">1</li> -->
 	  	</#list>
@@ -180,7 +187,7 @@
 		  </ul>
 		</div>
 
-	    <div class="row terms-list">
+	    <div id="wordListDiv" class="row terms-list">
 	    
 	    <a href="#" class="list-group-item active">
 		    Hola
@@ -198,7 +205,7 @@
 		  </div>
 		  
 		  <div class="row">
-		  	<h1><span class="label label-primary terms-header">Total: ${listWords?size +1} </span></h1>
+		  	<h1><span id="totalTermsCounter" class="label label-primary terms-header">Total: ${listWords?size +1} </span></h1>
 		  </div>
 		  
 		</div>

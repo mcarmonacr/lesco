@@ -48,5 +48,11 @@ public interface WordDAO {
 	 */
 	public List<Word> findByPattern(String termsInput);
 	
+	/**
+	 * Get a list of all the matching terms and the given category ID
+	 * @return
+	 */
+	public List<Word> findByPatternAndCategoryId(String termsInput, Integer categoryId);
+	
 	
 }

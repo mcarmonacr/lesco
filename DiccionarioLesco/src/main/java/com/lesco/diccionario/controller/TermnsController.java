@@ -178,10 +178,18 @@ public class TermnsController {
 		logger.debug("RegisterController - obtenerListaTerminos() - Start");
 		
 		//Validate input
-		if (json.get("termsInput") != null){
+		if (json.get("termsInput") != null && !json.get("termsInput").isEmpty()){
 			
-			//Get all the categories
-			List<Word> wordsList = wordDAO.findByPattern(json.get("termsInput")); //wordDAO.list();
+			List<Word> wordsList = new ArrayList<Word>();
+			
+			if(json.get("categoryIdDiv") != null && !json.get("categoryIdDiv").isEmpty()){
+				wordsList = wordDAO.findByPatternAndCategoryId(json.get("termsInput"), Integer.parseInt(json.get("categoryIdDiv"))); //wordDAO.list();
+			}
+			else {
+				//Get all the categories
+				wordsList = wordDAO.findByPattern(json.get("termsInput")); //wordDAO.list();
+			}
+
 			
 			Map <String, Object> wordsMap = new HashMap <String, Object> ();
 			
