@@ -189,8 +189,6 @@ public class TermnsController {
 				//Get all the categories
 				wordsList = wordDAO.findByPattern(json.get("termsInput")); //wordDAO.list();
 			}
-
-			
 			Map <String, Object> wordsMap = new HashMap <String, Object> ();
 			
 			// TODO process wordsMap in order to get only the list of words and its ids 

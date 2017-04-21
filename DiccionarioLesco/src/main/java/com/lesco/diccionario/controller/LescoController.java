@@ -1,6 +1,7 @@
 package com.lesco.diccionario.controller;
 
 import java.util.List;
+import java.util.Random;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,7 +56,7 @@ public class LescoController {
 		//Get random video
 		//TODO
 		
-		
+		mv.addObject("randomWord", getRandomWord(listWords));
 		 
 		mv.addObject("listCategories", listCategories);
 		mv.addObject("listWords", listWords);
@@ -145,6 +146,37 @@ public class LescoController {
 		
 		return mv;
 	}
+	
+	
+	/*** Private methods ***/
+	
+	@SuppressWarnings("unused")
+	private Word getRandomWord(List<Word> listWords){
+
+		int START = 1;
+	    int END = listWords.size();
+	    Random random = new Random();
+		
+		Integer randomNumber = getRandomInteger(START, END, random);
+		
+		Word randomWord = listWords.get(randomNumber);
+		
+		return randomWord;
+	}
+	
+	private static int getRandomInteger(int aStart, int aEnd, Random aRandom){
+	    if (aStart > aEnd) {
+	      throw new IllegalArgumentException("Start cannot exceed End.");
+	    }
+	    //get the range, casting to long to avoid overflow problems
+	    long range = (long)aEnd - (long)aStart + 1;
+	    // compute a fraction of the range, 0 <= frac < range
+	    long fraction = (long)(range * aRandom.nextDouble());
+	    int randomNumber =  (int)(fraction + aStart);    
+	    //log("Generated : " + randomNumber);
+	    
+	    return randomNumber;
+	  }
 	
 	
 	

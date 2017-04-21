@@ -104,6 +104,11 @@ function checkTerm() {
 	    		var wordListDiv= $("#wordListDiv");
 	    		wordListDiv.children().remove();
 	    		
+	    		//Update the total terms counter
+	    		var totalTermsCounter= $("#totalTermsCounter");
+	    		
+	    		totalTermsCounter.text("Total: 0");
+	    		
 	    		//TO DO Update counter when there is an empty list
 	    		
 	    	} else {
