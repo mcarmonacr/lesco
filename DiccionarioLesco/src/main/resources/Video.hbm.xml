@@ -14,7 +14,10 @@
         <one-to-one name="word" class="Word"
 			constrained="true"></one-to-one>
         
-        <property name="youtubeVideoID" column="YoutubeVideoID" />
+        <property name="termYoutubeVideoID" column="TermYoutubeVideoID" />
+        <property name="definitionYoutubeVideoID" column="DefinitionYoutubeVideoID" />
+        <property name="explanationYoutubeVideoID" column="ExplanationYoutubeVideoID" />
+        <property name="exampleYoutubeVideoID" column="ExampleYoutubeVideoID" />
         
     </class> 
 </hibernate-mapping>

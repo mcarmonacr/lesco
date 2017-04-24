@@ -153,8 +153,8 @@ public class LescoController {
 	@SuppressWarnings("unused")
 	private Word getRandomWord(List<Word> listWords){
 
-		int START = 1;
-	    int END = listWords.size();
+		int START = 0; //Start index is 0
+	    int END = listWords.size() - 1; //The maximum index should be one number less than the maximum because indexes start at 0
 	    Random random = new Random();
 		
 		Integer randomNumber = getRandomInteger(START, END, random);

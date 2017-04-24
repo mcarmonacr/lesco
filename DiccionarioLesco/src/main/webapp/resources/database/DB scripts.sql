@@ -48,7 +48,10 @@ FOREIGN KEY (Category_ID) REFERENCES Category(Category_ID)
 CREATE TABLE Video
 (
 Video_ID INT NOT NULL AUTO_INCREMENT,
-YoutubeVideoID VARCHAR(100) NOT NULL,
+TermYoutubeVideoID VARCHAR(100) NOT NULL,
+DefinitionYoutubeVideoID VARCHAR(100) NOT NULL,
+ExplanationYoutubeVideoID VARCHAR(100) NOT NULL,
+ExampleYoutubeVideoID VARCHAR(100) NOT NULL,
 PRIMARY KEY (Video_ID),
 FOREIGN KEY (Video_ID) REFERENCES Word(Word_ID)
 );

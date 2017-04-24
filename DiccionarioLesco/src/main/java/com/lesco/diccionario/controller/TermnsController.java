@@ -145,7 +145,9 @@ public class TermnsController {
 				wordMap.put("explanation", word.getExplanation());
 				wordMap.put("example", word.getExample());
 				wordMap.put("numberOfVisits", word.getNumberOfVisits().toString());
-				wordMap.put("youtubeVideoID", word.getVideo().getYoutubeVideoID());
+				
+				//TODO update mapping
+				//wordMap.put("youtubeVideoID", word.getVideo().getYoutubeVideoID());
 				
 				result.setContent(wordMap);
 				
@@ -294,7 +296,7 @@ public class TermnsController {
 	private String salvarTermino(AddTermForm addTermForm, MultipartFile videoFile, HttpServletRequest request){
 		
 		//Validates that all values come from the form
-		if(addTermForm.getWordName() != null && addTermForm.getCategoryName() != null && addTermForm.getDefinition() != null && 
+		if(addTermForm.getWordName() != null && addTermForm.getDefinition() != null && addTermForm.getCategoryName() != null && 
 				addTermForm.getExplanation() != null	&& addTermForm.getExample() != null /*&& addTermForm.getYoutubeType() != null
 				&& addTermForm.getFileType() != null && addTermForm.getVideoURL() != null&& addTermForm.getFilePath() != null */){		
 			
@@ -303,7 +305,12 @@ public class TermnsController {
 			//String youtubeVideoID = "xy6IFAzuMSI";
 			String youtubeVideoID = "X7PpGPOHVrA";
 			
-			if(!youtubeVideoID.isEmpty()){
+			String termYoutubeVideoID = uploadVideo.upload(addTermForm.getWordName(), "" , videoFile);
+			//String definitionYoutubeVideoID = uploadVideo.upload("Definición en LESCO del término, "Definition: " + addTermForm.getDefinition() , videoFile);
+			String explanationYoutubeVideoID = uploadVideo.upload("Explanation: " + addTermForm.getExplanation(), "" , videoFile);
+			String exampleYoutubeVideoID = uploadVideo.upload("Example: " + addTermForm.getExample(), "" , videoFile);
+			
+			if(!termYoutubeVideoID.isEmpty()){
 				//Get user session
 				HttpSession session = request.getSession();
 				
@@ -327,10 +334,22 @@ public class TermnsController {
 				word.setExample(addTermForm.getExample());
 				word.setNumberOfVisits(0);
 				
-				//TODO
+				//TODO Update the Youtube video ID according to the 4 new video names
 				//New Video
 				Video video = new Video();
-				video.setYoutubeVideoID(youtubeVideoID);
+				//video.settermYouTubeVideoID(termYouTubeVideoID);
+				video.setTermYoutubeVideoID(termYoutubeVideoID);
+				
+				//Set additional videos if available
+//				if(definitionYoutubeVideoID != null) {
+//					video.setDefinitionYoutubeVideoID(definitionYoutubeVideoID);
+//				}
+				if(explanationYoutubeVideoID != null){
+					video.setExampleYoutubeVideoID(exampleYoutubeVideoID);
+				}
+				if(exampleYoutubeVideoID != null){
+					video.setExplanationYoutubeVideoID(explanationYoutubeVideoID);
+				}
 				
 				//Relationship references
 				video.setWord(word);

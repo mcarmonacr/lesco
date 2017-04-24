@@ -15,7 +15,7 @@
 		  <div class="panel-body">
 		  
 		  	<div class="row">
-		    	<h1><span class="label label-primary terms-header" id="wordName"> Hola</span></h1>
+		    	<h1><span class="label label-primary terms-header" id="wordName"> ${randomWord.wordName}</span></h1>
 		    </div>
 
 			

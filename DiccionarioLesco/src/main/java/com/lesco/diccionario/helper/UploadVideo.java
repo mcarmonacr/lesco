@@ -67,7 +67,7 @@ public class UploadVideo {
      *
      * @param args command line args (not used).
      */
-    public String upload(AddTermForm addTermForm, MultipartFile videoFile) {
+    public String upload(String title, String description, MultipartFile videoFile) {
 
         // This OAuth 2.0 access scope allows an application to upload files
         // to the authenticated user's YouTube channel, but doesn't allow
@@ -105,9 +105,12 @@ public class UploadVideo {
             //snippet.setTitle("Upload via Diccionario Lesco on " + cal.getTime());
             //snippet.setDescription("Video uploaded via YouTube Data API V3 using the Java library " + "on " + cal.getTime());
             
-            snippet.setTitle(addTermForm.getWordName() + "Diccionario LESCO");
-            snippet.setDescription("Definición: " + addTermForm.getDefinition() + "\n" + 
-            		"Explicación: " + addTermForm.getExplanation() + "\n" + "Ejemplo: " + addTermForm.getExample());
+//            snippet.setTitle(addTermForm.getWordName() + "Diccionario LESCO");
+//            snippet.setDescription("Definición: " + addTermForm.getDefinition() + "\n" + 
+//            		"Explicación: " + addTermForm.getExplanation() + "\n" + "Ejemplo: " + addTermForm.getExample());
+            
+            snippet.setTitle(title + "- Diccionario LESCO");
+            snippet.setDescription(description);
 
             // Set the keyword tags that you want to associate with the video.
             List<String> tags = new ArrayList<String>();
