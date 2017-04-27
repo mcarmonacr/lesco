@@ -76,15 +76,15 @@ public class TermnsController {
 	 */
 	@RequestMapping(value= "/agregarTermino", method = RequestMethod.POST/*, headers = "Accept=application/json", consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE*/)
 	public @ResponseBody AjaxResponseBody agregarTermino(@RequestPart(value = "data", required = false) AddTermForm addTermForm, @RequestPart(value = "video") MultipartFile videoFile, 
-			@RequestPart(value = "definitionVideo") MultipartFile definitionVideoFile, @RequestPart(value = "explanationVideo") MultipartFile explanationVideoFile, @RequestPart(value = "examplesVideo") MultipartFile examplesVideo,
+			@RequestPart(value = "definitionVideo") MultipartFile definitionVideoFile, @RequestPart(value = "explanationVideo") MultipartFile explanationVideoFile, 
+			@RequestPart(value = "exampleVideo") MultipartFile exampleVideoFile,
 			HttpServletRequest request, HttpServletResponse response){
 		
 		AjaxResponseBody ajaxResponse = new AjaxResponseBody();
+		
 		try{
 			logger.debug("TermnsController - agregarTermino() - Start");
-			
-			
-			
+
 			ajaxResponse.setCode("000");
 			ajaxResponse.setMessage("Success");
 			
@@ -92,7 +92,7 @@ public class TermnsController {
 			
 
 			//Saves the user to the database
-			String resultadoSalvar= salvarTermino(addTermForm, videoFile, request);
+			String resultadoSalvar= salvarTermino(addTermForm, videoFile, definitionVideoFile, explanationVideoFile, exampleVideoFile, request);
 			
 			//Sleep 5 seconds
 			//Thread.currentThread().wait(5000);
@@ -293,23 +293,43 @@ public class TermnsController {
 	 * 
 	 * @param registerForm. Contains fields: wordName, categoryName, definition, explanation ,example, youtubeType, fileType, videoURL, filePath.
 	 */
-	private String salvarTermino(AddTermForm addTermForm, MultipartFile videoFile, HttpServletRequest request){
+	private String salvarTermino(AddTermForm addTermForm, MultipartFile videoFile, MultipartFile definitionVideoFile, MultipartFile explanationVideoFile, MultipartFile exampleVideoFile, HttpServletRequest request){
 		
-		//Validates that all values come from the form
-		if(addTermForm.getWordName() != null && addTermForm.getDefinition() != null && addTermForm.getCategoryName() != null && 
-				addTermForm.getExplanation() != null	&& addTermForm.getExample() != null /*&& addTermForm.getYoutubeType() != null
-				&& addTermForm.getFileType() != null && addTermForm.getVideoURL() != null&& addTermForm.getFilePath() != null */){		
+		//Validates that the most important value comes from the form
+		if(addTermForm.getWordName() != null && videoFile != null){		
 			
 			//First step is to upload the video to Youtube
 			//String youtubeVideoID= uploadVideo.upload(addTermForm, videoFile);
 			//String youtubeVideoID = "xy6IFAzuMSI";
-			String youtubeVideoID = "X7PpGPOHVrA";
+			//String youtubeVideoID = "X7PpGPOHVrA";
 			
-			String termYoutubeVideoID = uploadVideo.upload(addTermForm.getWordName(), "" , videoFile);
-			//String definitionYoutubeVideoID = uploadVideo.upload("Definición en LESCO del término, "Definition: " + addTermForm.getDefinition() , videoFile);
-			String explanationYoutubeVideoID = uploadVideo.upload("Explanation: " + addTermForm.getExplanation(), "" , videoFile);
-			String exampleYoutubeVideoID = uploadVideo.upload("Example: " + addTermForm.getExample(), "" , videoFile);
+			//Words values
+			String wordName = addTermForm.getWordName(); //At this point the variable most be different from null
+			String definition = addTermForm.getDefinition() != null ? addTermForm.getDefinition() : "";
+			String explanation = addTermForm.getExplanation() != null ? addTermForm.getExplanation() : "";
+			String example = addTermForm.getExample() != null ? addTermForm.getExample() : "";
 			
+			//This video does not need validation on some values since its values are compulsory
+			String termYoutubeVideoID = uploadVideo.upload(wordName+ "en Lenguaje de Señas Costarricense (LESCO)" , wordName+ "en Lenguaje de Señas Costarricense (LESCO)" , videoFile);
+			
+			//Rest of the videos IDs
+			String definitionYoutubeVideoID = "";
+			String explanationYoutubeVideoID = "";
+			String exampleYoutubeVideoID = "";
+			
+			if (definition != null && definitionVideoFile != null){
+				definitionYoutubeVideoID = uploadVideo.upload("Definición en LESCO del término " + wordName, "Definición en LESCO del término: " + wordName + " - " + definition, definitionVideoFile);
+			}
+			
+			if (explanation != null && explanationVideoFile != null){
+				explanationYoutubeVideoID = uploadVideo.upload("Explicación en LESCO del término " + wordName, "Explicación en LESCO del término: " + wordName + " - " + explanation, explanationVideoFile);
+			}
+			
+			if (example != null && exampleVideoFile != null){
+				exampleYoutubeVideoID = uploadVideo.upload("Ejemplo en LESCO del término " + wordName, "Ejemplo en LESCO del término: " + wordName + " - " + example, exampleVideoFile);
+			}
+			
+			//The term video is the only that is compulsory, the other ones are optional
 			if(!termYoutubeVideoID.isEmpty()){
 				//Get user session
 				HttpSession session = request.getSession();
@@ -324,14 +344,13 @@ public class TermnsController {
 				
 				UserProfile userProfile = ProfileDetailReference.getUserProfile();
 				
-				
 				//New Word
 				Word word = new Word();
-				word.setWordName(addTermForm.getWordName());
+				word.setWordName(wordName);
 				//word.setCategory(addTermForm.getCategoryName());
-				word.setDefinition(addTermForm.getDefinition());
-				word.setExplanation(addTermForm.getExplanation());
-				word.setExample(addTermForm.getExample());
+				if(definition != null) word.setDefinition(definition);
+				if(explanation != null) word.setExplanation(explanation);
+				if(example != null) word.setExample(example);
 				word.setNumberOfVisits(0);
 				
 				//TODO Update the Youtube video ID according to the 4 new video names
@@ -341,9 +360,9 @@ public class TermnsController {
 				video.setTermYoutubeVideoID(termYoutubeVideoID);
 				
 				//Set additional videos if available
-//				if(definitionYoutubeVideoID != null) {
-//					video.setDefinitionYoutubeVideoID(definitionYoutubeVideoID);
-//				}
+				if(definitionYoutubeVideoID != null) {
+					video.setDefinitionYoutubeVideoID(definitionYoutubeVideoID);
+				}
 				if(explanationYoutubeVideoID != null){
 					video.setExampleYoutubeVideoID(exampleYoutubeVideoID);
 				}
@@ -363,7 +382,7 @@ public class TermnsController {
 				word.setUserProfile(userProfile);
 				
 				//Get the category
-				if(addTermForm.getCategoryName().trim().length() != 0){
+				if(addTermForm.getCategoryName() != null && addTermForm.getCategoryName().trim().length() != 0){
 					Category category = categoryDAO.findByCategoryName(addTermForm.getCategoryName());
 					
 					//Relationship references
@@ -384,6 +403,12 @@ public class TermnsController {
 		}
 	}
 	
+	/**
+	 * 
+	 * @param wordList
+	 * @return
+	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private List processWordList(List<Word> wordList){
 		
 		List result = new ArrayList();

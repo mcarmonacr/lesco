@@ -98,7 +98,7 @@ function submitform() {
 	  formData.append("video", filePath.files[0]);
 	  formData.append("definitionVideo", definitionFilePath.files[0]);
 	  formData.append("explanationVideo", explanationFilePath.files[0]);
-	  formData.append("examplesVideo", examplesFilePath.files[0]);
+	  formData.append("exampleVideo", examplesFilePath.files[0]);
 	  //formData.append("data", JSON.stringify(formParameters)); 
 	  
 	  //formData.serialize();

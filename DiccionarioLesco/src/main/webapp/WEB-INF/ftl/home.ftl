@@ -14,9 +14,16 @@
 		<div class="panel panel-default">
 		  <div class="panel-body">
 		  
+		  
+		  <#if randomWord.wordName??>
+		 	 	<div class="row">
+			    	<h1><span class="label label-primary terms-header" id="wordName"> ${randomWord.wordName}</span></h1>
+			    </div>
+		  <#else>
 		  	<div class="row">
-		    	<h1><span class="label label-primary terms-header" id="wordName"> ${randomWord.wordName}</span></h1>
-		    </div>
+			    	<h1><span class="label label-primary terms-header" id="wordName"> No Hay Términos</span></h1>
+			    </div>
+		  </#if>
 
 			
 		  <!-- Nav tabs -->
