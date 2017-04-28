@@ -43,15 +43,17 @@
 		  <div class="tab-content">
 		    <div role="tabpanel" class="tab-pane active" id="home">
 		    	<div class="row embed-responsive embed-responsive-16by9">
+		    		<#assign termSourceURL = "https://www.youtube.com/embed/${randomWord.video.termYoutubeVideoID}?controls=1">
 					 <iframe class="embed-responsive-item" id="videoIframe"
-					src="https://www.youtube.com/embed/X7PpGPOHVrA?controls=1">
+					src=${termSourceURL}>
 					</iframe> 
 				</div>
 		    </div>
 		    <div role="tabpanel" class="tab-pane" id="profile">
 		    	<div class="row embed-responsive embed-responsive-16by9">
+		    	<#assign definitionSourceURL = "https://www.youtube.com/embed/${randomWord.video.definitionYoutubeVideoID}?controls=1">
 					 <iframe class="embed-responsive-item" id="videoIframe"
-					src="https://www.youtube.com/embed/X7PpGPOHVrA?controls=1">
+					src=${definitionSourceURL}>
 					</iframe> 
 				</div>
 			    <div class="row">
@@ -61,7 +63,7 @@
 					  <h3 class="panel-title">Definición</h3>
 					  </div>
 					  <div class="panel-body">
-					    Es un tipo de saludo.
+					    ${randomWord.definition}
 					  </div>
 					</div>
 <!-- 					<div class="panel-group"> -->
@@ -81,8 +83,9 @@
 		    </div>
 		    <div role="tabpanel" class="tab-pane" id="messages">
 			    <div class="row">
+			    <#assign explanationSourceURL = "https://www.youtube.com/embed/${randomWord.video.explanationYoutubeVideoID}?controls=1">
 					 <iframe class="video-container" id="videoIframe"
-					src="https://www.youtube.com/embed/X7PpGPOHVrA?controls=1">
+					src=${explanationSourceURL}>
 					</iframe> 
 				</div>
 			    <div class="row">
@@ -94,7 +97,7 @@
 					      </h4>
 					    </div>
 					    <div id="collapse1" class="panel-collapse collapse">
-					      <div id="explanationDiv" class="panel-body">Es usualemnte utilizado como saludo inicial entre dos o más personas.</div>
+					      <div id="explanationDiv" class="panel-body">${randomWord.explanation}</div>
 		<!-- 			      <div class="panel-footer">Panel Footer</div> -->
 					    </div>
 					  </div>
@@ -103,8 +106,9 @@
 		    </div>
 		    <div role="tabpanel" class="tab-pane" id="settings">
 		    	<div class="row">
+		    	<#assign exampleSourceURL = "https://www.youtube.com/embed/${randomWord.video.exampleYoutubeVideoID}?controls=1">
 					 <iframe class="video-container" id="videoIframe"
-					src="https://www.youtube.com/embed/X7PpGPOHVrA?controls=1">
+					src=${exampleSourceURL}>
 					</iframe> 
 				</div>
 				<div class="row">
@@ -116,7 +120,7 @@
 						  </h4>
 						</div>
 						<div id="collapse3" class="panel-collapse collapse">
-						  <div id="exampleDiv" class="panel-body">¡Hola a todos! ¿Cómo están?</div>
+						  <div id="exampleDiv" class="panel-body">${randomWord.example}</div>
 					<!-- 			      <div class="panel-footer">Panel Footer</div> -->
 						</div>
 					  </div>
@@ -133,7 +137,8 @@
 			</div>
 			<div class="col-md-6">
 				<h2>
-					<span id="numberOfVisitsSpan" class="label label-primary visits glyphicon glyphicon-eye-open"> Visitas: 35</span>
+					<#assign visits = "Visitas: ${randomWord.numberOfVisits}">
+					<span id="numberOfVisitsSpan" class="label label-primary visits glyphicon glyphicon-eye-open"> ${visits}</span>
 				</h2>
 			</div>
 		</div>

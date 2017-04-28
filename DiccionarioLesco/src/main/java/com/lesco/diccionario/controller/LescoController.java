@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.lesco.diccionario.dao.CategoryDAO;
 import com.lesco.diccionario.dao.WordDAO;
 import com.lesco.diccionario.model.Category;
+import com.lesco.diccionario.model.Video;
 import com.lesco.diccionario.model.Word;
 
 /**
@@ -164,7 +165,24 @@ public class LescoController {
 			
 			return randomWord;
 		} else {
-			return null;
+			//In case there aren't any videos available create empty objects 
+			
+			Video video = new Video();
+			video.setDefinitionYoutubeVideoID("");
+			video.setExampleYoutubeVideoID("");
+			video.setExplanationYoutubeVideoID("");
+			video.setTermYoutubeVideoID("");
+			
+			Word word = new Word();
+			
+			word.setWordName("");
+			word.setDefinition("");
+			word.setExample("");
+			word.setExplanation("");
+			word.setNumberOfVisits(0);
+			word.setVideo(video);
+			
+			return word;
 		}
 	}
 	
