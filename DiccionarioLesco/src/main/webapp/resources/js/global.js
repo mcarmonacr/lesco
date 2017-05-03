@@ -2,13 +2,13 @@ jQuery(document).ready(function($) {
 
 		$("#loginForm").submit(function(event) {
 			event.preventDefault();
-			submitform();
+			submitGlobalLoginForm();
 
 		});
 
 });
 
-function submitform() {
+function submitGlobalLoginForm() {
 
 	  var loginEmailAddress=document.getElementById("loginEmailAddress");
 	  var loginPassword=document.getElementById("loginPassword");

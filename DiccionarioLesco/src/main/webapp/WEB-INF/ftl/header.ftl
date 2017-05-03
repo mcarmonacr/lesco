@@ -21,7 +21,7 @@
 	            
 	             <#if (userRole??)>
 					<#if (isSessionValid == "true")>
-						<li><a href="/DiccionarioLesco/agregar">Agregar Término</a></li>
+						<li><a href="/DiccionarioLesco/agregar"> <span class="glyphicon glyphicon-plus"></span> Agregar Término</a></li>
 					</#if>
 				</#if>
 	            
@@ -29,7 +29,7 @@
 	            
 	            <#if (isSessionValid??)>
 					<#if (userRole == "administrator")>
-						<li><a href="/DiccionarioLesco/admin">Admin</a></li>
+						<li><a href="/DiccionarioLesco/admin"> <span class="glyphicon glyphicon-dashboard"></span> Admin</a></li>
 					</#if>
 				</#if>
 	            

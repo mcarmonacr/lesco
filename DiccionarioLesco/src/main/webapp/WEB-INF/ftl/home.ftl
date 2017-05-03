@@ -201,24 +201,30 @@
 
 	    <div id="wordListDiv" class="row terms-list">
 	    
-	    <a href="#" class="list-group-item active">
-		    Hola
-		  </a>
+<!-- 	    <a href="#" class="list-group-item active"> -->
+<!-- 		    Hola -->
+<!-- 		  </a> -->
 		  
 <!-- 		  <a href="#" class="list-group-item">Hotel</a> -->
 <!-- 		  <a href="#" class="list-group-item">Importante</a> -->
 <!-- 		  <a href="#" class="list-group-item">Letra</a> -->
 <!-- 		  <a href="#" class="list-group-item">Nunca</a> -->
 	    
-	    <#list listWords as word>
-		  <a onclick="loadDetail(${word.wordId})" href="#" class="list-group-item">${word.wordName}</a>
-	    </#list>
+		    <#list listWords as word>
+			  <a onclick="loadDetail(${word.wordId})" href="#" class="list-group-item">${word.wordName}</a>
+		    </#list>
 
-		  </div>
-		  
-		  <div class="row">
-		  	<h1><span id="totalTermsCounter" class="label label-primary terms-header">Total: ${listWords?size +1} </span></h1>
-		  </div>
+		 </div>
+		    
+		  <#if randomWord.wordName??>
+		  	<div class="row">
+		  		<h1><span id="totalTermsCounter" class="label label-primary terms-header">Total: ${listWords?size} </span></h1>
+		  	</div>
+		  <#else>
+		  	<div class="row">
+		  		<h1><span id="totalTermsCounter" class="label label-primary terms-header">Total: 0 </span></h1>
+		  	</div>
+		  </#if>
 		  
 		</div>
 		
