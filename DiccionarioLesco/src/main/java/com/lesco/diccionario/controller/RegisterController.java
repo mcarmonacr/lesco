@@ -1,5 +1,7 @@
 package com.lesco.diccionario.controller;
 
+import java.util.Map;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -10,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.lesco.diccionario.dao.UserDAO;
+import com.lesco.diccionario.helper.RandomGenerator;
+import com.lesco.diccionario.helper.UploadVideo;
 import com.lesco.diccionario.model.ProfileDetail;
 import com.lesco.diccionario.model.UserProfile;
 import com.lesco.diccionario.pojo.AjaxResponseBody;
@@ -36,6 +40,9 @@ public class RegisterController {
 	
 	@Autowired
 	private SHAEncryption shaEncryption;
+	
+	@Autowired
+	private RandomGenerator randomGenerator;
 	
 	/**
 	 * Service that registers the user into the site
@@ -139,6 +146,48 @@ public class RegisterController {
 		
 		return result;
 	}
+	
+	/**
+	 * 
+	 * Verifies is the emailAddress entered already exists in the database
+	 * 
+	 * Type: Json POST method
+	 * 
+	 * @param registerForm. Contains fields: userName, emailAddress, password, passwordConfirmation, private String birthdate ,termsAndConditions.
+	 */
+	@RequestMapping(value= "/recuperarContraseña", method = RequestMethod.POST, headers = "Accept=application/json", consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody AjaxResponseBody recuperarContraseña(@RequestBody Map<String, String> json){
+		
+		AjaxResponseBody result = new AjaxResponseBody();
+		
+		logger.debug("RegisterController - verificarCorreo() - Start");
+		if (json.get("wordId") != null){	}
+		
+		//TODO define a global constants class
+		randomGenerator.randomString(25);
+		
+		//TODO Verify the user-name / email and then send the the new password
+		
+//		//Validate input
+//		if(registerForm.getEmailAddress() != null && registerForm.getEmailAddress().length() != 0){
+//			
+//			//Checks if the input user name already exists in the database
+//			if(userDAO.checkEmailAddress(registerForm.getEmailAddress().trim()) == false){			
+//				result.setMessage("Sucess");
+//				result.setCode("000");
+//			}else{
+//				result.setMessage("The user already exists");
+//				result.setCode("001");
+//			}
+//		}else{
+//			result.setMessage("Failure");
+//			result.setCode("001");
+//		}
+		
+		logger.debug("RegisterController - verificarCorreo() - End");
+		
+		return result;
+	} 
 	
 	
 	/**

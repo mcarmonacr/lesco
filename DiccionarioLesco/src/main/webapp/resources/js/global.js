@@ -37,6 +37,13 @@ function submitGlobalLoginForm() {
 			window.location.reload(true);
 			
 			//display(data);
+			
+			if(data != null  && data.code == "000"){
+				
+			} else {
+				//alert("Wrong password");
+			}
+			
 		},
 		error : function(e) {
 			console.log("ERROR: ", e);

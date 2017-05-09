@@ -124,4 +124,7 @@ http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
 	<bean id="sendMailTLS" class="com.lesco.diccionario.utils.SendMailTLS">
 	</bean>
 	
+	<bean id="randomGenerator" class="com.lesco.diccionario.helper.RandomGenerator">
+	</bean>
+	
 </beans>

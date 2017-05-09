@@ -192,7 +192,7 @@
   </div>
   
 	<!-- Common loading modal -->
-	<#include "/loadingModal.ftl">
+	<#include "/modal/loadingModal.ftl">
   
 </div>
     
