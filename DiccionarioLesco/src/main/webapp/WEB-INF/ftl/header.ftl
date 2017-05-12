@@ -61,7 +61,11 @@
 					</#if>
 				</#if>
 			<#else>
+						
 				<form class="navbar-form navbar-right" id="loginForm" name="loginForm">
+				
+				<a data-toggle="modal" data-target="#myPasswordModal" class="text-primary">¿Olvidó su contraseña? </a>
+				
 		            <div class="form-group">
 		              <input type="text" placeholder="Email" class="form-control" id="loginEmailAddress" name="loginEmailAddress">
 		            </div>
@@ -84,3 +88,5 @@
     <!-- Space between the header and the content -->
     <br>
 </div>
+
+<#include "/modal/passwordRecoveryModal.ftl">
