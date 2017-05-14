@@ -64,8 +64,9 @@
 						
 				<form class="navbar-form navbar-right" id="loginForm" name="loginForm">
 				
-				<a data-toggle="modal" data-target="#myPasswordModal" class="text-primary">¿Olvidó su contraseña? </a>
-				
+				<div id= "passwordRecoveryDiv">
+					<a data-toggle="modal" data-target="#myPasswordModal" class="text-primary">¿Olvidó su contraseña? </a>
+				</div>
 		            <div class="form-group">
 		              <input type="text" placeholder="Email" class="form-control" id="loginEmailAddress" name="loginEmailAddress">
 		            </div>

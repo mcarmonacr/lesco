@@ -17,8 +17,10 @@ import com.lesco.diccionario.helper.UploadVideo;
 import com.lesco.diccionario.model.ProfileDetail;
 import com.lesco.diccionario.model.UserProfile;
 import com.lesco.diccionario.pojo.AjaxResponseBody;
+import com.lesco.diccionario.pojo.ContactForm;
 import com.lesco.diccionario.pojo.RegisterForm;
 import com.lesco.diccionario.utils.SHAEncryption;
+import com.lesco.diccionario.utils.SendMailTLS;
 
 /**
  * Handles all the registry related operations
@@ -43,6 +45,9 @@ public class RegisterController {
 	
 	@Autowired
 	private RandomGenerator randomGenerator;
+	
+	@Autowired
+	private SendMailTLS sendMailTLS;
 	
 	/**
 	 * Service that registers the user into the site
@@ -155,38 +160,62 @@ public class RegisterController {
 	 * 
 	 * @param registerForm. Contains fields: userName, emailAddress, password, passwordConfirmation, private String birthdate ,termsAndConditions.
 	 */
-	@RequestMapping(value= "/recuperarContraseña", method = RequestMethod.POST, headers = "Accept=application/json", consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value= "/recuperarPassword", method = RequestMethod.POST, headers = "Accept=application/json", consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody AjaxResponseBody recuperarContraseña(@RequestBody Map<String, String> json){
 		
-		AjaxResponseBody result = new AjaxResponseBody();
+		AjaxResponseBody ajaxResponse = new AjaxResponseBody();
 		
 		logger.debug("RegisterController - verificarCorreo() - Start");
-		if (json.get("wordId") != null){	}
+		if (json.get("emailAddress") != null){	
+			
+			String emailAddress= json.get("emailAddress");
 		
-		//TODO define a global constants class
-		randomGenerator.randomString(25);
-		
-		//TODO Verify the user-name / email and then send the the new password
-		
-//		//Validate input
-//		if(registerForm.getEmailAddress() != null && registerForm.getEmailAddress().length() != 0){
-//			
-//			//Checks if the input user name already exists in the database
-//			if(userDAO.checkEmailAddress(registerForm.getEmailAddress().trim()) == false){			
-//				result.setMessage("Sucess");
-//				result.setCode("000");
-//			}else{
-//				result.setMessage("The user already exists");
-//				result.setCode("001");
-//			}
-//		}else{
-//			result.setMessage("Failure");
-//			result.setCode("001");
-//		}
-		
+			//TODO define a global constants class
+			String newPassword= randomGenerator.randomString(25);
+			
+			//Verifies that the email address existis in the database
+			 if(userDAO.checkEmailAddress(emailAddress.trim()) == true){
+				 
+					//Obtain the User that belongs to the email
+					ProfileDetail profileDetailQuery = userDAO.findByEmailAddress(emailAddress);
+					
+					//ProfileDetail ProfileDetailReference = userDAO.findById(profileDetailQuery.getProfileDetailId());
+					
+					UserProfile userProfile = userDAO.findUserProfileById(profileDetailQuery.getProfileDetailId());
+					
+					userProfile.setUserPassword(shaEncryption.getHashedPassword(newPassword, userProfile.getSalt()));
+					
+					//Update the profile in the database
+					userDAO.update(userProfile);
+					
+					//nested transactions not supported
+					
+					ContactForm contactForm = new ContactForm();
+					
+					contactForm.setContactEmail(emailAddress.trim());
+					//contactForm.setContactMessage(contactMessage);
+					contactForm.setContactName(userProfile.getUserName());
+					contactForm.setContactSubject("Diccionario LESCO - Cambio de Contraseña");
+					
+					String sendEmailResponse = sendMailTLS.sendPasswordRecoveryMail(contactForm, newPassword);
+					
+					//String sendEmailResponse = "success";
+					
+					if("success".equals(sendEmailResponse)){
+						//Response toggle based on the save return
+						ajaxResponse.setCode("000");
+						ajaxResponse.setMessage("Success");
+					}else{
+						//Response toggle based on the save return
+						ajaxResponse.setCode("999");
+						ajaxResponse.setMessage("Error");
+					}
+			 }
+		}
+				
 		logger.debug("RegisterController - verificarCorreo() - End");
 		
-		return result;
+		return ajaxResponse;
 	} 
 	
 	

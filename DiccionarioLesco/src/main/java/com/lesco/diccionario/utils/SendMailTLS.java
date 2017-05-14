@@ -67,4 +67,45 @@ public class SendMailTLS {
 		
 		return "success";
 	}
+	
+	
+	public String sendPasswordRecoveryMail(ContactForm contactForm, String newPassword) {
+
+		final String username = "diccionariolesco@gmail.com";
+		final String password = "diccionario";
+
+		Properties props = new Properties();
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.smtp.starttls.enable", "true");
+		props.put("mail.smtp.host", "smtp.gmail.com");
+		props.put("mail.smtp.port", "587");
+
+		Session session = Session.getInstance(props,
+		  new javax.mail.Authenticator() {
+			protected PasswordAuthentication getPasswordAuthentication() {
+				return new PasswordAuthentication(username, password);
+			}
+		  });
+
+		try {
+
+			Message message = new MimeMessage(session);
+			message.setFrom(new InternetAddress("diccionariolesco@gmail.com"));
+			message.setRecipients(Message.RecipientType.TO,
+				InternetAddress.parse(contactForm.getContactEmail()));
+			message.setSubject(contactForm.getContactSubject());
+			message.setText(" Hola " + contactForm.getContactName()
+				+ "\n\n Su nueva contraseña es:: "+ newPassword
+				+ "\n\n Atentamente, el equipo del diccionario de LESCO");
+
+			Transport.send(message);
+
+			//System.out.println("Done");
+
+		} catch (MessagingException e) {
+			logger.debug("SendMailTLS - admin() - End");
+		}
+		
+		return "success";
+	}
 }

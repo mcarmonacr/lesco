@@ -56,7 +56,8 @@ public class UserDAOImpl implements UserDAO {
 	public void update(UserProfile userProfile) {
 		
 		
-		Session session = this.sessionFactory.getCurrentSession();
+		//Session session = this.sessionFactory.getCurrentSession();
+		Session session = this.sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
 		//session.persist(userProfile);
 		session.update(userProfile);
@@ -153,6 +154,16 @@ public class UserDAOImpl implements UserDAO {
 		criteria.setCacheable(true); //Improves performance. The average time drops close to the level of calling get.
         criteria.add(Restrictions.eq("profileDetailId",profileDetailId));
         return (ProfileDetail) criteria.uniqueResult();
+	}
+	
+	
+	@Transactional
+	public UserProfile findUserProfileById(Integer userProfileId){		
+		
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(UserProfile.class);
+		criteria.setCacheable(true); //Improves performance. The average time drops close to the level of calling get.
+        criteria.add(Restrictions.eq("userProfileId",userProfileId));
+        return (UserProfile) criteria.uniqueResult();
 	}
 	
 	

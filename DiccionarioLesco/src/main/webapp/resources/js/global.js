@@ -5,6 +5,12 @@ jQuery(document).ready(function($) {
 			submitGlobalLoginForm();
 
 		});
+		
+		$("#passwordRecoveryForm").submit(function(event) {
+			event.preventDefault();
+			submitPasswordRecoveryForm();
+
+		});
 
 });
 
@@ -32,6 +38,48 @@ function submitGlobalLoginForm() {
 	    dataType : 'json',
 	    success : function(data) {
 			console.log("SUCCESS: ", data);
+						
+			if(data != null  && data.code == "000"){
+				//The true parameter forces the page to release it's cache.
+				window.location.reload(true);
+			} else {
+				//alert("Wrong password");
+				//document.getElementById("passwordRecoveryDiv").css("visibility", "visible");
+				$("#passwordRecoveryDiv").css("display", "inline");
+			}
+		},
+		error : function(e) {
+			console.log("ERROR: ", e);
+			//display(e);
+		},
+		done : function(e) {
+			console.log("DONE");
+			//enableSearchButton(true);
+		}
+	  });
+	  //return false;
+}
+
+function submitPasswordRecoveryForm() {
+
+	  var loginEmailAddressModal= document.getElementById("loginEmailAddressModal");
+
+	  var search = {
+	            "emailAddress":loginEmailAddressModal.value
+	    }
+
+	  $.ajax({
+	  	headers: { 
+	        'Accept': 'application/json',
+	        'Content-Type': 'application/json' 
+	    },
+		type: 'post',
+	    contentType : "application/json",
+	    url: "/DiccionarioLesco/registro/recuperarPassword",
+	    data : JSON.stringify(search),
+	    dataType : 'json',
+	    success : function(data) {
+			console.log("SUCCESS: ", data);
 			
 			//The true parameter forces the page to release it's cache.
 			window.location.reload(true);
@@ -55,7 +103,7 @@ function submitGlobalLoginForm() {
 		}
 	  });
 	  //return false;
-	}
+}
 
 function endUserSession() {
 

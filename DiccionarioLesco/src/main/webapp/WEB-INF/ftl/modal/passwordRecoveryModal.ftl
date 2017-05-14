@@ -16,16 +16,19 @@
       <div class="modal-body">
         <p>Por favor ingrese la misma dirección de correo registrada en el sistema, ahí recibirá un correo con su nueva contraseña</p>
       </div>
+      <form id="passwordRecoveryForm" name="passwordRecoveryForm">
       <div class="form-group">
       	<div class="col-md-12">
+      	
         	<input type="text" placeholder="Email" class="form-control" id="loginEmailAddressModal" name="loginEmailAddressModal">
         </div>
       </div>
       <br>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn btn-primary">Enviar</button>
+        <button type="submit" class="btn btn-primary">Enviar</button>
       </div>
+      </form>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->

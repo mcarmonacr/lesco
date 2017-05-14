@@ -55,4 +55,6 @@ public interface UserDAO {
 	 * @return
 	 */
 	public ProfileDetail findById(Integer profileDetailId);
+	
+	public UserProfile findUserProfileById(Integer userProfileId);
 }
