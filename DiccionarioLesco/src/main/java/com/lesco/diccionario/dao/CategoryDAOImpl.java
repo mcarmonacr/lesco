@@ -10,7 +10,6 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.lesco.diccionario.controller.AboutController;
 import com.lesco.diccionario.model.Category;
 
 /**
@@ -38,24 +37,32 @@ public class CategoryDAOImpl implements CategoryDAO {
 	 */
 	@Transactional
 	public void save(Category category) {
+		logger.debug("CategoryDAOImpl - save() - Start");
+		
 		Session session = this.sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
 		session.persist(category);
 		tx.commit();
 		session.close();
+		
+		logger.debug("CategoryDAOImpl - save() - End");
 	}
 	
 	/**
 	 * Get a list of all categories
 	 */
 	@Transactional
+	@SuppressWarnings("unchecked")
 	public List<Category> list() {
 		
-		@SuppressWarnings("unchecked")
+		logger.debug("CategoryDAOImpl - List<Category>() - Start");
+		
         List<Category> listCategories = (List<Category>) sessionFactory.getCurrentSession()
                 .createCriteria(Category.class)
                 .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
 
+        logger.debug("CategoryDAOImpl - List<Category>() - End");
+        
         return listCategories;
 	}
 	
@@ -65,9 +72,13 @@ public class CategoryDAOImpl implements CategoryDAO {
 	@Transactional
 	public Category findByCategoryName(String categoryName){
 		
+		logger.debug("CategoryDAOImpl - findByCategoryName() - Start");
+		
 		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Category.class);
         criteria.add(Restrictions.eq("categoryName",categoryName));
+        
+        logger.debug("CategoryDAOImpl - findByCategoryName() - End");
+        
         return (Category) criteria.uniqueResult();
-		
 	}
 }

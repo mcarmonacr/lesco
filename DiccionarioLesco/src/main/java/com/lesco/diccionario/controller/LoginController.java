@@ -21,8 +21,6 @@ import com.lesco.diccionario.pojo.AjaxResponseBody;
 import com.lesco.diccionario.pojo.LoginForm;
 import com.lesco.diccionario.utils.SHAEncryption;
 
-
-
 /**
  * 
  * @author Mario Alonso Carmona Dinarte
@@ -55,117 +53,126 @@ public class LoginController {
 	public @ResponseBody AjaxResponseBody iniciarSesion(@RequestBody LoginForm loginForm, HttpServletRequest request, 
 	        HttpServletResponse response){
 		
-		logger.debug("RegisterController - iniciarSesion() - Start");
+		logger.debug("LoginController - iniciarSesion() - Start");
 		
 		AjaxResponseBody ajaxResponse = new AjaxResponseBody();
 		
-		//Verifies the login
+		//Verifies the login. Response toggle based on the save return
 		if(verifyUser(loginForm)){
 			//Validation the session, creates a new one in case there isn't one already created
 			verifySession(loginForm, request, response);
-			
-			//Response toggle based on the save return
+
 			ajaxResponse.setCode("000");
 			ajaxResponse.setMessage("Success");
-			
 		} else {
-			//Response toggle based on the save return
 			ajaxResponse.setCode("999");
 			ajaxResponse.setMessage("Error");
 		}
 				
-		logger.debug("RegisterController - iniciarSesion() - End");
+		logger.debug("LoginController - iniciarSesion() - End");
 		
 		return ajaxResponse;
 	}
 	
 	/**
-	 * Service that registers the user into the site
-	 * Type: Json POST method
+	 * Service that log users out the site
 	 * 
-	 * @param registerForm. Contains fields: userName, emailAddress, password, passwordConfirmation, private String birthdate ,termsAndConditions.
+	 * @param request
+	 * @param response
+	 * @return AjaxResponseBody
 	 */
 	@RequestMapping(value= "/finalizarSesion", method = RequestMethod.POST, headers = "Accept=application/json", consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody AjaxResponseBody finalizarSesion(HttpServletRequest request, 
 	        HttpServletResponse response){
 		
-		logger.debug("RegisterController - iniciarSesion() - Start");
+		logger.debug("LoginController - finalizarSesion() - Start");
 		
 		AjaxResponseBody ajaxResponse = new AjaxResponseBody();
 		
-		//Verifies the login
+		//Invalidates the user session. Response toggle based on the save return
 		if(endUserSession(request, response)){
-			//Validation the session, creates a new one in case there isn't one already created
-			//verifySession(loginForm, request, response);
-			
-			//Response toggle based on the save return
 			ajaxResponse.setCode("000");
 			ajaxResponse.setMessage("Success");
-			
 		} else {
-			//Response toggle based on the save return
 			ajaxResponse.setCode("999");
 			ajaxResponse.setMessage("Error");
 		}
 				
-		logger.debug("RegisterController - iniciarSesion() - End");
+		logger.debug("LoginController - finalizarSesion() - End");
 		
 		return ajaxResponse;
 	}
 	
 	/**
-	 * End User Session
+	 * Ends the user session by invalidating the session and deleting the user's cookie.
+	 * 
+	 * @param request
+	 * @param response
+	 * @return Boolean
 	 */
-	
 	private Boolean endUserSession(HttpServletRequest request, 
 	        HttpServletResponse response){
 		
+		logger.debug("LoginController - endUserSession() - Start");
+		
+		//Gets the current user's session
 		HttpSession session = request.getSession();
 		
 		//Invalidates the current session
 		session.invalidate();
 		
-		
-		//Adds the JSESSIONID cookie to be able to maintain the same session
+		//Adds a new null JSESSIONID cookie to invalidate the current valid cookie
 		Cookie cookie = new Cookie("JSESSIONID",null);
-		cookie.setMaxAge(0); //15 minutes
+		cookie.setMaxAge(0); //0 minutes
 		response.addCookie(cookie);
 		
-		return true;
+		logger.debug("LoginController - endUserSession() - End");
 		
+		return true;
 	}
 	
 	/**
-	 * 
+	 * Verfies the user's login information by matching the form with the database values
 	 * 
 	 * @param loginForm
-	 * @return
+	 * @return Boolean
 	 */
 	private Boolean verifyUser(LoginForm loginForm){
 	
+		logger.debug("LoginController - verifyUser() - Start");
+		
+		//Value to be returned
+		Boolean isUserdVerfied;
+		
+		//Get the user's profile detail
 		ProfileDetail profileDetailQuery = userDAO.findByEmailAddress(loginForm.getEmailAddress());
 		
+		//Get user's profile detail hibernate's reference
 		ProfileDetail ProfileDetailReference = userDAO.findById(profileDetailQuery.getProfileDetailId());
 		
+		//Get user's profile using the user's profile detail object
 		UserProfile userProfile = ProfileDetailReference.getUserProfile();
 		
+		//Get original user's sal value. This value is needed to encrypt the user's input and see if it matches the value in the Database.
 		byte[] salt= userProfile.getSalt();
 		
+		//Get hashed passwrod from the user's input
 		String hashedPassword = shaEncryption.getHashedPassword(loginForm.getPassword(), salt);
 		
-		//If passwords match return success
+		//If passwords match, return success
 		if (hashedPassword.equals(userProfile.getUserPassword())){
-			return true;
+			isUserdVerfied= true;
 		} else {
-			return false;
+			isUserdVerfied= false;
 		}
-		
-		//return true;
 
+		logger.debug("LoginController - verifyUser() - End");
+		
+		return isUserdVerfied;
 	}
 	
 	/**
-	 * 
+	 * Verifies the current user's session
 	 * 
 	 * @param loginForm
 	 * @param request
@@ -173,6 +180,7 @@ public class LoginController {
 	 */
 	private void verifySession(LoginForm loginForm, HttpServletRequest request, 
 	        HttpServletResponse response){
+		logger.debug("LoginController - verifySession() - Start");
 		
 		//Create user session or get the current in case one already exists
 		HttpSession session = request.getSession();
@@ -185,5 +193,7 @@ public class LoginController {
 		Cookie cookie = new Cookie("JSESSIONID",session.getId().toString());
 		cookie.setMaxAge(15*60); //15 minutes
 		response.addCookie(cookie);
+		
+		logger.debug("LoginController - verifySession() - End");
 	}
 }

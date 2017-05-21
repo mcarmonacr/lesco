@@ -11,10 +11,8 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.lesco.diccionario.model.Category;
 import com.lesco.diccionario.model.ProfileDetail;
 import com.lesco.diccionario.model.UserProfile;
-import com.lesco.diccionario.model.Word;
 
 /**
  * User Table Data Access Object Implementation
@@ -41,66 +39,59 @@ public class UserDAOImpl implements UserDAO {
 	 */
 	@Transactional
 	public void save(UserProfile userProfile) {
+		
+		logger.debug("UserDAOImpl - save() - Start");
+		
 		Session session = this.sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
 		session.persist(userProfile);
 		tx.commit();
 		session.close();
+		
+		logger.debug("UserDAOImpl - save() - End");
 	}
 	
-	
 	/**
-	 * Updates a user in the DB
+	 * Update a user in the DB
 	 */
 	@Transactional
 	public void update(UserProfile userProfile) {
 		
+		logger.debug("UserDAOImpl - update() - Start");
 		
-		//Session session = this.sessionFactory.getCurrentSession();
 		Session session = this.sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
-		//session.persist(userProfile);
 		session.update(userProfile);
 		tx.commit();
 		session.close();
+		
+		logger.debug("UserDAOImpl - update() - End");
 	}
 	
-//	@Transactional
-//	public List<Category> list() {
-//		
-//		@SuppressWarnings("unchecked")
-//        List<Category> listCategories = (List<Category>) sessionFactory.getCurrentSession()
-//                .createCriteria(Category.class)
-//                .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
-//
-//        return listCategories;
-//	}
-	
 	/**
-	 * Check if the given user name already exists
+	 * Check if the given user name already exists in the database
 	 */
 	@SuppressWarnings("unchecked")
 	@Transactional
 	public Boolean checkUserName(String userName){
 		
-//		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(UserProfile.class);
-//        criteria.add(Restrictions.eq("userName",userName));
-//        return (UserProfile) criteria.uniqueResult();
-
 		logger.debug("UserDAOImpl - checkUserName() - Start");
+		
+		Boolean result;
 		
         Query query = sessionFactory.getCurrentSession().createQuery("from UserProfile where userName like :userName");
         query.setParameter("userName", userName + "%");
         List<UserProfile> userList= query.list();
 
         if(!userList.isEmpty()) {      
-        	logger.debug("UserDAOImpl - checkUserName() - End");
-        	return true;
+        	result= true;
+        } else {
+        	result= false;
         }
-        else{
-        	logger.debug("UserDAOImpl - checkUserName() - End");
-        	return false;
-        }
+        
+        logger.debug("UserDAOImpl - checkUserName() - End");
+        
+        return result;
 	}
 
 	/**
@@ -108,63 +99,77 @@ public class UserDAOImpl implements UserDAO {
 	 */
 	@SuppressWarnings("unchecked")
 	@Transactional
-	public Boolean checkEmailAddress(String emailAddress) {
+	public Boolean checkEmailAddress(String emailAddress){
 		
 		logger.debug("UserDAOImpl - checkEmailAddress() - Start");
+		
+		Boolean result;
 		
         Query query = sessionFactory.getCurrentSession().createQuery("from ProfileDetail where email like :emailAddress");
         query.setParameter("emailAddress", emailAddress + "%");
         List<ProfileDetail> profileDetailList= query.list();
 
-        if(!profileDetailList.isEmpty()) {      
-        	logger.debug("UserDAOImpl - checkEmailAddress() - End");
-        	return true;
+        if(!profileDetailList.isEmpty()) {        	
+        	result= true;
+        } else {
+        	result= false;
         }
-        else{
-        	logger.debug("UserDAOImpl - checkEmailAddress() - End");
-        	return false;
-        }
+        
+        logger.debug("UserDAOImpl - checkEmailAddress() - End");
+        
+        return result;
 	}
 	
 	
 	/**
-	 * Find a particular category by its name
+	 * Find a particular profile detail based on an email address
 	 */
 	@Transactional
 	public ProfileDetail findByEmailAddress(String emailAddress){
 		
+		 logger.debug("UserDAOImpl - findByEmailAddress() - Start");
+		 
 		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(ProfileDetail.class);
         criteria.add(Restrictions.eq("email",emailAddress));
         
-        
         ProfileDetail profileDetail = (ProfileDetail) criteria.uniqueResult();
-        
-        //sessionFactory.getCurrentSession().close();
+                
+        logger.debug("UserDAOImpl - findByEmailAddress() - End");
         
         return 	profileDetail;
 	}
 	
 	/**
-	 * Find a particular category by its name
+	 * Find a particular profile detail based on its ID
 	 */
 	@Transactional
 	public ProfileDetail findById(Integer profileDetailId){		
 		
+		logger.debug("UserDAOImpl - findById() - Start");
+		
 		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(ProfileDetail.class);
 		criteria.setCacheable(true); //Improves performance. The average time drops close to the level of calling get.
         criteria.add(Restrictions.eq("profileDetailId",profileDetailId));
+        
+        logger.debug("UserDAOImpl - findById() - End");
+        
         return (ProfileDetail) criteria.uniqueResult();
 	}
 	
-	
+	/**
+	 * Find a particular user profile based on its ID
+	 */
 	@Transactional
 	public UserProfile findUserProfileById(Integer userProfileId){		
+		
+		logger.debug("UserDAOImpl - findUserProfileById() - Start");
 		
 		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(UserProfile.class);
 		criteria.setCacheable(true); //Improves performance. The average time drops close to the level of calling get.
         criteria.add(Restrictions.eq("userProfileId",userProfileId));
+        
+        logger.debug("UserDAOImpl - findUserProfileById() - End");
+        
         return (UserProfile) criteria.uniqueResult();
 	}
-	
-	
 }

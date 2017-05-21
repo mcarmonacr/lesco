@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.lesco.diccionario.dao.UserDAO;
 import com.lesco.diccionario.helper.RandomGenerator;
-import com.lesco.diccionario.helper.UploadVideo;
 import com.lesco.diccionario.model.ProfileDetail;
 import com.lesco.diccionario.model.UserProfile;
 import com.lesco.diccionario.pojo.AjaxResponseBody;
@@ -35,7 +34,7 @@ import com.lesco.diccionario.utils.SendMailTLS;
 public class RegisterController {
 	
 	//Log4J class logger instance
-	private static final Logger logger = Logger.getLogger(TermnsController.class);
+	private static final Logger logger = Logger.getLogger(RegisterController.class);
 
 	@Autowired
 	private UserDAO userDAO;
@@ -79,9 +78,7 @@ public class RegisterController {
 		return response;
 	}
 	
-	
 	/**
-	 * 
 	 * Verifies is the userName entered already exists in the database
 	 * 
 	 * Type: Json POST method
@@ -153,71 +150,68 @@ public class RegisterController {
 	}
 	
 	/**
-	 * 
-	 * Verifies is the emailAddress entered already exists in the database
+	 * Creates a new password and then send an email to the user with that new information
 	 * 
 	 * Type: Json POST method
 	 * 
-	 * @param registerForm. Contains fields: userName, emailAddress, password, passwordConfirmation, private String birthdate ,termsAndConditions.
+	 * @param registerForm. Contains fields: emailAddress
 	 */
 	@RequestMapping(value= "/recuperarPassword", method = RequestMethod.POST, headers = "Accept=application/json", consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody AjaxResponseBody recuperarContraseña(@RequestBody Map<String, String> json){
+	public @ResponseBody AjaxResponseBody recuperarPassword(@RequestBody Map<String, String> json){
 		
 		AjaxResponseBody ajaxResponse = new AjaxResponseBody();
 		
-		logger.debug("RegisterController - verificarCorreo() - Start");
+		logger.debug("RegisterController - recuperarPassword() - Start");
+		
 		if (json.get("emailAddress") != null){	
 			
 			String emailAddress= json.get("emailAddress");
 		
 			//TODO define a global constants class
-			String newPassword= randomGenerator.randomString(25);
+			//Generate a random string of the given length
+			String newPassword= randomGenerator.randomString(10);
 			
-			//Verifies that the email address existis in the database
+			//Verifies that the email address exists in the database
 			 if(userDAO.checkEmailAddress(emailAddress.trim()) == true){
 				 
 					//Obtain the User that belongs to the email
 					ProfileDetail profileDetailQuery = userDAO.findByEmailAddress(emailAddress);
 					
-					//ProfileDetail ProfileDetailReference = userDAO.findById(profileDetailQuery.getProfileDetailId());
-					
+					//Get the user's profile
 					UserProfile userProfile = userDAO.findUserProfileById(profileDetailQuery.getProfileDetailId());
 					
+					//Set the new password
 					userProfile.setUserPassword(shaEncryption.getHashedPassword(newPassword, userProfile.getSalt()));
 					
 					//Update the profile in the database
 					userDAO.update(userProfile);
 					
-					//nested transactions not supported
-					
+					//New contact form
 					ContactForm contactForm = new ContactForm();
-					
 					contactForm.setContactEmail(emailAddress.trim());
 					//contactForm.setContactMessage(contactMessage);
 					contactForm.setContactName(userProfile.getUserName());
 					contactForm.setContactSubject("Diccionario LESCO - Cambio de Contraseña");
 					
+					//Send the email with the given parameters
 					String sendEmailResponse = sendMailTLS.sendPasswordRecoveryMail(contactForm, newPassword);
 					
-					//String sendEmailResponse = "success";
-					
+					//Response toggle based on the save return
 					if("success".equals(sendEmailResponse)){
-						//Response toggle based on the save return
 						ajaxResponse.setCode("000");
 						ajaxResponse.setMessage("Success");
 					}else{
-						//Response toggle based on the save return
 						ajaxResponse.setCode("999");
 						ajaxResponse.setMessage("Error");
 					}
 			 }
-		}
-				
-		logger.debug("RegisterController - verificarCorreo() - End");
+		}		
+		logger.debug("RegisterController - recuperarPassword() - End");
 		
 		return ajaxResponse;
 	} 
 	
+	/**** Private Methods ****/
 	
 	/**
 	 * Stores the new user into the database
@@ -226,7 +220,12 @@ public class RegisterController {
 	 */
 	private String salvarUsuario(RegisterForm registerForm){
 		
-		//Validates that all values come from the form
+		logger.debug("RegisterController - salvarUsuario() - Start");
+		
+		//String to the return, with the operation result
+		String isUserSaved;
+		
+		//Validates that all values that come from the form
 		if(registerForm.getUserName() != null && registerForm.getEmailAddress() != null && registerForm.getPassword() != null && 
 				registerForm.getPasswordConfirmation() != null	&& registerForm.getBirthDate() != null && registerForm.getTermsAndConditions() != null){
 					
@@ -234,38 +233,43 @@ public class RegisterController {
 			//TODO Add the validation of the email
 			if(userDAO.checkUserName(registerForm.getUserName()).equals(false)){
 			
-			//Get unique random salt which will be used to encryp the user password
-			byte[] salt= SHAEncryption.getSalt();
-			
-			//New Profile Detail
-			ProfileDetail profileDetail = new ProfileDetail();
-			profileDetail.setBirthDate(registerForm.getBirthDate());
-			profileDetail.setTermsAndConditions(registerForm.getTermsAndConditions());
-			profileDetail.setEmail(registerForm.getEmailAddress());
-			
-			//New User Profile
-			UserProfile userProfile = new UserProfile();
-			userProfile.setSalt(salt);
-			userProfile.setUserName(registerForm.getUserName());
-			userProfile.setUserPassword(shaEncryption.getHashedPassword(registerForm.getPassword(), salt));
-			
-			if(registerForm.getAdministrator()){
-				userProfile.setUserRole("administrator");
+				//Get unique random salt which will be used to encryp the user password
+				byte[] salt= SHAEncryption.getSalt();
+				
+				//New Profile Detail
+				ProfileDetail profileDetail = new ProfileDetail();
+				profileDetail.setBirthDate(registerForm.getBirthDate());
+				profileDetail.setTermsAndConditions(registerForm.getTermsAndConditions());
+				profileDetail.setEmail(registerForm.getEmailAddress());
+				
+				//New User Profile
+				UserProfile userProfile = new UserProfile();
+				userProfile.setSalt(salt);
+				userProfile.setUserName(registerForm.getUserName());
+				userProfile.setUserPassword(shaEncryption.getHashedPassword(registerForm.getPassword(), salt));
+				
+				//Checks if the user should be administrator
+				if(registerForm.getAdministrator()){
+					userProfile.setUserRole("administrator");
+				}
+				
+				//Because this two instances have a one-to-one relationship, this needs to be done
+				userProfile.setProfileDetail(profileDetail);
+				profileDetail.setUserProfile(userProfile);
+				
+				//This saves both, the User Profile and the Profile Detail instances into the DB
+				userDAO.save(userProfile);
+				
+				//If I wanted to get the ID, I'd have to do something like:
+				//category.getId();
 			}
-			
-			//Because this two instances have a one-to-one relationship, this needs to be done
-			userProfile.setProfileDetail(profileDetail);
-			profileDetail.setUserProfile(userProfile);
-			
-			//This saves both, the User Profile and the Profile Detail instances into the DB
-			userDAO.save(userProfile);
-			
-			//If I wanted to get the ID, I'd have to do something like:
-			//category.getId();
-			}
-			return "Success";
+			isUserSaved= "Success";
 		}else{
-			return"Failure";
+			isUserSaved= "Failure";
 		}
+		
+		logger.debug("RegisterController - salvarUsuario() - Start");
+		
+		return isUserSaved;
 	}
 }

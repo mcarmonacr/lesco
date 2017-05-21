@@ -1,5 +1,15 @@
 package com.lesco.diccionario.helper;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.log4j.Logger;
+import org.springframework.web.multipart.MultipartFile;
+
 /*
  * Copyright (c) 2012 Google Inc.
  *
@@ -25,17 +35,6 @@ import com.google.api.services.youtube.model.Video;
 import com.google.api.services.youtube.model.VideoSnippet;
 import com.google.api.services.youtube.model.VideoStatus;
 import com.google.common.collect.Lists;
-import com.lesco.diccionario.pojo.AddTermForm;
-
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-
-import org.springframework.web.multipart.MultipartFile;
 
 /**
  * Upload a video to the authenticated user's channel. Use OAuth 2.0 to
@@ -46,6 +45,9 @@ import org.springframework.web.multipart.MultipartFile;
  */
 public class UploadVideo {
 
+	//Log4J class logger instance
+	private static final Logger logger = Logger.getLogger(UploadVideo.class);
+		
     /**
      * Define a global instance of a Youtube object, which will be used
      * to make YouTube Data API requests.
@@ -68,6 +70,8 @@ public class UploadVideo {
      * @param args command line args (not used).
      */
     public String upload(String title, String description, MultipartFile videoFile) {
+    	
+    	logger.debug("UploadVideo - upload() - Start");
 
         // This OAuth 2.0 access scope allows an application to upload files
         // to the authenticated user's YouTube channel, but doesn't allow
@@ -101,7 +105,7 @@ public class UploadVideo {
             // description for test purposes so that you can easily upload
             // multiple files. You should remove this code from your project
             // and use your own standard names instead.
-            Calendar cal = Calendar.getInstance();
+            //Calendar cal = Calendar.getInstance();
             //snippet.setTitle("Upload via Diccionario Lesco on " + cal.getTime());
             //snippet.setDescription("Video uploaded via YouTube Data API V3 using the Java library " + "on " + cal.getTime());
             
@@ -196,27 +200,44 @@ public class UploadVideo {
             System.out.println("  - Video Count: " + returnedVideo.getStatistics().getViewCount());
 
         } catch (GoogleJsonResponseException e) {
+        	logger.error("UploadVideo - upload() - Error: ", e);
             System.err.println("GoogleJsonResponseException code: " + e.getDetails().getCode() + " : "
                     + e.getDetails().getMessage());
             e.printStackTrace();
             return "failure";
         } catch (IOException e) {
+        	logger.error("UploadVideo - upload() - Error: ", e);
             System.err.println("IOException: " + e.getMessage());
             e.printStackTrace();
             return "failure";
         } catch (Throwable t) {
+        	logger.error("UploadVideo - upload() - Error: ", t);
             System.err.println("Throwable: " + t.getMessage());
             t.printStackTrace();
             return "failure";
         }
         
+        logger.debug("UploadVideo - upload() - End");
+        
         return response;
     }
     
-    public File multipartToFile(MultipartFile multipart) throws IllegalStateException, IOException 
-    {
-            File convFile = new File( multipart.getOriginalFilename());
-            multipart.transferTo(convFile);
-            return convFile;
+    /**
+     * Converts a MultipartFile file to particular File type
+     * @param multipart
+     * @return
+     * @throws IllegalStateException
+     * @throws IOException
+     */
+    public File multipartToFile(MultipartFile multipart) throws IllegalStateException, IOException {
+        
+    	logger.debug("UploadVideo - multipartToFile() - Start");
+    	
+    	File convFile = new File( multipart.getOriginalFilename());
+        multipart.transferTo(convFile);
+        
+        logger.debug("UploadVideo - multipartToFile() - End");
+        
+        return convFile;
     }
 }

@@ -19,10 +19,15 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 /**
  * Shared class used by every sample. Contains methods for authorizing a user and caching credentials.
  */
 public class Auth {
+	
+	//Log4J class logger instance
+	private static final Logger logger = Logger.getLogger(Auth.class);
 
     /**
      * Define a global instance of the HTTP transport.
@@ -46,6 +51,8 @@ public class Auth {
      * @param credentialDatastore name of the credential datastore to cache OAuth tokens
      */
     public static Credential authorize(List<String> scopes, String credentialDatastore) throws IOException {
+    	
+    	logger.debug("Auth - authorize() - Start");
 
         // Load client secrets.
         Reader clientSecretReader = new InputStreamReader(Auth.class.getResourceAsStream("/client_secrets.json"));
@@ -72,6 +79,8 @@ public class Auth {
         // Build the local server and bind it to port 8080
         LocalServerReceiver localReceiver = new LocalServerReceiver.Builder().setPort(8080).build();
 
+        logger.debug("Auth - authorize() - End");
+        
         // Authorize.
         return new AuthorizationCodeInstalledApp(flow, localReceiver).authorize("user");
     }

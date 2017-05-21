@@ -2,7 +2,6 @@ package com.lesco.diccionario.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,13 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.lesco.diccionario.dao.CategoryDAO;
 import com.lesco.diccionario.pojo.AjaxResponseBody;
 import com.lesco.diccionario.pojo.ContactForm;
-import com.lesco.diccionario.pojo.LoginForm;
 import com.lesco.diccionario.utils.SendMailTLS;
-
-
 
 /**
  * Handles all the contact related logic
@@ -52,18 +47,18 @@ public class ContactController {
 		
 		logger.debug("ContactController - enviarFormularioContacto() - Start");
 		
+		//Generic Ajax response body
 		AjaxResponseBody ajaxResponse = new AjaxResponseBody();
 		
 		String sendEmailResponse = sendMailTLS.sendMail(contactForm);
 		
 		//String sendEmailResponse = "success";
 		
+		//Response toggle based on the save return
 		if("success".equals(sendEmailResponse)){
-			//Response toggle based on the save return
 			ajaxResponse.setCode("000");
 			ajaxResponse.setMessage("Success");
 		}else{
-			//Response toggle based on the save return
 			ajaxResponse.setCode("999");
 			ajaxResponse.setMessage("Error");
 		}
@@ -72,5 +67,4 @@ public class ContactController {
 		
 		return ajaxResponse;
 	}
-	
 }

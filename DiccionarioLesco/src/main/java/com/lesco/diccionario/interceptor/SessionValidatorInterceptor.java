@@ -4,7 +4,6 @@
 package com.lesco.diccionario.interceptor;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,8 +20,10 @@ import com.lesco.diccionario.model.ProfileDetail;
 import com.lesco.diccionario.model.UserProfile;
 
 /**
- * @author m.carmona.dinarte
- *
+ * Session Validator
+ * @author Mario Alonso Carmona Dinarte
+ * @email monacar89@hotmail.com
+ * @since 2016
  */
 public class SessionValidatorInterceptor extends HandlerInterceptorAdapter {
 
@@ -35,6 +36,8 @@ public class SessionValidatorInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public boolean preHandle(HttpServletRequest request,
 			HttpServletResponse response, Object handler) throws Exception {
+		
+		logger.debug("SessionValidatorInterceptor - preHandle() - Start");
 		
 		long startTime = System.currentTimeMillis();
 		logger.info("Request URL::" + request.getRequestURL().toString()
@@ -56,6 +59,8 @@ public class SessionValidatorInterceptor extends HandlerInterceptorAdapter {
 		} else {
 		    // Already created.
 		}
+
+		logger.debug("SessionValidatorInterceptor - preHandle() - End");
 		
 		return true;
 	}
@@ -63,30 +68,33 @@ public class SessionValidatorInterceptor extends HandlerInterceptorAdapter {
 	/**
 	 * 
 	 */
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public void postHandle(HttpServletRequest request,
 			HttpServletResponse response, Object handler,
 			ModelAndView modelAndView) throws Exception {
+		
+		logger.debug("SessionValidatorInterceptor - postHandle() - Start");
+		
 		System.out.println("Request URL::" + request.getRequestURL().toString()
 				+ " Sent to Handler :: Current Time=" + System.currentTimeMillis());
 		
 		if(modelAndView != null){
+			
 			Map model = modelAndView.getModel();		
 			model.put("year", Calendar.getInstance().get(Calendar.YEAR));
 			
 			if (request.getSession(false) != null && request.getSession(false).getAttribute("userEmail") != null){
 	
 					if(model != null){
-						model.put("isSessionValid", "true");
 						
+						model.put("isSessionValid", "true");
 						ProfileDetail profileDetailQuery = userDAO.findByEmailAddress(request.getSession(false).getAttribute("userEmail").toString());
 						
 						//Checks the user role and user name
 						if(profileDetailQuery != null) {
 								
 							ProfileDetail ProfileDetailReference = userDAO.findById(profileDetailQuery.getProfileDetailId());
-							
 							UserProfile userProfile = ProfileDetailReference.getUserProfile();
 							
 							model.put("userName", userProfile.getUserName());
@@ -96,6 +104,8 @@ public class SessionValidatorInterceptor extends HandlerInterceptorAdapter {
 				}
 		}
 		
+		logger.debug("SessionValidatorInterceptor - postHandle() - End");
+		
 		//we can add attributes in the modelAndView and use that in the view page
 	}
 	
@@ -103,11 +113,15 @@ public class SessionValidatorInterceptor extends HandlerInterceptorAdapter {
 	public void afterCompletion(HttpServletRequest request,
 			HttpServletResponse response, Object handler, Exception ex)
 			throws Exception {
+		logger.debug("SessionValidatorInterceptor - afterCompletion() - Start");
+		
 		long startTime = (Long) request.getAttribute("startTime");
 		logger.info("Request URL::" + request.getRequestURL().toString()
 				+ ":: End Time=" + System.currentTimeMillis());
 		logger.info("Request URL::" + request.getRequestURL().toString()
 				+ ":: Time Taken=" + (System.currentTimeMillis() - startTime));
+		
+		logger.debug("SessionValidatorInterceptor - afterCompletion() - End");
 
 	}
 	

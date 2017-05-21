@@ -8,7 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
- * Handles the website general error pages
+ * Handles the web-site general error pages
  * 
  * @author Mario Alonso Carmona Dinarte
  * @email monacar89@hotmail.com
@@ -41,5 +41,4 @@ public class HTTPErrorHandlerController {
 		logger.error("HTTPErrorHandlerController - error500()");
 		return filesRootFolderPath+"/500";
 	}
-
 }

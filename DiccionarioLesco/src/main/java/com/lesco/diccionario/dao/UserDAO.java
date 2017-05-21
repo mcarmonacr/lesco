@@ -25,8 +25,6 @@ public interface UserDAO {
 	 * @param userProfile
 	 */
 	public void update(UserProfile userProfile);
-
-	//public List<Category> list();
 	
 	/**
 	 * Check if the given user name already exists
@@ -37,24 +35,29 @@ public interface UserDAO {
 	
 	/**
 	 * Check if the given email address already exists
-	 * @param userName
+	 * @param emailAddress
 	 * @return
 	 */
 	public Boolean checkEmailAddress(String emailAddress);
 	
 	/**
-	 * Find a particular category by its name
+	 * Find a particular profile detail by email address
 	 * @param categoryName
 	 * @return
 	 */
 	public ProfileDetail findByEmailAddress(String emailAddress);
 	
 	/**
-	 * Find a particular category by its name
-	 * @param categoryName
+	 * Find a particular profile detail by its ID
+	 * @param emailAddress
 	 * @return
 	 */
 	public ProfileDetail findById(Integer profileDetailId);
 	
+	/**
+	 * Find a particular user profile by its ID
+	 * @param userProfileId
+	 * @return
+	 */
 	public UserProfile findUserProfileById(Integer userProfileId);
 }

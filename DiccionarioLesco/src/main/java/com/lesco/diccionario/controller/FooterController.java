@@ -1,21 +1,9 @@
 package com.lesco.diccionario.controller;
 
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-
-import com.lesco.diccionario.dao.UserDAO;
-import com.lesco.diccionario.model.ProfileDetail;
-import com.lesco.diccionario.model.UserProfile;
-import com.lesco.diccionario.pojo.AjaxResponseBody;
-import com.lesco.diccionario.pojo.RegisterForm;
-import com.lesco.diccionario.utils.SHAEncryption;
 
 /**
  * Handles all the legal related pages
@@ -35,7 +23,7 @@ public class FooterController {
 	/**
 	 * Terms and conditions detail page
 	 * 
-	 * @return
+	 * @return modelAndView
 	 */
 	@RequestMapping("/terminos-de-servicio")
 	public ModelAndView terminosDeServicio() {
@@ -55,7 +43,7 @@ public class FooterController {
 	/**
 	 * Privacy detail page
 	 * 
-	 * @return
+	 * @return modelAndView
 	 */
 	@RequestMapping("/privacidad")
 	public ModelAndView privacidad() {

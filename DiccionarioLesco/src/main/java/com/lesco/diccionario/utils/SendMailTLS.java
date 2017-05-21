@@ -15,30 +15,37 @@ import javax.mail.internet.MimeMessage;
 
 import org.apache.log4j.Logger;
 
-import com.lesco.diccionario.controller.ContactController;
 import com.lesco.diccionario.pojo.ContactForm;
 
 /**
+ * Email sender class
+ * 
  * @author Mario Alonso Carmona Dinarte
+ * @email monacar89@hotmail.com
+ * @since 2016
  *
  */
 public class SendMailTLS {
-
 	
 	//Log4J class logger instance
 	private static final Logger logger = Logger.getLogger(SendMailTLS.class);
 	
+	private static final String username = "diccionariolesco@gmail.com";
+	private static final String password = "diccionario";
+	
+	/**
+	 * Send email functionality. This one is used for the contact functionality
+	 * 
+	 * @param contactForm
+	 * @return
+	 */
 	public String sendMail(ContactForm contactForm) {
-
-		final String username = "diccionariolesco@gmail.com";
-		final String password = "diccionario";
+		
+		logger.debug("SendMailTLS - sendMail() - Start");
 
 		Properties props = new Properties();
-		props.put("mail.smtp.auth", "true");
-		props.put("mail.smtp.starttls.enable", "true");
-		props.put("mail.smtp.host", "smtp.gmail.com");
-		props.put("mail.smtp.port", "587");
-
+		initializeMailProperties(props);
+		
 		Session session = Session.getInstance(props,
 		  new javax.mail.Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
@@ -47,7 +54,6 @@ public class SendMailTLS {
 		  });
 
 		try {
-
 			Message message = new MimeMessage(session);
 			message.setFrom(new InternetAddress("diccionariolesco@gmail.com"));
 			message.setRecipients(Message.RecipientType.TO,
@@ -58,28 +64,29 @@ public class SendMailTLS {
 				+ "\n\n Message: " + contactForm.getContactMessage());
 
 			Transport.send(message);
-
-			//System.out.println("Done");
-
 		} catch (MessagingException e) {
-			logger.debug("SendMailTLS - admin() - End");
+			logger.debug("SendMailTLS - sendMail() - Error: ");
 		}
+		
+		logger.debug("SendMailTLS - sendMail() - End");
 		
 		return "success";
 	}
 	
-	
+	/**
+	 *  Send email for the recovery password functionality
+	 * 
+	 * @param contactForm
+	 * @param newPassword
+	 * @return
+	 */
 	public String sendPasswordRecoveryMail(ContactForm contactForm, String newPassword) {
-
-		final String username = "diccionariolesco@gmail.com";
-		final String password = "diccionario";
+		
+		logger.debug("SendMailTLS - sendPasswordRecoveryMail() - Start");
 
 		Properties props = new Properties();
-		props.put("mail.smtp.auth", "true");
-		props.put("mail.smtp.starttls.enable", "true");
-		props.put("mail.smtp.host", "smtp.gmail.com");
-		props.put("mail.smtp.port", "587");
-
+		initializeMailProperties(props);
+		
 		Session session = Session.getInstance(props,
 		  new javax.mail.Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
@@ -88,7 +95,6 @@ public class SendMailTLS {
 		  });
 
 		try {
-
 			Message message = new MimeMessage(session);
 			message.setFrom(new InternetAddress("diccionariolesco@gmail.com"));
 			message.setRecipients(Message.RecipientType.TO,
@@ -99,13 +105,30 @@ public class SendMailTLS {
 				+ "\n\n Atentamente, el equipo del diccionario de LESCO");
 
 			Transport.send(message);
-
-			//System.out.println("Done");
-
 		} catch (MessagingException e) {
-			logger.debug("SendMailTLS - admin() - End");
+			logger.debug("SendMailTLS - sendPasswordRecoveryMail() - Error: ", e);
 		}
 		
+		logger.debug("SendMailTLS - sendPasswordRecoveryMail() - End");
+		
 		return "success";
+	}
+	
+	/**
+	 * Sets the mail sender properties
+	 * @param props
+	 */
+	private void initializeMailProperties(Properties props){
+		
+		logger.debug("SendMailTLS - initializeMailProperties() - Start");
+		
+		//Email provider properties
+		props = new Properties();
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.smtp.starttls.enable", "true");
+		props.put("mail.smtp.host", "smtp.gmail.com");
+		props.put("mail.smtp.port", "587");
+		
+		logger.debug("SendMailTLS - initializeMailProperties() - End");
 	}
 }

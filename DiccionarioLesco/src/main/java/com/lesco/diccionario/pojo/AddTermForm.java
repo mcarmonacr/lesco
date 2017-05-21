@@ -3,8 +3,6 @@
  */
 package com.lesco.diccionario.pojo;
 
-import org.springframework.web.multipart.MultipartFile;
-
 /**
  * RegisterForm POJO
  * 

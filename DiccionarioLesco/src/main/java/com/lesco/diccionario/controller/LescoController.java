@@ -16,6 +16,7 @@ import com.lesco.diccionario.model.Video;
 import com.lesco.diccionario.model.Word;
 
 /**
+ * Main Controller. Contains the Home page
  * 
  * @author Mario Alonso Carmona Dinarte
  * @email monacar89@hotmail.com
@@ -26,7 +27,7 @@ import com.lesco.diccionario.model.Word;
 public class LescoController {
 	
 	//Log4J class logger instance
-	private static final Logger logger = Logger.getLogger(Principal.class);
+	private static final Logger logger = Logger.getLogger(LescoController.class);
 	
 	@Autowired
 	private CategoryDAO categoryDAO;
@@ -37,7 +38,7 @@ public class LescoController {
 	/**
 	 * DiccioanrioLesco Home Page
 	 * 
-	 * @return
+	 * @return ModelAndView
 	 */
 	@RequestMapping("/")
 	public ModelAndView diccionarioLesco() {
@@ -55,7 +56,7 @@ public class LescoController {
 		List<Word> listWords = wordDAO.list();
 		
 		//Get random video
-		//TODO
+		//TODO Include all the missing details of the video
 		
 		mv.addObject("randomWord", getRandomWord(listWords));
 		 
@@ -70,7 +71,7 @@ public class LescoController {
 	/**
 	 * Registry page
 	 * 
-	 * @return
+	 * @return ModelAndView
 	 */
 	@RequestMapping("/registrarse")
 	public ModelAndView registrarse() {
@@ -89,7 +90,7 @@ public class LescoController {
 	/**
 	 * About page
 	 * 
-	 * @return
+	 * @return ModelAndView
 	 */
 	@RequestMapping("/acerca")
 	public ModelAndView acerca() {
@@ -108,7 +109,7 @@ public class LescoController {
 	/**
 	 * Add term page
 	 * 
-	 * @return
+	 * @return ModelAndView
 	 */
 	@RequestMapping("/agregar")
 	public ModelAndView agregar() {
@@ -132,7 +133,7 @@ public class LescoController {
 	/**
 	 * Contact page
 	 * 
-	 * @return
+	 * @return ModelAndView
 	 */
 	@RequestMapping("/contacto")
 	public ModelAndView contacto() {
@@ -151,45 +152,73 @@ public class LescoController {
 	
 	/*** Private methods ***/
 	
-	@SuppressWarnings("unused")
+	/**
+	 * Obtains a random word from the database
+	 * 
+	 * @param listWords
+	 * @return Word Object
+	 */
 	private Word getRandomWord(List<Word> listWords){
-
-		if(listWords.size() > 0) {
-			int START = 0; //Start index is 0
-		    int END = listWords.size() - 1; //The maximum index should be one number less than the maximum because indexes start at 0
-		    Random random = new Random();
-			
-			Integer randomNumber = getRandomInteger(START, END, random);
-			
-			Word randomWord = listWords.get(randomNumber);
-			
-			return randomWord;
-		} else {
-			//In case there aren't any videos available create empty objects 
-			
-			Video video = new Video();
-			video.setDefinitionYoutubeVideoID("");
-			video.setExampleYoutubeVideoID("");
-			video.setExplanationYoutubeVideoID("");
-			video.setTermYoutubeVideoID("");
-			
-			Word word = new Word();
-			
-			word.setWordName("");
-			word.setDefinition("");
-			word.setExample("");
-			word.setExplanation("");
-			word.setNumberOfVisits(0);
-			word.setVideo(video);
-			
-			return word;
+		
+		logger.debug("LescoController - getRandomWord() - Start");
+		
+		//New random word. This is the one been returned
+		Word randomWord = new Word();
+		
+		try{
+			//If the current list of words is not empty
+			if(listWords.size() > 0) {
+				int START = 0; //Start index is 0
+			    int END = listWords.size() - 1; //The maximum index should be one number less than the maximum because indexes start at 0
+			    
+			    //Create a random seed and the gets a random number based on the given parameters
+			    Random random = new Random();
+				Integer randomNumber = getRandomInteger(START, END, random);
+				
+				//Get random word
+				randomWord = listWords.get(randomNumber);
+			} else {	
+				//In case there aren't any videos available create empty objects 
+				
+				Video video = new Video();
+				video.setDefinitionYoutubeVideoID("");
+				video.setExampleYoutubeVideoID("");
+				video.setExplanationYoutubeVideoID("");
+				video.setTermYoutubeVideoID("");
+								
+				randomWord.setWordName("");
+				randomWord.setDefinition("");
+				randomWord.setExample("");
+				randomWord.setExplanation("");
+				randomWord.setNumberOfVisits(0);
+				randomWord.setVideo(video);
+			}
+		} catch (Exception e){
+			logger.error("LescoController - getRandomWord() - Error: ", e);
 		}
+		
+		logger.debug("LescoController - getRandomWord() - Start");
+		
+		//Returns a random word
+		return randomWord;
 	}
 	
+	/**
+	 * Returns a random integer based on the given parameters
+	 * 
+	 * @param aStart - Start index
+	 * @param aEnd - End Index
+	 * @param aRandom - Random Java generator 
+	 * @return random integer
+	 */
 	private static int getRandomInteger(int aStart, int aEnd, Random aRandom){
+		
+		logger.debug("LescoController - getRandomInteger() - Start");
+		
 	    if (aStart > aEnd) {
 	      throw new IllegalArgumentException("Start cannot exceed End.");
 	    }
+	    
 	    //get the range, casting to long to avoid overflow problems
 	    long range = (long)aEnd - (long)aStart + 1;
 	    // compute a fraction of the range, 0 <= frac < range
@@ -197,10 +226,8 @@ public class LescoController {
 	    int randomNumber =  (int)(fraction + aStart);    
 	    //log("Generated : " + randomNumber);
 	    
+	    logger.debug("LescoController - getRandomInteger() - End");
+	    
 	    return randomNumber;
-	  }
-	
-	
-	
-	
+	  }	
 }

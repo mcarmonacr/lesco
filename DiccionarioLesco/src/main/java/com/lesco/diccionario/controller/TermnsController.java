@@ -34,7 +34,6 @@ import com.lesco.diccionario.model.Word;
 import com.lesco.diccionario.pojo.AddTermForm;
 import com.lesco.diccionario.pojo.AjaxResponseBody;
 import com.lesco.diccionario.pojo.RegisterForm;
-import com.lesco.diccionario.utils.SHAEncryption;
 
 /**
  * Handles all the terms related operations
@@ -61,9 +60,6 @@ public class TermnsController {
 	private WordDAO wordDAO;
 	
 	@Autowired
-	private SHAEncryption shaEncryption;
-	
-	@Autowired
 	private UploadVideo uploadVideo;
 	
 	/**
@@ -87,16 +83,10 @@ public class TermnsController {
 
 			ajaxResponse.setCode("000");
 			ajaxResponse.setMessage("Success");
-			
-			//videoFile.getInputStream()
-			
 
 			//Saves the user to the database
 			String resultadoSalvar= salvarTermino(addTermForm, videoFile, definitionVideoFile, explanationVideoFile, exampleVideoFile, request);
-			
-			//Sleep 5 seconds
-			//Thread.currentThread().wait(5000);
-			
+
 			//String resultadoSalvar= "success";
 			
 			//Response toggle based on the save return
@@ -108,7 +98,7 @@ public class TermnsController {
 				ajaxResponse.setMessage("Failure");
 			}
 		} catch (Exception e){
-			logger.error("TermnsController - agregarTermino() - ERROR",e);
+			logger.error("TermnsController - agregarTermino() - Error: ",e);
 		}
 		
 		logger.debug("TermnsController - agregarTermino() - End");
@@ -118,7 +108,6 @@ public class TermnsController {
 	
 	
 	/**
-	 * 
 	 * Get the word corresponding to the sent ID
 	 * 
 	 * Type: Json POST method
@@ -132,27 +121,33 @@ public class TermnsController {
 		
 		logger.debug("RegisterController - obtenerTermino() - Start");
 		
+		///Checks if the word id comes from the request
 		if (json.get("wordId") != null){			
 			Integer wordId = Integer.parseInt(json.get("wordId"));
 			if(wordId != null){
 				Word word= wordDAO.findById(wordId);
 				
-				Map <String, Object> wordMap = new HashMap <String, Object> ();
-								
-				wordMap.put("wordId", wordId.toString());
-				wordMap.put("wordName", word.getWordName());
-				wordMap.put("definition", word.getDefinition());
-				wordMap.put("explanation", word.getExplanation());
-				wordMap.put("example", word.getExample());
-				wordMap.put("numberOfVisits", word.getNumberOfVisits().toString());
-				
-				//TODO update mapping
-				//wordMap.put("youtubeVideoID", word.getVideo().getYoutubeVideoID());
-				
-				result.setContent(wordMap);
-				
-				result.setCode("000");
-			
+				//If the word is found in the database
+				if(word != null){
+					Map <String, Object> wordMap = new HashMap <String, Object> ();
+					
+					wordMap.put("wordId", wordId.toString());
+					wordMap.put("wordName", word.getWordName());
+					wordMap.put("definition", word.getDefinition());
+					wordMap.put("explanation", word.getExplanation());
+					wordMap.put("example", word.getExample());
+					wordMap.put("numberOfVisits", word.getNumberOfVisits().toString());
+					
+					//TODO update mapping
+					//wordMap.put("youtubeVideoID", word.getVideo().getYoutubeVideoID());
+					
+					result.setContent(wordMap);
+					result.setMessage("Success");
+					result.setCode("000");
+				} else {
+					result.setMessage("Could not find the word");
+					result.setCode("001");
+				}
 			}
 		} else{
 			result.setMessage("Failure");
@@ -165,7 +160,6 @@ public class TermnsController {
 	}
 	
 	/**
-	 * 
 	 * Gets all terms form the DB that match the search input pattern
 	 * 
 	 * Type: Json POST method
@@ -184,19 +178,19 @@ public class TermnsController {
 			
 			List<Word> wordsList = new ArrayList<Word>();
 			
+			//If there's a category then it's included in the search 
 			if(json.get("categoryIdDiv") != null && !json.get("categoryIdDiv").isEmpty()){
 				wordsList = wordDAO.findByPatternAndCategoryId(json.get("termsInput"), Integer.parseInt(json.get("categoryIdDiv"))); //wordDAO.list();
+			} else {
+				//Search the word regardless the category
+				wordsList = wordDAO.findByPattern(json.get("termsInput"));
 			}
-			else {
-				//Get all the categories
-				wordsList = wordDAO.findByPattern(json.get("termsInput")); //wordDAO.list();
-			}
+			
 			Map <String, Object> wordsMap = new HashMap <String, Object> ();
 			
-			// TODO process wordsMap in order to get only the list of words and its ids 
+			// TODO process wordsMap in order to get only the list of words and its IDs 
 			
 			wordsMap.put("wordsList", processWordList(wordsList));
-			
 			result.setContent(wordsMap);
 					
 			//Checks if the input user name already exists in the database
@@ -208,7 +202,7 @@ public class TermnsController {
 				result.setCode("001");
 			}
 		}
-		logger.debug("RegisterController - verificarUsuario() - End");
+		logger.debug("RegisterController - obtenerListaTerminos() - End");
 		
 		return result;
 	}
@@ -216,7 +210,6 @@ public class TermnsController {
 	
 	
 	/**
-	 * 
 	 * Verifies is the userName entered already exists in the database
 	 * 
 	 * Type: Json POST method
@@ -234,14 +227,14 @@ public class TermnsController {
 		if(registerForm.getUserName() != null && registerForm.getUserName().length() != 0){
 			
 			//Checks if the input user name already exists in the database
-			if(userDAO.checkUserName(registerForm.getUserName().trim()) == false){			
+			if(userDAO.checkUserName(registerForm.getUserName().trim()) == false) {			
 				result.setMessage("Sucess");
 				result.setCode("000");
-			}else{
+			} else {
 				result.setMessage("The user already exists");
 				result.setCode("001");
 			}
-		}else{
+		} else {
 			result.setMessage("Failure");
 			result.setCode("001");
 		}
@@ -252,7 +245,6 @@ public class TermnsController {
 	}
 	
 	/**
-	 * 
 	 * Verifies is the emailAddress entered already exists in the database
 	 * 
 	 * Type: Json POST method
@@ -270,14 +262,14 @@ public class TermnsController {
 		if(registerForm.getEmailAddress() != null && registerForm.getEmailAddress().length() != 0){
 			
 			//Checks if the input user name already exists in the database
-			if(userDAO.checkEmailAddress(registerForm.getEmailAddress().trim()) == false){			
+			if(userDAO.checkEmailAddress(registerForm.getEmailAddress().trim()) == false) {			
 				result.setMessage("Sucess");
 				result.setCode("000");
-			}else{
+			} else {
 				result.setMessage("The user already exists");
 				result.setCode("001");
 			}
-		}else{
+		} else {
 			result.setMessage("Failure");
 			result.setCode("001");
 		}
@@ -287,125 +279,145 @@ public class TermnsController {
 		return result;
 	}
 	
+	/**** Private Methods ****/ 
 	
 	/**
-	 * Stores the new user into the database
+	 * Stores a new term in the database
 	 * 
-	 * @param registerForm. Contains fields: wordName, categoryName, definition, explanation ,example, youtubeType, fileType, videoURL, filePath.
+	 * @param addTermForm
+	 * @param videoFile
+	 * @param definitionVideoFile
+	 * @param explanationVideoFile
+	 * @param exampleVideoFile
+	 * @param request
+	 * @return operation state
 	 */
 	private String salvarTermino(AddTermForm addTermForm, MultipartFile videoFile, MultipartFile definitionVideoFile, MultipartFile explanationVideoFile, MultipartFile exampleVideoFile, HttpServletRequest request){
 		
-		//Validates that the most important value comes from the form
-		if(addTermForm.getWordName() != null && videoFile != null){		
-			
-			//First step is to upload the video to Youtube
-			//String youtubeVideoID= uploadVideo.upload(addTermForm, videoFile);
-			//String youtubeVideoID = "xy6IFAzuMSI";
-			//String youtubeVideoID = "X7PpGPOHVrA";
-			
-			//Words values
-			String wordName = addTermForm.getWordName(); //At this point the variable most be different from null
-			String definition = addTermForm.getDefinition() != null ? addTermForm.getDefinition() : "";
-			String explanation = addTermForm.getExplanation() != null ? addTermForm.getExplanation() : "";
-			String example = addTermForm.getExample() != null ? addTermForm.getExample() : "";
-			
-			//This video does not need validation on some values since its values are compulsory
-			//String termYoutubeVideoID = uploadVideo.upload(wordName+ "en Lenguaje de Señas Costarricense (LESCO)" , wordName+ "en Lenguaje de Señas Costarricense (LESCO)" , videoFile);
-			
-			String termYoutubeVideoID = "X7PpGPOHVrA";
-			
-			//Rest of the videos IDs
-			String definitionYoutubeVideoID = "";
-			String explanationYoutubeVideoID = "";
-			String exampleYoutubeVideoID = "";
-			
-			if (definition != null && definitionVideoFile != null){
-				//definitionYoutubeVideoID = uploadVideo.upload("Definición en LESCO del término " + wordName, "Definición en LESCO del término: " + wordName + " - " + definition, definitionVideoFile);
-			}
-			
-			if (explanation != null && explanationVideoFile != null){
-				//explanationYoutubeVideoID = uploadVideo.upload("Explicación en LESCO del término " + wordName, "Explicación en LESCO del término: " + wordName + " - " + explanation, explanationVideoFile);
-			}
-			
-			if (example != null && exampleVideoFile != null){
-				//exampleYoutubeVideoID = uploadVideo.upload("Ejemplo en LESCO del término " + wordName, "Ejemplo en LESCO del término: " + wordName + " - " + example, exampleVideoFile);
-			}
-			
-			//The term video is the only that is compulsory, the other ones are optional
-			if(!termYoutubeVideoID.isEmpty()){
-				//Get user session
-				HttpSession session = request.getSession();
+		logger.debug("RegisterController - salvarTermino() - Start");
+		
+		String result = "";
+		
+		try {
+			//Validates that the required values come from the form
+			if(addTermForm.getWordName() != null && videoFile != null){		
 				
-				//Get the current logged in user emailAddress
-				String userEmail = session.getAttribute("userEmail").toString();
+				//First step is to upload the video to Youtube
+				//String youtubeVideoID= uploadVideo.upload(addTermForm, videoFile);
+				//String youtubeVideoID = "xy6IFAzuMSI";
+				//String youtubeVideoID = "X7PpGPOHVrA";
 				
-				//Obtain the User that belongs to the email
-				ProfileDetail profileDetailQuery = userDAO.findByEmailAddress(userEmail);
+				//Words values
+				String wordName = addTermForm.getWordName(); //At this point the variable most be different from null
+				String definition = addTermForm.getDefinition() != null ? addTermForm.getDefinition() : "";
+				String explanation = addTermForm.getExplanation() != null ? addTermForm.getExplanation() : "";
+				String example = addTermForm.getExample() != null ? addTermForm.getExample() : "";
 				
-				ProfileDetail ProfileDetailReference = userDAO.findById(profileDetailQuery.getProfileDetailId());
+				//This video does not need validation on some values since its values are compulsory
+				//String termYoutubeVideoID = uploadVideo.upload(wordName+ "en Lenguaje de Señas Costarricense (LESCO)" , wordName+ "en Lenguaje de Señas Costarricense (LESCO)" , videoFile);
 				
-				UserProfile userProfile = ProfileDetailReference.getUserProfile();
+				String termYoutubeVideoID = "X7PpGPOHVrA";
 				
-				//New Word
-				Word word = new Word();
-				word.setWordName(wordName);
-				//word.setCategory(addTermForm.getCategoryName());
-				if(definition != null) word.setDefinition(definition);
-				if(explanation != null) word.setExplanation(explanation);
-				if(example != null) word.setExample(example);
-				word.setNumberOfVisits(0);
+				//Rest of the videos IDs
+				String definitionYoutubeVideoID = "";
+				String explanationYoutubeVideoID = "";
+				String exampleYoutubeVideoID = "";
 				
-				//TODO Update the Youtube video ID according to the 4 new video names
-				//New Video
-				Video video = new Video();
-				//video.settermYouTubeVideoID(termYouTubeVideoID);
-				video.setTermYoutubeVideoID(termYoutubeVideoID);
-				
-				//Set additional videos if available
-				if(definitionYoutubeVideoID != null) {
-					video.setDefinitionYoutubeVideoID(definitionYoutubeVideoID);
-				}
-				if(explanationYoutubeVideoID != null){
-					video.setExampleYoutubeVideoID(exampleYoutubeVideoID);
-				}
-				if(exampleYoutubeVideoID != null){
-					video.setExplanationYoutubeVideoID(explanationYoutubeVideoID);
+				if (definition != null && definitionVideoFile != null){
+					//definitionYoutubeVideoID = uploadVideo.upload("Definición en LESCO del término " + wordName, "Definición en LESCO del término: " + wordName + " - " + definition, definitionVideoFile);
 				}
 				
-				//Relationship references
-				video.setWord(word);
-				word.setVideo(video);
+				if (explanation != null && explanationVideoFile != null){
+					//explanationYoutubeVideoID = uploadVideo.upload("Explicación en LESCO del término " + wordName, "Explicación en LESCO del término: " + wordName + " - " + explanation, explanationVideoFile);
+				}
 				
-				Set<Word> words = new HashSet<Word>();
-				words.add(word);
+				if (example != null && exampleVideoFile != null){
+					//exampleYoutubeVideoID = uploadVideo.upload("Ejemplo en LESCO del término " + wordName, "Ejemplo en LESCO del término: " + wordName + " - " + example, exampleVideoFile);
+				}
 				
-				//Relationship references
-				userProfile.setWords(words);
-				word.setUserProfile(userProfile);
-				
-				//Get the category
-				if(addTermForm.getCategoryName() != null && addTermForm.getCategoryName().trim().length() != 0){
-					Category category = categoryDAO.findByCategoryName(addTermForm.getCategoryName());
+				//The term video is the only that is compulsory, the other ones are optional
+				if(!termYoutubeVideoID.isEmpty()){
+					//Get user session
+					HttpSession session = request.getSession();
+					
+					//Get the current logged in user emailAddress
+					String userEmail = session.getAttribute("userEmail").toString();
+					
+					//Obtain the User that belongs to the email
+					ProfileDetail profileDetailQuery = userDAO.findByEmailAddress(userEmail);
+					
+					ProfileDetail ProfileDetailReference = userDAO.findById(profileDetailQuery.getProfileDetailId());
+					
+					UserProfile userProfile = ProfileDetailReference.getUserProfile();
+					
+					//New Word
+					Word word = new Word();
+					word.setWordName(wordName);
+					//word.setCategory(addTermForm.getCategoryName());
+					if(definition != null) word.setDefinition(definition);
+					if(explanation != null) word.setExplanation(explanation);
+					if(example != null) word.setExample(example);
+					word.setNumberOfVisits(0);
+					
+					//TODO Update the Youtube video ID according to the 4 new video names
+					//New Video
+					Video video = new Video();
+					//video.settermYouTubeVideoID(termYouTubeVideoID);
+					video.setTermYoutubeVideoID(termYoutubeVideoID);
+					
+					//Set additional videos if available
+					if(definitionYoutubeVideoID != null) {
+						video.setDefinitionYoutubeVideoID(definitionYoutubeVideoID);
+					}
+					if(explanationYoutubeVideoID != null){
+						video.setExampleYoutubeVideoID(exampleYoutubeVideoID);
+					}
+					if(exampleYoutubeVideoID != null){
+						video.setExplanationYoutubeVideoID(explanationYoutubeVideoID);
+					}
 					
 					//Relationship references
-					category.setWords(words);
-					word.setCategory(category);
+					video.setWord(word);
+					word.setVideo(video);
+					
+					Set<Word> words = new HashSet<Word>();
+					words.add(word);
+					
+					//Relationship references
+					userProfile.setWords(words);
+					word.setUserProfile(userProfile);
+					
+					//Get the category
+					if(addTermForm.getCategoryName() != null && addTermForm.getCategoryName().trim().length() != 0){
+						Category category = categoryDAO.findByCategoryName(addTermForm.getCategoryName());
+						
+						//Relationship references
+						category.setWords(words);
+						word.setCategory(category);
+					}
+					
+					//Saves the new entities Word and Video, linked to the existing UserProfile and Category. 
+					//userDAO.update(userProfile);
+					wordDAO.save(word);
+					
+				} else {
+					result= "Failure";
 				}
-				
-				//Saves the new entities Word and Video, linked to the existing UserProfile and Category. 
-				//userDAO.update(userProfile);
-				wordDAO.save(word);
-				
-			} else {
-				return"Failure";
+				result= "Success";
+			}else{
+				result= "Failure";
 			}
-			return "Success";
-		}else{
-			return"Failure";
+		} catch(Exception e) {
+			logger.debug("RegisterController - salvarTermino() - Error: ", e);
 		}
+
+		logger.debug("RegisterController - salvarTermino() - End");
+		
+		return result;
 	}
 	
 	/**
+	 * Get the raw data and place the necessary data in the resulting map
 	 * 
 	 * @param wordList
 	 * @return
@@ -413,8 +425,11 @@ public class TermnsController {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private List processWordList(List<Word> wordList){
 		
+		logger.debug("RegisterController - processWordList() - Start");
+		
 		List result = new ArrayList();
 		
+		//Processes the word's list and add the necessary data in the resulting map
 		for(Word actualWord:wordList){
 			Map actualWordMap = new HashMap();
 			
@@ -423,6 +438,9 @@ public class TermnsController {
 			
 			result.add(actualWordMap);
 		}
+		
+		logger.debug("RegisterController - processWordList() - End");
+		
 		return result;
 	}
 }

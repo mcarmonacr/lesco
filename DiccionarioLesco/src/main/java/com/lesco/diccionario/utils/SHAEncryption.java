@@ -65,7 +65,7 @@ public class SHAEncryption {
             generatedPassword = sb.toString();
         } 
         catch (NoSuchAlgorithmException e) {
-            logger.error("SHAEncryption - get_SHA_512_SecurePassword() - Error", e);
+            logger.error("SHAEncryption - get_SHA_512_SecurePassword() - Error: ", e);
         }
         
         logger.debug("SHAEncryption - get_SHA_512_SecurePassword() - End");

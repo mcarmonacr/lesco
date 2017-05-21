@@ -12,7 +12,6 @@ import com.lesco.diccionario.model.Category;
  * @since 2016
  *
  */
-
 public interface CategoryDAO {
 	
 	/**

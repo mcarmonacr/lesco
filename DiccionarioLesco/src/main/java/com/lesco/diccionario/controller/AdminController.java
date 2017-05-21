@@ -37,7 +37,7 @@ public class AdminController {
 	private CategoryDAO categoryDAO;
 	
 	/**
-	 * Home page
+	 * Administrator home page 
 	 * 
 	 * @return
 	 */

@@ -16,19 +16,19 @@ import com.lesco.diccionario.model.Word;
 public interface WordDAO {
 	
 	/**
-	 * Saves a new category
+	 * Saves a new word
 	 * @param category
 	 */
 	public void save(Word word);
 
 	/**
-	 * Get a list of all categories
+	 * Get a list of all words
 	 * @return
 	 */
 	public List<Word> list();
 	
 	/**
-	 * Find a particular category by its name
+	 * Find a particular word by its name
 	 * @param categoryName
 	 * @return
 	 */
@@ -43,13 +43,13 @@ public interface WordDAO {
 	public Word findById(Integer wordId);
 	
 	/**
-	 * Get a list of all the matching terms
+	 * Get a list of all the matching words
 	 * @return
 	 */
 	public List<Word> findByPattern(String termsInput);
 	
 	/**
-	 * Get a list of all the matching terms and the given category ID
+	 * Get a list of all the matching words and the given category ID
 	 * @return
 	 */
 	public List<Word> findByPatternAndCategoryId(String termsInput, Integer categoryId);
