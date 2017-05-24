@@ -21,7 +21,7 @@
 	            
 	             <#if (userRole??)>
 					<#if (isSessionValid == "true")>
-						<li><a href="/DiccionarioLesco/agregar"> <span class="glyphicon glyphicon-plus"></span> Agregar Término</a></li>
+						<li><a href="/DiccionarioLesco/agregar"> <span class="glyphicon glyphicon-book"></span> Términos</a></li>
 					</#if>
 				</#if>
 	            

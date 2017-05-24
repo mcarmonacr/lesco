@@ -118,13 +118,13 @@ http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
 	<bean id="shaEncryption" class="com.lesco.diccionario.utils.SHAEncryption">
 	</bean>
 	
-	<bean id="uploadVideo" class="com.lesco.diccionario.helper.UploadVideo">
+	<bean id="youtubeHelper" class="com.lesco.diccionario.helper.YoutubeHelper">
 	</bean>
 	
 	<bean id="sendMailTLS" class="com.lesco.diccionario.utils.SendMailTLS">
 	</bean>
 	
-	<bean id="randomGenerator" class="com.lesco.diccionario.helper.RandomGenerator">
+	<bean id="randomGeneratorHelper" class="com.lesco.diccionario.helper.RandomGeneratorHelper">
 	</bean>
 	
 </beans>

@@ -16,10 +16,10 @@ import org.apache.log4j.Logger;
  *
  * Taken from: http://stackoverflow.com/questions/41107/how-to-generate-a-random-alpha-numeric-string
  */
-public class RandomGenerator {
+public class RandomGeneratorHelper {
 	
 	//Log4J class logger instance
-	private static final Logger logger = Logger.getLogger(RandomGenerator.class);
+	private static final Logger logger = Logger.getLogger(RandomGeneratorHelper.class);
 	
 	//Available symbols
 	static final String AB = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";

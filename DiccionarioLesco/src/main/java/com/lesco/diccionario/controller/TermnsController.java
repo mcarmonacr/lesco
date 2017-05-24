@@ -25,7 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.lesco.diccionario.dao.CategoryDAO;
 import com.lesco.diccionario.dao.UserDAO;
 import com.lesco.diccionario.dao.WordDAO;
-import com.lesco.diccionario.helper.UploadVideo;
+import com.lesco.diccionario.helper.YoutubeHelper;
 import com.lesco.diccionario.model.Category;
 import com.lesco.diccionario.model.ProfileDetail;
 import com.lesco.diccionario.model.UserProfile;
@@ -60,7 +60,7 @@ public class TermnsController {
 	private WordDAO wordDAO;
 	
 	@Autowired
-	private UploadVideo uploadVideo;
+	private YoutubeHelper youtubeHelper;
 	
 	/**
 	 * Service that stores a new term into the site
@@ -314,7 +314,7 @@ public class TermnsController {
 				String example = addTermForm.getExample() != null ? addTermForm.getExample() : "";
 				
 				//This video does not need validation on some values since its values are compulsory
-				//String termYoutubeVideoID = uploadVideo.upload(wordName+ "en Lenguaje de Señas Costarricense (LESCO)" , wordName+ "en Lenguaje de Señas Costarricense (LESCO)" , videoFile);
+				//String termYoutubeVideoID = youtubeHelper.uploadVideo(wordName+ "en Lenguaje de Señas Costarricense (LESCO)" , wordName+ "en Lenguaje de Señas Costarricense (LESCO)" , videoFile);
 				
 				String termYoutubeVideoID = "X7PpGPOHVrA";
 				
@@ -324,15 +324,15 @@ public class TermnsController {
 				String exampleYoutubeVideoID = "";
 				
 				if (definition != null && definitionVideoFile != null){
-					//definitionYoutubeVideoID = uploadVideo.upload("Definición en LESCO del término " + wordName, "Definición en LESCO del término: " + wordName + " - " + definition, definitionVideoFile);
+					//definitionYoutubeVideoID = youtubeHelper.uploadVideo("Definición en LESCO del término " + wordName, "Definición en LESCO del término: " + wordName + " - " + definition, definitionVideoFile);
 				}
 				
 				if (explanation != null && explanationVideoFile != null){
-					//explanationYoutubeVideoID = uploadVideo.upload("Explicación en LESCO del término " + wordName, "Explicación en LESCO del término: " + wordName + " - " + explanation, explanationVideoFile);
+					//explanationYoutubeVideoID = youtubeHelper.uploadVideo("Explicación en LESCO del término " + wordName, "Explicación en LESCO del término: " + wordName + " - " + explanation, explanationVideoFile);
 				}
 				
 				if (example != null && exampleVideoFile != null){
-					//exampleYoutubeVideoID = uploadVideo.upload("Ejemplo en LESCO del término " + wordName, "Ejemplo en LESCO del término: " + wordName + " - " + example, exampleVideoFile);
+					//exampleYoutubeVideoID = youtubeHelper.uploadVideo("Ejemplo en LESCO del término " + wordName, "Ejemplo en LESCO del término: " + wordName + " - " + example, exampleVideoFile);
 				}
 				
 				//The term video is the only that is compulsory, the other ones are optional

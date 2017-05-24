@@ -17,10 +17,10 @@ import org.springframework.web.multipart.support.MultipartFilter;
  * @since 2016
  *
  */
-public class MyMultipartFilter extends MultipartFilter {
+public class MyMultipartFilterInterceptor extends MultipartFilter {
 	
 	//Log4J class logger instance
-	private static final Logger logger = Logger.getLogger(MyMultipartFilter.class);
+	private static final Logger logger = Logger.getLogger(MyMultipartFilterInterceptor.class);
 
 	/**
 	 * Sets the correct char encoding to use in the application

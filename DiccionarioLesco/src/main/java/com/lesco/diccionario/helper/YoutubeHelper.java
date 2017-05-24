@@ -4,8 +4,11 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Properties;
 
 import org.apache.log4j.Logger;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,10 +31,17 @@ import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 import com.google.api.client.googleapis.media.MediaHttpUploader;
 import com.google.api.client.googleapis.media.MediaHttpUploaderProgressListener;
+import com.google.api.client.http.HttpRequest;
+import com.google.api.client.http.HttpRequestInitializer;
 import com.google.api.client.http.InputStreamContent;
 //import com.google.api.services.samples.youtube.cmdline.Auth;
 import com.google.api.services.youtube.YouTube;
+import com.google.api.services.youtube.model.ResourceId;
+import com.google.api.services.youtube.model.SearchListResponse;
+import com.google.api.services.youtube.model.SearchResult;
+import com.google.api.services.youtube.model.Thumbnail;
 import com.google.api.services.youtube.model.Video;
+import com.google.api.services.youtube.model.VideoListResponse;
 import com.google.api.services.youtube.model.VideoSnippet;
 import com.google.api.services.youtube.model.VideoStatus;
 import com.google.common.collect.Lists;
@@ -43,16 +53,25 @@ import com.google.common.collect.Lists;
  *
  * @author Jeremy Walker
  */
-public class UploadVideo {
+public class YoutubeHelper {
 
 	//Log4J class logger instance
-	private static final Logger logger = Logger.getLogger(UploadVideo.class);
+	private static final Logger logger = Logger.getLogger(YoutubeHelper.class);
 		
     /**
      * Define a global instance of a Youtube object, which will be used
      * to make YouTube Data API requests.
      */
     private static YouTube youtube;
+    
+    /**
+     * Define a global variable that identifies the name of a file that
+     * contains the developer's API key.
+     */
+
+    private static final String PROPERTIES_FILENAME = "youtube.properties";
+    
+    private static final long NUMBER_OF_VIDEOS_RETURNED = 1;
 
     /**
      * Define a global variable that specifies the MIME type of the video
@@ -69,7 +88,7 @@ public class UploadVideo {
      *
      * @param args command line args (not used).
      */
-    public String upload(String title, String description, MultipartFile videoFile) {
+    public String uploadVideo(String title, String description, MultipartFile videoFile) {
     	
     	logger.debug("UploadVideo - upload() - Start");
 
@@ -81,10 +100,10 @@ public class UploadVideo {
 
         try {
             // Authorize the request.
-            Credential credential = Auth.authorize(scopes, "uploadvideo");
+            Credential credential = AuthHelper.authorize(scopes, "uploadvideo");
 
             // This object is used to make YouTube Data API requests.
-            youtube = new YouTube.Builder(Auth.HTTP_TRANSPORT, Auth.JSON_FACTORY, credential).setApplicationName(
+            youtube = new YouTube.Builder(AuthHelper.HTTP_TRANSPORT, AuthHelper.JSON_FACTORY, credential).setApplicationName(
                     "diccionario-lesco-youtube-channel").build();
 
             System.out.println("Uploading: " + videoFile.getName());
@@ -222,6 +241,65 @@ public class UploadVideo {
         return response;
     }
     
+    public Video getVideoMetadata(String videoID) {
+    	// Read the developer key from the properties file.
+
+        Properties properties = new Properties();
+        
+        Video youtubeVideo = null;
+
+        try {
+        	InputStream in = YoutubeHelper.class.getResourceAsStream("/" + PROPERTIES_FILENAME);
+            properties.load(in);
+        } catch (IOException e) {
+            System.err.println("There was an error reading " + PROPERTIES_FILENAME + ": " + e.getCause()
+                    + " : " + e.getMessage());
+            System.exit(1);
+        }
+        
+        try{
+        	 // This object is used to make YouTube Data API requests. The last
+            // argument is required, but since we don't need anything
+            // initialized when the HttpRequest is initialized, we override
+            // the interface and provide a no-op function.
+            youtube = new YouTube.Builder(AuthHelper.HTTP_TRANSPORT, AuthHelper.JSON_FACTORY, new HttpRequestInitializer() {
+                public void initialize(HttpRequest request) throws IOException {
+                }
+            }).setApplicationName("diccionario-lesco-youtube-channel").build();
+            
+            //API:https://developers.google.com/youtube/v3/docs/videos/list 
+            YouTube.Videos.List listOfVideos = youtube.videos().list("id,snippet,statistics");
+      
+            // Set your developer key from the {{ Google Cloud Console }} for
+            // non-authenticated requests. See:
+            // {{ https://cloud.google.com/console }}
+            String apiKey = properties.getProperty("youtube.apikey");
+          
+            listOfVideos.setKey(apiKey);
+            listOfVideos.set("id", videoID);
+                        
+            listOfVideos.setMaxResults(NUMBER_OF_VIDEOS_RETURNED);
+            
+         // Call the API and print results.
+            VideoListResponse videoResponse = listOfVideos.execute();
+            
+            List<Video> searchResultList = videoResponse.getItems();
+            if (searchResultList != null) {
+                //prettyPrint(searchResultList.iterator(), "Test");
+            	
+            	if(searchResultList.size() != 0) youtubeVideo= searchResultList.get(0);
+            }
+        } catch (GoogleJsonResponseException e) {
+            System.err.println("There was a service error: " + e.getDetails().getCode() + " : "
+                    + e.getDetails().getMessage());
+        } catch (IOException e) {
+            System.err.println("There was an IO error: " + e.getCause() + " : " + e.getMessage());
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
+       return youtubeVideo; 
+    }
+    
     /**
      * Converts a MultipartFile file to particular File type
      * @param multipart
@@ -239,5 +317,43 @@ public class UploadVideo {
         logger.debug("UploadVideo - multipartToFile() - End");
         
         return convFile;
+    }
+    
+    
+    /*
+     * Prints out all results in the Iterator. For each result, print the
+     * title, video ID, and thumbnail.
+     *
+     * @param iteratorSearchResults Iterator of SearchResults to print
+     *
+     * @param query Search query (String)
+     */
+    private static void prettyPrint(Iterator<SearchResult> iteratorSearchResults, String query) {
+
+        System.out.println("\n=============================================================");
+        System.out.println(
+                "   First " + NUMBER_OF_VIDEOS_RETURNED + " videos for search on \"" + query + "\".");
+        System.out.println("=============================================================\n");
+
+        if (!iteratorSearchResults.hasNext()) {
+            System.out.println(" There aren't any results for your query.");
+        }
+
+        while (iteratorSearchResults.hasNext()) {
+
+            SearchResult singleVideo = iteratorSearchResults.next();
+            ResourceId rId = singleVideo.getId();
+
+            // Confirm that the result represents a video. Otherwise, the
+            // item will not contain a video ID.
+            if (rId.getKind().equals("youtube#video")) {
+                Thumbnail thumbnail = singleVideo.getSnippet().getThumbnails().getDefault();
+
+                System.out.println(" Video Id" + rId.getVideoId());
+                System.out.println(" Title: " + singleVideo.getSnippet().getTitle());
+                System.out.println(" Thumbnail: " + thumbnail.getUrl());
+                System.out.println("\n-------------------------------------------------------------\n");
+            }
+        }
     }
 }

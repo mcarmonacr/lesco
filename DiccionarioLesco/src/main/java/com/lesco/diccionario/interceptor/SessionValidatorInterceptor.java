@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
+import org.owasp.esapi.Encoder;
+import org.owasp.esapi.reference.DefaultEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -47,6 +49,11 @@ public class SessionValidatorInterceptor extends HandlerInterceptorAdapter {
 		logger.info("SessionValidatorInterceptor:preHandle- JsessionID" + request.getSession().getId());
 				
 		//if returned false, we need to make sure 'response' is sent
+	
+		//Test Cross Site Scripting 
+//		final String requestURI = request.getRequestURI();
+//		final Encoder esapiEnc = DefaultEncoder.getInstance();
+//		final String encPVal = esapiEnc.encodeForHTML(requestURI);
 		
 		//TODO Work this logic
 		HttpSession session = request.getSession(false);

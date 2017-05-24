@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.lesco.diccionario.dao.UserDAO;
-import com.lesco.diccionario.helper.RandomGenerator;
+import com.lesco.diccionario.helper.RandomGeneratorHelper;
 import com.lesco.diccionario.model.ProfileDetail;
 import com.lesco.diccionario.model.UserProfile;
 import com.lesco.diccionario.pojo.AjaxResponseBody;
@@ -43,7 +43,7 @@ public class RegisterController {
 	private SHAEncryption shaEncryption;
 	
 	@Autowired
-	private RandomGenerator randomGenerator;
+	private RandomGeneratorHelper randomGenerator;
 	
 	@Autowired
 	private SendMailTLS sendMailTLS;

@@ -48,6 +48,19 @@
 					src=${termSourceURL}>
 					</iframe> 
 				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<h2>
+							<span class="label label-primary punctuation glyphicon glyphicon-star"> Puntuación: 4.5</span>
+						</h2>
+					</div>
+					<div class="col-md-6">
+						<h2>
+							<#assign visits = "Visitas: ${randomWord.numberOfVisits}">
+							<span id="numberOfVisitsSpan" class="label label-primary visits glyphicon glyphicon-eye-open"> ${videosMetadata.termVideo}</span>
+						</h2>
+					</div>
+				</div>
 		    </div>
 		    <div role="tabpanel" class="tab-pane" id="profile">
 		    	<div class="row embed-responsive embed-responsive-16by9">
@@ -80,6 +93,19 @@
 <!-- 					  </div> -->
 <!-- 					</div> -->
 				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<h2>
+							<span class="label label-primary punctuation glyphicon glyphicon-star"> Puntuación: 4.5</span>
+						</h2>
+					</div>
+					<div class="col-md-6">
+						<h2>
+							<#assign visits = "Visitas: ${randomWord.numberOfVisits}">
+							<span id="numberOfVisitsSpan" class="label label-primary visits glyphicon glyphicon-eye-open"> ${videosMetadata.definitionVideo}</span>
+						</h2>
+					</div>
+				</div>
 		    </div>
 		    <div role="tabpanel" class="tab-pane" id="messages">
 			    <div class="row">
@@ -101,6 +127,19 @@
 		<!-- 			      <div class="panel-footer">Panel Footer</div> -->
 					    </div>
 					  </div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<h2>
+							<span class="label label-primary punctuation glyphicon glyphicon-star"> Puntuación: 4.5</span>
+						</h2>
+					</div>
+					<div class="col-md-6">
+						<h2>
+							<#assign visits = "Visitas: ${randomWord.numberOfVisits}">
+							<span id="numberOfVisitsSpan" class="label label-primary visits glyphicon glyphicon-eye-open"> ${videosMetadata.explanationVideo}</span>
+						</h2>
 					</div>
 				</div>
 		    </div>
@@ -125,24 +164,23 @@
 						</div>
 					  </div>
 					</div>
-				</div>				
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<h2>
+							<span class="label label-primary punctuation glyphicon glyphicon-star"> Puntuación: 4.5</span>
+						</h2>
+					</div>
+					<div class="col-md-6">
+						<h2>
+							<#assign visits = "Visitas: ${randomWord.numberOfVisits}">
+							<span id="numberOfVisitsSpan" class="label label-primary visits glyphicon glyphicon-eye-open"> ${videosMetadata.exampleVideo}</span>
+						</h2>
+					</div>
+				</div>			
 		    </div>
 		  </div>
-		  
-		<div class="row">
-			<div class="col-md-6">
-				<h2>
-					<span class="label label-primary punctuation glyphicon glyphicon-star"> Puntuación: 4.5</span>
-				</h2>
-			</div>
-			<div class="col-md-6">
-				<h2>
-					<#assign visits = "Visitas: ${randomWord.numberOfVisits}">
-					<span id="numberOfVisitsSpan" class="label label-primary visits glyphicon glyphicon-eye-open"> ${visits}</span>
-				</h2>
-			</div>
-		</div>
-		  
+
 		    </div> 
 		</div> <!-- Closes Video Details Section -->
 

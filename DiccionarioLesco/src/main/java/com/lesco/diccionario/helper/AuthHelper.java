@@ -24,10 +24,10 @@ import org.apache.log4j.Logger;
 /**
  * Shared class used by every sample. Contains methods for authorizing a user and caching credentials.
  */
-public class Auth {
+public class AuthHelper {
 	
 	//Log4J class logger instance
-	private static final Logger logger = Logger.getLogger(Auth.class);
+	private static final Logger logger = Logger.getLogger(AuthHelper.class);
 
     /**
      * Define a global instance of the HTTP transport.
@@ -55,7 +55,7 @@ public class Auth {
     	logger.debug("Auth - authorize() - Start");
 
         // Load client secrets.
-        Reader clientSecretReader = new InputStreamReader(Auth.class.getResourceAsStream("/client_secrets.json"));
+        Reader clientSecretReader = new InputStreamReader(AuthHelper.class.getResourceAsStream("/client_secrets.json"));
         GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, clientSecretReader);
 
         // Checks that the defaults have been replaced (Default = "Enter X here").

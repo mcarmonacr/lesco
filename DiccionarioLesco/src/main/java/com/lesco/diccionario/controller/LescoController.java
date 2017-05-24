@@ -1,6 +1,8 @@
 package com.lesco.diccionario.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import org.apache.log4j.Logger;
@@ -11,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.lesco.diccionario.dao.CategoryDAO;
 import com.lesco.diccionario.dao.WordDAO;
+import com.lesco.diccionario.helper.YoutubeHelper;
 import com.lesco.diccionario.model.Category;
 import com.lesco.diccionario.model.Video;
 import com.lesco.diccionario.model.Word;
@@ -35,6 +38,9 @@ public class LescoController {
 	@Autowired
 	private WordDAO wordDAO;
 	
+	@Autowired
+	private YoutubeHelper youtubeHelper;
+	
 	/**
 	 * DiccioanrioLesco Home Page
 	 * 
@@ -55,11 +61,15 @@ public class LescoController {
 		//Get all the categories
 		List<Word> listWords = wordDAO.list();
 		
+		//mv.addObject("youtubeVideo", youtubeHelper.getVideoMetadata());
+		
 		//Get random video
 		//TODO Include all the missing details of the video
 		
-		mv.addObject("randomWord", getRandomWord(listWords));
-		 
+		Word randomWord = getRandomWord(listWords);
+		
+		mv.addObject("randomWord", randomWord);
+		mv.addObject("videosMetadata", getVideosMetadata(randomWord));
 		mv.addObject("listCategories", listCategories);
 		mv.addObject("listWords", listWords);
 		
@@ -230,4 +240,55 @@ public class LescoController {
 	    
 	    return randomNumber;
 	  }	
+	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	private Map getVideosMetadata(Word randomWord) { 
+		Map result= new HashMap();
+		
+//		com.google.api.services.youtube.model.Video definitionVideo= youtubeHelper.getVideoMetadata(randomWord.getVideo().getDefinitionYoutubeVideoID());
+//		com.google.api.services.youtube.model.Video exampleVideo= youtubeHelper.getVideoMetadata(randomWord.getVideo().getExampleYoutubeVideoID());
+//		com.google.api.services.youtube.model.Video explanationVideo= youtubeHelper.getVideoMetadata(randomWord.getVideo().getExplanationYoutubeVideoID());
+//		com.google.api.services.youtube.model.Video termVideo= youtubeHelper.getVideoMetadata(randomWord.getVideo().getTermYoutubeVideoID());
+		
+		
+		if(randomWord == null || randomWord.getWordId() == null) {
+			result.put("definitionVideo", 0);
+			result.put("exampleVideo", 0);
+			result.put("explanationVideo", 0);
+			result.put("termVideo", 0);
+			
+			return result;	
+		}
+		
+		com.google.api.services.youtube.model.Video definitionVideo= youtubeHelper.getVideoMetadata("4z7rnfxhdms");
+		com.google.api.services.youtube.model.Video exampleVideo= youtubeHelper.getVideoMetadata("63xrbVSXbXA");
+		com.google.api.services.youtube.model.Video explanationVideo= youtubeHelper.getVideoMetadata("K64bcDY-Oko");
+		com.google.api.services.youtube.model.Video termVideo= youtubeHelper.getVideoMetadata("PX4IBJNuMsE");
+		
+		if (definitionVideo != null) {
+			result.put("definitionVideo", definitionVideo.getStatistics().getViewCount());
+		} else {
+			result.put("definitionVideo", 0);
+		}
+		
+		if (exampleVideo != null) {
+			result.put("exampleVideo", exampleVideo.getStatistics().getViewCount());
+		} else {
+			result.put("exampleVideo", 0);
+		}
+		
+		if (explanationVideo != null) {
+			result.put("explanationVideo", explanationVideo.getStatistics().getViewCount());
+		} else {
+			result.put("explanationVideo", 0);
+		}
+		
+		if (termVideo != null) {
+			result.put("termVideo", termVideo.getStatistics().getViewCount());
+		} else {
+			result.put("termVideo", 0);
+		}
+
+		return result;	
+	}
 }
