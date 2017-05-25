@@ -66,33 +66,16 @@ FOREIGN KEY (UserProfile_ID) REFERENCES UserProfile(UserProfile_ID),
 FOREIGN KEY (Word_ID) REFERENCES Word(Word_ID)
 );
 
--- Ratings table
-CREATE TABLE Rating
+-- Request table
+CREATE TABLE Request
 (
-Rating_ID INT NOT NULL AUTO_INCREMENT,
+Request_ID INT NOT NULL AUTO_INCREMENT,
 UserProfile_ID INT,
-Word_ID INT,
-Rating INT NOT NULL,
-PRIMARY KEY (Rating_ID),
-FOREIGN KEY (UserProfile_ID) REFERENCES UserProfile(UserProfile_ID),
-FOREIGN KEY (Word_ID) REFERENCES Word(Word_ID)
-);
-
--- WishList table
-CREATE TABLE WishList
-(
-WishList_ID INT NOT NULL AUTO_INCREMENT,
-UserProfile_ID INT,
-Word_ID INT,
 WordName VARCHAR(100) NOT NULL,
 Description VARCHAR(2048) NOT NULL,
-PRIMARY KEY (WishList_ID),
-FOREIGN KEY (UserProfile_ID) REFERENCES UserProfile(UserProfile_ID),
-FOREIGN KEY (Word_ID) REFERENCES Word(ID)
+PRIMARY KEY (Request_ID),
+FOREIGN KEY (UserProfile_ID) REFERENCES UserProfile(UserProfile_ID)
 );
-
-
-
 
 -- ********************************************* --
 

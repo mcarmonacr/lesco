@@ -11,5 +11,6 @@
     <mapping resource="Category.hbm.xml"/>
     <mapping resource="Word.hbm.xml"/>
     <mapping resource="Video.hbm.xml"/>
+    <mapping resource="Request.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

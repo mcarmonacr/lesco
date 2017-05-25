@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.lesco.diccionario.model">
+    <class name="Request" table="Request">
+            
+        <id name="requestId" type="java.lang.Integer" column="Request_ID">
+            <generator class="native"/>
+        </id>
+			
+		<many-to-one name="userProfile" class="UserProfile" fetch="select">
+			<column name="UserProfile_ID" not-null="true" />
+		</many-to-one>
+					                
+        <property name="wordName" column="WordName" />
+        <property name="description" column="Description" />
+                
+    </class> 
+</hibernate-mapping>

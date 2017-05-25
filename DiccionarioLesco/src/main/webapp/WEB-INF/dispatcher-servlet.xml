@@ -115,6 +115,12 @@ http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
 	    </constructor-arg>
 	</bean>
 	
+	<bean id="requestDao" class="com.lesco.diccionario.dao.RequestDAOImpl">
+	    <constructor-arg>
+	        <ref bean="sessionFactory" />
+	    </constructor-arg>
+	</bean>
+	
 	<bean id="shaEncryption" class="com.lesco.diccionario.utils.SHAEncryption">
 	</bean>
 	

@@ -5,7 +5,7 @@ import java.util.List;
 import com.lesco.diccionario.model.Word;
 
 /**
- * Category Table Data Access Object Interface
+ * Word Table Data Access Object Interface
  * 
  * @author Mario Alonso Carmona Dinarte
  * @email monacar89@hotmail.com
@@ -17,7 +17,7 @@ public interface WordDAO {
 	
 	/**
 	 * Saves a new word
-	 * @param category
+	 * @param word
 	 */
 	public void save(Word word);
 
@@ -29,7 +29,7 @@ public interface WordDAO {
 	
 	/**
 	 * Find a particular word by its name
-	 * @param categoryName
+	 * @param wordName
 	 * @return
 	 */
 	public Word findByWordName(String wordName);

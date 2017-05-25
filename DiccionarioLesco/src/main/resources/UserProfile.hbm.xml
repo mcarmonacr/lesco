@@ -25,5 +25,13 @@
            <one-to-many class="Word" />
         </set>
         
+        <set name="requests" table="Request"
+			inverse="true" lazy="false" fetch="select">
+           <key>
+               <column name="UserProfile_ID" not-null="true"/>
+           </key>
+           <one-to-many class="Request" />
+        </set>
+        
     </class> 
 </hibernate-mapping>

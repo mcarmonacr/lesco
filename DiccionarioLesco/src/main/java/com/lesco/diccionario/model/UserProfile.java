@@ -22,6 +22,7 @@ public class UserProfile {
 	//Foreign Key's
 	private ProfileDetail profileDetail;
 	private Set<Word> words = new HashSet<Word>(0);
+	private Set<Request> requests = new HashSet<Request>(0);
 
 	
 	/**
@@ -107,6 +108,18 @@ public class UserProfile {
 	 */
 	public void setUserRole(String userRole) {
 		this.userRole = userRole;
+	}
+	/**
+	 * @return the requests
+	 */
+	public Set<Request> getRequests() {
+		return requests;
+	}
+	/**
+	 * @param requests the requests to set
+	 */
+	public void setRequests(Set<Request> requests) {
+		this.requests = requests;
 	}
 	
 }
