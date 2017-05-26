@@ -54,5 +54,12 @@ public interface WordDAO {
 	 */
 	public List<Word> findByPatternAndCategoryId(String termsInput, Integer categoryId);
 	
+	/**
+	 * Check if the given word name name already exists
+	 * @param wordName
+	 * @return
+	 */
+	public Boolean checkWordName(String wordName);
+	
 	
 }

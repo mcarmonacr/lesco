@@ -12,6 +12,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.lesco.diccionario.model.Request;
+import com.lesco.diccionario.model.UserProfile;
 import com.lesco.diccionario.model.Word;
 
 /**
@@ -119,5 +120,31 @@ public class RequestDAOImpl implements RequestDAO {
         logger.debug("RequestDAOImpl - findById() - End");
         
         return (Request) criteria.uniqueResult();      
+	}
+	
+	/**
+	 * Check if the given word name already exists in the database
+	 */
+	@SuppressWarnings("unchecked")
+	@Transactional
+	public Boolean checkWordName(String wordName){
+		
+		logger.debug("RequestDAOImpl - checkWordName() - Start");
+		
+		Boolean result;
+		
+        Query query = sessionFactory.getCurrentSession().createQuery("from Request where wordName = :wordName");
+        query.setParameter("wordName", wordName);
+        List<UserProfile> requestList= query.list();
+
+        if(!requestList.isEmpty()) {      
+        	result= true;
+        } else {
+        	result= false;
+        }
+        
+        logger.debug("RequestDAOImpl - checkWordName() - End");
+        
+        return result;
 	}
 }

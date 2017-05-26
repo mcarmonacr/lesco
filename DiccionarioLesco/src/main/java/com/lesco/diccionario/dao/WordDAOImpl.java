@@ -11,6 +11,7 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.lesco.diccionario.model.UserProfile;
 import com.lesco.diccionario.model.Word;
 
 /**
@@ -138,5 +139,31 @@ public class WordDAOImpl implements WordDAO {
         logger.debug("WordDAOImpl - findById() - End");
         
         return (Word) criteria.uniqueResult();      
+	}
+	
+	/**
+	 * Check if the given word name already exists in the database
+	 */
+	@SuppressWarnings("unchecked")
+	@Transactional
+	public Boolean checkWordName(String wordName){
+		
+		logger.debug("WordDAOImpl - checkWordName() - Start");
+		
+		Boolean result;
+		
+        Query query = sessionFactory.getCurrentSession().createQuery("from Word where wordName = :wordName");
+        query.setParameter("wordName", wordName);
+        List<UserProfile> requestList= query.list();
+
+        if(!requestList.isEmpty()) {      
+        	result= true;
+        } else {
+        	result= false;
+        }
+        
+        logger.debug("WordDAOImpl - checkWordName() - End");
+        
+        return result;
 	}
 }

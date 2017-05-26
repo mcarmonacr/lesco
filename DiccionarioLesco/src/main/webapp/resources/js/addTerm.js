@@ -2,7 +2,13 @@ jQuery(document).ready(function($) {
 
 	$("#addTermForm").submit(function(event) {
 		event.preventDefault();
-		submitform();
+		submitForm();
+
+	});
+	
+	$("#requestTermForm").submit(function(event) {
+		event.preventDefault();
+		submitRequestForm();
 
 	});
 
@@ -59,7 +65,7 @@ function checkUserName() {
 }
 
 
-function submitform() {
+function submitForm() {
 
 	$('#processing-modal').modal({
 		backdrop: 'static'
@@ -130,6 +136,42 @@ function submitform() {
 			
 			$('#addTermModal').modal('show');
 			
+		},
+		error : function(e) {
+			console.log("ERROR: ", e);
+			//display(e);
+		},
+		done : function(e) {
+			console.log("DONE");
+			//enableSearchButton(true);
+		}
+	  });
+	  //return false;
+	}
+
+function submitRequestForm() {
+
+	  var requestedWordName= document.getElementById("requestedWordName");
+	  var requestedDescription= document.getElementById("requestedDescription");
+	  
+	  var search = {
+	            "wordName":requestedWordName.value,
+	            "description":requestedDescription.value
+	    }
+
+	  $.ajax({
+	  	headers: { 
+	        'Accept': 'application/json',
+	        'Content-Type': 'application/json' 
+	    },
+		type: 'post',
+	    contentType : "application/json",
+	    url: "/DiccionarioLesco/solicitud/agregarSolicitud",
+	    data : JSON.stringify(search),
+	    dataType : 'json',
+	    success : function(data) {
+			console.log("SUCCESS: ", data);
+			//display(data);
 		},
 		error : function(e) {
 			console.log("ERROR: ", e);

@@ -21,26 +21,22 @@
 	    <div class="row input-group search-text-box">
 		  <span class="glyphicon glyphicon-search input-group-addon home-search-glyphicon"></span>
 <!-- 		   <span class="input-group-addon" id="basic-addon1">@</span> -->
-		  <input type="text" class="form-control" placeholder="Buscar" aria-describedby="sizing-addon2">
+		  <input id="requestInput" name="requestInput" type="text" class="form-control" placeholder="Buscar" aria-describedby="sizing-addon2">
 		</div>
 	    
-	    <div class="row terms-list">
-		  <a href="#" class="list-group-item active">
-		    Cras justo odio
-		  </a>
-		  <a href="#" class="list-group-item">Agua</a>
-		  <a href="#" class="list-group-item">Alajuela</a>
-		  <a href="#" class="list-group-item">Amigo</a>
-		  <a href="#" class="list-group-item">Boda</a>
-		  <a href="#" class="list-group-item">Bosque</a>
-		  <a href="#" class="list-group-item">Camisa</a>
-		  <a href="#" class="list-group-item">Casa</a>
+	    <div id ="requestListDiv" class="row terms-list">
+<!-- 		  <a href="#" class="list-group-item active"> -->
+<!-- 		    Cras justo odio -->
+<!-- 		  </a> -->
+     	  
+     	  <#list requestList as request>
+			  <a onclick="loadDetail(${request.requestId})" href="#" class="list-group-item">${request.wordName}</a>
+		    </#list>
 
-		  
 		  </div>
 		  
 		  <div class="row">
-		  	<h1><span class="label label-primary terms-header">Total: 250</span></h1>
+		  	<h1><span id="totalRequestsCounter" class="label label-primary terms-header">Total: ${requestList?size}</span></h1>
 		  </div>
 		  
 		</div>

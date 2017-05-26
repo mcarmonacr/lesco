@@ -49,4 +49,11 @@ public interface RequestDAO {
 	 */
 	public List<Request> findByPattern(String requestInput);
 	
+	/**
+	 * Check if the given word name name already exists
+	 * @param wordName
+	 * @return
+	 */
+	public Boolean checkWordName(String wordName);
+	
 }

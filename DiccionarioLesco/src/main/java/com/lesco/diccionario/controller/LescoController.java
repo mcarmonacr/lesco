@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.lesco.diccionario.dao.CategoryDAO;
+import com.lesco.diccionario.dao.RequestDAO;
 import com.lesco.diccionario.dao.WordDAO;
 import com.lesco.diccionario.helper.YoutubeHelper;
 import com.lesco.diccionario.model.Category;
+import com.lesco.diccionario.model.Request;
 import com.lesco.diccionario.model.Video;
 import com.lesco.diccionario.model.Word;
 
@@ -37,6 +39,9 @@ public class LescoController {
 	
 	@Autowired
 	private WordDAO wordDAO;
+	
+	@Autowired
+	private RequestDAO requestDAO;
 	
 	@Autowired
 	private YoutubeHelper youtubeHelper;
@@ -130,9 +135,11 @@ public class LescoController {
 		//mv.addObject("message", message);
 		//mv.addObject("name", name);
 		
-		List<Category> listCategories = categoryDAO.list();
-		 
-		mv.addObject("listCategories", listCategories);
+		List<Request> requestList = requestDAO.list();
+		mv.addObject("requestList", requestList);
+		
+		List<Category> categoryList = categoryDAO.list();
+		mv.addObject("listCategories", categoryList);
 		
 		logger.debug("LescoController - agregar() - End");
 		
