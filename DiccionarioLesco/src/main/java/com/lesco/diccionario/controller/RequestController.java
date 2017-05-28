@@ -1,5 +1,10 @@
 package com.lesco.diccionario.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -19,6 +24,7 @@ import com.lesco.diccionario.dao.WordDAO;
 import com.lesco.diccionario.model.ProfileDetail;
 import com.lesco.diccionario.model.Request;
 import com.lesco.diccionario.model.UserProfile;
+import com.lesco.diccionario.model.Word;
 import com.lesco.diccionario.pojo.AjaxResponseBody;
 import com.lesco.diccionario.pojo.RequestForm;
 
@@ -55,7 +61,7 @@ public class RequestController {
 	@RequestMapping(value= "/agregarSolicitud", method = RequestMethod.POST, headers = "Accept=application/json", consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody AjaxResponseBody agregarSolicitud(@RequestBody RequestForm registerForm, HttpServletRequest httpRequest, HttpServletResponse httpResponse){
 		
-		logger.debug("RegisterController - agregarSolicitud() - Start");
+		logger.debug("RequestController - agregarSolicitud() - Start");
 		
 		AjaxResponseBody response = new AjaxResponseBody();
 
@@ -71,7 +77,7 @@ public class RequestController {
 			response.setMessage("Failure");
 		}
 		
-		logger.debug("RegisterController - agregarSolicitud() - End");
+		logger.debug("RequestController - agregarSolicitud() - End");
 		
 		return response;
 	}
@@ -209,6 +215,100 @@ public class RequestController {
 		return ajaxResponse;
 	} */
 	
+	/**
+	 * Get the request corresponding to the sent ID
+	 * 
+	 * Type: Json POST method
+	 * 
+	 * @param registerForm. Contains fields: requestId
+	 */
+	@RequestMapping(value= "/obtenerSolicitud", method = RequestMethod.POST, headers = "Accept=application/json", consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody AjaxResponseBody obtenerSolicitud(@RequestBody Map<String, String> json){
+		
+		AjaxResponseBody result = new AjaxResponseBody();
+		
+		logger.debug("RequestController - obtenerSolicitud() - Start");
+		
+		///Checks if the word id comes from the request
+		if (json.get("requestId") != null){			
+			Integer requestId = Integer.parseInt(json.get("requestId"));
+			if(requestId != null){
+				Request request= requestDAO.findById(requestId);
+				
+				//If the word is found in the database
+				if(request != null){
+					Map <String, Object> requestMap = new HashMap <String, Object> ();
+					
+					requestMap.put("requestId", requestId.toString());
+					requestMap.put("wordName", request.getWordName());
+					requestMap.put("description", request.getDescription());
+					
+					//TODO update mapping
+					//wordMap.put("youtubeVideoID", word.getVideo().getYoutubeVideoID());
+					
+					result.setContent(requestMap);
+					result.setMessage("Success");
+					result.setCode("000");
+				} else {
+					result.setMessage("Could not find the request");
+					result.setCode("001");
+				}
+			}
+		} else{
+			result.setMessage("Failure");
+			result.setCode("001");
+		}
+		
+		logger.debug("RequestController - obtenerSolicitud() - End");
+		
+		return result;
+	}
+	
+	/**
+	 * Gets all terms form the DB that match the search input pattern
+	 * 
+	 * Type: Json POST method
+	 * 
+	 * @param registerForm. Contains fields: userName, emailAddress, password, passwordConfirmation, private String birthdate ,termsAndConditions.
+	 */
+	@RequestMapping(value= "/obtenerListaSolicitudes", method = RequestMethod.POST, headers = "Accept=application/json", consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody AjaxResponseBody obtenerListaSolicitudes(@RequestBody Map<String, String> json){
+		
+		AjaxResponseBody result = new AjaxResponseBody();
+		
+		logger.debug("RequestController - obtenerListaSolicitudes() - Start");
+		
+		//Validate input
+		if (json.get("requestInput") != null && !json.get("requestInput").isEmpty()){
+			
+			List<Request> RequestList = new ArrayList<Request>();
+			
+			
+			RequestList = requestDAO.findByPattern(json.get("requestInput"));
+			
+			
+			Map <String, Object> requestsMap = new HashMap <String, Object> ();
+			
+			// TODO process wordsMap in order to get only the list of words and its IDs 
+			
+			requestsMap.put("requestsList", processRequestList(RequestList));
+			result.setContent(requestsMap);
+					
+			//Checks if the input user name already exists in the database
+			if(RequestList != null && !RequestList.isEmpty()){			
+				result.setMessage("Sucess");
+				result.setCode("000");
+			}else{
+				result.setMessage("List is empty");
+				result.setCode("001");
+			}
+		}
+		logger.debug("RequestController - obtenerListaSolicitudes() - End");
+		
+		return result;
+	}
+	
+	
 	/**** Private Methods ****/
 	
 	/**
@@ -218,7 +318,7 @@ public class RequestController {
 	 */
 	private String salvarSolicitud(RequestForm requestForm, HttpServletRequest httpRequest){
 		
-		logger.debug("RegisterController - salvarSolicitud() - Start");
+		logger.debug("RequestController - salvarSolicitud() - Start");
 		
 		//String to the return, with the operation result
 		String isUserSaved;
@@ -258,8 +358,36 @@ public class RequestController {
 			isUserSaved= "Failure";
 		}
 		
-		logger.debug("RegisterController - salvarSolicitud() - Start");
+		logger.debug("RequestController - salvarSolicitud() - Start");
 		
 		return isUserSaved;
+	}
+	
+	/**
+	 * Get the raw data and place the necessary data in the resulting map
+	 * 
+	 * @param requestList
+	 * @return
+	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	private List processRequestList(List<Request> requestList){
+		
+		logger.debug("RequestController - processRequestList() - Start");
+		
+		List result = new ArrayList();
+		
+		//Processes the word's list and add the necessary data in the resulting map
+		for(Request actualRequest:requestList){
+			Map actualRequestMap = new HashMap();
+			
+			actualRequestMap.put("requestId", actualRequest.getRequestId());
+			actualRequestMap.put("wordName", actualRequest.getWordName());
+			
+			result.add(actualRequestMap);
+		}
+		
+		logger.debug("RequestController - processRequestList() - End");
+		
+		return result;
 	}
 }

@@ -30,7 +30,7 @@
 <!-- 		  </a> -->
      	  
      	  <#list requestList as request>
-			  <a onclick="loadDetail(${request.requestId})" href="#" class="list-group-item">${request.wordName}</a>
+			  <a onclick="loadRequestDetail(${request.requestId})" href="#" class="list-group-item">${request.wordName}</a>
 		    </#list>
 
 		  </div>
