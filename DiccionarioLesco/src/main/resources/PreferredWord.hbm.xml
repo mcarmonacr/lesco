@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.lesco.diccionario.model">
+    <class name="PreferredWord" table="PreferredWord">
+    
+        <id name="preferredWordId" type="java.lang.Integer" column="PreferredWord_ID">
+            <generator class="native"/>
+        </id>
+			
+		<set name="words" table="Word"
+			inverse="true" lazy="false" fetch="select">
+           <key>
+               <column name="Word_ID" not-null="true"/>
+           </key>
+           <one-to-many class="Word" />
+        </set>
+        
+        <set name="userProfiles" table="UserProfile"
+			inverse="true" lazy="false" fetch="select">
+           <key>
+               <column name="UserProfile_ID" not-null="true"/>
+           </key>
+           <one-to-many class="UserProfile" />
+        </set>
+        
+    </class> 
+</hibernate-mapping>

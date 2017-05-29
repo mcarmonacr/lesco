@@ -191,7 +191,20 @@
     <!-- Terms column -->
     <div class="col-md-3">
     
-    <div class="panel panel-default">
+    
+     <!--Como usar Tabs: http://getbootstrap.com/javascript/#tabs -->
+
+			  <!-- Nav tabs -->
+			  <ul class="nav nav-tabs" role="tablist">
+			    <li role="presentation" class="active"><a href="#siteTerms" aria-controls="siteTerms" role="tab" data-toggle="tab">Términos</a></li>
+			    <li role="presentation"><a href="#myFavoriteTerms" aria-controls="myFavoriteTerms" role="tab" data-toggle="tab">Mis Términos</a></li>
+			  </ul>
+			  
+			  
+			  <!-- Tab panes -->
+			  <div class="tab-content">
+			    <div role="tabpanel" class="tab-pane active" id="siteTerms">
+			    	<div class="panel panel-default">
 		  <div class="panel-body">
 
     	<!-- Terms Section -->
@@ -237,13 +250,15 @@
 		  </ul>
 		</div>
 
-	    <div id="wordListDiv" class="row terms-list">
+	    <div id="wordListDiv" class="row terms-list text-center">
 	    
 <!-- 	    <a href="#" class="list-group-item active"> -->
 <!-- 		    Hola -->
 <!-- 		  </a> -->
+		  		  
 		  
-<!-- 		  <a href="#" class="list-group-item">Hotel</a> -->
+		  <a href="#" class="list-group-item"><span class="glyphicon glyphicon-star" data-toggle="tooltip" data-placement="top" title="Tooltip on top" onclick="alert('Hola')"></span>   Hotel</a>
+		  <a href="#" class="list-group-item"><span class="glyphicon glyphicon-star-empty" ></span>   Hotel</a>
 <!-- 		  <a href="#" class="list-group-item">Importante</a> -->
 <!-- 		  <a href="#" class="list-group-item">Letra</a> -->
 <!-- 		  <a href="#" class="list-group-item">Nunca</a> -->
@@ -268,7 +283,95 @@
 		
 		  </div>
 		</div>
+			    </div>
+			    
+			    <div role="tabpanel" class="tab-pane" id="myFavoriteTerms">
+			    
+			    
+			    <div class="panel panel-default">
+		  <div class="panel-body">
+
+    	<!-- Terms Section -->
+	    <div class="list-group">
+	    
+	    <div class="row">
+	    	<h1><span class="label label-primary terms-header glyphicon glyphicon-th-list"> Mis Términos</span></h1>
+	    </div>
+	    
+	    <div class="row input-group search-text-box">
+		  <span class="glyphicon glyphicon-search input-group-addon home-search-glyphicon"></span>
+<!-- 		   <span class="input-group-addon" id="basic-addon1">@</span> -->
+		  <input id="myTermsInput" name="myTermsInput" type="text" class="form-control" placeholder="Buscar" aria-describedby="sizing-addon2">
+		</div>
+	    
+	    <div class="row dropdown dropdown-container-home">
+		  <button class="btn btn-default dropdown-toggle dropdown-button-home" type="button" id="myCategoryDropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+		    <span class="glyphicon glyphicon-tasks"></span> Categoría
+		    <span class="caret"></span>
+		    <div id="myCategoryIdDiv" hidden></div>
+		  </button>
+		  <ul class="dropdown-menu dropdown-ul-home" aria-labelledby="myCategoryDropdownMenu">
+		  		<li onclick="assignMyCategory($(this).find('a').text(), $(this).find('div').text())">
+		  			<a href="#">Cualquiera</a>
+		  			<div hidden></div>
+		  		</li>
+		  		<li role="separator" class="divider"></li>
+		  <#list listCategories as category>
+		  		
+<!-- 	    	<li class="list-group-item list-group-item-info"><a href="#">${category.categoryName}</a></li> -->
+				<li onclick="assignMyCategory($(this).find('a').text(), $(this).find('div').text())">
+					<a href="#">${category.categoryName}</a>
+					<div hidden>${category.categoryId}</div>
+				</li>
+				
+<!-- 				<li onclick="assignCategory(this.value)" id="1">1</li> -->
+	  	</#list>
+<!-- 		    <li><a href="#">Action</a></li> -->
+<!-- 		    <li><a href="#">Another action</a></li> -->
+<!-- 		    <li><a href="#">Something else here</a></li> -->
+<!-- 		    <li role="separator" class="divider"></li> -->
+<!-- 		    <li><a href="#">Separated link</a></li> -->
+		  </ul>
+		</div>
+
+	    <div id="myWordListDiv" class="row terms-list text-center">
+	    
+<!-- 	    <a href="#" class="list-group-item active"> -->
+<!-- 		    Hola -->
+<!-- 		  </a> -->
+		  
+<!-- 		  <a href="#" class="list-group-item">Hotel</a> -->
+<!-- 		  <a href="#" class="list-group-item">Importante</a> -->
+<!-- 		  <a href="#" class="list-group-item">Letra</a> -->
+<!-- 		  <a href="#" class="list-group-item">Nunca</a> -->
+	    
+	    <#if listMyWords??>
+		    <#list listMyWords as myWord>
+			  <a onclick="loadMyDetail(${myWord.wordId})" href="#" class="list-group-item">${myWord.wordName}</a>
+		    </#list>
+		</#if>
+		
+		 </div>
+		    
+		  <#if listMyWords?? && listMyWords?size > 0>
+		  	<div class="row">
+		  		<h1><span id="myTotalTermsCounter" class="label label-primary terms-header">Total: ${listMyWords?size} </span></h1>
+		  	</div>
+		  <#else>
+		  	<div class="row">
+		  		<h1><span id="myTotalTermsCounter" class="label label-primary terms-header">Total: 0 </span></h1>
+		  	</div>
+		  </#if>
+		  
+		</div>
+		
+		  </div>
+		</div>
+			    
+			    </div>
 		    </div>
+
+    </div>
 
 </div>
     

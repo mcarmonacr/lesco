@@ -5,6 +5,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,10 +16,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.lesco.diccionario.dao.CategoryDAO;
+import com.lesco.diccionario.dao.PreferredWordDAO;
 import com.lesco.diccionario.dao.RequestDAO;
+import com.lesco.diccionario.dao.UserDAO;
 import com.lesco.diccionario.dao.WordDAO;
 import com.lesco.diccionario.helper.YoutubeHelper;
 import com.lesco.diccionario.model.Category;
+import com.lesco.diccionario.model.PreferredWord;
+import com.lesco.diccionario.model.ProfileDetail;
 import com.lesco.diccionario.model.Request;
 import com.lesco.diccionario.model.Video;
 import com.lesco.diccionario.model.Word;
@@ -46,13 +54,19 @@ public class LescoController {
 	@Autowired
 	private YoutubeHelper youtubeHelper;
 	
+	@Autowired
+	private UserDAO userDAO;
+	
+	@Autowired
+	private PreferredWordDAO preferredWordDAO;
+	
 	/**
 	 * DiccioanrioLesco Home Page
 	 * 
 	 * @return ModelAndView
 	 */
 	@RequestMapping("/")
-	public ModelAndView diccionarioLesco() {
+	public ModelAndView diccionarioLesco(HttpServletRequest httpRequest, HttpServletResponse httpResponse) {
 		
 		logger.debug("LescoController - diccionarioLesco() - Start");
  
@@ -62,6 +76,21 @@ public class LescoController {
 		
 		//Get all the categories
 		List<Category> listCategories = categoryDAO.list();
+		
+		List<PreferredWord> listMyWords = null;
+
+		//Get user session
+		HttpSession session = httpRequest.getSession();
+		
+		if(session != null && session.getAttribute("userEmail") != null) {
+			//Get the current logged in user emailAddress
+			String userEmail = session.getAttribute("userEmail").toString();
+			
+			//Obtain the User that belongs to the email
+			ProfileDetail profileDetailQuery = userDAO.findByEmailAddress(userEmail);
+			
+			//listMyWords = preferredWordDAO.findByUser(profileDetailQuery.getProfileDetailId());
+		}
 		
 		//Get all the categories
 		List<Word> listWords = wordDAO.list();
@@ -77,6 +106,7 @@ public class LescoController {
 		mv.addObject("videosMetadata", getVideosMetadata(randomWord));
 		mv.addObject("listCategories", listCategories);
 		mv.addObject("listWords", listWords);
+		mv.addObject("listMyWords", listMyWords);
 		
 		logger.debug("LescoController - diccionarioLesco() - End");
 		
