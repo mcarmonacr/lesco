@@ -89,7 +89,7 @@ public class LescoController {
 			//Obtain the User that belongs to the email
 			ProfileDetail profileDetailQuery = userDAO.findByEmailAddress(userEmail);
 			
-			//listMyWords = preferredWordDAO.findByUser(profileDetailQuery.getProfileDetailId());
+			listMyWords = preferredWordDAO.findByUser(profileDetailQuery.getProfileDetailId());
 		}
 		
 		//Get all the categories

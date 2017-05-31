@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -12,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.lesco.diccionario.model.Category;
 import com.lesco.diccionario.model.PreferredWord;
+import com.lesco.diccionario.model.UserProfile;
 import com.lesco.diccionario.model.Word;
 
 /**
@@ -75,11 +77,12 @@ public class PreferredWordDAOImpl implements PreferredWordDAO {
 	@Transactional
 	public List<PreferredWord> findByUser(Integer userId){
 		
-		logger.debug("PreferredWordDAOImpl - findByUser() - Start");
-		
-		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(PreferredWord.class);
-        criteria.add(Restrictions.eq("userProfile_ID",userId));
-        List<PreferredWord> preferredWordsList= criteria.list();
+		logger.debug("PreferredWordDAOImpl - findByUser() - Start");        
+        
+        Query query = sessionFactory.getCurrentSession().createQuery("from PreferredWord where userProfile_ID = :userProfile_ID");
+        query.setParameter("userProfile_ID", userId);
+        List<PreferredWord> preferredWordsList= query.list();
+        
         
         logger.debug("PreferredWordDAOImpl - findByUser() - End");
         

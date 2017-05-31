@@ -353,7 +353,7 @@
 		
 		 </div>
 		    
-		  <#if listMyWords?? && listMyWords?size > 0>
+		  <#if listMyWords??>
 		  	<div class="row">
 		  		<h1><span id="myTotalTermsCounter" class="label label-primary terms-header">Total: ${listMyWords?size} </span></h1>
 		  	</div>
