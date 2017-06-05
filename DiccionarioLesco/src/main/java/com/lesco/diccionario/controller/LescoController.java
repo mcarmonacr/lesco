@@ -1,5 +1,6 @@
 package com.lesco.diccionario.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -77,7 +78,7 @@ public class LescoController {
 		//Get all the categories
 		List<Category> listCategories = categoryDAO.list();
 		
-		List<PreferredWord> listMyWords = null;
+		List<Word> listMyWords = null;
 
 		//Get user session
 		HttpSession session = httpRequest.getSession();
@@ -89,7 +90,7 @@ public class LescoController {
 			//Obtain the User that belongs to the email
 			ProfileDetail profileDetailQuery = userDAO.findByEmailAddress(userEmail);
 			
-			listMyWords = preferredWordDAO.findByUser(profileDetailQuery.getProfileDetailId());
+			listMyWords = getWordsFromList(preferredWordDAO.findByUser(profileDetailQuery.getProfileDetailId()));
 		}
 		
 		//Get all the categories
@@ -327,5 +328,23 @@ public class LescoController {
 		}
 
 		return result;	
+	}
+	
+	private List<Word> getWordsFromList(List<PreferredWord> preferredWordList){
+		
+		List<Word> result = new ArrayList<Word>();
+		
+		//Processes the word's list and add the necessary data in the resulting map
+		for(PreferredWord actualPreferredWord:preferredWordList){
+			
+			Word actualWord= new Word();
+			
+			actualWord= wordDAO.findById(actualPreferredWord.getUserProfileId());
+			
+			result.add(actualWord);
+		}
+		
+		return result;
+		
 	}
 }

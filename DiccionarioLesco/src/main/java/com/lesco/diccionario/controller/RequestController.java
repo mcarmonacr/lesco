@@ -222,7 +222,7 @@ public class RequestController {
 	 * 
 	 * @param registerForm. Contains fields: requestId
 	 */
-	@RequestMapping(value= "/obtenerSolicitud", method = RequestMethod.POST, headers = "Accept=application/json", consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value= "/obtenerSolicitud", method = RequestMethod.POST, headers = "Accept=application/json", consumes=MediaType.APPLICATION_JSON_VALUE, produces={"application/json; charset=ISO-8859-1"})
 	public @ResponseBody AjaxResponseBody obtenerSolicitud(@RequestBody Map<String, String> json){
 		
 		AjaxResponseBody result = new AjaxResponseBody();

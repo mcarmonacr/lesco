@@ -56,4 +56,6 @@ public interface RequestDAO {
 	 */
 	public Boolean checkWordName(String wordName);
 	
+	
+	public Boolean deleteByWordName(String wordName);
 }

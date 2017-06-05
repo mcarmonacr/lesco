@@ -23,10 +23,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.lesco.diccionario.dao.CategoryDAO;
+import com.lesco.diccionario.dao.PreferredWordDAO;
+import com.lesco.diccionario.dao.RequestDAO;
 import com.lesco.diccionario.dao.UserDAO;
 import com.lesco.diccionario.dao.WordDAO;
 import com.lesco.diccionario.helper.YoutubeHelper;
 import com.lesco.diccionario.model.Category;
+import com.lesco.diccionario.model.PreferredWord;
 import com.lesco.diccionario.model.ProfileDetail;
 import com.lesco.diccionario.model.UserProfile;
 import com.lesco.diccionario.model.Video;
@@ -62,6 +65,12 @@ public class TermnsController {
 	@Autowired
 	private YoutubeHelper youtubeHelper;
 	
+	@Autowired
+	private PreferredWordDAO preferredWordDAO;
+	
+	@Autowired
+	private RequestDAO requestDAO;
+	
 	/**
 	 * Service that stores a new term into the site
 	 * Type: Json POST method
@@ -72,8 +81,8 @@ public class TermnsController {
 	 */
 	@RequestMapping(value= "/agregarTermino", method = RequestMethod.POST/*, headers = "Accept=application/json", consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE*/)
 	public @ResponseBody AjaxResponseBody agregarTermino(@RequestPart(value = "data", required = false) AddTermForm addTermForm, @RequestPart(value = "video") MultipartFile videoFile, 
-			@RequestPart(value = "definitionVideo") MultipartFile definitionVideoFile, @RequestPart(value = "explanationVideo") MultipartFile explanationVideoFile, 
-			@RequestPart(value = "exampleVideo") MultipartFile exampleVideoFile,
+			@RequestPart(value = "definitionVideo", required = false) MultipartFile definitionVideoFile, @RequestPart(value = "explanationVideo", required = false) MultipartFile explanationVideoFile, 
+			@RequestPart(value = "exampleVideo", required = false) MultipartFile exampleVideoFile,
 			HttpServletRequest request, HttpServletResponse response){
 		
 		AjaxResponseBody ajaxResponse = new AjaxResponseBody();
@@ -82,15 +91,25 @@ public class TermnsController {
 			logger.debug("TermnsController - agregarTermino() - Start");
 
 			ajaxResponse.setCode("000");
-			ajaxResponse.setMessage("Success");
-
-			//Saves the user to the database
-			String resultadoSalvar= salvarTermino(addTermForm, videoFile, definitionVideoFile, explanationVideoFile, exampleVideoFile, request);
-
-			//String resultadoSalvar= "success";
 			
+			ajaxResponse.setMessage("Success");
+			
+			String resultadoSalvar= "";
+
+			//Validate if the terms already exists in the system
+			if(!checkTermExistence(addTermForm)) {
+									
+				//Saves the user to the database
+				resultadoSalvar= salvarTermino(addTermForm, videoFile, definitionVideoFile, explanationVideoFile, exampleVideoFile, request);
+	
+				//resultadoSalvar= "success";
+			}
 			//Response toggle based on the save return
 			if("Success".equals(resultadoSalvar)){
+				
+				//Validate if the term is in the requests table, in which case should be deleted from there
+				checkRequestExistence(addTermForm);
+				
 				ajaxResponse.setCode("000");
 				ajaxResponse.setMessage("Success");
 			}else{
@@ -279,6 +298,87 @@ public class TermnsController {
 		return result;
 	}
 	
+	/**
+	 * Set a word as preferred or not, depending upon it previous status
+	 * 
+	 * Type: Json POST method
+	 * 
+	 * @param. Contains fields: wordId, isOneOfMyFavoriteTerms
+	 */
+	@RequestMapping(value= "/agregarPreferido", method = RequestMethod.POST, headers = "Accept=application/json", consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody AjaxResponseBody agregarPreferido(@RequestBody Map<String, String> json, HttpServletRequest request, HttpServletResponse response){
+		
+		AjaxResponseBody result = new AjaxResponseBody();
+		
+		logger.debug("RegisterController - agregarPreferido() - Start");
+		
+		
+		Map <String, Object> resultMap = new HashMap <String, Object> ();
+		resultMap.put("isOneOfMyFavoriteTerms", "");
+		
+		///Checks if the word id comes from the request
+		if (json.get("wordId") != null){			
+			Integer wordId = Integer.parseInt(json.get("wordId"));
+			if(wordId != null){
+				Word word= wordDAO.findById(wordId);
+				
+				//If the word is found in the database
+				if(word != null){
+					
+					//Get user session
+					HttpSession session = request.getSession();
+					
+					//Get the current logged in user emailAddress
+					String userEmail = session.getAttribute("userEmail").toString();
+					
+					//Obtain the User that belongs to the email
+					ProfileDetail profileDetailQuery = userDAO.findByEmailAddress(userEmail);
+					
+					if(profileDetailQuery != null){
+
+						//If the condition is met the term should be added to the favorite ones
+						if(json.get("isOneOfMyFavoriteTerms") != null) {
+							Boolean isOneOfMyFavoriteTerms= Boolean.valueOf(json.get("isOneOfMyFavoriteTerms"));
+							
+							if (isOneOfMyFavoriteTerms.equals(false)) {
+								PreferredWord preferredWord = new PreferredWord();
+																
+								preferredWord.setWordId(wordId);
+								preferredWord.setUserProfileId(profileDetailQuery.getProfileDetailId());
+								
+								preferredWordDAO.save(preferredWord);
+								resultMap.put("isOneOfMyFavoriteTerms", true);
+							} else {
+								//Get the entity that needs to be deleted
+								PreferredWord preferredWord = preferredWordDAO.findByWordAndUser(wordId, profileDetailQuery.getProfileDetailId());
+								
+								PreferredWord preferredWordReference = preferredWordDAO.findById(preferredWord.getPreferredWordId());
+								
+								//Delete the entity
+								preferredWordDAO.delete(preferredWordReference);
+								resultMap.put("isOneOfMyFavoriteTerms", false);
+							}							
+						} 
+					}
+
+					result.setContent(resultMap);
+					result.setMessage("Success");
+					result.setCode("000");
+				} else {
+					result.setMessage("Could not find the word");
+					result.setCode("001");
+				}
+			}
+		} else{
+			result.setMessage("Failure");
+			result.setCode("001");
+		}
+		
+		logger.debug("RegisterController - agregarPreferido() - End");
+		
+		return result;
+	}
+	
 	/**** Private Methods ****/ 
 	
 	/**
@@ -440,6 +540,29 @@ public class TermnsController {
 		}
 		
 		logger.debug("RegisterController - processWordList() - End");
+		
+		return result;
+	}
+	
+	private Boolean checkTermExistence(AddTermForm addTermForm) {
+		
+		Boolean result = false;
+		
+		if(wordDAO.checkWordName(addTermForm.getWordName()) == true) {
+			result= true;
+		}
+		
+		return result;
+	}
+	
+	
+	private Boolean checkRequestExistence(AddTermForm addTermForm) {
+		
+		Boolean result= false;
+		
+		if(requestDAO.checkWordName(addTermForm.getWordName()) == true) {
+			result= requestDAO.deleteByWordName(addTermForm.getWordName());
+		}
 		
 		return result;
 	}

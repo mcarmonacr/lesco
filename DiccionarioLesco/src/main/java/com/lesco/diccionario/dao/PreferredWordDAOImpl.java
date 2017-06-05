@@ -53,6 +53,22 @@ public class PreferredWordDAOImpl implements PreferredWordDAO {
 	}
 	
 	/**
+	 * Deletes a preferred word
+	 */
+	@Transactional
+	public void delete(PreferredWord preferredWord) {
+		logger.debug("PreferredWordDAOImpl - delete() - Start");
+		
+		Session session = this.sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		session.delete(preferredWord);
+		tx.commit();
+		session.close();
+		
+		logger.debug("PreferredWordDAOImpl - delete() - End");
+	}
+	
+	/**
 	 * Get a list of all preferred words
 	 */
 	@Transactional
@@ -87,5 +103,59 @@ public class PreferredWordDAOImpl implements PreferredWordDAO {
         logger.debug("PreferredWordDAOImpl - findByUser() - End");
         
         return preferredWordsList;
+	}
+	
+	/**
+	 * Find a particular preferred word by word
+	 */
+	@SuppressWarnings("unchecked")
+	@Transactional
+	public List<PreferredWord> findByWord(Integer wordId){
+		
+		logger.debug("PreferredWordDAOImpl - findByWord() - Start");        
+        
+        Query query = sessionFactory.getCurrentSession().createQuery("from PreferredWord where word_ID = :word_ID");
+        query.setParameter("word_ID", wordId);
+        List<PreferredWord> preferredWordsList= query.list();
+        
+        logger.debug("PreferredWordDAOImpl - findByWord() - End");
+        
+        return preferredWordsList;
+	}
+	
+	/**
+	 * Find a particular preferred word by word and user
+	 */
+	@Transactional
+	public PreferredWord findByWordAndUser(Integer wordId, Integer userId){
+		
+		logger.debug("PreferredWordDAOImpl - findByWordAndUser() - Start");        
+        
+        Query query = sessionFactory.getCurrentSession().createQuery("from PreferredWord where word_ID = :word_ID and userProfile_ID = :userProfile_ID");
+        query.setParameter("word_ID", wordId);
+        query.setParameter("userProfile_ID", userId);
+        List<PreferredWord> preferredWordsList= query.list();
+                
+        logger.debug("PreferredWordDAOImpl - findByWordAndUser() - End");
+        
+        //return (PreferredWord) criteria.uniqueResult();
+        return preferredWordsList.get(0);
+	}
+	
+	
+	/**
+	 * Find a particular preferred word by word and user
+	 */
+	@Transactional
+	public PreferredWord findById(Integer preferredWordId){
+		
+		logger.debug("PreferredWordDAOImpl - findById() - Start");        
+
+        Criteria criteria = sessionFactory.getCurrentSession().createCriteria(PreferredWord.class);
+        criteria.add(Restrictions.eq("preferredWordId",preferredWordId));
+        
+        logger.debug("PreferredWordDAOImpl - findById() - End");
+        
+        return (PreferredWord) criteria.uniqueResult();
 	}
 }

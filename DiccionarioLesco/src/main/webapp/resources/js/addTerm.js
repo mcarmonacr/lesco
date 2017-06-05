@@ -205,7 +205,11 @@ function loadRequestDetail(requestId)
 	        'Content-Type': 'application/json' 
 	    },
 		type: 'post',
-	    contentType : "application/json",
+	    contentType : "application/json; charset:ISO-8859-1",
+	    // This is the imporant part!!!
+	    beforeSend: function(jqXHR) {
+	        jqXHR.overrideMimeType('text/html;charset=iso-8859-1');
+	    },
 	    url: "/DiccionarioLesco/solicitud/obtenerSolicitud",
 	    data : JSON.stringify(search),
 	    dataType : 'json',

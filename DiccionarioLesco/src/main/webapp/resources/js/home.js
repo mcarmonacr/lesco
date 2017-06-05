@@ -72,6 +72,59 @@ function loadDetail(wordId)
 	  //return false;
 }
 
+function togglePreferred(wordId) {
+    //$("#dropdownMenu1").html(category + '  <span class="caret"></span>');
+	
+	  var spanElement=$("#span-"+wordId);
+	  var isOneOfMyFavoriteTerms= false;
+	  
+	  //If the condition is met, means that the word is actually a favorite
+	  if(spanElement.hasClass("glyphicon-star")) {
+		  isOneOfMyFavoriteTerms = true;
+	  }
+	  
+	  var search = {
+	            "wordId":wordId,
+	            "isOneOfMyFavoriteTerms":isOneOfMyFavoriteTerms
+	    }
+
+	  $.ajax({
+	  	headers: { 
+	        'Accept': 'application/json',
+	        'Content-Type': 'application/json' 
+	    },
+		type: 'post',
+	    contentType : "application/json",
+	    url: "/DiccionarioLesco/termino/agregarPreferido",
+	    data : JSON.stringify(search),
+	    dataType : 'json',
+	    success : function(data) {
+	    	console.log("SUCCESS: ", data);
+	    	if(data != null && data.code == "000"){
+	    		
+	    		//If is true, then it should be now a favorite term
+	    		if(data.content.isOneOfMyFavoriteTerms == true){
+	    			$("#span-"+wordId).removeClass('glyphicon-star-empty').addClass('glyphicon-star');
+	    		} 
+	    		if(data.content.isOneOfMyFavoriteTerms == false) {
+	    			$("#span-"+wordId).removeClass('glyphicon-star').addClass('glyphicon-star-empty');
+	    		}
+	    	}else {
+	    		console.log("Data: " + data.content.word);
+	    	}
+		},
+		error : function(e) {
+			console.log("ERROR: ", e);
+			//display(e);
+		},
+		done : function(e) {
+			//console.log("DONE");
+			//enableSearchButton(true);
+		}
+	  });
+	  //return false;
+}
+
 function checkTerm() {
 
 	  var termsInput= document.getElementById("termsInput");

@@ -74,9 +74,7 @@ CREATE TABLE PreferredWord
 PreferredWord_ID INT NOT NULL AUTO_INCREMENT,
 UserProfile_ID INT NOT NULL,
 Word_ID INT NOT NULL,
-PRIMARY KEY (PreferredWord_ID),
-FOREIGN KEY (UserProfile_ID) REFERENCES UserProfile(UserProfile_ID),
-FOREIGN KEY (Word_ID) REFERENCES Word(Word_ID)
+PRIMARY KEY (PreferredWord_ID)
 );
 
 -- ********************************************* --

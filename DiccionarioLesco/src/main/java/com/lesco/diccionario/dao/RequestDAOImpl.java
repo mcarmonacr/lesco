@@ -147,4 +147,31 @@ public class RequestDAOImpl implements RequestDAO {
         
         return result;
 	}
+	
+	
+	/**
+	 * Check if the given word name already exists in the database
+	 */
+	@SuppressWarnings("unchecked")
+	@Transactional
+	public Boolean deleteByWordName(String wordName){
+		
+		logger.debug("RequestDAOImpl - deleteByWordName() - Start");
+		
+		Boolean result = false;
+		
+        Query query = sessionFactory.getCurrentSession().createQuery("delete Request where wordName = :wordName");
+        query.setParameter("wordName", wordName);
+        
+        int queryResult = query.executeUpdate();
+        
+        if (queryResult > 0) {
+            result= true;
+        }
+
+        
+        logger.debug("RequestDAOImpl - deleteByWordName() - End");
+        
+        return result;
+	}
 }

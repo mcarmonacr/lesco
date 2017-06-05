@@ -197,7 +197,7 @@
 			  <!-- Nav tabs -->
 			  <ul class="nav nav-tabs" role="tablist">
 			    <li role="presentation" class="active"><a href="#siteTerms" aria-controls="siteTerms" role="tab" data-toggle="tab">Términos</a></li>
-			    <li role="presentation"><a href="#myFavoriteTerms" aria-controls="myFavoriteTerms" role="tab" data-toggle="tab">Mis Términos</a></li>
+			    <li role="presentation"><a href="#myFavoriteTerms" aria-controls="myFavoriteTerms" role="tab" data-toggle="tab">Favoritos</a></li>
 			  </ul>
 			  
 			  
@@ -257,14 +257,30 @@
 <!-- 		  </a> -->
 		  		  
 		  
-		  <a href="#" class="list-group-item"><span class="glyphicon glyphicon-star" data-toggle="tooltip" data-placement="top" title="Tooltip on top" onclick="alert('Hola')"></span>   Hotel</a>
-		  <a href="#" class="list-group-item"><span class="glyphicon glyphicon-star-empty" ></span>   Hotel</a>
+		  
 <!-- 		  <a href="#" class="list-group-item">Importante</a> -->
 <!-- 		  <a href="#" class="list-group-item">Letra</a> -->
 <!-- 		  <a href="#" class="list-group-item">Nunca</a> -->
 	    
+	    <!-- Work to do here: Add the proper classes and onClick actions -->
 		    <#list listWords as word>
-			  <a onclick="loadDetail(${word.wordId})" href="#" class="list-group-item">${word.wordName}</a>
+			     <#if ((listMyWords??) && (listMyWords?size > 0))>
+				    <#list listMyWords as myWord>
+				    <!-- This means that the word is a preferred word by the user -->
+				    	<#if (word.wordName == myWord.wordName) >
+				    		<a onclick="loadDetail(${myWord.wordId})" href="#" class="list-group-item">
+				    		<span id="span-${myWord.wordId}" class="glyphicon glyphicon-star" data-toggle="tooltip" data-placement="top" title="Agregar a favoritos" onclick="togglePreferred(${word.wordId})"></span> ${myWord.wordName}</a>
+				    		
+<!-- 				    		<a href="#" class="list-group-item"><span id="span-${myWord.wordId}" class="glyphicon glyphicon-star" data-toggle="tooltip" data-placement="top" title="Agregar a favoritos" onclick="togglePreferred(${word.wordId})"></span>   Hotel</a> -->
+<!-- 		  <a href="#" class="list-group-item"><span class="glyphicon glyphicon-star-empty" ></span>   Hotel</a> -->
+				    		
+				    	</#if>
+					  
+				    </#list>
+				<#else>
+					<a onclick="loadDetail(${word.wordId})" href="#" class="list-group-item">
+					<span id="span-${word.wordId}" class="glyphicon glyphicon-star-empty" data-toggle="tooltip" data-placement="top" title="Agregar a favoritos" onclick="togglePreferred(${word.wordId})"></span> ${word.wordName}</a>
+				</#if>
 		    </#list>
 
 		 </div>
@@ -295,7 +311,7 @@
 	    <div class="list-group">
 	    
 	    <div class="row">
-	    	<h1><span class="label label-primary terms-header glyphicon glyphicon-th-list"> Mis Términos</span></h1>
+	    	<h1><span class="label label-primary terms-header glyphicon glyphicon-th-list"> Favoritos</span></h1>
 	    </div>
 	    
 	    <div class="row input-group search-text-box">

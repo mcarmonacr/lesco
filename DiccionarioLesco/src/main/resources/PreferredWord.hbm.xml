@@ -8,22 +8,9 @@
         <id name="preferredWordId" type="java.lang.Integer" column="PreferredWord_ID">
             <generator class="native"/>
         </id>
-			
-		<set name="words" table="Word"
-			inverse="true" lazy="false" fetch="select">
-           <key>
-               <column name="Word_ID" not-null="true"/>
-           </key>
-           <one-to-many class="Word" />
-        </set>
-        
-        <set name="userProfiles" table="UserProfile"
-			inverse="true" lazy="false" fetch="select">
-           <key>
-               <column name="UserProfile_ID" not-null="true"/>
-           </key>
-           <one-to-many class="UserProfile" />
-        </set>
+
+		<property name="wordId" column="Word_ID" />
+		<property name="userProfileId" column="UserProfile_ID" />
         
     </class> 
 </hibernate-mapping>

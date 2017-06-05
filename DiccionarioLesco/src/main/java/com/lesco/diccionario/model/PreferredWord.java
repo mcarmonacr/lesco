@@ -14,11 +14,8 @@ import java.util.Set;
 public class PreferredWord {
 
 	private Integer preferredWordId;
-	
-	//Foreign Key
-	private Set<Word> words = new HashSet<Word>(0);
-	private Set<UserProfile> userProfiles = new HashSet<UserProfile>(0);
-
+	private Integer wordId;
+	private Integer userProfileId;
 	/**
 	 * @return the preferredWordId
 	 */
@@ -32,27 +29,27 @@ public class PreferredWord {
 		this.preferredWordId = preferredWordId;
 	}
 	/**
-	 * @return the words
+	 * @return the wordId
 	 */
-	public Set<Word> getWords() {
-		return words;
+	public Integer getWordId() {
+		return wordId;
 	}
 	/**
-	 * @param words the words to set
+	 * @param wordId the wordId to set
 	 */
-	public void setWords(Set<Word> words) {
-		this.words = words;
+	public void setWordId(Integer wordId) {
+		this.wordId = wordId;
 	}
 	/**
-	 * @return the userProfiles
+	 * @return the userProfileId
 	 */
-	public Set<UserProfile> getUserProfiles() {
-		return userProfiles;
+	public Integer getUserProfileId() {
+		return userProfileId;
 	}
 	/**
-	 * @param userProfiles the userProfiles to set
+	 * @param userProfileId the userProfileId to set
 	 */
-	public void setUserProfiles(Set<UserProfile> userProfiles) {
-		this.userProfiles = userProfiles;
+	public void setUserProfileId(Integer userProfileId) {
+		this.userProfileId = userProfileId;
 	}
 }

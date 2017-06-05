@@ -20,6 +20,12 @@ public interface PreferredWordDAO {
 	 * @param category
 	 */
 	public void save(PreferredWord preferredWord);
+	
+	/**
+	 * deletes a preferred word
+	 * @param category
+	 */
+	public void delete(PreferredWord preferredWord);
 
 	/**
 	 * Get a list of all preferred words
@@ -33,4 +39,27 @@ public interface PreferredWordDAO {
 	 * @return
 	 */
 	public List<PreferredWord> findByUser(Integer userId);
+	
+	/**
+	 * Find a particular preferred word by word ID
+	 * @param wordId
+	 * @return
+	 */
+	public List<PreferredWord> findByWord(Integer wordId);
+	
+	/**
+	 * Find a particular preferred word by word and user ID
+	 * @param wordId
+	 * @param userId
+	 * @return
+	 */
+	public PreferredWord findByWordAndUser(Integer wordId, Integer userId);
+	
+	/**
+	 * Find a particular preferred word by word and user ID
+	 * @param wordId
+	 * @param userId
+	 * @return
+	 */
+	public PreferredWord findById(Integer preferredWordId);
 }
