@@ -227,6 +227,55 @@ public class TermnsController {
 	}
 	
 	
+	/**
+	 * Gets all terms form the DB that match the search input pattern
+	 * 
+	 * Type: Json POST method
+	 * 
+	 * @param registerForm. Contains fields: myTermsInput, myCategoryIdDiv
+	 */
+	@RequestMapping(value= "/obtenerListaMisTerminos", method = RequestMethod.POST, headers = "Accept=application/json", consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody AjaxResponseBody obtenerListaMisTerminos(@RequestBody Map<String, String> json){
+		
+		AjaxResponseBody result = new AjaxResponseBody();
+		
+		logger.debug("RegisterController - obtenerListaMisTerminos() - Start");
+		
+		//Validate input
+		if (json.get("myTermsInput") != null && !json.get("myTermsInput").isEmpty()){
+			
+			List<Word> myWordsList = new ArrayList<Word>();
+			
+			//If there's a category then it's included in the search 
+			if(json.get("myCategoryIdDiv") != null && !json.get("myCategoryIdDiv").isEmpty()){
+				myWordsList = preferredWordDAO.findByPatternAndCategoryId(json.get("myTermsInput"), Integer.parseInt(json.get("myCategoryIdDiv"))); //wordDAO.list();
+			} else {
+				//Search the word regardless the category
+				myWordsList = preferredWordDAO.findByPattern(json.get("myTermsInput"));
+			}
+			
+			Map <String, Object> wordsMap = new HashMap <String, Object> ();
+			
+			// TODO process wordsMap in order to get only the list of words and its IDs 
+			
+			wordsMap.put("myWordsList", processWordList(myWordsList));
+			result.setContent(wordsMap);
+					
+			//Checks if the input user name already exists in the database
+			if(myWordsList != null && !myWordsList.isEmpty()){			
+				result.setMessage("Sucess");
+				result.setCode("000");
+			}else{
+				result.setMessage("List is empty");
+				result.setCode("001");
+			}
+		}
+		logger.debug("RegisterController - obtenerListaMisTerminos() - End");
+		
+		return result;
+	}
+	
+	
 	
 	/**
 	 * Verifies is the userName entered already exists in the database

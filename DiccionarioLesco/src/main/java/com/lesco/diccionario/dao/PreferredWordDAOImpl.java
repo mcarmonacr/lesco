@@ -158,4 +158,46 @@ public class PreferredWordDAOImpl implements PreferredWordDAO {
         
         return (PreferredWord) criteria.uniqueResult();
 	}
+	
+	/**
+	 * Find words that match the pattern
+	 */
+	@SuppressWarnings("unchecked")
+	@Transactional
+	public List<Word> findByPattern(String termsInput){
+		
+		logger.debug("WordDAOImpl - findByPattern() - Start");
+		
+		Query query = sessionFactory.getCurrentSession().createSQLQuery("SELECT * FROM PreferredWord pw, Word w WHERE pw.Word_ID=w.Word_ID and w.wordName like :wordName Order By w.wordName")
+				.addEntity(Word.class);
+        query.setParameter("wordName", termsInput + "%");
+        List<Word> wordsList= query.list();
+                        
+        			
+        		
+        logger.debug("WordDAOImpl - findByPattern() - End");
+        
+        return wordsList;
+	}
+	
+	/**
+	 * Find words that match the pattern and also the category
+	 */
+	@SuppressWarnings("unchecked")
+	@Transactional
+	public List<Word> findByPatternAndCategoryId(String termsInput, Integer categoryId){
+		
+		logger.debug("WordDAOImpl - findByPatternAndCategoryId() - Start");
+        
+        Query query = sessionFactory.getCurrentSession().createSQLQuery("SELECT * FROM PreferredWord pw, Word w WHERE pw.Word_ID=w.Word_ID and w.wordName like :wordName and w.Category_ID =:categoryId Order By w.wordName")
+				.addEntity(Word.class);
+        query.setParameter("wordName", termsInput + "%");
+        query.setParameter("categoryId", categoryId);
+        List<Word> wordsList= query.list();
+        
+        
+        logger.debug("WordDAOImpl - findByPatternAndCategoryId() - End");
+        
+        return wordsList;
+	}
 }

@@ -3,6 +3,10 @@ jQuery(document).ready(function($) {
 	$("#termsInput").keyup(function(){
 		checkTerm();
 	});
+	
+	$("#myTermsInput").keyup(function(){
+		checkMyTerm();
+	});
 
 });
 
@@ -180,6 +184,61 @@ function checkTerm() {
 	  //return false;
 }
 
+function checkMyTerm() {
+
+	  var termsInput= document.getElementById("myTermsInput");
+	  var categoryIdDiv= document.getElementById("myCategoryIdDiv");
+	  
+	  var search= {
+	            "myTermsInput":myTermsInput.value,
+	            "myCategoryIdDiv":myCategoryIdDiv.textContent
+	    }
+
+	  $.ajax({
+	  	headers: { 
+	        'Accept': 'application/json',
+	        'Content-Type': 'application/json' 
+	    },
+		type: 'post',
+	    contentType : "application/json",
+	    url: "/DiccionarioLesco/termino/obtenerListaMisTerminos",
+	    data : JSON.stringify(search),
+	    dataType : 'json',
+	    success : function(data) {
+	    	console.log("SUCCESS: ", data);
+	    	if(data != null && data.code == "000"){
+	    		//$('#divUserName').removeClass('has-error').addClass('has-success');
+				//$('#divUserName .glyphicon').removeClass('glyphicon-remove').addClass('glyphicon-ok');
+	    		updateMyTermsList(data.content.myWordsList);
+	    	}else if(data != null && data.code == "001"){
+	    		//$('#divUserName').removeClass('has-success').addClass('has-error');
+				//$('#divUserName .glyphicon').removeClass('glyphicon-ok').addClass('glyphicon-remove');
+	    		var myWordListDiv= $("#myWordListDiv");
+	    		myWordListDiv.children().remove();
+	    		
+	    		//Update the total terms counter
+	    		var myTotalTermsCounter= $("#myTotalTermsCounter");
+	    		
+	    		myTotalTermsCounter.text("Total: 0");
+	    		
+	    		//TO DO Update counter when there is an empty list
+	    		
+	    	} else {
+	    		
+	    	}
+		},
+		error : function(e) {
+			console.log("ERROR: ", e);
+			//display(e);
+		},
+		done : function(e) {
+			//console.log("DONE");
+			//enableSearchButton(true);
+		}
+	  });
+	  //return false;
+}
+
 function updateTermsList(wordList){
 	
 	//Get the ID wordListDiv
@@ -203,6 +262,40 @@ function updateTermsList(wordList){
 	var totalTermsCounter= $("#totalTermsCounter");
 	
 	totalTermsCounter.text("Total: " + wordList.length);
+	
+	
+	//totalTermsCounter
+		
+	
+	//wordListDiv
+	
+	//<a onclick="loadDetail(${word.wordId})" href="#" class="list-group-item">${word.wordName}</a>
+	
+}
+
+function updateMyTermsList(myWordList){
+	
+	//Get the ID wordListDiv
+	var myWordListDiv= $("#myWordListDiv");
+	
+	//Remove all anchors form the wordListDiv
+	myWordListDiv.children().remove();
+	
+	//Insert the new set of word from the query
+	for (index = 0; index < myWordList.length; index++) {
+		var anchor= $("<a>");
+		anchor.attr("href", "#");
+		anchor.attr("onclick", "loadDetail("+ myWordList[index].wordId +")");
+		anchor.addClass("list-group-item");
+		anchor.text(myWordList[index].wordName);
+		
+		myWordListDiv.append(anchor);
+	}
+	
+	//Update the total terms counter
+	var myTotalTermsCounter= $("#myTotalTermsCounter");
+	
+	myTotalTermsCounter.text("Total: " + myWordList.length);
 	
 	
 	//totalTermsCounter

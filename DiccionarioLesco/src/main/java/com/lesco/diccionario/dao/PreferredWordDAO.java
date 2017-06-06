@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.lesco.diccionario.model.Category;
 import com.lesco.diccionario.model.PreferredWord;
+import com.lesco.diccionario.model.Word;
 
 /**
  * Preferred Word Table Data Access Object Interface
@@ -62,4 +63,16 @@ public interface PreferredWordDAO {
 	 * @return
 	 */
 	public PreferredWord findById(Integer preferredWordId);
+	
+	/**
+	 * Get a list of all the matching words
+	 * @return
+	 */
+	public List<Word> findByPattern(String termsInput);
+	
+	/**
+	 * Get a list of all the matching words and the given category ID
+	 * @return
+	 */
+	public List<Word> findByPatternAndCategoryId(String termsInput, Integer categoryId);
 }
