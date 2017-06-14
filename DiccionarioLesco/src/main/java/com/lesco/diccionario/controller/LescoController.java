@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.api.services.youtube.model.VideoRating;
 import com.lesco.diccionario.dao.CategoryDAO;
 import com.lesco.diccionario.dao.PreferredWordDAO;
 import com.lesco.diccionario.dao.RequestDAO;
@@ -289,12 +290,28 @@ public class LescoController {
 //		com.google.api.services.youtube.model.Video termVideo= youtubeHelper.getVideoMetadata(randomWord.getVideo().getTermYoutubeVideoID());
 		
 		
-		if(randomWord == null || randomWord.getWordId() == null) {
-			result.put("definitionVideo", 0);
-			result.put("exampleVideo", 0);
-			result.put("explanationVideo", 0);
-			result.put("termVideo", 0);
-			
+		//Setup default result values
+		result.put("definitionVideo", 0);
+		result.put("definitionVideoLikes", 0);
+		result.put("definitionVideoDislikes", 0);
+		result.put("definitionVideoRating", "none");
+		
+		result.put("exampleVideo", 0);
+		result.put("exampleVideoLikes", 0);
+		result.put("exampleVideoDislikes", 0);
+		result.put("exampleVideoRating", "none");
+		
+		result.put("explanationVideo", 0);
+		result.put("explanationVideoLikes", 0);
+		result.put("explanationVideoDislikes", 0);
+		result.put("explanationVideoRating", "none");
+		
+		result.put("termVideo", 0);
+		result.put("termVideoLikes", 0);
+		result.put("termVideoDislikes", 0);
+		result.put("termVideoRating", "none");
+		
+		if(randomWord == null || randomWord.getWordId() == null) {			
 			return result;	
 		}
 		
@@ -303,29 +320,39 @@ public class LescoController {
 		com.google.api.services.youtube.model.Video explanationVideo= youtubeHelper.getVideoMetadata("K64bcDY-Oko");
 		com.google.api.services.youtube.model.Video termVideo= youtubeHelper.getVideoMetadata("PX4IBJNuMsE");
 		
-		if (definitionVideo != null) {
+		VideoRating definitionVideoRating= youtubeHelper.getVideoRating("4z7rnfxhdms");
+		VideoRating exampleVideoRating= youtubeHelper.getVideoRating("63xrbVSXbXA");
+		VideoRating explanationVideoRating= youtubeHelper.getVideoRating("K64bcDY-Oko");
+		VideoRating termVideoRating= youtubeHelper.getVideoRating("PX4IBJNuMsE");
+		
+		//If the values exist, then the ones in the map get overridden
+		if (definitionVideo != null && definitionVideoRating != null) {
 			result.put("definitionVideo", definitionVideo.getStatistics().getViewCount());
-		} else {
-			result.put("definitionVideo", 0);
-		}
+			result.put("definitionVideoLikes", definitionVideo.getStatistics().getLikeCount());
+			result.put("definitionVideoDislikes", definitionVideo.getStatistics().getDislikeCount());
+			result.put("definitionVideoRating", definitionVideoRating.getRating());
+		} 
 		
 		if (exampleVideo != null) {
 			result.put("exampleVideo", exampleVideo.getStatistics().getViewCount());
-		} else {
-			result.put("exampleVideo", 0);
-		}
+			result.put("exampleVideoLikes", exampleVideo.getStatistics().getLikeCount());
+			result.put("exampleVideoDislikes", exampleVideo.getStatistics().getDislikeCount());
+			result.put("exampleVideoRating", exampleVideoRating.getRating());
+		} 
 		
 		if (explanationVideo != null) {
 			result.put("explanationVideo", explanationVideo.getStatistics().getViewCount());
-		} else {
-			result.put("explanationVideo", 0);
-		}
+			result.put("explanationVideoLikes", explanationVideo.getStatistics().getLikeCount());
+			result.put("explanationVideoDislikes", explanationVideo.getStatistics().getDislikeCount());
+			result.put("explanationVideoRating", explanationVideoRating.getRating());
+		} 
 		
 		if (termVideo != null) {
 			result.put("termVideo", termVideo.getStatistics().getViewCount());
-		} else {
-			result.put("termVideo", 0);
-		}
+			result.put("termVideoLikes", termVideo.getStatistics().getLikeCount());
+			result.put("termVideoDislikes", termVideo.getStatistics().getDislikeCount());
+			result.put("termVideoRating", termVideoRating.getRating());
+		} 
 
 		return result;	
 	}

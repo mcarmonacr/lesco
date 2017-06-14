@@ -19,6 +19,11 @@
 
 <link rel="stylesheet" type="text/css" href="/DiccionarioLesco/resources/css/jumbotron.css">
 
+<!-- Font Awesome Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+
 	<#if (parameters??)>
 		<#if (parameters?size > 0)>
 			<#if parameters.css??>

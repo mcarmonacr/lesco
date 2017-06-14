@@ -49,15 +49,28 @@
 					</iframe> 
 				</div>
 				<div class="row">
-					<div class="col-md-6">
+					<div class="col-md-1">
 						<h2>
-							<span class="label label-primary punctuation glyphicon glyphicon-star"> Puntuación: 4.5</span>
+<!-- 							<i class="fa fa-thumbs-down"></i> -->
+<!-- 							<i class="fa fa-thumbs-o-down"></i> -->
+<!-- 							<i class="fa fa-thumbs-o-up"></i> -->
+<!-- 							<i class="fa fa-thumbs-up"></i> -->
+							<span class="label label-primary punctuation fa fa-thumbs-o-up"> ${videosMetadata.termVideoLikes} </span>
 						</h2>
 					</div>
-					<div class="col-md-6">
+					<div class="col-md-1">
+						<h2>
+<!-- 							<i class="fa fa-thumbs-down"></i> -->
+<!-- 							<i class="fa fa-thumbs-o-down"></i> -->
+<!-- 							<i class="fa fa-thumbs-o-up"></i> -->
+<!-- 							<i class="fa fa-thumbs-up"></i> -->
+							<span class="label label-primary punctuation fa fa-thumbs-o-down"> ${videosMetadata.termVideoDislikes}</span>
+						</h2>
+					</div>
+					<div class="col-md-10">
 						<h2>
 							<#assign visits = "Visitas: ${randomWord.numberOfVisits}">
-							<span id="numberOfVisitsSpan" class="label label-primary visits glyphicon glyphicon-eye-open"> ${videosMetadata.termVideo}</span>
+							<span id="numberOfVisitsSpan" class="label label-primary visits fa fa-eye"> ${videosMetadata.termVideo}</span>
 						</h2>
 					</div>
 				</div>

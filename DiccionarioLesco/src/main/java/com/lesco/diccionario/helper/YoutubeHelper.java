@@ -41,7 +41,9 @@ import com.google.api.services.youtube.model.SearchListResponse;
 import com.google.api.services.youtube.model.SearchResult;
 import com.google.api.services.youtube.model.Thumbnail;
 import com.google.api.services.youtube.model.Video;
+import com.google.api.services.youtube.model.VideoGetRatingResponse;
 import com.google.api.services.youtube.model.VideoListResponse;
+import com.google.api.services.youtube.model.VideoRating;
 import com.google.api.services.youtube.model.VideoSnippet;
 import com.google.api.services.youtube.model.VideoStatus;
 import com.google.common.collect.Lists;
@@ -241,6 +243,12 @@ public class YoutubeHelper {
         return response;
     }
     
+    /**
+     * Get video metadata from Youtube
+     * 
+     * @param videoID
+     * @return
+     */
     public Video getVideoMetadata(String videoID) {
     	// Read the developer key from the properties file.
 
@@ -267,20 +275,20 @@ public class YoutubeHelper {
                 }
             }).setApplicationName("diccionario-lesco-youtube-channel").build();
             
-            //API:https://developers.google.com/youtube/v3/docs/videos/list 
-            YouTube.Videos.List listOfVideos = youtube.videos().list("id,snippet,statistics");
-      
-            // Set your developer key from the {{ Google Cloud Console }} for
+         // Set your developer key from the {{ Google Cloud Console }} for
             // non-authenticated requests. See:
             // {{ https://cloud.google.com/console }}
             String apiKey = properties.getProperty("youtube.apikey");
-          
+
+            //API:https://developers.google.com/youtube/v3/docs/videos/list 
+            YouTube.Videos.List listOfVideos = youtube.videos().list("id,snippet,statistics");
+ 
             listOfVideos.setKey(apiKey);
             listOfVideos.set("id", videoID);
                         
             listOfVideos.setMaxResults(NUMBER_OF_VIDEOS_RETURNED);
             
-         // Call the API and print results.
+            // Call the API and print results.
             VideoListResponse videoResponse = listOfVideos.execute();
             
             List<Video> searchResultList = videoResponse.getItems();
@@ -288,7 +296,8 @@ public class YoutubeHelper {
                 //prettyPrint(searchResultList.iterator(), "Test");
             	
             	if(searchResultList.size() != 0) youtubeVideo= searchResultList.get(0);
-            }
+            }         
+            
         } catch (GoogleJsonResponseException e) {
             System.err.println("There was a service error: " + e.getDetails().getCode() + " : "
                     + e.getDetails().getMessage());
@@ -299,6 +308,118 @@ public class YoutubeHelper {
         }
        return youtubeVideo; 
     }
+    
+    /**
+     * Get video rating from Youtube
+     * 
+     * @param videoID
+     * @return
+     */
+    public VideoRating getVideoRating(String videoID) {
+    	// Read the developer key from the properties file.
+
+        Properties properties = new Properties();
+        
+        VideoRating youtubeVideoRating = null;
+
+        try {
+        	InputStream in = YoutubeHelper.class.getResourceAsStream("/" + PROPERTIES_FILENAME);
+            properties.load(in);
+        } catch (IOException e) {
+            System.err.println("There was an error reading " + PROPERTIES_FILENAME + ": " + e.getCause()
+                    + " : " + e.getMessage());
+            System.exit(1);
+        }
+        
+        try{            
+            // Set your developer key from the {{ Google Cloud Console }} for
+            // non-authenticated requests. See:
+            // {{ https://cloud.google.com/console }}
+            String apiKey = properties.getProperty("youtube.apikey");
+            
+            List<String> scopes = Lists.newArrayList("https://www.googleapis.com/auth/youtube");
+            
+            // Authorize the request.
+            Credential credential = AuthHelper.authorize(scopes, "uploadvideo");
+
+            // This object is used to make YouTube Data API requests.
+            youtube = new YouTube.Builder(AuthHelper.HTTP_TRANSPORT, AuthHelper.JSON_FACTORY, credential).setApplicationName(
+                    "diccionario-lesco-youtube-channel").build();
+            
+            YouTube.Videos.GetRating rating= youtube.videos().getRating(videoID);
+            rating.setKey(apiKey);
+            //rating.setId(arg0)
+            
+            VideoGetRatingResponse ratingResponse = rating.execute();
+            List<VideoRating> ratingResultList = ratingResponse.getItems();
+            
+            if (ratingResultList != null) {
+                //prettyPrint(searchResultList.iterator(), "Test");
+            	
+            	if(ratingResultList.size() != 0) youtubeVideoRating= ratingResultList.get(0);
+            }        
+            
+        } catch (GoogleJsonResponseException e) {
+            System.err.println("There was a service error: " + e.getDetails().getCode() + " : "
+                    + e.getDetails().getMessage());
+        } catch (IOException e) {
+            System.err.println("There was an IO error: " + e.getCause() + " : " + e.getMessage());
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
+       return youtubeVideoRating; 
+    }
+    
+    public Boolean likeAVideo(String videoID) {
+    	// Read the developer key from the properties file.
+
+        Properties properties = new Properties();
+        
+        Boolean response = true;
+
+        try {
+        	InputStream in = YoutubeHelper.class.getResourceAsStream("/" + PROPERTIES_FILENAME);
+            properties.load(in);
+        } catch (IOException e) {
+            System.err.println("There was an error reading " + PROPERTIES_FILENAME + ": " + e.getCause()
+                    + " : " + e.getMessage());
+            
+            //Every time there is an error a false status should be returned
+            response = false;
+            
+            System.exit(1);
+        }
+        
+        try{                        
+            List<String> scopes = Lists.newArrayList("https://www.googleapis.com/auth/youtube");
+            
+            // Authorize the request.
+            Credential credential = AuthHelper.authorize(scopes, "uploadvideo");
+
+            // This object is used to make YouTube Data API requests.
+            youtube = new YouTube.Builder(AuthHelper.HTTP_TRANSPORT, AuthHelper.JSON_FACTORY, credential).setApplicationName(
+                    "diccionario-lesco-youtube-channel").build();
+            
+            youtube.videos().rate(videoID, "like").execute();            
+            
+        } catch (GoogleJsonResponseException e) {
+            System.err.println("There was a service error: " + e.getDetails().getCode() + " : "
+                    + e.getDetails().getMessage());
+          //Every time there is an error a false status should be returned
+            response = false;
+        } catch (IOException e) {
+            System.err.println("There was an IO error: " + e.getCause() + " : " + e.getMessage());
+          //Every time there is an error a false status should be returned
+            response = false;
+        } catch (Throwable t) {
+            t.printStackTrace();
+          //Every time there is an error a false status should be returned
+            response = false;
+        }
+       return response;
+    }
+    
+    
     
     /**
      * Converts a MultipartFile file to particular File type

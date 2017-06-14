@@ -7,6 +7,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -58,9 +59,11 @@ public class CategoryDAOImpl implements CategoryDAO {
 		logger.debug("CategoryDAOImpl - List<Category>() - Start");
 		
         List<Category> listCategories = (List<Category>) sessionFactory.getCurrentSession()
-                .createCriteria(Category.class)
+                .createCriteria(Category.class).addOrder(Order.asc("categoryName"))
                 .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
 
+        //Order functionality taken from: https://www.tutorialspoint.com/hibernate/hibernate_criteria_queries.htm
+        
         logger.debug("CategoryDAOImpl - List<Category>() - End");
         
         return listCategories;

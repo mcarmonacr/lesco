@@ -8,6 +8,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -61,7 +62,7 @@ public class WordDAOImpl implements WordDAO {
 		logger.debug("WordDAOImpl - List<Word>() - Start");
 
         List<Word> listWords = (List<Word>) sessionFactory.getCurrentSession()
-                .createCriteria(Word.class)
+                .createCriteria(Word.class).addOrder(Order.asc("wordName"))
                 .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
 
 		logger.debug("WordDAOImpl - List<Word>() - End");

@@ -77,4 +77,23 @@ public class AboutController {
 		
 		return mv;
 	}
+	
+	/**
+	 * Resources detail page
+	 * 
+	 * @return
+	 */
+	@RequestMapping("/recursos")
+	public ModelAndView recursos() {
+		
+		logger.debug("AboutController - recursos() - Start");
+ 
+		ModelAndView mv = new ModelAndView("/about/resources");
+		//mv.addObject("message", message);
+		//mv.addObject("name", name);
+		
+		logger.debug("AboutController - recursos() - End");
+		
+		return mv;
+	}
 }

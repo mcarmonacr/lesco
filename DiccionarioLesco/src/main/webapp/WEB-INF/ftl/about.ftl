@@ -11,6 +11,7 @@
         <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
         <li data-target="#myCarousel" data-slide-to="1"></li>
         <li data-target="#myCarousel" data-slide-to="2"></li>
+        <li data-target="#myCarousel" data-slide-to="3"></li>
       </ol>
       <div class="carousel-inner" role="listbox">
         <div class="item active">
@@ -44,6 +45,16 @@
               <p class="text-justify">La Escuela de Ciencias de la Computación e Infomática de la Universidad de Costa Rica se fundó en 1981, como resultado de la fusión 
               de dos programas distintos pero relacionados, el de Bachillerato en Informática y el de Bachillerato y Licenciatura en Computación</p>
               <p><a class="btn btn-lg btn-primary" href="/DiccionarioLesco/acerca/ecci" role="button">Conocer Más</a></p>
+            </div>
+          </div>
+        </div>
+        <div class="item">
+          <img class="forth-slide" src="resources/images/free-background-wallpaper.jpg" alt="Forth slide">
+          <div class="container">
+            <div class="carousel-caption">
+              <h1>Recursos</h1>
+              <p class="text-justify">Recursos relacionados al Lenguaje de Señas Costarricense (LESCO)</p>
+              <p><a class="btn btn-lg btn-primary" href="/DiccionarioLesco/acerca/recursos" role="button">Conocer Más</a></p>
             </div>
           </div>
         </div>

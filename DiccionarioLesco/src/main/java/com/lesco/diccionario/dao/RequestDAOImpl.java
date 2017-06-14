@@ -8,6 +8,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -62,7 +63,7 @@ public class RequestDAOImpl implements RequestDAO {
 		logger.debug("RequestDAOImpl - List<Request>() - Start");
 
         List<Request> listRequests = (List<Request>) sessionFactory.getCurrentSession()
-                .createCriteria(Request.class)
+                .createCriteria(Request.class).addOrder(Order.asc("wordName"))
                 .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
 
 		logger.debug("RequestDAOImpl - List<Request>() - End");
