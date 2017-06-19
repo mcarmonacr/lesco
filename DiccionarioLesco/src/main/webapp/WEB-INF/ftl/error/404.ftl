@@ -4,16 +4,14 @@
     
 <div class="container-fluid">
   <div class="jumbotron">
-  
-<!--         <button type="button" class="btn btn-default btn-lg"> -->
-<!--           <span class="glyphicon glyphicon-warning-sign"></span> ¡ERROR! -->
-<!--         </button> -->
-        
-	   <div class="alert alert-danger" role="alert"> <p>¡ERROR!</p></div>
-	   
-	   <p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-	   <p><a class="btn btn-lg btn-success" href="/DiccionarioLesco/" role="button">Volver a la página principal</a></p>
-   </div>
+        <div class="text-center"><i class="fa fa-5x fa-exclamation-triangle" style="color:#d9534f;"></i></div>
+                
+        <h1 class="text-center">404 - No Encontrado<p> </p>
+<!--         	<p><small class="text-center"> Oh noes everything broke</small></p> -->
+        </h1>
+        <p class="text-center">El contenido solicitado no existe.</p>
+        <p class="text-center"><a class="btn btn-primary" href="/DiccionarioLesco/"><i class="fa fa-home"></i> Diccionario Lesco</a></p>
+    </div>
 </div>
 
  </@c.page>

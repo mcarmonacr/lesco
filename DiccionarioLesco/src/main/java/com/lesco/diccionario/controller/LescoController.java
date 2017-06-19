@@ -198,6 +198,22 @@ public class LescoController {
 		return mv;
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = {"/ingresar"})
+	public ModelAndView ingresar() {
+		
+		logger.debug("LescoController - ingresar() - Start");
+		 
+		ModelAndView mv = new ModelAndView("login");
+		
+		logger.debug("LescoController - ingresar() - End");
+		
+		return mv;
+	}
+	
 	
 	/*** Private methods ***/
 	

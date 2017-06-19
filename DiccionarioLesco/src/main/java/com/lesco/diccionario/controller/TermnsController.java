@@ -192,11 +192,12 @@ public class TermnsController {
 		
 		logger.debug("RegisterController - obtenerListaTerminos() - Start");
 		
+		
+		List<Word> wordsList = new ArrayList<Word>();
+		
 		//Validate input
 		if (json.get("termsInput") != null && !json.get("termsInput").isEmpty()){
-			
-			List<Word> wordsList = new ArrayList<Word>();
-			
+
 			//If there's a category then it's included in the search 
 			if(json.get("categoryIdDiv") != null && !json.get("categoryIdDiv").isEmpty()){
 				wordsList = wordDAO.findByPatternAndCategoryId(json.get("termsInput"), Integer.parseInt(json.get("categoryIdDiv"))); //wordDAO.list();
@@ -204,23 +205,30 @@ public class TermnsController {
 				//Search the word regardless the category
 				wordsList = wordDAO.findByPattern(json.get("termsInput"));
 			}
-			
-			Map <String, Object> wordsMap = new HashMap <String, Object> ();
-			
-			// TODO process wordsMap in order to get only the list of words and its IDs 
-			
-			wordsMap.put("wordsList", processWordList(wordsList));
-			result.setContent(wordsMap);
-					
-			//Checks if the input user name already exists in the database
-			if(wordsList != null && !wordsList.isEmpty()){			
-				result.setMessage("Sucess");
-				result.setCode("000");
-			}else{
-				result.setMessage("List is empty");
-				result.setCode("001");
+		}
+		else {
+			//If there wasn't any input, get them all
+			if(wordsList.size() == 0){
+				wordsList = wordDAO.list();
 			}
 		}
+		
+		Map <String, Object> wordsMap = new HashMap <String, Object> ();
+		
+		// TODO process wordsMap in order to get only the list of words and its IDs 
+		
+		wordsMap.put("wordsList", processWordList(wordsList));
+		result.setContent(wordsMap);
+				
+		//Checks if the input user name already exists in the database
+		if(wordsList != null && !wordsList.isEmpty()){			
+			result.setMessage("Sucess");
+			result.setCode("000");
+		}else{
+			result.setMessage("List is empty");
+			result.setCode("001");
+		}
+		
 		logger.debug("RegisterController - obtenerListaTerminos() - End");
 		
 		return result;
@@ -241,11 +249,11 @@ public class TermnsController {
 		
 		logger.debug("RegisterController - obtenerListaMisTerminos() - Start");
 		
+		List<Word> myWordsList = new ArrayList<Word>();
+		
 		//Validate input
 		if (json.get("myTermsInput") != null && !json.get("myTermsInput").isEmpty()){
-			
-			List<Word> myWordsList = new ArrayList<Word>();
-			
+
 			//If there's a category then it's included in the search 
 			if(json.get("myCategoryIdDiv") != null && !json.get("myCategoryIdDiv").isEmpty()){
 				myWordsList = preferredWordDAO.findByPatternAndCategoryId(json.get("myTermsInput"), Integer.parseInt(json.get("myCategoryIdDiv"))); //wordDAO.list();
@@ -253,23 +261,31 @@ public class TermnsController {
 				//Search the word regardless the category
 				myWordsList = preferredWordDAO.findByPattern(json.get("myTermsInput"));
 			}
-			
-			Map <String, Object> wordsMap = new HashMap <String, Object> ();
-			
-			// TODO process wordsMap in order to get only the list of words and its IDs 
-			
-			wordsMap.put("myWordsList", processWordList(myWordsList));
-			result.setContent(wordsMap);
-					
-			//Checks if the input user name already exists in the database
-			if(myWordsList != null && !myWordsList.isEmpty()){			
-				result.setMessage("Sucess");
-				result.setCode("000");
-			}else{
-				result.setMessage("List is empty");
-				result.setCode("001");
+		} else {
+			// TODO
+			//If there wasn't any input, get them all
+			if(myWordsList.size() == 0){
+				//myWordsList = preferredWordDAO.list();
 			}
 		}
+		
+		Map <String, Object> wordsMap = new HashMap <String, Object> ();
+		
+		// TODO process wordsMap in order to get only the list of words and its IDs 
+		
+		wordsMap.put("myWordsList", processWordList(myWordsList));
+		result.setContent(wordsMap);
+				
+		//Checks if the input user name already exists in the database
+		if(myWordsList != null && !myWordsList.isEmpty()){			
+			result.setMessage("Sucess");
+			result.setCode("000");
+		}else{
+			result.setMessage("List is empty");
+			result.setCode("001");
+		}
+		
+		
 		logger.debug("RegisterController - obtenerListaMisTerminos() - End");
 		
 		return result;
@@ -385,29 +401,32 @@ public class TermnsController {
 					
 					if(profileDetailQuery != null){
 
-						//If the condition is met the term should be added to the favorite ones
-						if(json.get("isOneOfMyFavoriteTerms") != null) {
-							Boolean isOneOfMyFavoriteTerms= Boolean.valueOf(json.get("isOneOfMyFavoriteTerms"));
+						List<PreferredWord> preferredWordsList = preferredWordDAO.findByWord(wordId);
+						
+						//If the condition is met means that the term is already a favorite and should be removed from there
+						if(preferredWordsList != null && !preferredWordsList.isEmpty()) {
 							
-							if (isOneOfMyFavoriteTerms.equals(false)) {
-								PreferredWord preferredWord = new PreferredWord();
-																
-								preferredWord.setWordId(wordId);
-								preferredWord.setUserProfileId(profileDetailQuery.getProfileDetailId());
-								
-								preferredWordDAO.save(preferredWord);
-								resultMap.put("isOneOfMyFavoriteTerms", true);
-							} else {
-								//Get the entity that needs to be deleted
-								PreferredWord preferredWord = preferredWordDAO.findByWordAndUser(wordId, profileDetailQuery.getProfileDetailId());
-								
-								PreferredWord preferredWordReference = preferredWordDAO.findById(preferredWord.getPreferredWordId());
-								
-								//Delete the entity
-								preferredWordDAO.delete(preferredWordReference);
-								resultMap.put("isOneOfMyFavoriteTerms", false);
-							}							
-						} 
+							//Get the entity that needs to be deleted
+							PreferredWord preferredWord = preferredWordDAO.findByWordAndUser(wordId, profileDetailQuery.getProfileDetailId());
+							
+							PreferredWord preferredWordReference = preferredWordDAO.findById(preferredWord.getPreferredWordId());
+							
+							//Delete the entity
+							preferredWordDAO.delete(preferredWordReference);
+							resultMap.put("isOneOfMyFavoriteTerms", false);							
+						} else {
+							PreferredWord preferredWord = new PreferredWord();
+							
+							preferredWord.setWordId(wordId);
+							preferredWord.setUserProfileId(profileDetailQuery.getProfileDetailId());
+							
+							preferredWordDAO.save(preferredWord);
+							resultMap.put("isOneOfMyFavoriteTerms", true);
+						}
+						
+						//Gets the most recent list of preferred words
+						List<Word> listMyWords = getWordsFromList(preferredWordDAO.findByUser(profileDetailQuery.getProfileDetailId()));
+						resultMap.put("listMyWords", listMyWords);
 					}
 
 					result.setContent(resultMap);
@@ -424,6 +443,39 @@ public class TermnsController {
 		}
 		
 		logger.debug("RegisterController - agregarPreferido() - End");
+		
+		return result;
+	}
+	
+	/**
+	 * Give a rate to a particular video
+	 * 
+	 * Type: Json POST method
+	 * 
+	 * @param registerForm. Contains fields: myTermsInput, myCategoryIdDiv
+	 */
+	@RequestMapping(value= "/evaluarVideo", method = RequestMethod.POST, headers = "Accept=application/json", consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody AjaxResponseBody evaluarVideo(@RequestBody Map<String, String> json){
+		
+		AjaxResponseBody result = new AjaxResponseBody();
+		
+		logger.debug("RegisterController - evaluarVideo() - Start");
+		
+		try{
+			//Validate input
+			if (json.get("videoId") != null && json.get("action") != null){
+				
+				youtubeHelper.likeAVideo(json.get("videoId"), json.get("action"));
+		
+				result.setMessage("Sucess");
+				result.setCode("000");
+			}
+		} catch (Exception e){
+			result.setMessage("There was an error");
+			result.setCode("001");
+		}
+		
+		logger.debug("RegisterController - evaluarVideo() - End");
 		
 		return result;
 	}
@@ -614,5 +666,23 @@ public class TermnsController {
 		}
 		
 		return result;
+	}
+	
+private List<Word> getWordsFromList(List<PreferredWord> preferredWordList){
+		
+		List<Word> result = new ArrayList<Word>();
+		
+		//Processes the word's list and add the necessary data in the resulting map
+		for(PreferredWord actualPreferredWord:preferredWordList){
+			
+			Word actualWord= new Word();
+			
+			actualWord= wordDAO.findById(actualPreferredWord.getUserProfileId());
+			
+			result.add(actualWord);
+		}
+		
+		return result;
+		
 	}
 }

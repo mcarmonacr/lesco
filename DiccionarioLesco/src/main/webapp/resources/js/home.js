@@ -80,16 +80,9 @@ function togglePreferred(wordId) {
     //$("#dropdownMenu1").html(category + '  <span class="caret"></span>');
 	
 	  var spanElement=$("#span-"+wordId);
-	  var isOneOfMyFavoriteTerms= false;
-	  
-	  //If the condition is met, means that the word is actually a favorite
-	  if(spanElement.hasClass("glyphicon-star")) {
-		  isOneOfMyFavoriteTerms = true;
-	  }
 	  
 	  var search = {
-	            "wordId":wordId,
-	            "isOneOfMyFavoriteTerms":isOneOfMyFavoriteTerms
+	            "wordId":wordId
 	    }
 
 	  $.ajax({
@@ -108,11 +101,15 @@ function togglePreferred(wordId) {
 	    		
 	    		//If is true, then it should be now a favorite term
 	    		if(data.content.isOneOfMyFavoriteTerms == true){
-	    			$("#span-"+wordId).removeClass('glyphicon-star-empty').addClass('glyphicon-star');
+	    			$("#span-"+wordId).removeClass('fa-star-o').addClass('fa-star');
 	    		} 
 	    		if(data.content.isOneOfMyFavoriteTerms == false) {
-	    			$("#span-"+wordId).removeClass('glyphicon-star').addClass('glyphicon-star-empty');
+	    			$("#span-"+wordId).removeClass('fa-star').addClass('fa-star-o');
 	    		}
+	    		
+	    		//Update my Terms section
+	    		updateMyTermsList(data.content.listMyWords);
+	    		
 	    	}else {
 	    		console.log("Data: " + data.content.word);
 	    	}
@@ -305,4 +302,67 @@ function updateMyTermsList(myWordList){
 	
 	//<a onclick="loadDetail(${word.wordId})" href="#" class="list-group-item">${word.wordName}</a>
 	
+}
+
+function rateVideo(videoId, action){
+	var termsInput= document.getElementById("myTermsInput");
+	var categoryIdDiv= document.getElementById("myCategoryIdDiv");
+	  
+	var search= {
+	            "videoId":videoId,
+	            "action":action
+	    }
+
+	  $.ajax({
+	  	headers: { 
+	        'Accept': 'application/json',
+	        'Content-Type': 'application/json' 
+	    },
+		type: 'post',
+	    contentType : "application/json",
+	    url: "/DiccionarioLesco/termino/evaluarVideo",
+	    data : JSON.stringify(search),
+	    dataType : 'json',
+	    success : function(data) {
+	    	console.log("SUCCESS: ", data);
+	    	if(data != null && data.code == "000"){
+	    		//$('#divUserName').removeClass('has-error').addClass('has-success');
+				//$('#divUserName .glyphicon').removeClass('glyphicon-remove').addClass('glyphicon-ok');
+	    		
+	    		//updateMyTermsList(data.content.myWordsList);
+	    		
+	    		
+	    		//The true parameter forces the page to release it's cache.
+	    		//event.preventDefault();
+				window.location.reload();
+				//window.location.reload(true);
+	    		
+	    	}else if(data != null && data.code == "001"){
+	    		//$('#divUserName').removeClass('has-success').addClass('has-error');
+				//$('#divUserName .glyphicon').removeClass('glyphicon-ok').addClass('glyphicon-remove');
+	    		
+	    		//var myWordListDiv= $("#myWordListDiv");
+	    		//myWordListDiv.children().remove();
+	    		
+	    		//Update the total terms counter
+	    		//var myTotalTermsCounter= $("#myTotalTermsCounter");
+	    		
+	    		//myTotalTermsCounter.text("Total: 0");
+	    		
+	    		//TO DO Update counter when there is an empty list
+	    		
+	    	} else {
+	    		
+	    	}
+		},
+		error : function(e) {
+			console.log("ERROR: ", e);
+			//display(e);
+		},
+		done : function(e) {
+			//console.log("DONE");
+			//enableSearchButton(true);
+		}
+	  });
+	  //return false;
 }

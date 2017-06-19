@@ -31,7 +31,7 @@
 		  <div class="row">
 			  <div class="col-md-8 col-md-offset-4">
 				  <ul class="nav nav-tabs" role="tablist">
-				    <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Termino</a></li>
+				    <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Término</a></li>
 				    <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Definición</a></li>
 				    <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Explicación</a></li>
 				    <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Ejemplo(s)</a></li>
@@ -49,28 +49,46 @@
 					</iframe> 
 				</div>
 				<div class="row">
-					<div class="col-md-1">
+					<div class="col-md-6">
 						<h2>
-<!-- 							<i class="fa fa-thumbs-down"></i> -->
-<!-- 							<i class="fa fa-thumbs-o-down"></i> -->
-<!-- 							<i class="fa fa-thumbs-o-up"></i> -->
-<!-- 							<i class="fa fa-thumbs-up"></i> -->
-							<span class="label label-primary punctuation fa fa-thumbs-o-up"> ${videosMetadata.termVideoLikes} </span>
+<!-- 						Icons taken from: https://bootsnipp.com/iconsearch/ -->
+						 <#if ((videosMetadata.termVideoRating??) && (videosMetadata.termVideoRating == "like"))> 								 
+								 <a onclick="rateVideo('${randomWord.video.termYoutubeVideoID}', 'like')" class="btn-lg btn-primary">
+							      	<span class="fa fa-thumbs-up"></span> ${videosMetadata.termVideoLikes}
+							      </a>
+						 <#else>
+						 
+						  <a onclick="rateVideo('${randomWord.video.termYoutubeVideoID}', 'like')" class="btn-lg btn-primary">
+					      	<span class="fa fa-thumbs-o-up"></span> ${videosMetadata.termVideoLikes}
+					      </a>
+					      
+						 </#if>
+						 
+						 <a>|</a>
+						 
+						 <#if ((videosMetadata.termVideoRating??) && (videosMetadata.termVideoRating == "dislike"))> 
+								 <a onclick="rateVideo('${randomWord.video.termYoutubeVideoID}', dislike)" class="btn-lg btn-primary">
+							      	<span class="fa fa-thumbs-down"></span> ${videosMetadata.termVideoDislikes}
+							      </a>
+						 <#else>
+						 
+						 <a onclick="rateVideo('${randomWord.video.termYoutubeVideoID}', dislike)" class="btn-lg btn-primary">
+					      	<span class="fa fa-thumbs-o-down"></span> ${videosMetadata.termVideoDislikes}
+					      </a>
+						 
+						 </#if>
+						 
+						 <a>|</a>
+
 						</h2>
 					</div>
-					<div class="col-md-1">
+					<div class="col-md-6">
 						<h2>
-<!-- 							<i class="fa fa-thumbs-down"></i> -->
-<!-- 							<i class="fa fa-thumbs-o-down"></i> -->
-<!-- 							<i class="fa fa-thumbs-o-up"></i> -->
-<!-- 							<i class="fa fa-thumbs-up"></i> -->
-							<span class="label label-primary punctuation fa fa-thumbs-o-down"> ${videosMetadata.termVideoDislikes}</span>
-						</h2>
-					</div>
-					<div class="col-md-10">
-						<h2>
-							<#assign visits = "Visitas: ${randomWord.numberOfVisits}">
-							<span id="numberOfVisitsSpan" class="label label-primary visits fa fa-eye"> ${videosMetadata.termVideo}</span>
+							<#-- <#assign visits = "Visitas: ${randomWord.numberOfVisits}"> -->
+							<a class="btn-lg btn-primary pull-right">
+					      		<span id="numberOfTermVideoVisits" class="fa fa-eye"> ${videosMetadata.termVideo}</span>
+					      	</a>
+							
 						</h2>
 					</div>
 				</div>
@@ -109,13 +127,40 @@
 				<div class="row">
 					<div class="col-md-6">
 						<h2>
-							<span class="label label-primary punctuation glyphicon glyphicon-star"> Puntuación: 4.5</span>
+						 <#if ((videosMetadata.definitionVideoRating??) && (videosMetadata.definitionVideoRating == "like"))> 								 
+								 <a onclick="rateVideo(${randomWord.video.definitionYoutubeVideoID}, like)" class="btn-lg btn-primary">
+							      	<span class="fa fa-thumbs-up"></span> ${videosMetadata.definitionVideoLikes}
+							      </a>
+						 <#else>
+						 
+						  <a onclick="rateVideo(${randomWord.video.definitionYoutubeVideoID}, like)" class="btn-lg btn-primary">
+					      	<span class="fa fa-thumbs-o-up"></span> ${videosMetadata.definitionVideoLikes}
+					      </a>
+					      
+						 </#if>
+						 
+						 <a>|</a>
+						 
+						 <#if ((videosMetadata.definitionVideoRating??) && (videosMetadata.definitionVideoRating == "dislike"))> 
+								 <a onclick="rateVideo(${randomWord.video.definitionYoutubeVideoID}, dislike)" class="btn-lg btn-primary">
+							      	<span class="fa fa-thumbs-down"></span> ${videosMetadata.definitionVideoDislikes}
+							      </a>
+						 <#else>
+						 
+						 <a onclick="rateVideo(${randomWord.video.definitionYoutubeVideoID}, dislike)" class="btn-lg btn-primary">
+					      	<span class="fa fa-thumbs-o-down"></span> ${videosMetadata.definitionVideoDislikes}
+					      </a>
+						 </#if> 
+						 
+						 <a>|</a>
 						</h2>
 					</div>
 					<div class="col-md-6">
 						<h2>
-							<#assign visits = "Visitas: ${randomWord.numberOfVisits}">
-							<span id="numberOfVisitsSpan" class="label label-primary visits glyphicon glyphicon-eye-open"> ${videosMetadata.definitionVideo}</span>
+							<#-- <#assign visits = "Visitas: ${randomWord.numberOfVisits}"> -->
+							<a class="btn-lg btn-primary pull-right">
+					      		<span id="numberOfDefinitionVideoVisits" class="fa fa-eye"> ${videosMetadata.definitionVideo}</span>
+					      	</a>
 						</h2>
 					</div>
 				</div>
@@ -129,10 +174,10 @@
 				</div>
 			    <div class="row">
 					<div class="panel-group">
-					  <div class="panel panel-default">
+					  <div class="panel panel-primary">
 					    <div class="panel-heading">
 					      <h4 class="panel-title">
-					        <a data-toggle="collapse" href="#collapse1">Explicación</a>
+					        <a data-toggle="collapse" href="#collapse1"><span class="glyphicon glyphicon-expand"></span> Explicación</a>
 					      </h4>
 					    </div>
 					    <div id="collapse1" class="panel-collapse collapse">
@@ -145,13 +190,40 @@
 				<div class="row">
 					<div class="col-md-6">
 						<h2>
-							<span class="label label-primary punctuation glyphicon glyphicon-star"> Puntuación: 4.5</span>
+						 <#if ((videosMetadata.explanationVideoRating??) && (videosMetadata.explanationVideoRating == "like"))> 								 
+								 <a onclick="rateVideo(${randomWord.video.explanationYoutubeVideoID}, like)" class="btn-lg btn-primary">
+							      	<span class="fa fa-thumbs-up"></span> ${videosMetadata.exampleVideoLikes}
+							      </a>
+						 <#else>
+						 
+						  <a onclick="rateVideo(${randomWord.video.explanationYoutubeVideoID}, like)" class="btn-lg btn-primary">
+					      	<span class="fa fa-thumbs-o-up"></span> ${videosMetadata.exampleVideoLikes}
+					      </a>
+					      
+						 </#if>
+						 
+						 <a>|</a>
+						 
+						 <#if ((videosMetadata.explanationVideoRating??) && (videosMetadata.explanationVideoRating == "dislike"))> 
+								 <a onclick="rateVideo(${randomWord.video.explanationYoutubeVideoID}, dislike)" class="btn-lg btn-primary">
+							      	<span class="fa fa-thumbs-down"></span> ${videosMetadata.explanationVideoDislikes}
+							      </a>
+						 <#else>
+						 
+						 <a onclick="rateVideo(${randomWord.video.explanationYoutubeVideoID}, dislike)" class="btn-lg btn-primary">
+					      	<span class="fa fa-thumbs-o-down"></span> ${videosMetadata.explanationVideoDislikes}
+					      </a>
+						 </#if> 
+						 
+						 <a>|</a>
 						</h2>
 					</div>
 					<div class="col-md-6">
 						<h2>
-							<#assign visits = "Visitas: ${randomWord.numberOfVisits}">
-							<span id="numberOfVisitsSpan" class="label label-primary visits glyphicon glyphicon-eye-open"> ${videosMetadata.explanationVideo}</span>
+							<#-- <#assign visits = "Visitas: ${randomWord.numberOfVisits}"> -->
+							<a class="btn-lg btn-primary pull-right">
+					      		<span id="numberOfExplanationVideoVisits" class="fa fa-eye"> ${videosMetadata.explanationVideo}</span>
+					      	</a>
 						</h2>
 					</div>
 				</div>
@@ -165,10 +237,10 @@
 				</div>
 				<div class="row">
 					<div class="panel-group">
-					  <div class="panel panel-default">
+					  <div class="panel panel-primary">
 						<div class="panel-heading">
 						  <h4 class="panel-title">
-							<a data-toggle="collapse" href="#collapse3">Ejemplos</a>
+							<a data-toggle="collapse" href="#collapse3"> <span class="glyphicon glyphicon-expand"></span> Ejemplos</a>
 						  </h4>
 						</div>
 						<div id="collapse3" class="panel-collapse collapse">
@@ -181,13 +253,40 @@
 				<div class="row">
 					<div class="col-md-6">
 						<h2>
-							<span class="label label-primary punctuation glyphicon glyphicon-star"> Puntuación: 4.5</span>
+						 <#if ((videosMetadata.exampleVideoRating??) && (videosMetadata.exampleVideoRating == "like"))> 								 
+								 <a onclick="rateVideo(${randomWord.video.explanationYoutubeVideoID}, like)" class="btn-lg btn-primary">
+							      	<span class="fa fa-thumbs-up"></span> ${videosMetadata.exampleVideoLikes}
+							      </a>
+						 <#else>
+						 
+						  <a onclick="rateVideo(${randomWord.video.explanationYoutubeVideoID}, like)" class="btn-lg btn-primary">
+					      	<span class="fa fa-thumbs-o-up"></span> ${videosMetadata.exampleVideoLikes}
+					      </a>
+					      
+						 </#if>
+						 
+						 <a>|</a>
+						 
+						 <#if ((videosMetadata.exampleVideoRating??) && (videosMetadata.exampleVideoRating == "dislike"))> 
+								 <a onclick="rateVideo(${randomWord.video.explanationYoutubeVideoID}, dislike)" class="btn-lg btn-primary">
+							      	<span class="fa fa-thumbs-down"></span> ${videosMetadata.exampleVideoDislikes}
+							      </a>
+						 <#else>
+						 
+						 <a onclick="rateVideo(${randomWord.video.explanationYoutubeVideoID}, dislike)" class="btn-lg btn-primary">
+					      	<span class="fa fa-thumbs-o-down"></span> ${videosMetadata.exampleVideoDislikes}
+					      </a>
+						 </#if> 
+						 
+						 <a>|</a>
 						</h2>
 					</div>
 					<div class="col-md-6">
 						<h2>
-							<#assign visits = "Visitas: ${randomWord.numberOfVisits}">
-							<span id="numberOfVisitsSpan" class="label label-primary visits glyphicon glyphicon-eye-open"> ${videosMetadata.exampleVideo}</span>
+							<#-- <#assign visits = "Visitas: ${randomWord.numberOfVisits}"> -->
+							<a class="btn-lg btn-primary pull-right">
+					      		<span id="numberOfExampleVideoVisits" class="fa fa-eye"> ${videosMetadata.exampleVideo}</span>
+					      	</a>
 						</h2>
 					</div>
 				</div>			
@@ -268,33 +367,41 @@
 <!-- 	    <a href="#" class="list-group-item active"> -->
 <!-- 		    Hola -->
 <!-- 		  </a> -->
-		  		  
-		  
-		  
+
 <!-- 		  <a href="#" class="list-group-item">Importante</a> -->
 <!-- 		  <a href="#" class="list-group-item">Letra</a> -->
 <!-- 		  <a href="#" class="list-group-item">Nunca</a> -->
 	    
-	    <!-- Work to do here: Add the proper classes and onClick actions -->
-		    <#list listWords as word>
-			     <#if ((listMyWords??) && (listMyWords?size > 0))>
-				    <#list listMyWords as myWord>
-				    <!-- This means that the word is a preferred word by the user -->
-				    	<#if (word.wordName == myWord.wordName) >
-				    		<a onclick="loadDetail(${myWord.wordId})" href="#" class="list-group-item">
-				    		<span id="span-${myWord.wordId}" class="glyphicon glyphicon-star" data-toggle="tooltip" data-placement="top" title="Agregar a favoritos" onclick="togglePreferred(${word.wordId})"></span> ${myWord.wordName}</a>
-				    		
-<!-- 				    		<a href="#" class="list-group-item"><span id="span-${myWord.wordId}" class="glyphicon glyphicon-star" data-toggle="tooltip" data-placement="top" title="Agregar a favoritos" onclick="togglePreferred(${word.wordId})"></span>   Hotel</a> -->
-<!-- 		  <a href="#" class="list-group-item"><span class="glyphicon glyphicon-star-empty" ></span>   Hotel</a> -->
-				    		
-				    	</#if>
-					  
-				    </#list>
-				<#else>
-					<a onclick="loadDetail(${word.wordId})" href="#" class="list-group-item">
-					<span id="span-${word.wordId}" class="glyphicon glyphicon-star-empty" data-toggle="tooltip" data-placement="top" title="Agregar a favoritos" onclick="togglePreferred(${word.wordId})"></span> ${word.wordName}</a>
-				</#if>
-		    </#list>
+	    
+			<!-- 	    Checks if the user is logged in the site -->
+		    <#if ((isSessionValid??) && (isSessionValid == "true"))>
+				<!-- Work to do here: Add the proper classes and onClick actions -->
+			    <#list listWords as word>
+				     <#if ((listMyWords??) && (listMyWords?size > 0))>
+					    <#list listMyWords as myWord>
+					    <!-- This means that the word is a preferred word by the user -->
+					    	<#if (word.wordName == myWord.wordName) >
+								<a class="list-group-item">
+									<span id="span-${word.wordId}" title="Deshacer Favorito" onclick="togglePreferred(${word.wordId})" class="fa fa-lg fa-star pull-left"></span> 
+									<span onclick="loadDetail(${word.wordId})" title="Cargar detalle"> ${word.wordName}</span>
+								</a>
+								
+					    	</#if>
+					    </#list>
+					<#else>								
+						<a class="list-group-item">
+							<span id="span-${word.wordId}" title="Hacer Favorito" onclick="togglePreferred(${word.wordId})" class="fa fa-lg fa-star-o pull-left"></span> 
+							<span onclick="loadDetail(${word.wordId})" title="Cargar detalle"> ${word.wordName}</span>
+						</a>
+					</#if>
+			    </#list>
+			<#else>
+				<#list listWords as word>							
+					<a class="list-group-item"> 
+						<span onclick="loadDetail(${word.wordId})" title="Cargar detalle"> ${word.wordName}</span>
+					</a>
+			    </#list>		
+			</#if>
 
 		 </div>
 		    

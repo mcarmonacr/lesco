@@ -370,7 +370,7 @@ public class YoutubeHelper {
        return youtubeVideoRating; 
     }
     
-    public Boolean likeAVideo(String videoID) {
+    public Boolean likeAVideo(String videoID, String action) {
     	// Read the developer key from the properties file.
 
         Properties properties = new Properties();
@@ -400,7 +400,7 @@ public class YoutubeHelper {
             youtube = new YouTube.Builder(AuthHelper.HTTP_TRANSPORT, AuthHelper.JSON_FACTORY, credential).setApplicationName(
                     "diccionario-lesco-youtube-channel").build();
             
-            youtube.videos().rate(videoID, "like").execute();            
+            youtube.videos().rate(videoID, action).execute();            
             
         } catch (GoogleJsonResponseException e) {
             System.err.println("There was a service error: " + e.getDetails().getCode() + " : "

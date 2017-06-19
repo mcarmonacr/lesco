@@ -3,6 +3,7 @@
  */
 package com.lesco.diccionario.interceptor;
 
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.Map;
 
@@ -47,13 +48,16 @@ public class SessionValidatorInterceptor extends HandlerInterceptorAdapter {
 		request.setAttribute("startTime", startTime);
 		
 		logger.info("SessionValidatorInterceptor:preHandle- JsessionID" + request.getSession().getId());
-				
+		
+						
 		//if returned false, we need to make sure 'response' is sent
 	
 		//Test Cross Site Scripting 
 //		final String requestURI = request.getRequestURI();
 //		final Encoder esapiEnc = DefaultEncoder.getInstance();
 //		final String encPVal = esapiEnc.encodeForHTML(requestURI);
+		
+		validateIncomingURL(request, response);
 		
 		//TODO Work this logic
 		HttpSession session = request.getSession(false);
@@ -130,6 +134,30 @@ public class SessionValidatorInterceptor extends HandlerInterceptorAdapter {
 		
 		logger.debug("SessionValidatorInterceptor - afterCompletion() - End");
 
+	}
+	
+	/**
+	 * Checks if the incoming URL is allowed to access the requested URL
+	 * 
+	 * @param request
+	 */
+	private void validateIncomingURL(HttpServletRequest request, HttpServletResponse response){
+		logger.debug("SessionValidatorInterceptor - validaIncomingURL() - End");
+		
+		try {
+			//If there isn't a session created yet the user is not supposed to access certain URLs
+			if (request.getSession(false) == null || request.getSession(false).getAttribute("userEmail") == null){
+				
+				if(request.getRequestURI().contains("/termino") || request.getRequestURI().contains("/admin") || request.getRequestURI().contains("/agregar")) {
+					response.sendRedirect(request.getContextPath() + "/ingresar");
+				}
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		logger.debug("SessionValidatorInterceptor - validaIncomingURL() - End");
 	}
 	
 }

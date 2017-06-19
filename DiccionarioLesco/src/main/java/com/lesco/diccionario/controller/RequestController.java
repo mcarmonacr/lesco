@@ -278,31 +278,35 @@ public class RequestController {
 		
 		logger.debug("RequestController - obtenerListaSolicitudes() - Start");
 		
+		List<Request> requestList = new ArrayList<Request>();
+		
 		//Validate input
 		if (json.get("requestInput") != null && !json.get("requestInput").isEmpty()){
-			
-			List<Request> RequestList = new ArrayList<Request>();
-			
-			
-			RequestList = requestDAO.findByPattern(json.get("requestInput"));
-			
-			
-			Map <String, Object> requestsMap = new HashMap <String, Object> ();
-			
-			// TODO process wordsMap in order to get only the list of words and its IDs 
-			
-			requestsMap.put("requestsList", processRequestList(RequestList));
-			result.setContent(requestsMap);
-					
-			//Checks if the input user name already exists in the database
-			if(RequestList != null && !RequestList.isEmpty()){			
-				result.setMessage("Sucess");
-				result.setCode("000");
-			}else{
-				result.setMessage("List is empty");
-				result.setCode("001");
+
+			requestList = requestDAO.findByPattern(json.get("requestInput"));
+		} else {
+			//If there wasn't any input, get them all
+			if(requestList.size() == 0){
+				requestList = requestDAO.list();
 			}
 		}
+		
+		Map <String, Object> requestsMap = new HashMap <String, Object> ();
+		
+		// TODO process wordsMap in order to get only the list of words and its IDs 
+		
+		requestsMap.put("requestsList", processRequestList(requestList));
+		result.setContent(requestsMap);
+				
+		//Checks if the input user name already exists in the database
+		if(requestList != null && !requestList.isEmpty()){			
+			result.setMessage("Sucess");
+			result.setCode("000");
+		}else{
+			result.setMessage("List is empty");
+			result.setCode("001");
+		}
+		
 		logger.debug("RequestController - obtenerListaSolicitudes() - End");
 		
 		return result;
