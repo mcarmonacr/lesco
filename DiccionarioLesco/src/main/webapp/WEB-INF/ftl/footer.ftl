@@ -27,11 +27,15 @@
 	
 	<#if (parameters??)>
 		<#if (parameters?size > 0)>
-			<#if parameters.js??>
-		 	 	 <script type="text/javascript" src=${parameters.js}></script>
-			</#if>
+					
+			<!-- 			Gets all the parameters that contain the css keyword in their string -->
+			<#list parameters?values as v>
+				<#if v?contains("js")>
+					<script type="text/javascript" src=${v}></script>
+				</#if>
+		    </#list>
+			
 		</#if>
 	</#if>
 
-	
 </div>

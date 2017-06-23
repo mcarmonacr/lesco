@@ -309,7 +309,7 @@ function updateRequestsList(requestList){
 	for (index = 0; index < requestList.length; index++) {
 		var anchor= $("<a>");
 		anchor.attr("href", "#");
-		anchor.attr("onclick", "loadDetail("+ requestList[index].requestId +")");
+		anchor.attr("onclick", "loadRequestDetail("+ requestList[index].requestId +")");
 		anchor.addClass("list-group-item");
 		anchor.text(requestList[index].wordName);
 		

@@ -400,6 +400,8 @@ public class YoutubeHelper {
             youtube = new YouTube.Builder(AuthHelper.HTTP_TRANSPORT, AuthHelper.JSON_FACTORY, credential).setApplicationName(
                     "diccionario-lesco-youtube-channel").build();
             
+            //https://developers.google.com/youtube/v3/docs/videos/rate
+            //Possible values are: like, dislike and none
             youtube.videos().rate(videoID, action).execute();            
             
         } catch (GoogleJsonResponseException e) {

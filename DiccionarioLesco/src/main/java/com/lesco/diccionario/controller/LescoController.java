@@ -105,7 +105,7 @@ public class LescoController {
 		Word randomWord = getRandomWord(listWords);
 		
 		mv.addObject("randomWord", randomWord);
-		mv.addObject("videosMetadata", getVideosMetadata(randomWord));
+		mv.addObject("videosMetadata", getVideosMetadata(randomWord, session));
 		mv.addObject("listCategories", listCategories);
 		mv.addObject("listWords", listWords);
 		mv.addObject("listMyWords", listMyWords);
@@ -297,7 +297,7 @@ public class LescoController {
 	  }	
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	private Map getVideosMetadata(Word randomWord) { 
+	private Map getVideosMetadata(Word randomWord, HttpSession session) { 
 		Map result= new HashMap();
 		
 //		com.google.api.services.youtube.model.Video definitionVideo= youtubeHelper.getVideoMetadata(randomWord.getVideo().getDefinitionYoutubeVideoID());
@@ -336,10 +336,18 @@ public class LescoController {
 		com.google.api.services.youtube.model.Video explanationVideo= youtubeHelper.getVideoMetadata("K64bcDY-Oko");
 		com.google.api.services.youtube.model.Video termVideo= youtubeHelper.getVideoMetadata("PX4IBJNuMsE");
 		
-		VideoRating definitionVideoRating= youtubeHelper.getVideoRating("4z7rnfxhdms");
-		VideoRating exampleVideoRating= youtubeHelper.getVideoRating("63xrbVSXbXA");
-		VideoRating explanationVideoRating= youtubeHelper.getVideoRating("K64bcDY-Oko");
-		VideoRating termVideoRating= youtubeHelper.getVideoRating("PX4IBJNuMsE");
+		VideoRating definitionVideoRating = new VideoRating();
+		VideoRating exampleVideoRating = new VideoRating();
+		VideoRating explanationVideoRating = new VideoRating();
+		VideoRating termVideoRating = new VideoRating();
+		
+		//Only get the rating from youtube if the user is logged in
+		if(session != null && session.getAttribute("userEmail") != null) {
+			definitionVideoRating= youtubeHelper.getVideoRating("4z7rnfxhdms");
+			exampleVideoRating= youtubeHelper.getVideoRating("63xrbVSXbXA");
+			explanationVideoRating= youtubeHelper.getVideoRating("K64bcDY-Oko");
+			termVideoRating= youtubeHelper.getVideoRating("PX4IBJNuMsE");
+		}
 		
 		//If the values exist, then the ones in the map get overridden
 		if (definitionVideo != null && definitionVideoRating != null) {

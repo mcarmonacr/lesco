@@ -4,6 +4,7 @@
 package com.lesco.diccionario.interceptor;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.Map;
 
@@ -92,8 +93,12 @@ public class SessionValidatorInterceptor extends HandlerInterceptorAdapter {
 		
 		if(modelAndView != null){
 			
-			Map model = modelAndView.getModel();		
-			model.put("year", Calendar.getInstance().get(Calendar.YEAR));
+			Map model = modelAndView.getModel();
+			
+			DecimalFormat myFormatter = new DecimalFormat("####");
+		    String output = myFormatter.format(Calendar.getInstance().get(Calendar.YEAR));
+			
+			model.put("year", output);
 			
 			if (request.getSession(false) != null && request.getSession(false).getAttribute("userEmail") != null){
 	
@@ -148,7 +153,8 @@ public class SessionValidatorInterceptor extends HandlerInterceptorAdapter {
 			//If there isn't a session created yet the user is not supposed to access certain URLs
 			if (request.getSession(false) == null || request.getSession(false).getAttribute("userEmail") == null){
 				
-				if(request.getRequestURI().contains("/termino") || request.getRequestURI().contains("/admin") || request.getRequestURI().contains("/agregar")) {
+				//At this point there are two banned URLs: Admin and Agregar
+				if(request.getRequestURI().contains("/admin") || request.getRequestURI().contains("/agregar")) {
 					response.sendRedirect(request.getContextPath() + "/ingresar");
 				}
 			}

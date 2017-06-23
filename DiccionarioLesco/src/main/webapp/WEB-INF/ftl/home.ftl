@@ -51,35 +51,45 @@
 				<div class="row">
 					<div class="col-md-6">
 						<h2>
-<!-- 						Icons taken from: https://bootsnipp.com/iconsearch/ -->
-						 <#if ((videosMetadata.termVideoRating??) && (videosMetadata.termVideoRating == "like"))> 								 
-								 <a onclick="rateVideo('${randomWord.video.termYoutubeVideoID}', 'like')" class="btn-lg btn-primary">
-							      	<span class="fa fa-thumbs-up"></span> ${videosMetadata.termVideoLikes}
-							      </a>
-						 <#else>
-						 
-						  <a onclick="rateVideo('${randomWord.video.termYoutubeVideoID}', 'like')" class="btn-lg btn-primary">
-					      	<span class="fa fa-thumbs-o-up"></span> ${videosMetadata.termVideoLikes}
-					      </a>
-					      
-						 </#if>
-						 
-						 <a>|</a>
-						 
-						 <#if ((videosMetadata.termVideoRating??) && (videosMetadata.termVideoRating == "dislike"))> 
-								 <a onclick="rateVideo('${randomWord.video.termYoutubeVideoID}', dislike)" class="btn-lg btn-primary">
-							      	<span class="fa fa-thumbs-down"></span> ${videosMetadata.termVideoDislikes}
-							      </a>
-						 <#else>
-						 
-						 <a onclick="rateVideo('${randomWord.video.termYoutubeVideoID}', dislike)" class="btn-lg btn-primary">
-					      	<span class="fa fa-thumbs-o-down"></span> ${videosMetadata.termVideoDislikes}
-					      </a>
-						 
-						 </#if>
-						 
-						 <a>|</a>
-
+						<!-- 	    Checks if the user is logged in the site -->
+					    <#if ((isSessionValid??) && (isSessionValid == "true"))>
+							  <!-- 						Icons taken from: https://bootsnipp.com/iconsearch/ -->
+									 <#if ((videosMetadata.termVideoRating??) && (videosMetadata.termVideoRating == "like"))> 								 
+										 <a onclick="rateVideo('${randomWord.video.termYoutubeVideoID}', 'like')" class="btn-lg btn-primary">
+									      	<span id="spanLike-${randomWord.video.termYoutubeVideoID}" class="fa fa-thumbs-up"> ${videosMetadata.termVideoLikes}</span> 
+									      </a>
+									 <#else>
+										  <a onclick="rateVideo('${randomWord.video.termYoutubeVideoID}', 'like')" class="btn-lg btn-primary">
+									      	<span id="spanLike-${randomWord.video.termYoutubeVideoID}" class="fa fa-thumbs-o-up"> ${videosMetadata.termVideoLikes}</span> 
+									      </a>
+									 </#if>
+									 
+									 <a>|</a>
+									 
+									 <#if ((videosMetadata.termVideoRating??) && (videosMetadata.termVideoRating == "dislike"))> 
+										 <a onclick="rateVideo('${randomWord.video.termYoutubeVideoID}', 'dislike')" class="btn-lg btn-primary">
+									      	<span id="spanDislike-${randomWord.video.termYoutubeVideoID}" class="fa fa-thumbs-down"> ${videosMetadata.termVideoDislikes}</span> 
+									      </a>
+									 <#else>
+										 <a onclick="rateVideo('${randomWord.video.termYoutubeVideoID}', 'dislike')" class="btn-lg btn-primary">
+									      	<span id="spanDislike-${randomWord.video.termYoutubeVideoID}" class="fa fa-thumbs-o-down"> ${videosMetadata.termVideoDislikes}</span> 
+									      </a>
+									 </#if>
+									 
+									 <a>|</a>
+						  <#else>
+							  <a class="btn-lg btn-primary">
+							      	<span id="spanLike-${randomWord.video.termYoutubeVideoID}" class="fa fa-thumbs-up"> ${videosMetadata.termVideoLikes}</span> 
+						      </a>
+						      
+						      <a>|</a>
+						      
+						      <a class="btn-lg btn-primary">
+						      	<span id="spanDislike-${randomWord.video.termYoutubeVideoID}" class="fa fa-thumbs-down"> ${videosMetadata.termVideoDislikes}</span> 
+						      </a>
+						  
+						  	  <a>|</a>
+						  </#if>
 						</h2>
 					</div>
 					<div class="col-md-6">
@@ -127,32 +137,45 @@
 				<div class="row">
 					<div class="col-md-6">
 						<h2>
-						 <#if ((videosMetadata.definitionVideoRating??) && (videosMetadata.definitionVideoRating == "like"))> 								 
-								 <a onclick="rateVideo(${randomWord.video.definitionYoutubeVideoID}, like)" class="btn-lg btn-primary">
-							      	<span class="fa fa-thumbs-up"></span> ${videosMetadata.definitionVideoLikes}
-							      </a>
-						 <#else>
-						 
-						  <a onclick="rateVideo(${randomWord.video.definitionYoutubeVideoID}, like)" class="btn-lg btn-primary">
-					      	<span class="fa fa-thumbs-o-up"></span> ${videosMetadata.definitionVideoLikes}
-					      </a>
-					      
-						 </#if>
-						 
-						 <a>|</a>
-						 
-						 <#if ((videosMetadata.definitionVideoRating??) && (videosMetadata.definitionVideoRating == "dislike"))> 
-								 <a onclick="rateVideo(${randomWord.video.definitionYoutubeVideoID}, dislike)" class="btn-lg btn-primary">
-							      	<span class="fa fa-thumbs-down"></span> ${videosMetadata.definitionVideoDislikes}
-							      </a>
-						 <#else>
-						 
-						 <a onclick="rateVideo(${randomWord.video.definitionYoutubeVideoID}, dislike)" class="btn-lg btn-primary">
-					      	<span class="fa fa-thumbs-o-down"></span> ${videosMetadata.definitionVideoDislikes}
-					      </a>
-						 </#if> 
-						 
-						 <a>|</a>
+						 <!-- 	    Checks if the user is logged in the site -->
+					    <#if ((isSessionValid??) && (isSessionValid == "true"))>
+							  <!-- 						Icons taken from: https://bootsnipp.com/iconsearch/ -->
+									 <#if ((videosMetadata.definitionVideoRating??) && (videosMetadata.definitionVideoRating == "like"))> 								 
+										 <a onclick="rateVideo('${randomWord.video.definitionYoutubeVideoID}', 'like')" class="btn-lg btn-primary">
+									      	<span id="spanLike-${randomWord.video.definitionYoutubeVideoID}" class="fa fa-thumbs-up"> ${videosMetadata.definitionVideoLikes}</span> 
+									      </a>
+									 <#else>
+										  <a onclick="rateVideo('${randomWord.video.definitionYoutubeVideoID}', 'like')" class="btn-lg btn-primary">
+									      	<span id="spanLike-${randomWord.video.definitionYoutubeVideoID}" class="fa fa-thumbs-o-up"> ${videosMetadata.definitionVideoLikes}</span> 
+									      </a>
+									 </#if>
+									 
+									 <a>|</a>
+									 
+									 <#if ((videosMetadata.definitionVideoRating??) && (videosMetadata.definitionVideoRating == "dislike"))> 
+										 <a onclick="rateVideo('${randomWord.video.definitionYoutubeVideoID}', 'dislike')" class="btn-lg btn-primary">
+									      	<span id="spanDislike-${randomWord.video.definitionYoutubeVideoID}" class="fa fa-thumbs-down"> ${videosMetadata.definitionVideoDislikes}</span> 
+									      </a>
+									 <#else>
+										 <a onclick="rateVideo('${randomWord.video.definitionYoutubeVideoID}', 'dislike')" class="btn-lg btn-primary">
+									      	<span id="spanDislike-${randomWord.video.definitionYoutubeVideoID}" class="fa fa-thumbs-o-down"> ${videosMetadata.definitionVideoDislikes}</span> 
+									      </a>
+									 </#if>
+									 
+									 <a>|</a>
+						  <#else>
+							  <a class="btn-lg btn-primary">
+							      	<span id="spanLike-${randomWord.video.definitionYoutubeVideoID}" class="fa fa-thumbs-up"> ${videosMetadata.definitionVideoLikes}</span> 
+						      </a>
+						      
+						      <a>|</a>
+						      
+						      <a class="btn-lg btn-primary">
+						      	<span id="spanDislike-${randomWord.video.definitionYoutubeVideoID}" class="fa fa-thumbs-down"> ${videosMetadata.definitionVideoDislikes}</span> 
+						      </a>
+						  
+						  	  <a>|</a>
+						  </#if>
 						</h2>
 					</div>
 					<div class="col-md-6">
@@ -190,32 +213,45 @@
 				<div class="row">
 					<div class="col-md-6">
 						<h2>
-						 <#if ((videosMetadata.explanationVideoRating??) && (videosMetadata.explanationVideoRating == "like"))> 								 
-								 <a onclick="rateVideo(${randomWord.video.explanationYoutubeVideoID}, like)" class="btn-lg btn-primary">
-							      	<span class="fa fa-thumbs-up"></span> ${videosMetadata.exampleVideoLikes}
-							      </a>
-						 <#else>
-						 
-						  <a onclick="rateVideo(${randomWord.video.explanationYoutubeVideoID}, like)" class="btn-lg btn-primary">
-					      	<span class="fa fa-thumbs-o-up"></span> ${videosMetadata.exampleVideoLikes}
-					      </a>
-					      
-						 </#if>
-						 
-						 <a>|</a>
-						 
-						 <#if ((videosMetadata.explanationVideoRating??) && (videosMetadata.explanationVideoRating == "dislike"))> 
-								 <a onclick="rateVideo(${randomWord.video.explanationYoutubeVideoID}, dislike)" class="btn-lg btn-primary">
-							      	<span class="fa fa-thumbs-down"></span> ${videosMetadata.explanationVideoDislikes}
-							      </a>
-						 <#else>
-						 
-						 <a onclick="rateVideo(${randomWord.video.explanationYoutubeVideoID}, dislike)" class="btn-lg btn-primary">
-					      	<span class="fa fa-thumbs-o-down"></span> ${videosMetadata.explanationVideoDislikes}
-					      </a>
-						 </#if> 
-						 
-						 <a>|</a>
+						 <!-- 	    Checks if the user is logged in the site -->
+					    <#if ((isSessionValid??) && (isSessionValid == "true"))>
+							  <!-- 						Icons taken from: https://bootsnipp.com/iconsearch/ -->
+									 <#if ((videosMetadata.explanationVideoRating??) && (videosMetadata.explanationVideoRating == "like"))> 								 
+										 <a onclick="rateVideo('${randomWord.video.explanationYoutubeVideoID}', 'like')" class="btn-lg btn-primary">
+									      	<span id="spanLike-${randomWord.video.explanationYoutubeVideoID}" class="fa fa-thumbs-up"> ${videosMetadata.exampleVideoLikes}</span> 
+									      </a>
+									 <#else>
+										  <a onclick="rateVideo('${randomWord.video.explanationYoutubeVideoID}', 'like')" class="btn-lg btn-primary">
+									      	<span id="spanLike-${randomWord.video.explanationYoutubeVideoID}" class="fa fa-thumbs-o-up"> ${videosMetadata.exampleVideoLikes}</span> 
+									      </a>
+									 </#if>
+									 
+									 <a>|</a>
+									 
+									 <#if ((videosMetadata.explanationVideoRating??) && (videosMetadata.explanationVideoRating == "dislike"))> 
+										 <a onclick="rateVideo('${randomWord.video.explanationYoutubeVideoID}', 'dislike')" class="btn-lg btn-primary">
+									      	<span id="spanDislike-${randomWord.video.explanationYoutubeVideoID}" class="fa fa-thumbs-down"> ${videosMetadata.explanationVideoDislikes}</span> 
+									      </a>
+									 <#else>
+										 <a onclick="rateVideo('${randomWord.video.explanationYoutubeVideoID}', 'dislike')" class="btn-lg btn-primary">
+									      	<span id="spanDislike-${randomWord.video.explanationYoutubeVideoID}" class="fa fa-thumbs-o-down"> ${videosMetadata.explanationVideoDislikes}</span> 
+									      </a>
+									 </#if>
+									 
+									 <a>|</a>
+						  <#else>
+							  <a class="btn-lg btn-primary">
+							      	<span id="spanLike-${randomWord.video.explanationYoutubeVideoID}" class="fa fa-thumbs-up"> ${videosMetadata.exampleVideoLikes}</span> 
+						      </a>
+						      
+						      <a>|</a>
+						      
+						      <a class="btn-lg btn-primary">
+						      	<span id="spanDislike-${randomWord.video.explanationYoutubeVideoID}" class="fa fa-thumbs-down"> ${videosMetadata.explanationVideoDislikes}</span> 
+						      </a>
+						  
+						  	  <a>|</a>
+						  </#if>
 						</h2>
 					</div>
 					<div class="col-md-6">
@@ -253,32 +289,45 @@
 				<div class="row">
 					<div class="col-md-6">
 						<h2>
-						 <#if ((videosMetadata.exampleVideoRating??) && (videosMetadata.exampleVideoRating == "like"))> 								 
-								 <a onclick="rateVideo(${randomWord.video.explanationYoutubeVideoID}, like)" class="btn-lg btn-primary">
-							      	<span class="fa fa-thumbs-up"></span> ${videosMetadata.exampleVideoLikes}
-							      </a>
-						 <#else>
-						 
-						  <a onclick="rateVideo(${randomWord.video.explanationYoutubeVideoID}, like)" class="btn-lg btn-primary">
-					      	<span class="fa fa-thumbs-o-up"></span> ${videosMetadata.exampleVideoLikes}
-					      </a>
-					      
-						 </#if>
-						 
-						 <a>|</a>
-						 
-						 <#if ((videosMetadata.exampleVideoRating??) && (videosMetadata.exampleVideoRating == "dislike"))> 
-								 <a onclick="rateVideo(${randomWord.video.explanationYoutubeVideoID}, dislike)" class="btn-lg btn-primary">
-							      	<span class="fa fa-thumbs-down"></span> ${videosMetadata.exampleVideoDislikes}
-							      </a>
-						 <#else>
-						 
-						 <a onclick="rateVideo(${randomWord.video.explanationYoutubeVideoID}, dislike)" class="btn-lg btn-primary">
-					      	<span class="fa fa-thumbs-o-down"></span> ${videosMetadata.exampleVideoDislikes}
-					      </a>
-						 </#if> 
-						 
-						 <a>|</a>
+						 <!-- 	    Checks if the user is logged in the site -->
+					    <#if ((isSessionValid??) && (isSessionValid == "true"))>
+							  <!-- 						Icons taken from: https://bootsnipp.com/iconsearch/ -->
+									 <#if ((videosMetadata.exampleVideoRating??) && (videosMetadata.exampleVideoRating == "like"))> 								 
+										 <a onclick="rateVideo('${randomWord.video.exampleYoutubeVideoID}', 'like')" class="btn-lg btn-primary">
+									      	<span id="spanLike-${randomWord.video.exampleYoutubeVideoID}" class="fa fa-thumbs-up"> ${videosMetadata.exampleVideoLikes}</span> 
+									      </a>
+									 <#else>
+										  <a onclick="rateVideo('${randomWord.video.exampleYoutubeVideoID}', 'like')" class="btn-lg btn-primary">
+									      	<span id="spanLike-${randomWord.video.exampleYoutubeVideoID}" class="fa fa-thumbs-o-up"> ${videosMetadata.exampleVideoLikes}</span> 
+									      </a>
+									 </#if>
+									 
+									 <a>|</a>
+									 
+									 <#if ((videosMetadata.exampleVideoRating??) && (videosMetadata.exampleVideoRating == "dislike"))> 
+										 <a onclick="rateVideo('${randomWord.video.exampleYoutubeVideoID}', 'dislike')" class="btn-lg btn-primary">
+									      	<span id="spanDislike-${randomWord.video.exampleYoutubeVideoID}" class="fa fa-thumbs-down"> ${videosMetadata.exampleVideoDislikes}</span> 
+									      </a>
+									 <#else>
+										 <a onclick="rateVideo('${randomWord.video.exampleYoutubeVideoID}', 'dislike')" class="btn-lg btn-primary">
+									      	<span id="spanDislike-${randomWord.video.exampleYoutubeVideoID}" class="fa fa-thumbs-o-down"> ${videosMetadata.exampleVideoDislikes}</span> 
+									      </a>
+									 </#if>
+									 
+									 <a>|</a>
+						  <#else>
+							  <a class="btn-lg btn-primary">
+							      	<span id="spanLike-${randomWord.video.exampleYoutubeVideoID}" class="fa fa-thumbs-up"> ${videosMetadata.exampleVideoLikes}</span> 
+						      </a>
+						      
+						      <a>|</a>
+						      
+						      <a class="btn-lg btn-primary">
+						      	<span id="spanDislike-${randomWord.video.exampleYoutubeVideoID}" class="fa fa-thumbs-down"> ${videosMetadata.exampleVideoDislikes}</span> 
+						      </a>
+						  
+						  	  <a>|</a>
+						  </#if>
 						</h2>
 					</div>
 					<div class="col-md-6">
@@ -306,11 +355,14 @@
     
      <!--Como usar Tabs: http://getbootstrap.com/javascript/#tabs -->
 
-			  <!-- Nav tabs -->
-			  <ul class="nav nav-tabs" role="tablist">
-			    <li role="presentation" class="active"><a href="#siteTerms" aria-controls="siteTerms" role="tab" data-toggle="tab">Términos</a></li>
-			    <li role="presentation"><a href="#myFavoriteTerms" aria-controls="myFavoriteTerms" role="tab" data-toggle="tab">Favoritos</a></li>
-			  </ul>
+ <!-- 	    Checks if the user is logged in the site -->
+		    <#if ((isSessionValid??) && (isSessionValid == "true"))>
+				  <!-- Nav tabs -->
+				  <ul class="nav nav-tabs" role="tablist">
+				    <li role="presentation" class="active"><a href="#siteTerms" aria-controls="siteTerms" role="tab" data-toggle="tab">Términos</a></li>
+				    <li role="presentation"><a href="#myFavoriteTerms" aria-controls="myFavoriteTerms" role="tab" data-toggle="tab">Favoritos</a></li>
+				  </ul>
+			  </#if>
 			  
 			  
 			  <!-- Tab panes -->

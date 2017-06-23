@@ -54,10 +54,10 @@ public class RegisterController {
 	 * 
 	 * @param registerForm. Contains fields: userName, emailAddress, password, passwordConfirmation, private String birthdate ,termsAndConditions.
 	 */
-	@RequestMapping(value= "/agregarUsuario", method = RequestMethod.POST, headers = "Accept=application/json", consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody AjaxResponseBody agregarUsuario(@RequestBody RegisterForm registerForm){
+	@RequestMapping(value= "/nuevoUsuario", method = RequestMethod.POST, headers = "Accept=application/json", consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody AjaxResponseBody nuevoUsuario(@RequestBody RegisterForm registerForm){
 		
-		logger.debug("RegisterController - agregarUsuario() - Start");
+		logger.debug("RegisterController - nuevoUsuario() - Start");
 		
 		AjaxResponseBody response = new AjaxResponseBody();
 
@@ -73,7 +73,7 @@ public class RegisterController {
 			response.setMessage("Failure");
 		}
 		
-		logger.debug("RegisterController - agregarUsuario() - End");
+		logger.debug("RegisterController - nuevoUsuario() - End");
 		
 		return response;
 	}

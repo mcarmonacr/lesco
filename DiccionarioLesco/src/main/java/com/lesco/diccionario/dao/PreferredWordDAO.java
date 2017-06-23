@@ -15,7 +15,7 @@ import com.lesco.diccionario.model.Word;
  *
  */
 public interface PreferredWordDAO {
-	
+		
 	/**
 	 * Saves a new preferred word
 	 * @param category
@@ -33,6 +33,12 @@ public interface PreferredWordDAO {
 	 * @return
 	 */
 	public List<PreferredWord> list();
+	
+	/**
+	 * Get a list of all preferred words
+	 * @return
+	 */
+	public List<Word> listMyWords(Integer userId);
 	
 	/**
 	 * Find a particular preferred word by user ID
@@ -68,11 +74,11 @@ public interface PreferredWordDAO {
 	 * Get a list of all the matching words
 	 * @return
 	 */
-	public List<Word> findByPattern(String termsInput);
+	public List<Word> findByPattern(String termsInput, Integer userId);
 	
 	/**
 	 * Get a list of all the matching words and the given category ID
 	 * @return
 	 */
-	public List<Word> findByPatternAndCategoryId(String termsInput, Integer categoryId);
+	public List<Word> findByPatternAndCategoryId(String termsInput, Integer categoryId, Integer userId);
 }

@@ -164,7 +164,7 @@ function submitform() {
 		type: 'post',
 	    contentType : "application/json",
 	    //url: "http://localhost:8080/DiccionarioLesco/registro/verificarUsuario",
-	    url: "/DiccionarioLesco/registro/agregarUsuario",
+	    url: "/DiccionarioLesco/registro/nuevoUsuario",
 	    data : JSON.stringify(search),
 	    dataType : 'json',
 	    success : function(data) {

@@ -151,7 +151,7 @@ function checkTerm() {
 	    	if(data != null && data.code == "000"){
 	    		//$('#divUserName').removeClass('has-error').addClass('has-success');
 				//$('#divUserName .glyphicon').removeClass('glyphicon-remove').addClass('glyphicon-ok');
-	    		updateTermsList(data.content.wordsList);
+	    		updateTermsList(data.content.wordsList, data.content.myWordsList, data.content.isSessionValid);
 	    	}else if(data != null && data.code == "001"){
 	    		//$('#divUserName').removeClass('has-success').addClass('has-error');
 				//$('#divUserName .glyphicon').removeClass('glyphicon-ok').addClass('glyphicon-remove');
@@ -236,7 +236,7 @@ function checkMyTerm() {
 	  //return false;
 }
 
-function updateTermsList(wordList){
+function updateTermsList(wordList, myWordList, isSessionValid){
 	
 	//Get the ID wordListDiv
 	var wordListDiv= $("#wordListDiv");
@@ -247,11 +247,75 @@ function updateTermsList(wordList){
 	//Insert the new set of word from the query
 	for (index = 0; index < wordList.length; index++) {
 		var anchor= $("<a>");
-		anchor.attr("href", "#");
-		anchor.attr("onclick", "loadDetail("+ wordList[index].wordId +")");
 		anchor.addClass("list-group-item");
-		anchor.text(wordList[index].wordName);
 		
+		if(isSessionValid){
+			
+			if(myWordList.length > 0) {
+				for (myIndex = 0; myIndex < myWordList.length; myIndex++) {
+					
+					if(wordList[index].wordName == myWordList[myIndex].wordName){
+						var spanFavorite= $("<span>");
+						spanFavorite.attr("href", "#");
+						spanFavorite.attr("onclick", "togglePreferred("+ wordList[index].wordId +")");
+						spanFavorite.attr("title", "Deshacer Favorito");
+						spanFavorite.attr("id", "span-"+wordList[index].wordId);
+						spanFavorite.attr("class", "fa fa-lg fa-star pull-left");
+						
+						var spanDetail= $("<span>");
+						spanDetail.attr("href", "#");
+						spanDetail.attr("onclick", "loadDetail("+ wordList[index].wordId +")");
+						spanDetail.attr("title", "Cargar Detalle");
+						spanDetail.text(wordList[index].wordName);
+						
+						anchor.append(spanFavorite);
+						anchor.append(spanDetail);
+					} else {
+						var spanFavorite= $("<span>");
+						spanFavorite.attr("href", "#");
+						spanFavorite.attr("onclick", "togglePreferred("+ wordList[index].wordId +")");
+						spanFavorite.attr("title", "Hacer Favorito");
+						spanFavorite.attr("id", "span-"+wordList[index].wordId);
+						spanFavorite.attr("class", "fa fa-lg fa-star-o pull-left");
+						
+						var spanDetail= $("<span>");
+						spanDetail.attr("href", "#");
+						spanDetail.attr("onclick", "loadDetail("+ wordList[index].wordId +")");
+						spanDetail.attr("title", "Cargar Detalle");
+						spanDetail.text(wordList[index].wordName);
+						
+						anchor.append(spanFavorite);
+						anchor.append(spanDetail);
+					}
+				}
+			} else { //Case where the user is logged in, but does not have favorites
+				var spanFavorite= $("<span>");
+				spanFavorite.attr("href", "#");
+				spanFavorite.attr("onclick", "togglePreferred("+ wordList[index].wordId +")");
+				spanFavorite.attr("title", "Hacer Favorito");
+				spanFavorite.attr("id", "span-"+wordList[index].wordId);
+				spanFavorite.attr("class", "fa fa-lg fa-star-o pull-left");
+				
+				var spanDetail= $("<span>");
+				spanDetail.attr("href", "#");
+				spanDetail.attr("onclick", "loadDetail("+ wordList[index].wordId +")");
+				spanDetail.attr("title", "Cargar Detalle");
+				spanDetail.text(wordList[index].wordName);
+				
+				anchor.append(spanFavorite);
+				anchor.append(spanDetail);
+			}
+
+		}else{
+			var spanDetail= $("<span>");
+			spanDetail.attr("href", "#");
+			spanDetail.attr("onclick", "loadDetail("+ wordList[index].wordId +")");
+			spanDetail.attr("title", "Cargar Detalle");
+			spanDetail.text(wordList[index].wordName);
+			
+			anchor.append(spanDetail);
+		}
+
 		wordListDiv.append(anchor);
 	}
 	
@@ -307,6 +371,9 @@ function updateMyTermsList(myWordList){
 function rateVideo(videoId, action){
 	var termsInput= document.getElementById("myTermsInput");
 	var categoryIdDiv= document.getElementById("myCategoryIdDiv");
+	
+	var hasLike= $('#spanLike-'+videoId).hasClass("fa-thumbs-up");
+	var hasDislike= $('#spanDislike-'+videoId).hasClass("fa-thumbs-down");
 	  
 	var search= {
 	            "videoId":videoId,
@@ -331,12 +398,22 @@ function rateVideo(videoId, action){
 	    		
 	    		//updateMyTermsList(data.content.myWordsList);
 	    		
+	    		if(data.content.videoRating.rating == "like"){
+	    			$('#spanLike-'+videoId).removeClass('fa-thumbs-o-up').addClass('fa-thumbs-up');
+	    			$('#spanDislike-'+videoId).removeClass('fa-thumbs-down').addClass('fa-thumbs-o-down');
+	    		} else if (data.content.videoRating.rating == "dislike"){
+	    			$('#spanLike-'+videoId).removeClass('fa-thumbs-up').addClass('fa-thumbs-o-up');
+	    			$('#spanDislike-'+videoId).removeClass('fa-thumbs-o-down').addClass('fa-thumbs-down');
+	    		} else { //Default case where the rating is none
+	    			$('#spanLike-'+videoId).removeClass('fa-thumbs-up').addClass('fa-thumbs-o-up');
+	    			$('#spanDislike-'+videoId).removeClass('fa-thumbs-down').addClass('fa-thumbs-o-down');
+	    		}
 	    		
-	    		//The true parameter forces the page to release it's cache.
-	    		//event.preventDefault();
-				window.location.reload();
-				//window.location.reload(true);
-	    		
+	    		if(data.content.videoMetadata.statistics.likeCount != null && data.content.videoMetadata.statistics.dislikeCount != null){
+	    			$('#spanLike-'+videoId).text(" " + data.content.videoMetadata.statistics.likeCount);
+	    			$('#spanDislike-'+videoId).text(" " + data.content.videoMetadata.statistics.dislikeCount);
+	    		}	    	
+	    		    		    		
 	    	}else if(data != null && data.code == "001"){
 	    		//$('#divUserName').removeClass('has-success').addClass('has-error');
 				//$('#divUserName .glyphicon').removeClass('glyphicon-ok').addClass('glyphicon-remove');

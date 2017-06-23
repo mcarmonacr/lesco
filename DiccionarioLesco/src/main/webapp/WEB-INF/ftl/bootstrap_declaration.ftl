@@ -26,9 +26,14 @@
 
 	<#if (parameters??)>
 		<#if (parameters?size > 0)>
-			<#if parameters.css??>
-		 	 	<link rel="stylesheet" type="text/css" href=${parameters.css}>
-			</#if>
+
+<!-- 			Gets all the parameters that contain the css keyword in their string -->
+			<#list parameters?values as v>
+				<#if v?contains("css")>
+					<link rel="stylesheet" type="text/css" href=${v}>
+				</#if>
+		    </#list>
+
 		</#if>
 	</#if>
 

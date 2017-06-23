@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.google.api.services.youtube.model.VideoRating;
 import com.lesco.diccionario.dao.CategoryDAO;
 import com.lesco.diccionario.dao.PreferredWordDAO;
 import com.lesco.diccionario.dao.RequestDAO;
@@ -186,7 +187,7 @@ public class TermnsController {
 	 * @param registerForm. Contains fields: userName, emailAddress, password, passwordConfirmation, private String birthdate ,termsAndConditions.
 	 */
 	@RequestMapping(value= "/obtenerListaTerminos", method = RequestMethod.POST, headers = "Accept=application/json", consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody AjaxResponseBody obtenerListaTerminos(@RequestBody Map<String, String> json){
+	public @ResponseBody AjaxResponseBody obtenerListaTerminos(@RequestBody Map<String, String> json, HttpServletRequest request, HttpServletResponse response){
 		
 		AjaxResponseBody result = new AjaxResponseBody();
 		
@@ -194,6 +195,7 @@ public class TermnsController {
 		
 		
 		List<Word> wordsList = new ArrayList<Word>();
+		List<Word> listMyWords = new ArrayList<Word>();
 		
 		//Validate input
 		if (json.get("termsInput") != null && !json.get("termsInput").isEmpty()){
@@ -215,10 +217,31 @@ public class TermnsController {
 		
 		Map <String, Object> wordsMap = new HashMap <String, Object> ();
 		
+		//Get user session and sets an attribute in the result datamap
+		HttpSession session = request.getSession();
+		if(session != null && session.getAttribute("userEmail") != null) {
+			
+			//Get the current logged in user emailAddress
+			String userEmail = session.getAttribute("userEmail").toString();
+			
+			//Obtain the User that belongs to the email
+			ProfileDetail profileDetailQuery = userDAO.findByEmailAddress(userEmail);
+			
+			listMyWords = getWordsFromList(preferredWordDAO.findByUser(profileDetailQuery.getProfileDetailId()));
+			
+			wordsMap.put("isSessionValid", true);
+		} else {
+			wordsMap.put("isSessionValid", false);
+		}
+		
 		// TODO process wordsMap in order to get only the list of words and its IDs 
+	
+		wordsMap.put("myWordsList", processWordList(listMyWords));
 		
 		wordsMap.put("wordsList", processWordList(wordsList));
 		result.setContent(wordsMap);
+		
+		
 				
 		//Checks if the input user name already exists in the database
 		if(wordsList != null && !wordsList.isEmpty()){			
@@ -243,7 +266,7 @@ public class TermnsController {
 	 * @param registerForm. Contains fields: myTermsInput, myCategoryIdDiv
 	 */
 	@RequestMapping(value= "/obtenerListaMisTerminos", method = RequestMethod.POST, headers = "Accept=application/json", consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody AjaxResponseBody obtenerListaMisTerminos(@RequestBody Map<String, String> json){
+	public @ResponseBody AjaxResponseBody obtenerListaMisTerminos(@RequestBody Map<String, String> json, HttpServletRequest request, HttpServletResponse response){
 		
 		AjaxResponseBody result = new AjaxResponseBody();
 		
@@ -251,29 +274,49 @@ public class TermnsController {
 		
 		List<Word> myWordsList = new ArrayList<Word>();
 		
-		//Validate input
-		if (json.get("myTermsInput") != null && !json.get("myTermsInput").isEmpty()){
+		//Get user session
+		HttpSession session = request.getSession();
+		
+		//Get the current logged in user emailAddress
+		String userEmail = session.getAttribute("userEmail").toString();
+		
+		//Obtain the User that belongs to the email
+		ProfileDetail profileDetailQuery = userDAO.findByEmailAddress(userEmail);
+		
+		if(profileDetailQuery != null){
+			//Validate input
+			if (json.get("myTermsInput") != null && !json.get("myTermsInput").isEmpty()){
 
-			//If there's a category then it's included in the search 
-			if(json.get("myCategoryIdDiv") != null && !json.get("myCategoryIdDiv").isEmpty()){
-				myWordsList = preferredWordDAO.findByPatternAndCategoryId(json.get("myTermsInput"), Integer.parseInt(json.get("myCategoryIdDiv"))); //wordDAO.list();
+				//If there's a category then it's included in the search 
+				if(json.get("myCategoryIdDiv") != null && !json.get("myCategoryIdDiv").isEmpty()){
+					myWordsList = preferredWordDAO.findByPatternAndCategoryId(json.get("myTermsInput"), Integer.parseInt(json.get("myCategoryIdDiv")), profileDetailQuery.getProfileDetailId()); //wordDAO.list();
+				} else {
+					//Search the word regardless the category
+					myWordsList = preferredWordDAO.findByPattern(json.get("myTermsInput"), profileDetailQuery.getProfileDetailId());
+				}
 			} else {
-				//Search the word regardless the category
-				myWordsList = preferredWordDAO.findByPattern(json.get("myTermsInput"));
-			}
-		} else {
-			// TODO
-			//If there wasn't any input, get them all
-			if(myWordsList.size() == 0){
-				//myWordsList = preferredWordDAO.list();
+				// TODO
+				//If there wasn't any input, get them all
+				if(myWordsList.size() == 0){
+					myWordsList = preferredWordDAO.listMyWords(profileDetailQuery.getProfileDetailId());
+				}
 			}
 		}
+
 		
 		Map <String, Object> wordsMap = new HashMap <String, Object> ();
 		
-		// TODO process wordsMap in order to get only the list of words and its IDs 
+		//Get user session and sets an attribute in the result datamap
+//		HttpSession session = request.getSession();
+//		if(session != null && session.getAttribute("userEmail") != null) {
+//			wordsMap.put("isSessionValid", true);
+//		} else {
+//			wordsMap.put("isSessionValid", false);
+//		}
 		
+		// TODO process wordsMap in order to get only the list of words and its IDs 
 		wordsMap.put("myWordsList", processWordList(myWordsList));
+				
 		result.setContent(wordsMap);
 				
 		//Checks if the input user name already exists in the database
@@ -426,7 +469,7 @@ public class TermnsController {
 						
 						//Gets the most recent list of preferred words
 						List<Word> listMyWords = getWordsFromList(preferredWordDAO.findByUser(profileDetailQuery.getProfileDetailId()));
-						resultMap.put("listMyWords", listMyWords);
+						resultMap.put("listMyWords", processWordList(listMyWords));
 					}
 
 					result.setContent(resultMap);
@@ -465,8 +508,23 @@ public class TermnsController {
 			//Validate input
 			if (json.get("videoId") != null && json.get("action") != null){
 				
+				//first cleans the video from any previous rate
+				youtubeHelper.likeAVideo(json.get("videoId"), "none");
+				
+				//Set the new rating
 				youtubeHelper.likeAVideo(json.get("videoId"), json.get("action"));
-		
+				
+				VideoRating videoRating= youtubeHelper.getVideoRating(json.get("videoId"));
+				
+				com.google.api.services.youtube.model.Video videoMetadata= youtubeHelper.getVideoMetadata(json.get("videoId"));
+				
+				//Map resultMap = new HashMap();
+				Map <String, Object> resultMap = new HashMap <String, Object> ();
+				
+				resultMap.put("videoRating", videoRating);
+				resultMap.put("videoMetadata", videoMetadata);
+				
+				result.setContent(resultMap);
 				result.setMessage("Sucess");
 				result.setCode("000");
 			}
@@ -677,7 +735,7 @@ private List<Word> getWordsFromList(List<PreferredWord> preferredWordList){
 			
 			Word actualWord= new Word();
 			
-			actualWord= wordDAO.findById(actualPreferredWord.getUserProfileId());
+			actualWord= wordDAO.findById(actualPreferredWord.getWordId());
 			
 			result.add(actualWord);
 		}

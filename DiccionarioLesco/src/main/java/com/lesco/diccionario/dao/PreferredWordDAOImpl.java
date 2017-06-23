@@ -87,6 +87,28 @@ public class PreferredWordDAOImpl implements PreferredWordDAO {
 	}
 	
 	/**
+	 * Get a list of all preferred words
+	 */
+	@Transactional
+	@SuppressWarnings("unchecked")
+	public List<Word> listMyWords(Integer userId) {
+ 
+        logger.debug("WordDAOImpl - listMyWords() - Start");
+		
+		Query query = sessionFactory.getCurrentSession().createSQLQuery("SELECT * FROM PreferredWord pw, Word w WHERE pw.Word_ID=w.Word_ID and pw.userProfile_ID= :userProfile_ID Order By w.wordName")
+				.addEntity(Word.class);
+        query.setParameter("userProfile_ID", userId);
+        List<Word> wordsList= query.list();
+                        
+        			
+        		
+        logger.debug("WordDAOImpl - listMyWords() - End");
+        
+        return wordsList;
+        
+	}
+	
+	/**
 	 * Find a particular preferred word by user
 	 */
 	@SuppressWarnings("unchecked")
@@ -164,13 +186,14 @@ public class PreferredWordDAOImpl implements PreferredWordDAO {
 	 */
 	@SuppressWarnings("unchecked")
 	@Transactional
-	public List<Word> findByPattern(String termsInput){
+	public List<Word> findByPattern(String termsInput, Integer userId){
 		
 		logger.debug("WordDAOImpl - findByPattern() - Start");
 		
-		Query query = sessionFactory.getCurrentSession().createSQLQuery("SELECT * FROM PreferredWord pw, Word w WHERE pw.Word_ID=w.Word_ID and w.wordName like :wordName Order By w.wordName")
+		Query query = sessionFactory.getCurrentSession().createSQLQuery("SELECT * FROM PreferredWord pw, Word w WHERE pw.Word_ID=w.Word_ID and w.wordName like :wordName and pw.userProfile_ID = :userProfile_ID Order By w.wordName")
 				.addEntity(Word.class);
         query.setParameter("wordName", termsInput + "%");
+        query.setParameter("userProfile_ID", userId);
         List<Word> wordsList= query.list();
                         
         			
@@ -185,14 +208,15 @@ public class PreferredWordDAOImpl implements PreferredWordDAO {
 	 */
 	@SuppressWarnings("unchecked")
 	@Transactional
-	public List<Word> findByPatternAndCategoryId(String termsInput, Integer categoryId){
+	public List<Word> findByPatternAndCategoryId(String termsInput, Integer categoryId, Integer userId){
 		
 		logger.debug("WordDAOImpl - findByPatternAndCategoryId() - Start");
         
-        Query query = sessionFactory.getCurrentSession().createSQLQuery("SELECT * FROM PreferredWord pw, Word w WHERE pw.Word_ID=w.Word_ID and w.wordName like :wordName and w.Category_ID =:categoryId Order By w.wordName")
+        Query query = sessionFactory.getCurrentSession().createSQLQuery("SELECT * FROM PreferredWord pw, Word w WHERE pw.Word_ID=w.Word_ID and w.wordName like :wordName and w.Category_ID =:categoryId and pw.userProfile_ID = :userProfile_ID Order By w.wordName")
 				.addEntity(Word.class);
         query.setParameter("wordName", termsInput + "%");
         query.setParameter("categoryId", categoryId);
+        query.setParameter("userProfile_ID", userId);
         List<Word> wordsList= query.list();
         
         
