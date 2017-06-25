@@ -45,16 +45,8 @@ function loadDetail(wordId)
 	    		
 	    		//console.log("Data: " + data.content.word);
 	    		
-	    		 $("#wordName").text(data.content.wordName);
-	    		 $('#videoIframe').attr('src', "https://www.youtube.com/embed/" + data.content.youtubeVideoID + "?controls=1");
-	    		 $("#definitionDiv").text(data.content.definition);
-	    		 $("#explanationDiv").text(data.content.explanation);
-	    		 $("#exampleDiv").text(data.content.example);
-	    		 $("#numberOfVisitsSpan").text(data.content.numberOfVisits);
-	    		 
-	    		 
-	    		
-	    		
+	    		loadTermDetails(data.content);
+
 	    		//$('#divUserName').removeClass('has-error').addClass('has-success');
 				//$('#divUserName .glyphicon').removeClass('glyphicon-remove').addClass('glyphicon-ok');
 	    	}else {
@@ -74,6 +66,28 @@ function loadDetail(wordId)
 		}
 	  });
 	  //return false;
+}
+
+
+function loadTermDetails(content){ 
+	
+	 $("#wordName").text(content.wordName);
+	 $('#termSourceURLIframe').attr('src', "https://www.youtube.com/embed/" + content.termYoutubeVideoID + "?controls=1");
+	 updateVideoRatingMetadata(content.termYoutubeVideoID, content.termVideoRating, content.termVideoMetadata);
+	 
+	 $("#definitionDiv").text(data.content.definition);
+	 $('#definitionSourceURLIframe').attr('src', "https://www.youtube.com/embed/" + content.definitionYoutubeVideoID + "?controls=1");
+	 updateVideoRatingMetadata(content.definitionYoutubeVideoID, content.definitionVideoRating, content.definitionVideoMetadata);
+	 
+	 $("#explanationDiv").text(data.content.explanation);
+	 $('#explanationSourceURLIframe').attr('src', "https://www.youtube.com/embed/" + content.explanationYoutubeVideoID + "?controls=1");
+	 updateVideoRatingMetadata(content.explanationYoutubeVideoID, content.explanationVideoRating, content.explanationVideoMetadata);
+	 
+	 $("#exampleDiv").text(data.content.example);
+	 $('#exampleSourceURLIframe').attr('src', "https://www.youtube.com/embed/" + content.exampleYoutubeVideoID + "?controls=1");
+	 updateVideoRatingMetadata(content.exampleYoutubeVideoID, content.exampleVideoRating, content.exampleVideoMetadata);
+	 
+	 //$("#numberOfVisitsSpan").text(data.content.numberOfVisits);	
 }
 
 function togglePreferred(wordId) {
@@ -398,21 +412,7 @@ function rateVideo(videoId, action){
 	    		
 	    		//updateMyTermsList(data.content.myWordsList);
 	    		
-	    		if(data.content.videoRating.rating == "like"){
-	    			$('#spanLike-'+videoId).removeClass('fa-thumbs-o-up').addClass('fa-thumbs-up');
-	    			$('#spanDislike-'+videoId).removeClass('fa-thumbs-down').addClass('fa-thumbs-o-down');
-	    		} else if (data.content.videoRating.rating == "dislike"){
-	    			$('#spanLike-'+videoId).removeClass('fa-thumbs-up').addClass('fa-thumbs-o-up');
-	    			$('#spanDislike-'+videoId).removeClass('fa-thumbs-o-down').addClass('fa-thumbs-down');
-	    		} else { //Default case where the rating is none
-	    			$('#spanLike-'+videoId).removeClass('fa-thumbs-up').addClass('fa-thumbs-o-up');
-	    			$('#spanDislike-'+videoId).removeClass('fa-thumbs-down').addClass('fa-thumbs-o-down');
-	    		}
-	    		
-	    		if(data.content.videoMetadata.statistics.likeCount != null && data.content.videoMetadata.statistics.dislikeCount != null){
-	    			$('#spanLike-'+videoId).text(" " + data.content.videoMetadata.statistics.likeCount);
-	    			$('#spanDislike-'+videoId).text(" " + data.content.videoMetadata.statistics.dislikeCount);
-	    		}	    	
+	    		updateVideoRatingMetadata(videoId, data.content.videoRating.rating, data.content.videoMetadata);
 	    		    		    		
 	    	}else if(data != null && data.code == "001"){
 	    		//$('#divUserName').removeClass('has-success').addClass('has-error');
@@ -442,4 +442,27 @@ function rateVideo(videoId, action){
 		}
 	  });
 	  //return false;
+}
+
+//Updates the likes, the icons related and the number of view of a video
+function updateVideoRatingMetadata(videoId, videoRating, videoMetadata){
+	if(videoRating == "like"){
+		$('#spanLike-'+videoId).removeClass('fa-thumbs-o-up').addClass('fa-thumbs-up');
+		$('#spanDislike-'+videoId).removeClass('fa-thumbs-down').addClass('fa-thumbs-o-down');
+	} else if (videoRating == "dislike"){
+		$('#spanLike-'+videoId).removeClass('fa-thumbs-up').addClass('fa-thumbs-o-up');
+		$('#spanDislike-'+videoId).removeClass('fa-thumbs-o-down').addClass('fa-thumbs-down');
+	} else { //Default case where the rating is none
+		$('#spanLike-'+videoId).removeClass('fa-thumbs-up').addClass('fa-thumbs-o-up');
+		$('#spanDislike-'+videoId).removeClass('fa-thumbs-down').addClass('fa-thumbs-o-down');
+	}
+	
+	if(videoMetadata.statistics.likeCount != null && videoMetadata.statistics.dislikeCount != null){
+		$('#spanLike-'+videoId).text(" " + videoMetadata.statistics.likeCount);
+		$('#spanDislike-'+videoId).text(" " + videoMetadata.statistics.dislikeCount);
+	}
+	
+	//TO-DO
+	//Updates the view count
+	$('#numberOfVisits-'+videoId).text(" " + videoMetadata.statistics.viewCount);
 }

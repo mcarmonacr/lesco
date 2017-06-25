@@ -153,10 +153,26 @@ public class TermnsController {
 					
 					wordMap.put("wordId", wordId.toString());
 					wordMap.put("wordName", word.getWordName());
+					wordMap.put("termYoutubeVideoID", word.getVideo().getTermYoutubeVideoID());
+					wordMap.put("termVideoRating", youtubeHelper.getVideoRating(word.getVideo().getTermYoutubeVideoID()));
+					wordMap.put("termVideoMetadata", youtubeHelper.getVideoMetadata(word.getVideo().getTermYoutubeVideoID()));					
+					
 					wordMap.put("definition", word.getDefinition());
+					wordMap.put("definitionYoutubeVideoID", word.getVideo().getDefinitionYoutubeVideoID());
+					wordMap.put("definitionVideoRating", youtubeHelper.getVideoRating(word.getVideo().getDefinitionYoutubeVideoID()));
+					wordMap.put("definitionVideoMetadata", youtubeHelper.getVideoMetadata(word.getVideo().getDefinitionYoutubeVideoID()));
+					
 					wordMap.put("explanation", word.getExplanation());
+					wordMap.put("explanationYoutubeVideoID", word.getVideo().getExplanationYoutubeVideoID());
+					wordMap.put("explanationVideoRating", youtubeHelper.getVideoRating(word.getVideo().getExplanationYoutubeVideoID()));
+					wordMap.put("explanationVideoMetadata", youtubeHelper.getVideoMetadata(word.getVideo().getExplanationYoutubeVideoID()));
+					
 					wordMap.put("example", word.getExample());
-					wordMap.put("numberOfVisits", word.getNumberOfVisits().toString());
+					wordMap.put("exampleYoutubeVideoID", word.getVideo().getExampleYoutubeVideoID());
+					wordMap.put("exampleVideoRating", youtubeHelper.getVideoRating(word.getVideo().getExampleYoutubeVideoID()));
+					wordMap.put("exampleVideoMetadata", youtubeHelper.getVideoMetadata(word.getVideo().getExampleYoutubeVideoID()));
+					
+					//wordMap.put("numberOfVisits", word.getNumberOfVisits().toString());
 					
 					//TODO update mapping
 					//wordMap.put("youtubeVideoID", word.getVideo().getYoutubeVideoID());

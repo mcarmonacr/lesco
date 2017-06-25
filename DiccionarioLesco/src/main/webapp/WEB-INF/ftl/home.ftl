@@ -44,7 +44,7 @@
 		    <div role="tabpanel" class="tab-pane active" id="home">
 		    	<div class="row embed-responsive embed-responsive-16by9">
 		    		<#assign termSourceURL = "https://www.youtube.com/embed/${randomWord.video.termYoutubeVideoID}?controls=1">
-					 <iframe class="embed-responsive-item" id="videoIframe"
+					 <iframe class="embed-responsive-item" id="termSourceURLIframe"
 					src=${termSourceURL}>
 					</iframe> 
 				</div>
@@ -96,7 +96,7 @@
 						<h2>
 							<#-- <#assign visits = "Visitas: ${randomWord.numberOfVisits}"> -->
 							<a class="btn-lg btn-primary pull-right">
-					      		<span id="numberOfTermVideoVisits" class="fa fa-eye"> ${videosMetadata.termVideo}</span>
+					      		<span id="numberOfVisits-${randomWord.video.termYoutubeVideoID}" class="fa fa-eye"> ${videosMetadata.termVideo}</span>
 					      	</a>
 							
 						</h2>
@@ -106,7 +106,7 @@
 		    <div role="tabpanel" class="tab-pane" id="profile">
 		    	<div class="row embed-responsive embed-responsive-16by9">
 		    	<#assign definitionSourceURL = "https://www.youtube.com/embed/${randomWord.video.definitionYoutubeVideoID}?controls=1">
-					 <iframe class="embed-responsive-item" id="videoIframe"
+					 <iframe class="embed-responsive-item" id="definitionSourceURLIframe"
 					src=${definitionSourceURL}>
 					</iframe> 
 				</div>
@@ -116,7 +116,7 @@
 					<div class="panel-heading">
 					  <h3 class="panel-title">Definición</h3>
 					  </div>
-					  <div class="panel-body">
+					  <div class="panel-body" id="definitionDiv">
 					    ${randomWord.definition}
 					  </div>
 					</div>
@@ -182,7 +182,7 @@
 						<h2>
 							<#-- <#assign visits = "Visitas: ${randomWord.numberOfVisits}"> -->
 							<a class="btn-lg btn-primary pull-right">
-					      		<span id="numberOfDefinitionVideoVisits" class="fa fa-eye"> ${videosMetadata.definitionVideo}</span>
+					      		<span id="numberOfVisits-${randomWord.video.definitionYoutubeVideoID}" class="fa fa-eye"> ${videosMetadata.definitionVideo}</span>
 					      	</a>
 						</h2>
 					</div>
@@ -191,7 +191,7 @@
 		    <div role="tabpanel" class="tab-pane" id="messages">
 			    <div class="row">
 			    <#assign explanationSourceURL = "https://www.youtube.com/embed/${randomWord.video.explanationYoutubeVideoID}?controls=1">
-					 <iframe class="video-container" id="videoIframe"
+					 <iframe class="video-container" id="explanationSourceURLIframe"
 					src=${explanationSourceURL}>
 					</iframe> 
 				</div>
@@ -258,7 +258,7 @@
 						<h2>
 							<#-- <#assign visits = "Visitas: ${randomWord.numberOfVisits}"> -->
 							<a class="btn-lg btn-primary pull-right">
-					      		<span id="numberOfExplanationVideoVisits" class="fa fa-eye"> ${videosMetadata.explanationVideo}</span>
+					      		<span id="numberOfVisits-${randomWord.video.explanationYoutubeVideoID}" class="fa fa-eye"> ${videosMetadata.explanationVideo}</span>
 					      	</a>
 						</h2>
 					</div>
@@ -267,7 +267,7 @@
 		    <div role="tabpanel" class="tab-pane" id="settings">
 		    	<div class="row">
 		    	<#assign exampleSourceURL = "https://www.youtube.com/embed/${randomWord.video.exampleYoutubeVideoID}?controls=1">
-					 <iframe class="video-container" id="videoIframe"
+					 <iframe class="video-container" id="exampleSourceURLIframe"
 					src=${exampleSourceURL}>
 					</iframe> 
 				</div>
@@ -334,7 +334,7 @@
 						<h2>
 							<#-- <#assign visits = "Visitas: ${randomWord.numberOfVisits}"> -->
 							<a class="btn-lg btn-primary pull-right">
-					      		<span id="numberOfExampleVideoVisits" class="fa fa-eye"> ${videosMetadata.exampleVideo}</span>
+					      		<span id="numberOfVisits-${randomWord.video.exampleYoutubeVideoID}" class="fa fa-eye"> ${videosMetadata.exampleVideo}</span>
 					      	</a>
 						</h2>
 					</div>

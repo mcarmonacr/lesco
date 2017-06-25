@@ -159,10 +159,10 @@
 										
 										<!-- Button (Double) -->
 										<div class="form-group">
-										  <label class="col-md-4 control-label" for="button1id">Acción</label>
-										  <div class="col-md-8">
+<!-- 										  <label class="col-md-4 control-label" for="button1id">Acción</label> -->
+										  <div class="col-md-6 col-md-offset-6">
 										    <button id="button1id" name="button1id" class="btn btn-success">Enviar</button>
-										    <button id="button2id" name="button2id" class="btn btn-danger">Descartar</button>
+<!-- 										    <button id="button2id" name="button2id" class="btn btn-danger">Descartar</button> -->
 										  </div>
 										</div>
 									
@@ -224,10 +224,10 @@
 																									
 										<!-- Button (Double) -->
 										<div class="form-group">
-										  <label class="col-md-4 control-label" for="button1id">Acción</label>
-										  <div class="col-md-8">
+<!-- 										  <label class="col-md-4 control-label" for="button1id">Acción</label> -->
+										  <div class="col-md-6 col-md-offset-6">
 										    <button id="button1id" name="button1id" class="btn btn-success">Enviar</button>
-										    <button id="button2id" name="button2id" class="btn btn-danger">Descartar</button>
+<!-- 										    <button id="button2id" name="button2id" class="btn btn-danger">Descartar</button> -->
 										  </div>
 										</div>
 									
