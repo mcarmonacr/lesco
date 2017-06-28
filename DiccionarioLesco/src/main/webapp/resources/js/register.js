@@ -169,6 +169,13 @@ function submitform() {
 	    dataType : 'json',
 	    success : function(data) {
 			console.log("SUCCESS: ", data);
+			
+			$('#registerUserModal').modal({
+				backdrop: 'static'
+			});
+			
+			$('#registerUserModal').modal('show');
+			
 			//display(data);
 		},
 		error : function(e) {

@@ -174,6 +174,13 @@ function submitRequestForm() {
 	    data : JSON.stringify(search),
 	    dataType : 'json',
 	    success : function(data) {
+	    	
+	    	$('#requestTermModal').modal({
+				backdrop: 'static'
+			});
+			
+			$('#requestTermModal').modal('show');
+	    	
 			console.log("SUCCESS: ", data);
 			//display(data);
 		},
@@ -210,6 +217,8 @@ function loadRequestDetail(requestId)
 	    beforeSend: function(jqXHR) {
 	        jqXHR.overrideMimeType('text/html;charset=iso-8859-1');
 	    },
+	    responseType:"application/json;charset:ISO-8859-1",
+//	    mimeType:"text/plain; charset=ISO-8859-1",
 	    url: "/DiccionarioLesco/solicitud/obtenerSolicitud",
 	    data : JSON.stringify(search),
 	    dataType : 'json',
@@ -217,11 +226,25 @@ function loadRequestDetail(requestId)
 	    	console.log("SUCCESS: ", data);
 	    	if(data != null && data.code == "000"){
 	    		
+//	    		var obj = JSON.parse(data);
+//	    		console.log("Data obj: " + obj);
+	    		
 	    		//console.log("Data: " + data.content.word);
 	    		
-	    		 $("#wordName").val(data.content.wordName);
+//	    		var fixedstring;
+//
+//	    		try{
+//	    		    // If the string is UTF-8, this will work and not throw an error.
+//	    		    fixedstring=decodeURIComponent(escape(data.content.wordName));
+//	    		}catch(e){
+//	    		    // If it isn't, an error will be thrown, and we can asume that we have an ISO string.
+//	    		    fixedstring=badstring;
+//	    		}
+	    		
+	    		//This line: fixedstring=decodeURIComponent(escape(badstring)); converts a bad encoded string into the correct one
+	    		 $("#wordName").val(decodeURIComponent(escape(data.content.wordName)));
 	    		 //$('#videoIframe').attr('src', "https://www.youtube.com/embed/" + data.content.youtubeVideoID + "?controls=1");
-	    		 $("#definition").val(data.content.description);
+	    		 $("#definition").val(decodeURIComponent(escape(data.content.description(()));
 	    		 
 	    		//$('#divUserName').removeClass('has-error').addClass('has-success');
 				//$('#divUserName .glyphicon').removeClass('glyphicon-remove').addClass('glyphicon-ok');

@@ -49,7 +49,7 @@
 					</iframe> 
 				</div>
 				<div class="row">
-					<div class="col-md-6">
+					<div class="col-md-12">
 						<h2>
 						<!-- 	    Checks if the user is logged in the site -->
 					    <#if ((isSessionValid??) && (isSessionValid == "true"))>
@@ -90,15 +90,11 @@
 						  
 						  	  <a>|</a>
 						  </#if>
-						</h2>
-					</div>
-					<div class="col-md-6">
-						<h2>
-							<#-- <#assign visits = "Visitas: ${randomWord.numberOfVisits}"> -->
+						  
+						  <#-- <#assign visits = "Visitas: ${randomWord.numberOfVisits}"> -->
 							<a class="btn-lg btn-primary pull-right">
 					      		<span id="numberOfVisits-${randomWord.video.termYoutubeVideoID}" class="fa fa-eye"> ${videosMetadata.termVideo}</span>
 					      	</a>
-							
 						</h2>
 					</div>
 				</div>

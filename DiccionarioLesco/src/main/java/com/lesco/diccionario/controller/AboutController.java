@@ -31,8 +31,6 @@ public class AboutController {
 		logger.debug("AboutController - ucr() - Start");
  
 		ModelAndView mv = new ModelAndView("/about/ucr");
-		//mv.addObject("message", message);
-		//mv.addObject("name", name);
 		
 		logger.debug("AboutController - ucr() - End");
 		
@@ -50,8 +48,6 @@ public class AboutController {
 		logger.debug("AboutController - ecci() - Start");
  
 		ModelAndView mv = new ModelAndView("/about/ecci");
-		//mv.addObject("message", message);
-		//mv.addObject("name", name);
 		
 		logger.debug("AboutController - ecci() - End");
 		
@@ -70,8 +66,6 @@ public class AboutController {
 		logger.debug("AboutController - lesco() - Start");
  
 		ModelAndView mv = new ModelAndView("/about/lesco");
-		//mv.addObject("message", message);
-		//mv.addObject("name", name);
 		
 		logger.debug("AboutController - lesco() - End");
 		
@@ -89,8 +83,6 @@ public class AboutController {
 		logger.debug("AboutController - recursos() - Start");
  
 		ModelAndView mv = new ModelAndView("/about/resources");
-		//mv.addObject("message", message);
-		//mv.addObject("name", name);
 		
 		logger.debug("AboutController - recursos() - End");
 		

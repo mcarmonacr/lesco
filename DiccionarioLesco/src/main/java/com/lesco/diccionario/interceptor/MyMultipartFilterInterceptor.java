@@ -32,7 +32,7 @@ public class MyMultipartFilterInterceptor extends MultipartFilter {
     	
     	logger.debug("MyMultipartFilter - doFilterInternal() - Start");
 
-       request.setCharacterEncoding("UTF-8");
+       request.setCharacterEncoding("ISO-8859-1");
        request.getParameterNames();
 
        super.doFilterInternal(request, response, filterChain);
