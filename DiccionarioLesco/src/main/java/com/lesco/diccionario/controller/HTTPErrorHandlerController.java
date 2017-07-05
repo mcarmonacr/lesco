@@ -27,18 +27,18 @@ public class HTTPErrorHandlerController {
 	@RequestMapping(value="/400")
 	public String error400(){
 		logger.error("HTTPErrorHandlerController - error400()");
-		return filesRootFolderPath+"/400";
+		return filesRootFolderPath + "/400";
 	}
 	
 	@RequestMapping(value="/404")
 	public String error404(){
 		logger.error("HTTPErrorHandlerController - error404()");
-		return filesRootFolderPath+"/404";
+		return filesRootFolderPath + "/404";
 	}
 	
 	@RequestMapping(value="/500")
 	public String error500(){
 		logger.error("HTTPErrorHandlerController - error500()");
-		return filesRootFolderPath+"/500";
+		return filesRootFolderPath + "/500";
 	}
 }

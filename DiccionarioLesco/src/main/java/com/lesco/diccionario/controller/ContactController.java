@@ -50,6 +50,7 @@ public class ContactController {
 		//Generic Ajax response body
 		AjaxResponseBody ajaxResponse = new AjaxResponseBody();
 		
+		//Send the email message
 		String sendEmailResponse = sendMailTLS.sendMail(contactForm);
 		
 		//String sendEmailResponse = "success";

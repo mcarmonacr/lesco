@@ -31,8 +31,6 @@ public class FooterController {
 		logger.debug("FooterController - terminosDeServicio() - Start");
  
 		ModelAndView mv = new ModelAndView("/legal/termsAndConditions");
-		//mv.addObject("message", message);
-		//mv.addObject("name", name);
 		
 		logger.debug("FooterController - terminosDeServicio() - End");
 		
@@ -51,8 +49,6 @@ public class FooterController {
 		logger.debug("FooterController - privacidad() - Start");
  
 		ModelAndView mv = new ModelAndView("/legal/privacy");
-		//mv.addObject("message", message);
-		//mv.addObject("name", name);
 		
 		logger.debug("FooterController - privacidad() - End");
 		

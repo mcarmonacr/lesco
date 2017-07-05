@@ -44,10 +44,10 @@ public class LoginController {
 	
 
 	/**
-	 * Service that registers the user into the site
+	 * Service that logins the user into the site
 	 * Type: Json POST method
 	 * 
-	 * @param registerForm. Contains fields: userName, emailAddress, password, passwordConfirmation, private String birthdate ,termsAndConditions.
+	 * @param registerForm. Contains fields: emailAddress, password
 	 */
 	@RequestMapping(value= "/iniciarSesion", method = RequestMethod.POST, headers = "Accept=application/json", consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody AjaxResponseBody iniciarSesion(@RequestBody LoginForm loginForm, HttpServletRequest request, 
@@ -59,6 +59,7 @@ public class LoginController {
 		
 		//Verifies the login. Response toggle based on the save return
 		if(verifyUser(loginForm)){
+			
 			//Validation the session, creates a new one in case there isn't one already created
 			verifySession(loginForm, request, response);
 
@@ -132,7 +133,7 @@ public class LoginController {
 	}
 	
 	/**
-	 * Verfies the user's login information by matching the form with the database values
+	 * Verifies the user's login information by matching the form with the database values
 	 * 
 	 * @param loginForm
 	 * @return Boolean
@@ -142,28 +143,32 @@ public class LoginController {
 		logger.debug("LoginController - verifyUser() - Start");
 		
 		//Value to be returned
-		Boolean isUserdVerfied;
+		Boolean isUserdVerfied = false;
 		
 		//Get the user's profile detail
 		ProfileDetail profileDetailQuery = userDAO.findByEmailAddress(loginForm.getEmailAddress());
 		
-		//Get user's profile detail hibernate's reference
-		ProfileDetail ProfileDetailReference = userDAO.findById(profileDetailQuery.getProfileDetailId());
-		
-		//Get user's profile using the user's profile detail object
-		UserProfile userProfile = ProfileDetailReference.getUserProfile();
-		
-		//Get original user's sal value. This value is needed to encrypt the user's input and see if it matches the value in the Database.
-		byte[] salt= userProfile.getSalt();
-		
-		//Get hashed passwrod from the user's input
-		String hashedPassword = shaEncryption.getHashedPassword(loginForm.getPassword(), salt);
-		
-		//If passwords match, return success
-		if (hashedPassword.equals(userProfile.getUserPassword())){
-			isUserdVerfied= true;
-		} else {
-			isUserdVerfied= false;
+		if(profileDetailQuery != null){
+			//Get user's profile detail hibernate's reference
+			ProfileDetail ProfileDetailReference = userDAO.findById(profileDetailQuery.getProfileDetailId());
+			
+			if(ProfileDetailReference != null){
+				//Get user's profile using the user's profile detail object
+				UserProfile userProfile = ProfileDetailReference.getUserProfile();
+				
+				//Get original user's sal value. This value is needed to encrypt the user's input and see if it matches the value in the Database.
+				byte[] salt= userProfile.getSalt();
+				
+				//Get hashed passwrod from the user's input
+				String hashedPassword = shaEncryption.getHashedPassword(loginForm.getPassword(), salt);
+				
+				//If passwords match, return success
+				if (hashedPassword.equals(userProfile.getUserPassword())){
+					isUserdVerfied= true;
+				} else {
+					isUserdVerfied= false;
+				}
+			}
 		}
 
 		logger.debug("LoginController - verifyUser() - End");

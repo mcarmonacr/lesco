@@ -44,6 +44,7 @@ public class LescoController {
 	//Log4J class logger instance
 	private static final Logger logger = Logger.getLogger(LescoController.class);
 	
+	//Autowired beans
 	@Autowired
 	private CategoryDAO categoryDAO;
 	
@@ -73,8 +74,6 @@ public class LescoController {
 		logger.debug("LescoController - diccionarioLesco() - Start");
  
 		ModelAndView mv = new ModelAndView("home");
-		//mv.addObject("message", message);
-		//mv.addObject("name", name);
 		
 		//Get all the categories
 		List<Category> listCategories = categoryDAO.list();
@@ -96,12 +95,7 @@ public class LescoController {
 		
 		//Get all the categories
 		List<Word> listWords = wordDAO.list();
-		
-		//mv.addObject("youtubeVideo", youtubeHelper.getVideoMetadata());
-		
-		//Get random video
-		//TODO Include all the missing details of the video
-		
+				
 		Word randomWord = getRandomWord(listWords);
 		
 		mv.addObject("randomWord", randomWord);
@@ -126,8 +120,6 @@ public class LescoController {
 		logger.debug("LescoController - registrarse() - Start");
  
 		ModelAndView mv = new ModelAndView("register");
-		//mv.addObject("message", message);
-		//mv.addObject("name", name);
 		
 		logger.debug("LescoController - registrarse() - End");
 		
@@ -145,8 +137,6 @@ public class LescoController {
 		logger.debug("LescoController - acerca() - Start");
  
 		ModelAndView mv = new ModelAndView("about");
-		//mv.addObject("message", message);
-		//mv.addObject("name", name);
 		
 		logger.debug("LescoController - acerca() - End");
 		
@@ -164,8 +154,6 @@ public class LescoController {
 		logger.debug("LescoController - agregar() - Start");
  
 		ModelAndView mv = new ModelAndView("addTerm");
-		//mv.addObject("message", message);
-		//mv.addObject("name", name);
 		
 		List<Request> requestList = requestDAO.list();
 		mv.addObject("requestList", requestList);
@@ -190,8 +178,6 @@ public class LescoController {
 		logger.debug("LescoController - contacto() - Start");
  
 		ModelAndView mv = new ModelAndView("contact");
-		//mv.addObject("message", message);
-		//mv.addObject("name", name);
 		
 		logger.debug("LescoController - contacto() - End");
 		
