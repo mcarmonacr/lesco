@@ -1,3 +1,4 @@
+<!-- addTermModal -->
 <div class="row">
    	<div id="addTermModal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="addTermModalLabel">
 	  <div class="modal-dialog modal-md" role="document">
@@ -17,4 +18,4 @@
 	    </div>
 	  </div>
 	</div>
-</div> <!-- row div -->
+</div>

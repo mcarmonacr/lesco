@@ -1,3 +1,4 @@
+<!-- registerUserModal -->
 <div class="row">
    	<div id="registerUserModal" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="registerUserodalLabel">
 	  <div class="modal-dialog modal-md" role="document">
