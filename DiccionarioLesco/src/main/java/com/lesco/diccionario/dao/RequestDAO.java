@@ -3,7 +3,6 @@ package com.lesco.diccionario.dao;
 import java.util.List;
 
 import com.lesco.diccionario.model.Request;
-import com.lesco.diccionario.model.Word;
 
 /**
  * Request Table Data Access Object Interface
