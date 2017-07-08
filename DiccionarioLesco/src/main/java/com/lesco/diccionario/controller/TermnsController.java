@@ -188,7 +188,7 @@ public class TermnsController {
 				result.setCode("001");
 			}
 		}catch(Exception e){
-			logger.debug("TermnsController - obtenerTermino() - Error", e);
+			logger.error("TermnsController - obtenerTermino() - Error", e);
 		}
 
 		logger.debug("TermnsController - obtenerTermino() - End");
@@ -266,7 +266,7 @@ public class TermnsController {
 				result.setCode("001");
 			}
 		}catch(Exception e){
-			logger.debug("TermnsController - obtenerListaTerminos() - Error", e);
+			logger.error("TermnsController - obtenerListaTerminos() - Error", e);
 		}
 
 		logger.debug("TermnsController - obtenerListaTerminos() - End");
@@ -336,7 +336,7 @@ public class TermnsController {
 				result.setCode("001");
 			}
 		}catch(Exception e){
-			logger.debug("TermnsController - obtenerListaMisTerminos() - Error", e);
+			logger.error("TermnsController - obtenerListaMisTerminos() - Error", e);
 		}
 
 		logger.debug("TermnsController - obtenerListaMisTerminos() - End");
@@ -376,7 +376,7 @@ public class TermnsController {
 				result.setCode("001");
 			}
 		}catch(Exception e){
-			logger.debug("TermnsController - verificarUsuario() - Error", e);
+			logger.error("TermnsController - verificarUsuario() - Error", e);
 		}
 		
 		logger.debug("TermnsController - verificarUsuario() - End");
@@ -415,7 +415,7 @@ public class TermnsController {
 				result.setCode("001");
 			}
 		}catch(Exception e){
-			logger.debug("TermnsController - verificarCorreo() - Error", e);
+			logger.error("TermnsController - verificarCorreo() - Error", e);
 		}
 
 		logger.debug("TermnsController - verificarCorreo() - End");
@@ -500,7 +500,7 @@ public class TermnsController {
 				result.setCode("001");
 			}
 		}catch(Exception e){
-			logger.debug("TermnsController - agregarPreferido() - Error", e);
+			logger.error("TermnsController - agregarPreferido() - Error", e);
 		}
 		
 		logger.debug("TermnsController - agregarPreferido() - End");
@@ -548,7 +548,7 @@ public class TermnsController {
 				result.setCode("000");
 			}
 		} catch (Exception e){
-			logger.debug("TermnsController - evaluarVideo() - Error", e);
+			logger.error("TermnsController - evaluarVideo() - Error", e);
 			
 			result.setMessage("There was an error");
 			result.setCode("001");
@@ -691,7 +691,7 @@ public class TermnsController {
 				result= LescoConstants.FAILURE_MESSAGE;
 			}
 		} catch(Exception e) {
-			logger.debug("TermnsController - salvarTermino() - Error: ", e);
+			logger.error("TermnsController - salvarTermino() - Error: ", e);
 		}
 
 		logger.debug("TermnsController - salvarTermino() - End");
@@ -722,7 +722,7 @@ public class TermnsController {
 				result.add(actualWordMap);
 			}
 		}catch(Exception e){
-			logger.debug("TermnsController - processWordList() - Error", e);
+			logger.error("TermnsController - processWordList() - Error", e);
 		}
 				
 		logger.debug("TermnsController - processWordList() - End");
@@ -747,7 +747,7 @@ public class TermnsController {
 				result= true;
 			}
 		}catch(Exception e){
-			logger.debug("TermnsController - checkTermExistence() - Error", e);
+			logger.error("TermnsController - checkTermExistence() - Error", e);
 		}
 
 		logger.debug("TermnsController - checkTermExistence() - End");
@@ -772,7 +772,7 @@ public class TermnsController {
 				result= requestDAO.deleteByWordName(addTermForm.getWordName());
 			}
 		}catch(Exception e){
-			logger.debug("TermnsController - checkRequestExistence() - Error", e);
+			logger.error("TermnsController - checkRequestExistence() - Error", e);
 		}
 
 		logger.debug("TermnsController - checkRequestExistence() - End");
@@ -802,7 +802,7 @@ public class TermnsController {
 				result.add(actualWord);
 			}
 		}catch(Exception e){
-			logger.debug("TermnsController - getWordsFromList() - Error", e);
+			logger.error("TermnsController - getWordsFromList() - Error", e);
 		}
 	
 		logger.debug("TermnsController - getWordsFromList() - End");

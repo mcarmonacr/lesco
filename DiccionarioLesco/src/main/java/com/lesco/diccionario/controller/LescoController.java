@@ -289,7 +289,7 @@ public class LescoController {
 		    randomNumber =  (int)(fraction + aStart);    
 		    
 		} catch (Exception e){
-			logger.debug("LescoController - getRandomInteger() - Error", e);
+			logger.error("LescoController - getRandomInteger() - Error", e);
 		}
 
 	    logger.debug("LescoController - getRandomInteger() - End");
@@ -425,7 +425,7 @@ public class LescoController {
 				result.add(actualWord);
 			}
 		} catch (Exception e){
-			logger.debug("LescoController - getWordsFromList() - Error", e);
+			logger.error("LescoController - getWordsFromList() - Error", e);
 		}
 		
 		logger.debug("LescoController - getWordsFromList() - End");

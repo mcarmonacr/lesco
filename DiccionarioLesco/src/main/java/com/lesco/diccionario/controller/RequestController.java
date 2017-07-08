@@ -77,7 +77,7 @@ public class RequestController {
 				response.setMessage("Failure");
 			}
 		}catch(Exception e){
-			logger.debug("RequestController - agregarSolicitud() - Error", e);
+			logger.error("RequestController - agregarSolicitud() - Error", e);
 		}
 
 		logger.debug("RequestController - agregarSolicitud() - End");
@@ -133,7 +133,7 @@ public class RequestController {
 				result.setCode("001");
 			}
 		}catch(Exception e){
-			logger.debug("RequestController - obtenerSolicitud() - Error", e);
+			logger.error("RequestController - obtenerSolicitud() - Error", e);
 		}
 
 		logger.debug("RequestController - obtenerSolicitud() - End");
@@ -185,7 +185,7 @@ public class RequestController {
 				result.setCode("001");
 			}
 		}catch(Exception e){
-			logger.debug("RequestController - obtenerListaSolicitudes() - Error", e);
+			logger.error("RequestController - obtenerListaSolicitudes() - Error", e);
 		}
 		
 		logger.debug("RequestController - obtenerListaSolicitudes() - End");
@@ -244,7 +244,7 @@ public class RequestController {
 				isUserSaved= "Failure";
 			}
 		}catch(Exception e){
-			logger.debug("RequestController - salvarSolicitud() - Error", e);
+			logger.error("RequestController - salvarSolicitud() - Error", e);
 		}
 
 		logger.debug("RequestController - salvarSolicitud() - Start");
@@ -276,7 +276,7 @@ public class RequestController {
 				result.add(actualRequestMap);
 			}
 		}catch(Exception e){
-			logger.debug("RequestController - processRequestList() - Error", e);
+			logger.error("RequestController - processRequestList() - Error", e);
 		}
 		
 		logger.debug("RequestController - processRequestList() - End");

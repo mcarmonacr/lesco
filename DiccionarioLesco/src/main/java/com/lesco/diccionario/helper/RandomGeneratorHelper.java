@@ -42,7 +42,7 @@ public class RandomGeneratorHelper {
 		for( int i = 0; i < stringLenght; i++ ) 
 			sb.append( LescoConstants.AVAILABLE_SYMBOLS.charAt( rnd.nextInt(LescoConstants.AVAILABLE_SYMBOLS.length()) ) );
 	}catch(Exception e){
-		logger.debug("RandomGenerator - randomString() - Error", e);
+		logger.error("RandomGenerator - randomString() - Error", e);
 	}
 
 	logger.debug("RandomGenerator - randomString() - End");

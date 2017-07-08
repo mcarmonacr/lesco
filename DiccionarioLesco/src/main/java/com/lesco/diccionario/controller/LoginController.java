@@ -72,7 +72,7 @@ public class LoginController {
 				ajaxResponse.setMessage("Error");
 			}
 		} catch (Exception e){
-			logger.debug("LoginController - iniciarSesion() - Error", e);
+			logger.error("LoginController - iniciarSesion() - Error", e);
 		}
 	
 		logger.debug("LoginController - iniciarSesion() - End");
@@ -105,7 +105,7 @@ public class LoginController {
 				ajaxResponse.setMessage("Error");
 			}
 		} catch (Exception e){
-			logger.debug("LoginController - finalizarSesion() - Error", e);
+			logger.error("LoginController - finalizarSesion() - Error", e);
 		}
 		
 		logger.debug("LoginController - finalizarSesion() - End");
@@ -137,7 +137,7 @@ public class LoginController {
 			cookie.setMaxAge(0); //0 minutes
 			response.addCookie(cookie);
 		}catch (Exception e){
-			logger.debug("LoginController - endUserSession() - Error", e);
+			logger.error("LoginController - endUserSession() - Error", e);
 		}
 
 		logger.debug("LoginController - endUserSession() - End");
@@ -185,7 +185,7 @@ public class LoginController {
 				}
 			}
 		}catch(Exception e){
-			logger.debug("LoginController - verifyUser() - Error", e);
+			logger.error("LoginController - verifyUser() - Error", e);
 		}
 
 		logger.debug("LoginController - verifyUser() - End");
@@ -217,7 +217,7 @@ public class LoginController {
 			cookie.setMaxAge(15*60); //15 minutes
 			response.addCookie(cookie);	
 		}catch(Exception e){
-			logger.debug("LoginController - verifySession() - Error", e);
+			logger.error("LoginController - verifySession() - Error", e);
 		}
 
 		logger.debug("LoginController - verifySession() - End");

@@ -75,7 +75,7 @@ public class RegisterController {
 				response.setMessage("Failure");
 			}
 		}catch(Exception e){
-			logger.debug("RegisterController - nuevoUsuario() - Error", e);
+			logger.error("RegisterController - nuevoUsuario() - Error", e);
 		}
 
 		logger.debug("RegisterController - nuevoUsuario() - End");
@@ -114,7 +114,7 @@ public class RegisterController {
 				result.setCode("001");
 			}
 		}catch(Exception e){
-			logger.debug("RegisterController - verificarUsuario() - Error", e);
+			logger.error("RegisterController - verificarUsuario() - Error", e);
 		}
 
 		logger.debug("RegisterController - verificarUsuario() - End");
@@ -154,7 +154,7 @@ public class RegisterController {
 				result.setCode("001");
 			}
 		}catch(Exception e){
-			logger.debug("RegisterController - verificarCorreo() - Error", e);
+			logger.error("RegisterController - verificarCorreo() - Error", e);
 		}
 				
 		logger.debug("RegisterController - verificarCorreo() - End");
@@ -220,7 +220,7 @@ public class RegisterController {
 				 }
 			}
 		}catch(Exception e){
-			logger.debug("RegisterController - recuperarPassword() - Error", e);
+			logger.error("RegisterController - recuperarPassword() - Error", e);
 		}
 		
 		logger.debug("RegisterController - recuperarPassword() - End");
@@ -286,7 +286,7 @@ public class RegisterController {
 				isUserSaved= "Failure";
 			}
 		}catch(Exception e){
-			logger.debug("RegisterController - salvarUsuario() - Error", e);
+			logger.error("RegisterController - salvarUsuario() - Error", e);
 		}
 
 		logger.debug("RegisterController - salvarUsuario() - Start");

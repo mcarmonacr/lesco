@@ -13,8 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
-import org.owasp.esapi.Encoder;
-import org.owasp.esapi.reference.DefaultEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -49,15 +47,7 @@ public class SessionValidatorInterceptor extends HandlerInterceptorAdapter {
 		request.setAttribute("startTime", startTime);
 		
 		logger.info("SessionValidatorInterceptor:preHandle- JsessionID" + request.getSession().getId());
-		
-						
-		//if returned false, we need to make sure 'response' is sent
-	
-		//Test Cross Site Scripting 
-//		final String requestURI = request.getRequestURI();
-//		final Encoder esapiEnc = DefaultEncoder.getInstance();
-//		final String encPVal = esapiEnc.encodeForHTML(requestURI);
-		
+				
 		validateIncomingURL(request, response);
 		
 		//TODO Work this logic
@@ -120,10 +110,7 @@ public class SessionValidatorInterceptor extends HandlerInterceptorAdapter {
 					}
 				}
 		}
-		
 		logger.debug("SessionValidatorInterceptor - postHandle() - End");
-		
-		//we can add attributes in the modelAndView and use that in the view page
 	}
 	
 	@Override
@@ -160,8 +147,7 @@ public class SessionValidatorInterceptor extends HandlerInterceptorAdapter {
 				}
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("SessionValidatorInterceptor - validaIncomingURL() - Error",e);
 		}
 		
 		logger.debug("SessionValidatorInterceptor - validaIncomingURL() - End");
