@@ -6,7 +6,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 
@@ -36,10 +35,6 @@ import com.google.api.client.http.HttpRequestInitializer;
 import com.google.api.client.http.InputStreamContent;
 //import com.google.api.services.samples.youtube.cmdline.Auth;
 import com.google.api.services.youtube.YouTube;
-import com.google.api.services.youtube.model.ResourceId;
-import com.google.api.services.youtube.model.SearchListResponse;
-import com.google.api.services.youtube.model.SearchResult;
-import com.google.api.services.youtube.model.Thumbnail;
 import com.google.api.services.youtube.model.Video;
 import com.google.api.services.youtube.model.VideoGetRatingResponse;
 import com.google.api.services.youtube.model.VideoListResponse;
@@ -80,6 +75,9 @@ public class YoutubeHelper {
      * being uploaded.
      */
     private static final String VIDEO_FILE_FORMAT = "video/*";
+    
+    //Defines the upload API endpoint 
+    private static final String UPLOAD_SCOPE= "https://www.googleapis.com/auth/youtube.upload";
 
     //private static final String SAMPLE_VIDEO_FILENAME = "sample-video.mp4";
 
@@ -92,12 +90,12 @@ public class YoutubeHelper {
      */
     public String uploadVideo(String title, String description, MultipartFile videoFile) {
     	
-    	logger.debug("UploadVideo - upload() - Start");
+    	logger.debug("YoutubeHelper - upload() - Start");
 
         // This OAuth 2.0 access scope allows an application to upload files
         // to the authenticated user's YouTube channel, but doesn't allow
         // other types of access.
-        List<String> scopes = Lists.newArrayList("https://www.googleapis.com/auth/youtube.upload");
+        List<String> scopes = Lists.newArrayList(UPLOAD_SCOPE);
         String response;
 
         try {
@@ -205,6 +203,7 @@ public class YoutubeHelper {
                     }
                 }
             };
+            
             uploader.setProgressListener(progressListener);
 
             // Call the API and upload the video.
@@ -213,32 +212,32 @@ public class YoutubeHelper {
             response = returnedVideo.getId();
 
             // Print data about the newly inserted video from the API response.
-            System.out.println("\n================== Returned Video ==================\n");
-            System.out.println("  - Id: " + returnedVideo.getId());
-            System.out.println("  - Title: " + returnedVideo.getSnippet().getTitle());
-            System.out.println("  - Tags: " + returnedVideo.getSnippet().getTags());
-            System.out.println("  - Privacy Status: " + returnedVideo.getStatus().getPrivacyStatus());
-            System.out.println("  - Video Count: " + returnedVideo.getStatistics().getViewCount());
+//            System.out.println("\n================== Returned Video ==================\n");
+//            System.out.println("  - Id: " + returnedVideo.getId());
+//            System.out.println("  - Title: " + returnedVideo.getSnippet().getTitle());
+//            System.out.println("  - Tags: " + returnedVideo.getSnippet().getTags());
+//            System.out.println("  - Privacy Status: " + returnedVideo.getStatus().getPrivacyStatus());
+//            System.out.println("  - Video Count: " + returnedVideo.getStatistics().getViewCount());
 
         } catch (GoogleJsonResponseException e) {
-        	logger.error("UploadVideo - upload() - Error: ", e);
+        	logger.error("YoutubeHelper - upload() - Error: ", e);
             System.err.println("GoogleJsonResponseException code: " + e.getDetails().getCode() + " : "
                     + e.getDetails().getMessage());
             e.printStackTrace();
             return "failure";
         } catch (IOException e) {
-        	logger.error("UploadVideo - upload() - Error: ", e);
+        	logger.error("YoutubeHelper - upload() - Error: ", e);
             System.err.println("IOException: " + e.getMessage());
             e.printStackTrace();
             return "failure";
         } catch (Throwable t) {
-        	logger.error("UploadVideo - upload() - Error: ", t);
+        	logger.error("YoutubeHelper - upload() - Error: ", t);
             System.err.println("Throwable: " + t.getMessage());
             t.printStackTrace();
             return "failure";
         }
         
-        logger.debug("UploadVideo - upload() - End");
+        logger.debug("YoutubeHelper - upload() - End");
         
         return response;
     }
@@ -252,18 +251,13 @@ public class YoutubeHelper {
     public Video getVideoMetadata(String videoID) {
     	// Read the developer key from the properties file.
 
+    	logger.debug("YoutubeHelper - getVideoMetadata() - Start");
+    	
         Properties properties = new Properties();
         
         Video youtubeVideo = null;
-
-        try {
-        	InputStream in = YoutubeHelper.class.getResourceAsStream("/" + PROPERTIES_FILENAME);
-            properties.load(in);
-        } catch (IOException e) {
-            System.err.println("There was an error reading " + PROPERTIES_FILENAME + ": " + e.getCause()
-                    + " : " + e.getMessage());
-            System.exit(1);
-        }
+        
+        loadProperties(properties);
         
         try{
         	 // This object is used to make YouTube Data API requests. The last
@@ -275,7 +269,7 @@ public class YoutubeHelper {
                 }
             }).setApplicationName("diccionario-lesco-youtube-channel").build();
             
-         // Set your developer key from the {{ Google Cloud Console }} for
+            // Set your developer key from the {{ Google Cloud Console }} for
             // non-authenticated requests. See:
             // {{ https://cloud.google.com/console }}
             String apiKey = properties.getProperty("youtube.apikey");
@@ -306,6 +300,9 @@ public class YoutubeHelper {
         } catch (Throwable t) {
             t.printStackTrace();
         }
+        
+        logger.debug("YoutubeHelper - getVideoMetadata() - End");
+        
        return youtubeVideo; 
     }
     
@@ -317,19 +314,14 @@ public class YoutubeHelper {
      */
     public VideoRating getVideoRating(String videoID) {
     	// Read the developer key from the properties file.
+    	
+    	logger.debug("YoutubeHelper - getVideoRating() - Start");
 
         Properties properties = new Properties();
         
         VideoRating youtubeVideoRating = null;
-
-        try {
-        	InputStream in = YoutubeHelper.class.getResourceAsStream("/" + PROPERTIES_FILENAME);
-            properties.load(in);
-        } catch (IOException e) {
-            System.err.println("There was an error reading " + PROPERTIES_FILENAME + ": " + e.getCause()
-                    + " : " + e.getMessage());
-            System.exit(1);
-        }
+        
+        loadProperties(properties);
         
         try{            
             // Set your developer key from the {{ Google Cloud Console }} for
@@ -367,28 +359,29 @@ public class YoutubeHelper {
         } catch (Throwable t) {
             t.printStackTrace();
         }
+        
+        logger.debug("YoutubeHelper - getVideoRating() - End");
+        
        return youtubeVideoRating; 
     }
     
+    /**
+     * Give a ranking to a particular video, could be like, dislike, none
+     * 
+     * @param videoID
+     * @param action: like, dislike, none
+     * @return
+     */
     public Boolean likeAVideo(String videoID, String action) {
     	// Read the developer key from the properties file.
 
+    	logger.debug("YoutubeHelper - likeAVideo() - Start");
+    	
         Properties properties = new Properties();
         
         Boolean response = true;
 
-        try {
-        	InputStream in = YoutubeHelper.class.getResourceAsStream("/" + PROPERTIES_FILENAME);
-            properties.load(in);
-        } catch (IOException e) {
-            System.err.println("There was an error reading " + PROPERTIES_FILENAME + ": " + e.getCause()
-                    + " : " + e.getMessage());
-            
-            //Every time there is an error a false status should be returned
-            response = false;
-            
-            System.exit(1);
-        }
+        loadProperties(properties);
         
         try{                        
             List<String> scopes = Lists.newArrayList("https://www.googleapis.com/auth/youtube");
@@ -418,6 +411,9 @@ public class YoutubeHelper {
           //Every time there is an error a false status should be returned
             response = false;
         }
+
+        logger.debug("YoutubeHelper - likeAVideo() - End");
+        
        return response;
     }
     
@@ -441,42 +437,24 @@ public class YoutubeHelper {
         
         return convFile;
     }
-    
-    
-    /*
-     * Prints out all results in the Iterator. For each result, print the
-     * title, video ID, and thumbnail.
-     *
-     * @param iteratorSearchResults Iterator of SearchResults to print
-     *
-     * @param query Search query (String)
+        
+    /**
+     * Load the properties from the file into the given variable
+     * @param properties
      */
-    private static void prettyPrint(Iterator<SearchResult> iteratorSearchResults, String query) {
-
-        System.out.println("\n=============================================================");
-        System.out.println(
-                "   First " + NUMBER_OF_VIDEOS_RETURNED + " videos for search on \"" + query + "\".");
-        System.out.println("=============================================================\n");
-
-        if (!iteratorSearchResults.hasNext()) {
-            System.out.println(" There aren't any results for your query.");
+    private void loadProperties(Properties properties){
+    	
+    	logger.debug("UploadVideo - loadProperties() - Start");
+    	
+    	try {
+        	InputStream in = YoutubeHelper.class.getResourceAsStream("/" + PROPERTIES_FILENAME);
+            properties.load(in);
+        } catch (IOException e) {
+            System.err.println("There was an error reading " + PROPERTIES_FILENAME + ": " + e.getCause()
+                    + " : " + e.getMessage());
+            System.exit(1);
         }
-
-        while (iteratorSearchResults.hasNext()) {
-
-            SearchResult singleVideo = iteratorSearchResults.next();
-            ResourceId rId = singleVideo.getId();
-
-            // Confirm that the result represents a video. Otherwise, the
-            // item will not contain a video ID.
-            if (rId.getKind().equals("youtube#video")) {
-                Thumbnail thumbnail = singleVideo.getSnippet().getThumbnails().getDefault();
-
-                System.out.println(" Video Id" + rId.getVideoId());
-                System.out.println(" Title: " + singleVideo.getSnippet().getTitle());
-                System.out.println(" Thumbnail: " + thumbnail.getUrl());
-                System.out.println("\n-------------------------------------------------------------\n");
-            }
-        }
+    	
+    	logger.debug("UploadVideo - loadProperties() - End");
     }
 }

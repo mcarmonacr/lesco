@@ -12,6 +12,7 @@ import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.store.DataStore;
 import com.google.api.client.util.store.FileDataStoreFactory;
+import com.lesco.diccionario.utils.LescoConstants;
 
 import java.io.File;
 import java.io.IOException;
@@ -43,6 +44,11 @@ public class AuthHelper {
      * This is the directory that will be used under the user's home directory where OAuth tokens will be stored.
      */
     private static final String CREDENTIALS_DIRECTORY = ".oauth-credentials";
+    
+    /**
+     * File name with the account private credentials
+     */
+    private static final String CLIENT_SECRETS_JSON = "/client_secrets.json";
 
     /**
      * Authorizes the installed application to access user's protected data.
@@ -55,7 +61,7 @@ public class AuthHelper {
     	logger.debug("Auth - authorize() - Start");
 
         // Load client secrets.
-        Reader clientSecretReader = new InputStreamReader(AuthHelper.class.getResourceAsStream("/client_secrets.json"));
+        Reader clientSecretReader = new InputStreamReader(AuthHelper.class.getResourceAsStream(CLIENT_SECRETS_JSON));
         GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, clientSecretReader);
 
         // Checks that the defaults have been replaced (Default = "Enter X here").
@@ -77,7 +83,7 @@ public class AuthHelper {
                 .build();
 
         // Build the local server and bind it to port 8080
-        LocalServerReceiver localReceiver = new LocalServerReceiver.Builder().setPort(8080).build();
+        LocalServerReceiver localReceiver = new LocalServerReceiver.Builder().setPort(LescoConstants.YOUTUBE_AUTH_BINDING_PORT).build();
 
         logger.debug("Auth - authorize() - End");
         

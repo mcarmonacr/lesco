@@ -7,6 +7,8 @@ import java.security.SecureRandom;
 
 import org.apache.log4j.Logger;
 
+import com.lesco.diccionario.utils.LescoConstants;
+
 /**
  * Class to generate random strings
  * 
@@ -21,8 +23,7 @@ public class RandomGeneratorHelper {
 	//Log4J class logger instance
 	private static final Logger logger = Logger.getLogger(RandomGeneratorHelper.class);
 	
-	//Available symbols
-	static final String AB = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+	//Secure random static instance
 	static SecureRandom rnd = new SecureRandom();
 
 	/**
@@ -34,11 +35,16 @@ public class RandomGeneratorHelper {
 	public String randomString( int stringLenght ){
 		
 	logger.debug("RandomGenerator - randomString() - Start");
+	
 	StringBuilder sb = new StringBuilder( stringLenght );
 	
-	for( int i = 0; i < stringLenght; i++ ) 
-		sb.append( AB.charAt( rnd.nextInt(AB.length()) ) );
-	   
+	try{
+		for( int i = 0; i < stringLenght; i++ ) 
+			sb.append( LescoConstants.AVAILABLE_SYMBOLS.charAt( rnd.nextInt(LescoConstants.AVAILABLE_SYMBOLS.length()) ) );
+	}catch(Exception e){
+		logger.debug("RandomGenerator - randomString() - Error", e);
+	}
+
 	logger.debug("RandomGenerator - randomString() - End");
 	   
 	return sb.toString();
