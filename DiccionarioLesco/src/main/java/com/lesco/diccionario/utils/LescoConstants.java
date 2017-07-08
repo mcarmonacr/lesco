@@ -17,6 +17,18 @@ public final class LescoConstants {
 	public static final String SUCCESS_MESSAGE= "Success";
 	public static final String FAILURE_MESSAGE= "Failure";
 	
+	//Port used to bind the Youtube API
+	public static final int YOUTUBE_AUTH_BINDING_PORT= 8080;
+
+	//Available symbols to generate a random String
+	public static final String AVAILABLE_SYMBOLS = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+	
+	//Salt value lenght
+	public static final int SALT_LENGHT= 16;
+	
+	//Encryption type
+	public static final String ENCRYPTION_TYPE= "SHA1PRNG";
+	
 	// Private Section //
 
 	//Examples

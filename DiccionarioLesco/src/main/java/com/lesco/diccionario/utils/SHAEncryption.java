@@ -55,14 +55,22 @@ public class SHAEncryption {
         String generatedPassword = null;
         
         try {
-            MessageDigest md = MessageDigest.getInstance("SHA-512");
-            md.update(salt);
-            byte[] bytes = md.digest(passwordToHash.getBytes());
-            StringBuilder sb = new StringBuilder();
-            for(int i=0; i< bytes.length ;i++) {
-                sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
-            }
-            generatedPassword = sb.toString();
+        	if(passwordToHash != null && salt != null){
+        		MessageDigest md = MessageDigest.getInstance("SHA-512");
+        		
+        		if(md != null){
+        			
+        			md.update(salt);
+                    byte[] bytes = md.digest(passwordToHash.getBytes());
+                    StringBuilder sb = new StringBuilder();
+                    
+                    for(int i=0; i< bytes.length ;i++) {
+                        sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
+                    }
+                    
+                    generatedPassword = sb.toString();
+        		}
+        	}
         } 
         catch (NoSuchAlgorithmException e) {
             logger.error("SHAEncryption - get_SHA_512_SecurePassword() - Error: ", e);
@@ -83,9 +91,10 @@ public class SHAEncryption {
     	logger.debug("SHAEncryption - getSalt() - Start");
     	
         SecureRandom sr;
-        byte[] salt = new byte[16];
+        byte[] salt = new byte[LescoConstants.SALT_LENGHT];
+        
 		try {
-			sr = SecureRandom.getInstance("SHA1PRNG");
+			sr = SecureRandom.getInstance(LescoConstants.ENCRYPTION_TYPE);
 			sr.nextBytes(salt);
 		} catch (NoSuchAlgorithmException e) {
 			logger.error("SHAEncryption - getSalt() - Error", e);

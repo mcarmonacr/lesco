@@ -3,6 +3,8 @@
  */
 package com.lesco.diccionario.utils;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 
 import javax.mail.Message;
@@ -30,8 +32,10 @@ public class SendMailTLS {
 	//Log4J class logger instance
 	private static final Logger logger = Logger.getLogger(SendMailTLS.class);
 	
-	private static final String username = "diccionariolesco@gmail.com";
+	private static final String userName = "diccionariolesco@gmail.com";
 	private static final String password = "diccionario";
+	
+	private static final String PROPERTIES_FILENAME = "mail.properties";
 	
 	/**
 	 * Send email functionality. This one is used for the contact functionality
@@ -49,15 +53,15 @@ public class SendMailTLS {
 		Session session = Session.getInstance(props,
 		  new javax.mail.Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
-				return new PasswordAuthentication(username, password);
+				return new PasswordAuthentication(userName, password);
 			}
 		  });
 
 		try {
 			Message message = new MimeMessage(session);
-			message.setFrom(new InternetAddress("diccionariolesco@gmail.com"));
+			message.setFrom(new InternetAddress(userName));
 			message.setRecipients(Message.RecipientType.TO,
-				InternetAddress.parse("diccionariolesco@gmail.com"));
+				InternetAddress.parse(userName));
 			message.setSubject(contactForm.getContactSubject());
 			message.setText(" From: " + contactForm.getContactName()
 				+ "\n\n Email: "+ contactForm.getContactEmail()
@@ -65,7 +69,7 @@ public class SendMailTLS {
 
 			Transport.send(message);
 		} catch (MessagingException e) {
-			logger.debug("SendMailTLS - sendMail() - Error: ");
+			logger.error("SendMailTLS - sendMail() - Error: ",e);
 		}
 		
 		logger.debug("SendMailTLS - sendMail() - End");
@@ -90,13 +94,13 @@ public class SendMailTLS {
 		Session session = Session.getInstance(props,
 		  new javax.mail.Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
-				return new PasswordAuthentication(username, password);
+				return new PasswordAuthentication(userName, password);
 			}
 		  });
 
 		try {
 			Message message = new MimeMessage(session);
-			message.setFrom(new InternetAddress("diccionariolesco@gmail.com"));
+			message.setFrom(new InternetAddress(userName));
 			message.setRecipients(Message.RecipientType.TO,
 				InternetAddress.parse(contactForm.getContactEmail()));
 			message.setSubject(contactForm.getContactSubject());
@@ -111,7 +115,7 @@ public class SendMailTLS {
 		
 		logger.debug("SendMailTLS - sendPasswordRecoveryMail() - End");
 		
-		return "success";
+		return LescoConstants.SUCCESS_MESSAGE;
 	}
 	
 	/**
@@ -123,12 +127,22 @@ public class SendMailTLS {
 		logger.debug("SendMailTLS - initializeMailProperties() - Start");
 		
 		//Email provider properties
-		props = new Properties();
-		props.put("mail.smtp.auth", "true");
-		props.put("mail.smtp.starttls.enable", "true");
-		props.put("mail.smtp.host", "smtp.gmail.com");
-		props.put("mail.smtp.port", "587");
+		//props = new Properties();
+//		props.put("mail.smtp.auth", "true");
+//		props.put("mail.smtp.starttls.enable", "true");
+//		props.put("mail.smtp.host", "smtp.gmail.com");
+//		props.put("mail.smtp.port", "587");
 		
+		
+		try {
+        	InputStream in = SendMailTLS.class.getResourceAsStream("/" + PROPERTIES_FILENAME);
+        	props.load(in);
+        } catch (IOException e) {
+            System.err.println("There was an error reading " + PROPERTIES_FILENAME + ": " + e.getCause()
+                    + " : " + e.getMessage());
+            System.exit(1);
+        }
+
 		logger.debug("SendMailTLS - initializeMailProperties() - End");
 	}
 }

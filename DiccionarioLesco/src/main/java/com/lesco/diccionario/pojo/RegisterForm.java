@@ -22,7 +22,7 @@ public class RegisterForm{
 	private String emailAddress;
 	private String password;
 	private String passwordConfirmation;
-	private Boolean administrator;
+	//private Boolean administrator;
 	
 	@com.fasterxml.jackson.databind.annotation.JsonDeserialize(using=CustomerDateAndTimeDeserialize.class)
 	private Date birthDate;
@@ -101,17 +101,17 @@ public class RegisterForm{
 	public void setTermsAndConditions(Boolean termsAndConditions) {
 		this.termsAndConditions = termsAndConditions;
 	}
-	/**
-	 * @return the administrator
-	 */
-	public Boolean getAdministrator() {
-		return administrator;
-	}
-	/**
-	 * @param administrator the administrator to set
-	 */
-	public void setAdministrator(Boolean administrator) {
-		this.administrator = administrator;
-	}
+//	/**
+//	 * @return the administrator
+//	 */
+//	public Boolean getAdministrator() {
+//		return administrator;
+//	}
+//	/**
+//	 * @param administrator the administrator to set
+//	 */
+//	public void setAdministrator(Boolean administrator) {
+//		this.administrator = administrator;
+//	}
 	
 }

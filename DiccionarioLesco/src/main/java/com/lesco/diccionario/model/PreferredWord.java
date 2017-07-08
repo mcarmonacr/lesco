@@ -1,10 +1,7 @@
 package com.lesco.diccionario.model;
 
-import java.util.HashSet;
-import java.util.Set;
-
 /**
- * Word POJO
+ * PreferredWord POJO
  * 
  * @author Mario Alonso Carmona Dinarte
  * @email monacar89@hotmail.com

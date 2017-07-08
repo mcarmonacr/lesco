@@ -3,10 +3,6 @@
  */
 package com.lesco.diccionario.pojo;
 
-import java.util.Date;
-
-import com.lesco.diccionario.utils.CustomerDateAndTimeDeserialize;
-
 /**
  * RegisterForm POJO
  * 
