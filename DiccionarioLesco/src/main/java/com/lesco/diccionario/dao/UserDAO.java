@@ -3,7 +3,6 @@ package com.lesco.diccionario.dao;
 import com.lesco.diccionario.model.ProfileDetail;
 import com.lesco.diccionario.model.UserProfile;
 
-
 /**
  * User Table Data Access Object Interface
  * 

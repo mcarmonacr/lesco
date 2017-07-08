@@ -19,6 +19,14 @@ public interface CategoryDAO {
 	 * @param category
 	 */
 	public void save(Category category);
+	
+	/**
+	 * Deletes a category
+	 * 
+	 * @param categoryId
+	 * @return
+	 */
+	public Boolean deleteById(Integer categoryId);
 
 	/**
 	 * Get a list of all categories

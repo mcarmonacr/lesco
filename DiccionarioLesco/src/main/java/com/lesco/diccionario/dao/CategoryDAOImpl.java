@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -47,6 +48,29 @@ public class CategoryDAOImpl implements CategoryDAO {
 		session.close();
 		
 		logger.debug("CategoryDAOImpl - save() - End");
+	}
+	
+	/**
+	 * Deletes a new category
+	 */
+	@Transactional
+	public Boolean deleteById(Integer categoryId){
+		logger.debug("CategoryDAOImpl - delete() - Start");
+		
+		Boolean result = false;
+		
+        Query query = sessionFactory.getCurrentSession().createQuery("delete Category where categoryId = :categoryId");
+        query.setParameter("categoryId", categoryId);
+        
+        int queryResult = query.executeUpdate();
+        
+        if (queryResult > 0) {
+            result= true;
+        }
+        
+        logger.debug("CategoryDAOImpl - delete() - End");
+        
+        return result;
 	}
 	
 	/**

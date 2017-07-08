@@ -57,5 +57,11 @@ public interface RequestDAO {
 	public Boolean checkWordName(String wordName);
 	
 	
+	/**
+	 * Delete a particular word by its name
+	 * 
+	 * @param wordName
+	 * @return
+	 */
 	public Boolean deleteByWordName(String wordName);
 }

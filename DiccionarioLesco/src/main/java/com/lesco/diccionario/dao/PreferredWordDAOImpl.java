@@ -11,9 +11,7 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.lesco.diccionario.model.Category;
 import com.lesco.diccionario.model.PreferredWord;
-import com.lesco.diccionario.model.UserProfile;
 import com.lesco.diccionario.model.Word;
 
 /**
@@ -93,19 +91,16 @@ public class PreferredWordDAOImpl implements PreferredWordDAO {
 	@SuppressWarnings("unchecked")
 	public List<Word> listMyWords(Integer userId) {
  
-        logger.debug("WordDAOImpl - listMyWords() - Start");
+        logger.debug("PreferredWordDAOImpl - listMyWords() - Start");
 		
 		Query query = sessionFactory.getCurrentSession().createSQLQuery("SELECT * FROM PreferredWord pw, Word w WHERE pw.Word_ID=w.Word_ID and pw.userProfile_ID= :userProfile_ID Order By w.wordName")
 				.addEntity(Word.class);
         query.setParameter("userProfile_ID", userId);
         List<Word> wordsList= query.list();
-                        
-        			
-        		
-        logger.debug("WordDAOImpl - listMyWords() - End");
+
+        logger.debug("PreferredWordDAOImpl - listMyWords() - End");
         
         return wordsList;
-        
 	}
 	
 	/**
@@ -120,8 +115,7 @@ public class PreferredWordDAOImpl implements PreferredWordDAO {
         Query query = sessionFactory.getCurrentSession().createQuery("from PreferredWord where userProfile_ID = :userProfile_ID");
         query.setParameter("userProfile_ID", userId);
         List<PreferredWord> preferredWordsList= query.list();
-        
-        
+
         logger.debug("PreferredWordDAOImpl - findByUser() - End");
         
         return preferredWordsList;
@@ -148,6 +142,7 @@ public class PreferredWordDAOImpl implements PreferredWordDAO {
 	/**
 	 * Find a particular preferred word by word and user
 	 */
+	@SuppressWarnings("unchecked")
 	@Transactional
 	public PreferredWord findByWordAndUser(Integer wordId, Integer userId){
 		
@@ -188,17 +183,15 @@ public class PreferredWordDAOImpl implements PreferredWordDAO {
 	@Transactional
 	public List<Word> findByPattern(String termsInput, Integer userId){
 		
-		logger.debug("WordDAOImpl - findByPattern() - Start");
+		logger.debug("PreferredWordDAOImpl - findByPattern() - Start");
 		
 		Query query = sessionFactory.getCurrentSession().createSQLQuery("SELECT * FROM PreferredWord pw, Word w WHERE pw.Word_ID=w.Word_ID and w.wordName like :wordName and pw.userProfile_ID = :userProfile_ID Order By w.wordName")
 				.addEntity(Word.class);
         query.setParameter("wordName", termsInput + "%");
         query.setParameter("userProfile_ID", userId);
         List<Word> wordsList= query.list();
-                        
-        			
         		
-        logger.debug("WordDAOImpl - findByPattern() - End");
+        logger.debug("PreferredWordDAOImpl - findByPattern() - End");
         
         return wordsList;
 	}
@@ -210,7 +203,7 @@ public class PreferredWordDAOImpl implements PreferredWordDAO {
 	@Transactional
 	public List<Word> findByPatternAndCategoryId(String termsInput, Integer categoryId, Integer userId){
 		
-		logger.debug("WordDAOImpl - findByPatternAndCategoryId() - Start");
+		logger.debug("PreferredWordDAOImpl - findByPatternAndCategoryId() - Start");
         
         Query query = sessionFactory.getCurrentSession().createSQLQuery("SELECT * FROM PreferredWord pw, Word w WHERE pw.Word_ID=w.Word_ID and w.wordName like :wordName and w.Category_ID =:categoryId and pw.userProfile_ID = :userProfile_ID Order By w.wordName")
 				.addEntity(Word.class);
@@ -219,8 +212,7 @@ public class PreferredWordDAOImpl implements PreferredWordDAO {
         query.setParameter("userProfile_ID", userId);
         List<Word> wordsList= query.list();
         
-        
-        logger.debug("WordDAOImpl - findByPatternAndCategoryId() - End");
+        logger.debug("PreferredWordDAOImpl - findByPatternAndCategoryId() - End");
         
         return wordsList;
 	}

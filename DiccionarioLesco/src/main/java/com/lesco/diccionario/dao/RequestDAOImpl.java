@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.lesco.diccionario.model.Request;
 import com.lesco.diccionario.model.UserProfile;
-import com.lesco.diccionario.model.Word;
 
 /**
  * Request Table Data Access Object Implementation
@@ -151,9 +150,8 @@ public class RequestDAOImpl implements RequestDAO {
 	
 	
 	/**
-	 * Check if the given word name already exists in the database
+	 * Deleteby word name
 	 */
-	@SuppressWarnings("unchecked")
 	@Transactional
 	public Boolean deleteByWordName(String wordName){
 		
@@ -170,7 +168,6 @@ public class RequestDAOImpl implements RequestDAO {
             result= true;
         }
 
-        
         logger.debug("RequestDAOImpl - deleteByWordName() - End");
         
         return result;

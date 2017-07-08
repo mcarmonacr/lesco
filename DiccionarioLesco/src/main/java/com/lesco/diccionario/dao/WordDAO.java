@@ -60,6 +60,5 @@ public interface WordDAO {
 	 * @return
 	 */
 	public Boolean checkWordName(String wordName);
-	
-	
+
 }
