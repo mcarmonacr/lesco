@@ -1,7 +1,5 @@
 package com.lesco.diccionario.controller;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,7 +24,6 @@ import com.lesco.diccionario.dao.WordDAO;
 import com.lesco.diccionario.model.ProfileDetail;
 import com.lesco.diccionario.model.Request;
 import com.lesco.diccionario.model.UserProfile;
-import com.lesco.diccionario.model.Word;
 import com.lesco.diccionario.pojo.AjaxResponseBody;
 import com.lesco.diccionario.pojo.RequestForm;
 
