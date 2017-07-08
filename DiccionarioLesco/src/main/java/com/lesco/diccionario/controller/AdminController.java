@@ -1,6 +1,7 @@
 package com.lesco.diccionario.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -94,4 +95,31 @@ public class AdminController {
 		
 		return result;
 	}
+	
+	@RequestMapping(value= "/eliminarCategoria", method = RequestMethod.POST, headers = "Accept=application/json", consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody AjaxResponseBody eliminarCategoria(@RequestBody Map<String, String> json){
+		
+		//Generic Response Body for all Ajax request
+		AjaxResponseBody result = new AjaxResponseBody();
+		result.setMessage("Failure");
+		logger.debug("AdminController - eliminarCategoria() - Start");
+		
+		//Check if the category name coming form the form is not null
+		if(json.get("categoryId") != null && !json.get("categoryId").isEmpty()){
+			try{
+				//Checks if the category already exists
+				if(categoryDAO.deleteById(Integer.valueOf(json.get("categoryId")))){
+					result.setMessage("Sucess");
+				}else{
+					result.setMessage("Failure");
+				}
+			} catch (Exception e) {
+				logger.error("There was an error processing the request", e);
+			}
+		}			
+		logger.debug("AdminController - eliminarCategoria() - End");
+		
+		return result;
+	}
 }
+

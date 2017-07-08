@@ -38,6 +38,7 @@ import com.lesco.diccionario.model.Word;
 import com.lesco.diccionario.pojo.AddTermForm;
 import com.lesco.diccionario.pojo.AjaxResponseBody;
 import com.lesco.diccionario.pojo.RegisterForm;
+import com.lesco.diccionario.utils.LescoConstants;
 
 /**
  * Handles all the terms related operations
@@ -91,9 +92,8 @@ public class TermnsController {
 		try{
 			logger.debug("TermnsController - agregarTermino() - Start");
 
-			ajaxResponse.setCode("000");
-			
-			ajaxResponse.setMessage("Success");
+			ajaxResponse.setCode(LescoConstants.SUCCESS_CODE);
+			ajaxResponse.setMessage(LescoConstants.SUCCESS_MESSAGE);
 			
 			String resultadoSalvar= "";
 
@@ -106,7 +106,7 @@ public class TermnsController {
 				//resultadoSalvar= "success";
 			}
 			//Response toggle based on the save return
-			if("Success".equals(resultadoSalvar)){
+			if(LescoConstants.SUCCESS_MESSAGE.equals(resultadoSalvar)){
 				
 				//Validate if the term is in the requests table, in which case should be deleted from there
 				checkRequestExistence(addTermForm);
@@ -139,58 +139,59 @@ public class TermnsController {
 		
 		AjaxResponseBody result = new AjaxResponseBody();
 		
-		logger.debug("RegisterController - obtenerTermino() - Start");
+		logger.debug("TermnsController - obtenerTermino() - Start");
 		
-		///Checks if the word id comes from the request
-		if (json.get("wordId") != null){			
-			Integer wordId = Integer.parseInt(json.get("wordId"));
-			if(wordId != null){
-				Word word= wordDAO.findById(wordId);
+		try{
+			//Checks if the word id comes from the request
+			if (json.get("wordId") != null){			
+				Integer wordId = Integer.parseInt(json.get("wordId"));
 				
-				//If the word is found in the database
-				if(word != null){
-					Map <String, Object> wordMap = new HashMap <String, Object> ();
+				if(wordId != null){
+					Word word= wordDAO.findById(wordId);
 					
-					wordMap.put("wordId", wordId.toString());
-					wordMap.put("wordName", word.getWordName());
-					wordMap.put("termYoutubeVideoID", word.getVideo().getTermYoutubeVideoID());
-					wordMap.put("termVideoRating", youtubeHelper.getVideoRating(word.getVideo().getTermYoutubeVideoID()));
-					wordMap.put("termVideoMetadata", youtubeHelper.getVideoMetadata(word.getVideo().getTermYoutubeVideoID()));					
-					
-					wordMap.put("definition", word.getDefinition());
-					wordMap.put("definitionYoutubeVideoID", word.getVideo().getDefinitionYoutubeVideoID());
-					wordMap.put("definitionVideoRating", youtubeHelper.getVideoRating(word.getVideo().getDefinitionYoutubeVideoID()));
-					wordMap.put("definitionVideoMetadata", youtubeHelper.getVideoMetadata(word.getVideo().getDefinitionYoutubeVideoID()));
-					
-					wordMap.put("explanation", word.getExplanation());
-					wordMap.put("explanationYoutubeVideoID", word.getVideo().getExplanationYoutubeVideoID());
-					wordMap.put("explanationVideoRating", youtubeHelper.getVideoRating(word.getVideo().getExplanationYoutubeVideoID()));
-					wordMap.put("explanationVideoMetadata", youtubeHelper.getVideoMetadata(word.getVideo().getExplanationYoutubeVideoID()));
-					
-					wordMap.put("example", word.getExample());
-					wordMap.put("exampleYoutubeVideoID", word.getVideo().getExampleYoutubeVideoID());
-					wordMap.put("exampleVideoRating", youtubeHelper.getVideoRating(word.getVideo().getExampleYoutubeVideoID()));
-					wordMap.put("exampleVideoMetadata", youtubeHelper.getVideoMetadata(word.getVideo().getExampleYoutubeVideoID()));
-					
-					//wordMap.put("numberOfVisits", word.getNumberOfVisits().toString());
-					
-					//TODO update mapping
-					//wordMap.put("youtubeVideoID", word.getVideo().getYoutubeVideoID());
-					
-					result.setContent(wordMap);
-					result.setMessage("Success");
-					result.setCode("000");
-				} else {
-					result.setMessage("Could not find the word");
-					result.setCode("001");
+					//If the word is found in the database
+					if(word != null){
+						
+						Map <String, Object> wordMap = new HashMap <String, Object> ();
+						
+						wordMap.put("wordId", wordId.toString());
+						wordMap.put("wordName", word.getWordName());
+						wordMap.put("termYoutubeVideoID", word.getVideo().getTermYoutubeVideoID());
+						wordMap.put("termVideoRating", youtubeHelper.getVideoRating(word.getVideo().getTermYoutubeVideoID()));
+						wordMap.put("termVideoMetadata", youtubeHelper.getVideoMetadata(word.getVideo().getTermYoutubeVideoID()));					
+						
+						wordMap.put("definition", word.getDefinition());
+						wordMap.put("definitionYoutubeVideoID", word.getVideo().getDefinitionYoutubeVideoID());
+						wordMap.put("definitionVideoRating", youtubeHelper.getVideoRating(word.getVideo().getDefinitionYoutubeVideoID()));
+						wordMap.put("definitionVideoMetadata", youtubeHelper.getVideoMetadata(word.getVideo().getDefinitionYoutubeVideoID()));
+						
+						wordMap.put("explanation", word.getExplanation());
+						wordMap.put("explanationYoutubeVideoID", word.getVideo().getExplanationYoutubeVideoID());
+						wordMap.put("explanationVideoRating", youtubeHelper.getVideoRating(word.getVideo().getExplanationYoutubeVideoID()));
+						wordMap.put("explanationVideoMetadata", youtubeHelper.getVideoMetadata(word.getVideo().getExplanationYoutubeVideoID()));
+						
+						wordMap.put("example", word.getExample());
+						wordMap.put("exampleYoutubeVideoID", word.getVideo().getExampleYoutubeVideoID());
+						wordMap.put("exampleVideoRating", youtubeHelper.getVideoRating(word.getVideo().getExampleYoutubeVideoID()));
+						wordMap.put("exampleVideoMetadata", youtubeHelper.getVideoMetadata(word.getVideo().getExampleYoutubeVideoID()));
+						
+						result.setContent(wordMap);
+						result.setMessage("Success");
+						result.setCode("000");
+					} else {
+						result.setMessage("Could not find the word");
+						result.setCode("001");
+					}
 				}
+			} else{
+				result.setMessage("Failure");
+				result.setCode("001");
 			}
-		} else{
-			result.setMessage("Failure");
-			result.setCode("001");
+		}catch(Exception e){
+			logger.debug("TermnsController - obtenerTermino() - Error", e);
 		}
-		
-		logger.debug("RegisterController - obtenerTermino() - End");
+
+		logger.debug("TermnsController - obtenerTermino() - End");
 		
 		return result;
 	}
@@ -207,68 +208,68 @@ public class TermnsController {
 		
 		AjaxResponseBody result = new AjaxResponseBody();
 		
-		logger.debug("RegisterController - obtenerListaTerminos() - Start");
+		logger.debug("TermnsController - obtenerListaTerminos() - Start");
 		
-		
-		List<Word> wordsList = new ArrayList<Word>();
-		List<Word> listMyWords = new ArrayList<Word>();
-		
-		//Validate input
-		if (json.get("termsInput") != null && !json.get("termsInput").isEmpty()){
+		try{
+			List<Word> wordsList = new ArrayList<Word>();
+			List<Word> listMyWords = new ArrayList<Word>();
+			
+			//Validate input
+			if (json.get("termsInput") != null && !json.get("termsInput").isEmpty()){
 
-			//If there's a category then it's included in the search 
-			if(json.get("categoryIdDiv") != null && !json.get("categoryIdDiv").isEmpty()){
-				wordsList = wordDAO.findByPatternAndCategoryId(json.get("termsInput"), Integer.parseInt(json.get("categoryIdDiv"))); //wordDAO.list();
-			} else {
-				//Search the word regardless the category
-				wordsList = wordDAO.findByPattern(json.get("termsInput"));
+				//If there's a category then it's included in the search 
+				if(json.get("categoryIdDiv") != null && !json.get("categoryIdDiv").isEmpty()){
+					wordsList = wordDAO.findByPatternAndCategoryId(json.get("termsInput"), Integer.parseInt(json.get("categoryIdDiv"))); //wordDAO.list();
+				} else {
+					//Search the word regardless the category
+					wordsList = wordDAO.findByPattern(json.get("termsInput"));
+				}
 			}
-		}
-		else {
-			//If there wasn't any input, get them all
-			if(wordsList.size() == 0){
-				wordsList = wordDAO.list();
+			else {
+				//If there wasn't any input, get them all
+				if(wordsList.size() == 0){
+					wordsList = wordDAO.list();
+				}
 			}
-		}
-		
-		Map <String, Object> wordsMap = new HashMap <String, Object> ();
-		
-		//Get user session and sets an attribute in the result datamap
-		HttpSession session = request.getSession();
-		if(session != null && session.getAttribute("userEmail") != null) {
 			
-			//Get the current logged in user emailAddress
-			String userEmail = session.getAttribute("userEmail").toString();
+			Map <String, Object> wordsMap = new HashMap <String, Object> ();
 			
-			//Obtain the User that belongs to the email
-			ProfileDetail profileDetailQuery = userDAO.findByEmailAddress(userEmail);
-			
-			listMyWords = getWordsFromList(preferredWordDAO.findByUser(profileDetailQuery.getProfileDetailId()));
-			
-			wordsMap.put("isSessionValid", true);
-		} else {
-			wordsMap.put("isSessionValid", false);
-		}
-		
-		// TODO process wordsMap in order to get only the list of words and its IDs 
-	
-		wordsMap.put("myWordsList", processWordList(listMyWords));
-		
-		wordsMap.put("wordsList", processWordList(wordsList));
-		result.setContent(wordsMap);
-		
-		
+			//Get user session and sets an attribute in the result datamap
+			HttpSession session = request.getSession();
+			if(session != null && session.getAttribute("userEmail") != null) {
 				
-		//Checks if the input user name already exists in the database
-		if(wordsList != null && !wordsList.isEmpty()){			
-			result.setMessage("Sucess");
-			result.setCode("000");
-		}else{
-			result.setMessage("List is empty");
-			result.setCode("001");
-		}
+				//Get the current logged in user emailAddress
+				String userEmail = session.getAttribute("userEmail").toString();
+				
+				//Obtain the User that belongs to the email
+				ProfileDetail profileDetailQuery = userDAO.findByEmailAddress(userEmail);
+				
+				listMyWords = getWordsFromList(preferredWordDAO.findByUser(profileDetailQuery.getProfileDetailId()));
+				
+				wordsMap.put("isSessionValid", true);
+			} else {
+				wordsMap.put("isSessionValid", false);
+			}
+			
+			// TODO process wordsMap in order to get only the list of words and its IDs 
 		
-		logger.debug("RegisterController - obtenerListaTerminos() - End");
+			wordsMap.put("myWordsList", processWordList(listMyWords));
+			wordsMap.put("wordsList", processWordList(wordsList));
+			result.setContent(wordsMap);
+					
+			//Checks if the input user name already exists in the database
+			if(wordsList != null && !wordsList.isEmpty()){			
+				result.setMessage("Sucess");
+				result.setCode("000");
+			}else{
+				result.setMessage("List is empty");
+				result.setCode("001");
+			}
+		}catch(Exception e){
+			logger.debug("TermnsController - obtenerListaTerminos() - Error", e);
+		}
+
+		logger.debug("TermnsController - obtenerListaTerminos() - End");
 		
 		return result;
 	}
@@ -286,66 +287,59 @@ public class TermnsController {
 		
 		AjaxResponseBody result = new AjaxResponseBody();
 		
-		logger.debug("RegisterController - obtenerListaMisTerminos() - Start");
+		logger.debug("TermnsController - obtenerListaMisTerminos() - Start");
 		
-		List<Word> myWordsList = new ArrayList<Word>();
-		
-		//Get user session
-		HttpSession session = request.getSession();
-		
-		//Get the current logged in user emailAddress
-		String userEmail = session.getAttribute("userEmail").toString();
-		
-		//Obtain the User that belongs to the email
-		ProfileDetail profileDetailQuery = userDAO.findByEmailAddress(userEmail);
-		
-		if(profileDetailQuery != null){
-			//Validate input
-			if (json.get("myTermsInput") != null && !json.get("myTermsInput").isEmpty()){
+		try{
+			List<Word> myWordsList = new ArrayList<Word>();
+			
+			//Get user session
+			HttpSession session = request.getSession();
+			
+			//Get the current logged in user emailAddress
+			String userEmail = session.getAttribute("userEmail").toString();
+			
+			//Obtain the User that belongs to the email
+			ProfileDetail profileDetailQuery = userDAO.findByEmailAddress(userEmail);
+			
+			if(profileDetailQuery != null){
+				//Validate input
+				if (json.get("myTermsInput") != null && !json.get("myTermsInput").isEmpty()){
 
-				//If there's a category then it's included in the search 
-				if(json.get("myCategoryIdDiv") != null && !json.get("myCategoryIdDiv").isEmpty()){
-					myWordsList = preferredWordDAO.findByPatternAndCategoryId(json.get("myTermsInput"), Integer.parseInt(json.get("myCategoryIdDiv")), profileDetailQuery.getProfileDetailId()); //wordDAO.list();
+					//If there's a category then it's included in the search 
+					if(json.get("myCategoryIdDiv") != null && !json.get("myCategoryIdDiv").isEmpty()){
+						myWordsList = preferredWordDAO.findByPatternAndCategoryId(json.get("myTermsInput"), Integer.parseInt(json.get("myCategoryIdDiv")), profileDetailQuery.getProfileDetailId()); //wordDAO.list();
+					} else {
+						//Search the word regardless the category
+						myWordsList = preferredWordDAO.findByPattern(json.get("myTermsInput"), profileDetailQuery.getProfileDetailId());
+					}
 				} else {
-					//Search the word regardless the category
-					myWordsList = preferredWordDAO.findByPattern(json.get("myTermsInput"), profileDetailQuery.getProfileDetailId());
-				}
-			} else {
-				// TODO
-				//If there wasn't any input, get them all
-				if(myWordsList.size() == 0){
-					myWordsList = preferredWordDAO.listMyWords(profileDetailQuery.getProfileDetailId());
+					// TODO
+					//If there wasn't any input, get them all
+					if(myWordsList.size() == 0){
+						myWordsList = preferredWordDAO.listMyWords(profileDetailQuery.getProfileDetailId());
+					}
 				}
 			}
+
+			Map <String, Object> wordsMap = new HashMap <String, Object> ();
+						
+			// TODO process wordsMap in order to get only the list of words and its IDs 
+			wordsMap.put("myWordsList", processWordList(myWordsList));
+			result.setContent(wordsMap);
+					
+			//Checks if the input user name already exists in the database
+			if(myWordsList != null && !myWordsList.isEmpty()){			
+				result.setMessage("Sucess");
+				result.setCode("000");
+			}else{
+				result.setMessage("List is empty");
+				result.setCode("001");
+			}
+		}catch(Exception e){
+			logger.debug("TermnsController - obtenerListaMisTerminos() - Error", e);
 		}
 
-		
-		Map <String, Object> wordsMap = new HashMap <String, Object> ();
-		
-		//Get user session and sets an attribute in the result datamap
-//		HttpSession session = request.getSession();
-//		if(session != null && session.getAttribute("userEmail") != null) {
-//			wordsMap.put("isSessionValid", true);
-//		} else {
-//			wordsMap.put("isSessionValid", false);
-//		}
-		
-		// TODO process wordsMap in order to get only the list of words and its IDs 
-		wordsMap.put("myWordsList", processWordList(myWordsList));
-				
-		result.setContent(wordsMap);
-				
-		//Checks if the input user name already exists in the database
-		if(myWordsList != null && !myWordsList.isEmpty()){			
-			result.setMessage("Sucess");
-			result.setCode("000");
-		}else{
-			result.setMessage("List is empty");
-			result.setCode("001");
-		}
-		
-		
-		logger.debug("RegisterController - obtenerListaMisTerminos() - End");
+		logger.debug("TermnsController - obtenerListaMisTerminos() - End");
 		
 		return result;
 	}
@@ -364,25 +358,28 @@ public class TermnsController {
 		
 		AjaxResponseBody result = new AjaxResponseBody();
 		
-		logger.debug("RegisterController - verificarUsuario() - Start");
+		logger.debug("TermnsController - verificarUsuario() - Start");
 		
-		//Validate input
-		if(registerForm.getUserName() != null && registerForm.getUserName().length() != 0){
-			
-			//Checks if the input user name already exists in the database
-			if(userDAO.checkUserName(registerForm.getUserName().trim()) == false) {			
-				result.setMessage("Sucess");
-				result.setCode("000");
+		try{
+			//Validate input
+			if(registerForm.getUserName() != null && registerForm.getUserName().length() != 0){
+				//Checks if the input user name already exists in the database
+				if(userDAO.checkUserName(registerForm.getUserName().trim()) == false) {			
+					result.setMessage("Sucess");
+					result.setCode("000");
+				} else {
+					result.setMessage("The user already exists");
+					result.setCode("001");
+				}
 			} else {
-				result.setMessage("The user already exists");
+				result.setMessage("Failure");
 				result.setCode("001");
 			}
-		} else {
-			result.setMessage("Failure");
-			result.setCode("001");
+		}catch(Exception e){
+			logger.debug("TermnsController - verificarUsuario() - Error", e);
 		}
 		
-		logger.debug("RegisterController - verificarUsuario() - End");
+		logger.debug("TermnsController - verificarUsuario() - End");
 		
 		return result;
 	}
@@ -399,25 +396,29 @@ public class TermnsController {
 		
 		AjaxResponseBody result = new AjaxResponseBody();
 		
-		logger.debug("RegisterController - verificarCorreo() - Start");
+		logger.debug("TermnsController - verificarCorreo() - Start");
 		
-		//Validate input
-		if(registerForm.getEmailAddress() != null && registerForm.getEmailAddress().length() != 0){
-			
-			//Checks if the input user name already exists in the database
-			if(userDAO.checkEmailAddress(registerForm.getEmailAddress().trim()) == false) {			
-				result.setMessage("Sucess");
-				result.setCode("000");
+		try{
+			//Validate input
+			if(registerForm.getEmailAddress() != null && registerForm.getEmailAddress().length() != 0){
+				
+				//Checks if the input user name already exists in the database
+				if(userDAO.checkEmailAddress(registerForm.getEmailAddress().trim()) == false) {			
+					result.setMessage("Sucess");
+					result.setCode("000");
+				} else {
+					result.setMessage("The user already exists");
+					result.setCode("001");
+				}
 			} else {
-				result.setMessage("The user already exists");
+				result.setMessage("Failure");
 				result.setCode("001");
 			}
-		} else {
-			result.setMessage("Failure");
-			result.setCode("001");
+		}catch(Exception e){
+			logger.debug("TermnsController - verificarCorreo() - Error", e);
 		}
-		
-		logger.debug("RegisterController - verificarCorreo() - End");
+
+		logger.debug("TermnsController - verificarCorreo() - End");
 		
 		return result;
 	}
@@ -434,74 +435,75 @@ public class TermnsController {
 		
 		AjaxResponseBody result = new AjaxResponseBody();
 		
-		logger.debug("RegisterController - agregarPreferido() - Start");
+		logger.debug("TermnsController - agregarPreferido() - Start");
 		
-		
-		Map <String, Object> resultMap = new HashMap <String, Object> ();
-		resultMap.put("isOneOfMyFavoriteTerms", "");
-		
-		///Checks if the word id comes from the request
-		if (json.get("wordId") != null){			
-			Integer wordId = Integer.parseInt(json.get("wordId"));
-			if(wordId != null){
-				Word word= wordDAO.findById(wordId);
-				
-				//If the word is found in the database
-				if(word != null){
+		try{
+			Map <String, Object> resultMap = new HashMap <String, Object> ();
+			resultMap.put("isOneOfMyFavoriteTerms", "");
+			
+			///Checks if the word id comes from the request
+			if (json.get("wordId") != null){			
+				Integer wordId = Integer.parseInt(json.get("wordId"));
+				if(wordId != null){
+					Word word= wordDAO.findById(wordId);
 					
-					//Get user session
-					HttpSession session = request.getSession();
-					
-					//Get the current logged in user emailAddress
-					String userEmail = session.getAttribute("userEmail").toString();
-					
-					//Obtain the User that belongs to the email
-					ProfileDetail profileDetailQuery = userDAO.findByEmailAddress(userEmail);
-					
-					if(profileDetailQuery != null){
-
-						List<PreferredWord> preferredWordsList = preferredWordDAO.findByWord(wordId);
+					//If the word is found in the database
+					if(word != null){
+						//Get user session
+						HttpSession session = request.getSession();
 						
-						//If the condition is met means that the term is already a favorite and should be removed from there
-						if(preferredWordsList != null && !preferredWordsList.isEmpty()) {
+						//Get the current logged in user emailAddress
+						String userEmail = session.getAttribute("userEmail").toString();
+						
+						//Obtain the User that belongs to the email
+						ProfileDetail profileDetailQuery = userDAO.findByEmailAddress(userEmail);
+						
+						if(profileDetailQuery != null){
+
+							List<PreferredWord> preferredWordsList = preferredWordDAO.findByWord(wordId);
 							
-							//Get the entity that needs to be deleted
-							PreferredWord preferredWord = preferredWordDAO.findByWordAndUser(wordId, profileDetailQuery.getProfileDetailId());
+							//If the condition is met means that the term is already a favorite and should be removed from there
+							if(preferredWordsList != null && !preferredWordsList.isEmpty()) {
+								
+								//Get the entity that needs to be deleted
+								PreferredWord preferredWord = preferredWordDAO.findByWordAndUser(wordId, profileDetailQuery.getProfileDetailId());
+								
+								PreferredWord preferredWordReference = preferredWordDAO.findById(preferredWord.getPreferredWordId());
+								
+								//Delete the entity
+								preferredWordDAO.delete(preferredWordReference);
+								resultMap.put("isOneOfMyFavoriteTerms", false);							
+							} else {
+								PreferredWord preferredWord = new PreferredWord();
+								
+								preferredWord.setWordId(wordId);
+								preferredWord.setUserProfileId(profileDetailQuery.getProfileDetailId());
+								
+								preferredWordDAO.save(preferredWord);
+								resultMap.put("isOneOfMyFavoriteTerms", true);
+							}
 							
-							PreferredWord preferredWordReference = preferredWordDAO.findById(preferredWord.getPreferredWordId());
-							
-							//Delete the entity
-							preferredWordDAO.delete(preferredWordReference);
-							resultMap.put("isOneOfMyFavoriteTerms", false);							
-						} else {
-							PreferredWord preferredWord = new PreferredWord();
-							
-							preferredWord.setWordId(wordId);
-							preferredWord.setUserProfileId(profileDetailQuery.getProfileDetailId());
-							
-							preferredWordDAO.save(preferredWord);
-							resultMap.put("isOneOfMyFavoriteTerms", true);
+							//Gets the most recent list of preferred words
+							List<Word> listMyWords = getWordsFromList(preferredWordDAO.findByUser(profileDetailQuery.getProfileDetailId()));
+							resultMap.put("listMyWords", processWordList(listMyWords));
 						}
-						
-						//Gets the most recent list of preferred words
-						List<Word> listMyWords = getWordsFromList(preferredWordDAO.findByUser(profileDetailQuery.getProfileDetailId()));
-						resultMap.put("listMyWords", processWordList(listMyWords));
+						result.setContent(resultMap);
+						result.setMessage("Success");
+						result.setCode("000");
+					} else {
+						result.setMessage("Could not find the word");
+						result.setCode("001");
 					}
-
-					result.setContent(resultMap);
-					result.setMessage("Success");
-					result.setCode("000");
-				} else {
-					result.setMessage("Could not find the word");
-					result.setCode("001");
 				}
+			} else{
+				result.setMessage("Failure");
+				result.setCode("001");
 			}
-		} else{
-			result.setMessage("Failure");
-			result.setCode("001");
+		}catch(Exception e){
+			logger.debug("TermnsController - agregarPreferido() - Error", e);
 		}
 		
-		logger.debug("RegisterController - agregarPreferido() - End");
+		logger.debug("TermnsController - agregarPreferido() - End");
 		
 		return result;
 	}
@@ -518,7 +520,7 @@ public class TermnsController {
 		
 		AjaxResponseBody result = new AjaxResponseBody();
 		
-		logger.debug("RegisterController - evaluarVideo() - Start");
+		logger.debug("TermnsController - evaluarVideo() - Start");
 		
 		try{
 			//Validate input
@@ -530,13 +532,14 @@ public class TermnsController {
 				//Set the new rating
 				youtubeHelper.likeAVideo(json.get("videoId"), json.get("action"));
 				
+				//Get the video rating and metadata
 				VideoRating videoRating= youtubeHelper.getVideoRating(json.get("videoId"));
-				
 				com.google.api.services.youtube.model.Video videoMetadata= youtubeHelper.getVideoMetadata(json.get("videoId"));
 				
 				//Map resultMap = new HashMap();
 				Map <String, Object> resultMap = new HashMap <String, Object> ();
 				
+				//Set the video rating and metadata
 				resultMap.put("videoRating", videoRating);
 				resultMap.put("videoMetadata", videoMetadata);
 				
@@ -545,11 +548,13 @@ public class TermnsController {
 				result.setCode("000");
 			}
 		} catch (Exception e){
+			logger.debug("TermnsController - evaluarVideo() - Error", e);
+			
 			result.setMessage("There was an error");
 			result.setCode("001");
 		}
 		
-		logger.debug("RegisterController - evaluarVideo() - End");
+		logger.debug("TermnsController - evaluarVideo() - End");
 		
 		return result;
 	}
@@ -569,7 +574,7 @@ public class TermnsController {
 	 */
 	private String salvarTermino(AddTermForm addTermForm, MultipartFile videoFile, MultipartFile definitionVideoFile, MultipartFile explanationVideoFile, MultipartFile exampleVideoFile, HttpServletRequest request){
 		
-		logger.debug("RegisterController - salvarTermino() - Start");
+		logger.debug("TermnsController - salvarTermino() - Start");
 		
 		String result = "";
 		
@@ -609,6 +614,9 @@ public class TermnsController {
 				if (example != null && exampleVideoFile != null){
 					//exampleYoutubeVideoID = youtubeHelper.uploadVideo("Ejemplo en LESCO del término " + wordName, "Ejemplo en LESCO del término: " + wordName + " - " + example, exampleVideoFile);
 				}
+				
+				
+				termYoutubeVideoID= "";
 				
 				//The term video is the only that is compulsory, the other ones are optional
 				if(!termYoutubeVideoID.isEmpty()){
@@ -676,17 +684,17 @@ public class TermnsController {
 					wordDAO.save(word);
 					
 				} else {
-					result= "Failure";
+					result= LescoConstants.FAILURE_MESSAGE;
 				}
-				result= "Success";
+				result= LescoConstants.SUCCESS_MESSAGE;
 			}else{
-				result= "Failure";
+				result= LescoConstants.FAILURE_MESSAGE;
 			}
 		} catch(Exception e) {
-			logger.debug("RegisterController - salvarTermino() - Error: ", e);
+			logger.debug("TermnsController - salvarTermino() - Error: ", e);
 		}
 
-		logger.debug("RegisterController - salvarTermino() - End");
+		logger.debug("TermnsController - salvarTermino() - End");
 		
 		return result;
 	}
@@ -700,63 +708,105 @@ public class TermnsController {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private List processWordList(List<Word> wordList){
 		
-		logger.debug("RegisterController - processWordList() - Start");
-		
+		logger.debug("TermnsController - processWordList() - Start");
 		List result = new ArrayList();
 		
-		//Processes the word's list and add the necessary data in the resulting map
-		for(Word actualWord:wordList){
-			Map actualWordMap = new HashMap();
-			
-			actualWordMap.put("wordId", actualWord.getWordId());
-			actualWordMap.put("wordName", actualWord.getWordName());
-			
-			result.add(actualWordMap);
+		try{
+			//Processes the word's list and add the necessary data in the resulting map
+			for(Word actualWord:wordList){
+				Map actualWordMap = new HashMap();
+				
+				actualWordMap.put("wordId", actualWord.getWordId());
+				actualWordMap.put("wordName", actualWord.getWordName());
+				
+				result.add(actualWordMap);
+			}
+		}catch(Exception e){
+			logger.debug("TermnsController - processWordList() - Error", e);
 		}
-		
-		logger.debug("RegisterController - processWordList() - End");
+				
+		logger.debug("TermnsController - processWordList() - End");
 		
 		return result;
 	}
 	
+	/**
+	 * Checks if the input term already exists in the database
+	 * 
+	 * @param addTermForm
+	 * @return
+	 */
 	private Boolean checkTermExistence(AddTermForm addTermForm) {
+		
+		logger.debug("TermnsController - checkTermExistence() - Start");
 		
 		Boolean result = false;
 		
-		if(wordDAO.checkWordName(addTermForm.getWordName()) == true) {
-			result= true;
+		try{
+			if(wordDAO.checkWordName(addTermForm.getWordName()) == true) {
+				result= true;
+			}
+		}catch(Exception e){
+			logger.debug("TermnsController - checkTermExistence() - Error", e);
 		}
+
+		logger.debug("TermnsController - checkTermExistence() - End");
 		
 		return result;
 	}
 	
-	
+	/**
+	 * Checks if a input request already exists in the database
+	 * 
+	 * @param addTermForm
+	 * @return
+	 */
 	private Boolean checkRequestExistence(AddTermForm addTermForm) {
+		
+		logger.debug("TermnsController - checkRequestExistence() - Start");
 		
 		Boolean result= false;
 		
-		if(requestDAO.checkWordName(addTermForm.getWordName()) == true) {
-			result= requestDAO.deleteByWordName(addTermForm.getWordName());
+		try{
+			if(requestDAO.checkWordName(addTermForm.getWordName()) == true) {
+				result= requestDAO.deleteByWordName(addTermForm.getWordName());
+			}
+		}catch(Exception e){
+			logger.debug("TermnsController - checkRequestExistence() - Error", e);
 		}
+
+		logger.debug("TermnsController - checkRequestExistence() - End");
 		
 		return result;
 	}
 	
-private List<Word> getWordsFromList(List<PreferredWord> preferredWordList){
-		
-		List<Word> result = new ArrayList<Word>();
-		
-		//Processes the word's list and add the necessary data in the resulting map
-		for(PreferredWord actualPreferredWord:preferredWordList){
-			
-			Word actualWord= new Word();
-			
-			actualWord= wordDAO.findById(actualPreferredWord.getWordId());
-			
-			result.add(actualWord);
+	/**
+	 * From the preferred list, based on the word id, the actual word is retrieved from the database
+	 * 
+	 * @param preferredWordList
+	 * @return
+	 */
+	private List<Word> getWordsFromList(List<PreferredWord> preferredWordList){
+	
+	logger.debug("TermnsController - getWordsFromList() - Start");
+	List<Word> result = new ArrayList<Word>();
+	
+		try{
+			//Processes the word's list and add the necessary data in the resulting map
+			for(PreferredWord actualPreferredWord:preferredWordList){
+				
+				Word actualWord= new Word();
+				
+				actualWord= wordDAO.findById(actualPreferredWord.getWordId());
+				
+				result.add(actualWord);
+			}
+		}catch(Exception e){
+			logger.debug("TermnsController - getWordsFromList() - Error", e);
 		}
+	
+		logger.debug("TermnsController - getWordsFromList() - End");
 		
 		return result;
-		
 	}
 }

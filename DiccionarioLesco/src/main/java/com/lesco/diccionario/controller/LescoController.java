@@ -74,35 +74,42 @@ public class LescoController {
 		logger.debug("LescoController - diccionarioLesco() - Start");
  
 		ModelAndView mv = new ModelAndView("home");
-		
-		//Get all the categories
-		List<Category> listCategories = categoryDAO.list();
-		
-		List<Word> listMyWords = null;
+		try{
+			//Get all the categories
+			List<Category> listCategories = categoryDAO.list();
+			
+			List<Word> listMyWords = null;
 
-		//Get user session
-		HttpSession session = httpRequest.getSession();
-		
-		if(session != null && session.getAttribute("userEmail") != null) {
-			//Get the current logged in user emailAddress
-			String userEmail = session.getAttribute("userEmail").toString();
+			//Get user session
+			HttpSession session = httpRequest.getSession();
 			
-			//Obtain the User that belongs to the email
-			ProfileDetail profileDetailQuery = userDAO.findByEmailAddress(userEmail);
-			
-			listMyWords = getWordsFromList(preferredWordDAO.findByUser(profileDetailQuery.getProfileDetailId()));
-		}
-		
-		//Get all the categories
-		List<Word> listWords = wordDAO.list();
+			if(session != null && session.getAttribute("userEmail") != null) {
+				//Get the current logged in user emailAddress
+				String userEmail = session.getAttribute("userEmail").toString();
 				
-		Word randomWord = getRandomWord(listWords);
-		
-		mv.addObject("randomWord", randomWord);
-		mv.addObject("videosMetadata", getVideosMetadata(randomWord, session));
-		mv.addObject("listCategories", listCategories);
-		mv.addObject("listWords", listWords);
-		mv.addObject("listMyWords", listMyWords);
+				//Obtain the User that belongs to the email
+				ProfileDetail profileDetailQuery = userDAO.findByEmailAddress(userEmail);
+				
+				//Get the list of words
+				listMyWords = getWordsFromList(preferredWordDAO.findByUser(profileDetailQuery.getProfileDetailId()));
+			}
+			
+			//Get all the categories
+			List<Word> listWords = wordDAO.list();
+					
+			//Get a random from
+			Word randomWord = getRandomWord(listWords);
+			
+			//Set the model values
+			mv.addObject("randomWord", randomWord);
+			mv.addObject("videosMetadata", getVideosMetadata(randomWord, session));
+			mv.addObject("listCategories", listCategories);
+			mv.addObject("listWords", listWords);
+			mv.addObject("listMyWords", listMyWords);
+			
+		} catch (Exception e) {
+			logger.error("There was an error - LescoController - diccionarioLesco()", e);
+		}
 		
 		logger.debug("LescoController - diccionarioLesco() - End");
 		
@@ -155,9 +162,11 @@ public class LescoController {
  
 		ModelAndView mv = new ModelAndView("addTerm");
 		
+		//Get the list of request
 		List<Request> requestList = requestDAO.list();
 		mv.addObject("requestList", requestList);
 		
+		//Get the list of categories
 		List<Category> categoryList = categoryDAO.list();
 		mv.addObject("listCategories", categoryList);
 		
@@ -213,7 +222,7 @@ public class LescoController {
 		
 		logger.debug("LescoController - getRandomWord() - Start");
 		
-		//New random word. This is the one been returned
+		//New random word to been returned
 		Word randomWord = new Word();
 		
 		try{
@@ -229,8 +238,8 @@ public class LescoController {
 				//Get random word
 				randomWord = listWords.get(randomNumber);
 			} else {	
-				//In case there aren't any videos available create empty objects 
 				
+				//In case there aren't any videos available create empty objects 
 				Video video = new Video();
 				video.setDefinitionYoutubeVideoID("");
 				video.setExampleYoutubeVideoID("");
@@ -265,123 +274,162 @@ public class LescoController {
 	private static int getRandomInteger(int aStart, int aEnd, Random aRandom){
 		
 		logger.debug("LescoController - getRandomInteger() - Start");
+		int randomNumber= 0;
 		
-	    if (aStart > aEnd) {
-	      throw new IllegalArgumentException("Start cannot exceed End.");
-	    }
-	    
-	    //get the range, casting to long to avoid overflow problems
-	    long range = (long)aEnd - (long)aStart + 1;
-	    // compute a fraction of the range, 0 <= frac < range
-	    long fraction = (long)(range * aRandom.nextDouble());
-	    int randomNumber =  (int)(fraction + aStart);    
-	    //log("Generated : " + randomNumber);
-	    
+		try{
+			if (aStart > aEnd) {
+				throw new IllegalArgumentException("Start cannot exceed End.");
+			}
+			    
+		    //Get the range, casting to long to avoid overflow problems
+		    long range = (long)aEnd - (long)aStart + 1;
+		    
+		    //Compute a fraction of the range, 0 <= frac < range
+		    long fraction = (long)(range * aRandom.nextDouble());
+		    randomNumber =  (int)(fraction + aStart);    
+		    
+		} catch (Exception e){
+			logger.debug("LescoController - getRandomInteger() - Error", e);
+		}
+
 	    logger.debug("LescoController - getRandomInteger() - End");
 	    
 	    return randomNumber;
 	  }	
 	
+	/**
+	 * Gets all the metadata of all the associated videos of a particular word
+	 * 
+	 * @param randomWord
+	 * @param session
+	 * @return
+	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private Map getVideosMetadata(Word randomWord, HttpSession session) { 
+		
+		logger.debug("LescoController - getVideosMetadata() - Start");
+		
 		Map result= new HashMap();
 		
-//		com.google.api.services.youtube.model.Video definitionVideo= youtubeHelper.getVideoMetadata(randomWord.getVideo().getDefinitionYoutubeVideoID());
-//		com.google.api.services.youtube.model.Video exampleVideo= youtubeHelper.getVideoMetadata(randomWord.getVideo().getExampleYoutubeVideoID());
-//		com.google.api.services.youtube.model.Video explanationVideo= youtubeHelper.getVideoMetadata(randomWord.getVideo().getExplanationYoutubeVideoID());
-//		com.google.api.services.youtube.model.Video termVideo= youtubeHelper.getVideoMetadata(randomWord.getVideo().getTermYoutubeVideoID());
-		
-		
-		//Setup default result values
-		result.put("definitionVideo", 0);
-		result.put("definitionVideoLikes", 0);
-		result.put("definitionVideoDislikes", 0);
-		result.put("definitionVideoRating", "none");
-		
-		result.put("exampleVideo", 0);
-		result.put("exampleVideoLikes", 0);
-		result.put("exampleVideoDislikes", 0);
-		result.put("exampleVideoRating", "none");
-		
-		result.put("explanationVideo", 0);
-		result.put("explanationVideoLikes", 0);
-		result.put("explanationVideoDislikes", 0);
-		result.put("explanationVideoRating", "none");
-		
-		result.put("termVideo", 0);
-		result.put("termVideoLikes", 0);
-		result.put("termVideoDislikes", 0);
-		result.put("termVideoRating", "none");
-		
-		if(randomWord == null || randomWord.getWordId() == null) {			
-			return result;	
+		try{
+//			com.google.api.services.youtube.model.Video definitionVideo= youtubeHelper.getVideoMetadata(randomWord.getVideo().getDefinitionYoutubeVideoID());
+//			com.google.api.services.youtube.model.Video exampleVideo= youtubeHelper.getVideoMetadata(randomWord.getVideo().getExampleYoutubeVideoID());
+//			com.google.api.services.youtube.model.Video explanationVideo= youtubeHelper.getVideoMetadata(randomWord.getVideo().getExplanationYoutubeVideoID());
+//			com.google.api.services.youtube.model.Video termVideo= youtubeHelper.getVideoMetadata(randomWord.getVideo().getTermYoutubeVideoID());
+			
+			//Setup default result values
+			result.put("definitionVideo", 0);
+			result.put("definitionVideoLikes", 0);
+			result.put("definitionVideoDislikes", 0);
+			result.put("definitionVideoRating", "none");
+			
+			result.put("exampleVideo", 0);
+			result.put("exampleVideoLikes", 0);
+			result.put("exampleVideoDislikes", 0);
+			result.put("exampleVideoRating", "none");
+			
+			result.put("explanationVideo", 0);
+			result.put("explanationVideoLikes", 0);
+			result.put("explanationVideoDislikes", 0);
+			result.put("explanationVideoRating", "none");
+			
+			result.put("termVideo", 0);
+			result.put("termVideoLikes", 0);
+			result.put("termVideoDislikes", 0);
+			result.put("termVideoRating", "none");
+			
+			//If there aren't any words, the return a void object
+			if(randomWord == null || randomWord.getWordId() == null) {			
+				return result;	
+			}
+			
+			//Get video's metadata, one by one
+			com.google.api.services.youtube.model.Video definitionVideo= youtubeHelper.getVideoMetadata("4z7rnfxhdms");
+			com.google.api.services.youtube.model.Video exampleVideo= youtubeHelper.getVideoMetadata("63xrbVSXbXA");
+			com.google.api.services.youtube.model.Video explanationVideo= youtubeHelper.getVideoMetadata("K64bcDY-Oko");
+			com.google.api.services.youtube.model.Video termVideo= youtubeHelper.getVideoMetadata("PX4IBJNuMsE");
+			
+			//Get video's rating. one by one
+			VideoRating definitionVideoRating = new VideoRating();
+			VideoRating exampleVideoRating = new VideoRating();
+			VideoRating explanationVideoRating = new VideoRating();
+			VideoRating termVideoRating = new VideoRating();
+			
+			//Only get the rating from youtube if the user is logged in
+			if(session != null && session.getAttribute("userEmail") != null) {
+				definitionVideoRating= youtubeHelper.getVideoRating("4z7rnfxhdms");
+				exampleVideoRating= youtubeHelper.getVideoRating("63xrbVSXbXA");
+				explanationVideoRating= youtubeHelper.getVideoRating("K64bcDY-Oko");
+				termVideoRating= youtubeHelper.getVideoRating("PX4IBJNuMsE");
+			}
+			
+			/**
+			 * If the values exists, then override the default ones
+			 */
+			if (definitionVideo != null && definitionVideoRating != null) {
+				result.put("definitionVideo", definitionVideo.getStatistics().getViewCount());
+				result.put("definitionVideoLikes", definitionVideo.getStatistics().getLikeCount());
+				result.put("definitionVideoDislikes", definitionVideo.getStatistics().getDislikeCount());
+				result.put("definitionVideoRating", definitionVideoRating.getRating());
+			} 
+			
+			if (exampleVideo != null) {
+				result.put("exampleVideo", exampleVideo.getStatistics().getViewCount());
+				result.put("exampleVideoLikes", exampleVideo.getStatistics().getLikeCount());
+				result.put("exampleVideoDislikes", exampleVideo.getStatistics().getDislikeCount());
+				result.put("exampleVideoRating", exampleVideoRating.getRating());
+			} 
+			
+			if (explanationVideo != null) {
+				result.put("explanationVideo", explanationVideo.getStatistics().getViewCount());
+				result.put("explanationVideoLikes", explanationVideo.getStatistics().getLikeCount());
+				result.put("explanationVideoDislikes", explanationVideo.getStatistics().getDislikeCount());
+				result.put("explanationVideoRating", explanationVideoRating.getRating());
+			} 
+			
+			if (termVideo != null) {
+				result.put("termVideo", termVideo.getStatistics().getViewCount());
+				result.put("termVideoLikes", termVideo.getStatistics().getLikeCount());
+				result.put("termVideoDislikes", termVideo.getStatistics().getDislikeCount());
+				result.put("termVideoRating", termVideoRating.getRating());
+			}
+		} catch (Exception e){
+			logger.error("LescoController - getVideosMetadata() - Error", e);
 		}
-		
-		com.google.api.services.youtube.model.Video definitionVideo= youtubeHelper.getVideoMetadata("4z7rnfxhdms");
-		com.google.api.services.youtube.model.Video exampleVideo= youtubeHelper.getVideoMetadata("63xrbVSXbXA");
-		com.google.api.services.youtube.model.Video explanationVideo= youtubeHelper.getVideoMetadata("K64bcDY-Oko");
-		com.google.api.services.youtube.model.Video termVideo= youtubeHelper.getVideoMetadata("PX4IBJNuMsE");
-		
-		VideoRating definitionVideoRating = new VideoRating();
-		VideoRating exampleVideoRating = new VideoRating();
-		VideoRating explanationVideoRating = new VideoRating();
-		VideoRating termVideoRating = new VideoRating();
-		
-		//Only get the rating from youtube if the user is logged in
-		if(session != null && session.getAttribute("userEmail") != null) {
-			definitionVideoRating= youtubeHelper.getVideoRating("4z7rnfxhdms");
-			exampleVideoRating= youtubeHelper.getVideoRating("63xrbVSXbXA");
-			explanationVideoRating= youtubeHelper.getVideoRating("K64bcDY-Oko");
-			termVideoRating= youtubeHelper.getVideoRating("PX4IBJNuMsE");
-		}
-		
-		//If the values exist, then the ones in the map get overridden
-		if (definitionVideo != null && definitionVideoRating != null) {
-			result.put("definitionVideo", definitionVideo.getStatistics().getViewCount());
-			result.put("definitionVideoLikes", definitionVideo.getStatistics().getLikeCount());
-			result.put("definitionVideoDislikes", definitionVideo.getStatistics().getDislikeCount());
-			result.put("definitionVideoRating", definitionVideoRating.getRating());
-		} 
-		
-		if (exampleVideo != null) {
-			result.put("exampleVideo", exampleVideo.getStatistics().getViewCount());
-			result.put("exampleVideoLikes", exampleVideo.getStatistics().getLikeCount());
-			result.put("exampleVideoDislikes", exampleVideo.getStatistics().getDislikeCount());
-			result.put("exampleVideoRating", exampleVideoRating.getRating());
-		} 
-		
-		if (explanationVideo != null) {
-			result.put("explanationVideo", explanationVideo.getStatistics().getViewCount());
-			result.put("explanationVideoLikes", explanationVideo.getStatistics().getLikeCount());
-			result.put("explanationVideoDislikes", explanationVideo.getStatistics().getDislikeCount());
-			result.put("explanationVideoRating", explanationVideoRating.getRating());
-		} 
-		
-		if (termVideo != null) {
-			result.put("termVideo", termVideo.getStatistics().getViewCount());
-			result.put("termVideoLikes", termVideo.getStatistics().getLikeCount());
-			result.put("termVideoDislikes", termVideo.getStatistics().getDislikeCount());
-			result.put("termVideoRating", termVideoRating.getRating());
-		} 
+
+		logger.debug("LescoController - getVideosMetadata() - End");
 
 		return result;	
 	}
 	
+	/**
+	 * Get the fundamental data into a new Word object, so it can be binded in the JSON response
+	 * 
+	 * @param preferredWordList
+	 * @return
+	 */
 	private List<Word> getWordsFromList(List<PreferredWord> preferredWordList){
+		
+		logger.debug("LescoController - getWordsFromList() - Start");
 		
 		List<Word> result = new ArrayList<Word>();
 		
-		//Processes the word's list and add the necessary data in the resulting map
-		for(PreferredWord actualPreferredWord:preferredWordList){
-			
-			Word actualWord= new Word();
-			
-			actualWord= wordDAO.findById(actualPreferredWord.getUserProfileId());
-			
-			result.add(actualWord);
+		try{
+			//Processes the word's list and add the necessary data in the resulting map
+			for(PreferredWord actualPreferredWord:preferredWordList){
+				
+				Word actualWord= new Word();
+				
+				actualWord= wordDAO.findById(actualPreferredWord.getUserProfileId());
+				
+				result.add(actualWord);
+			}
+		} catch (Exception e){
+			logger.debug("LescoController - getWordsFromList() - Error", e);
 		}
 		
-		return result;
+		logger.debug("LescoController - getWordsFromList() - End");
 		
+		return result;
 	}
 }

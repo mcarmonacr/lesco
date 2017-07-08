@@ -1,4 +1,4 @@
-package com.lesco.diccionario.controller;
+package com.lesco.diccionario.archive;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
@@ -8,7 +8,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 /**
  * 
- * 
+ * Testing controller
  * 
  * @author Mario Alonso Carmona Dinarte
  * @email monacar89@hotmail.com

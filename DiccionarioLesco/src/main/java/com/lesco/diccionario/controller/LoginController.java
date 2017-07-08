@@ -22,6 +22,7 @@ import com.lesco.diccionario.pojo.LoginForm;
 import com.lesco.diccionario.utils.SHAEncryption;
 
 /**
+ * Handles all the login related activities
  * 
  * @author Mario Alonso Carmona Dinarte
  * @email monacar89@hotmail.com
@@ -57,19 +58,23 @@ public class LoginController {
 		
 		AjaxResponseBody ajaxResponse = new AjaxResponseBody();
 		
-		//Verifies the login. Response toggle based on the save return
-		if(verifyUser(loginForm)){
-			
-			//Validation the session, creates a new one in case there isn't one already created
-			verifySession(loginForm, request, response);
-
-			ajaxResponse.setCode("000");
-			ajaxResponse.setMessage("Success");
-		} else {
-			ajaxResponse.setCode("999");
-			ajaxResponse.setMessage("Error");
-		}
+		try{
+			//Verifies the login. Response toggle based on the save return
+			if(verifyUser(loginForm)){
 				
+				//Validation the session, creates a new one in case there isn't one already created
+				verifySession(loginForm, request, response);
+
+				ajaxResponse.setCode("000");
+				ajaxResponse.setMessage("Success");
+			} else {
+				ajaxResponse.setCode("999");
+				ajaxResponse.setMessage("Error");
+			}
+		} catch (Exception e){
+			logger.debug("LoginController - iniciarSesion() - Error", e);
+		}
+	
 		logger.debug("LoginController - iniciarSesion() - End");
 		
 		return ajaxResponse;
@@ -90,15 +95,19 @@ public class LoginController {
 		
 		AjaxResponseBody ajaxResponse = new AjaxResponseBody();
 		
-		//Invalidates the user session. Response toggle based on the save return
-		if(endUserSession(request, response)){
-			ajaxResponse.setCode("000");
-			ajaxResponse.setMessage("Success");
-		} else {
-			ajaxResponse.setCode("999");
-			ajaxResponse.setMessage("Error");
+		try{
+			//Invalidates the user session. Response toggle based on the save return
+			if(endUserSession(request, response)){
+				ajaxResponse.setCode("000");
+				ajaxResponse.setMessage("Success");
+			} else {
+				ajaxResponse.setCode("999");
+				ajaxResponse.setMessage("Error");
+			}
+		} catch (Exception e){
+			logger.debug("LoginController - finalizarSesion() - Error", e);
 		}
-				
+		
 		logger.debug("LoginController - finalizarSesion() - End");
 		
 		return ajaxResponse;
@@ -116,17 +125,21 @@ public class LoginController {
 		
 		logger.debug("LoginController - endUserSession() - Start");
 		
-		//Gets the current user's session
-		HttpSession session = request.getSession();
-		
-		//Invalidates the current session
-		session.invalidate();
-		
-		//Adds a new null JSESSIONID cookie to invalidate the current valid cookie
-		Cookie cookie = new Cookie("JSESSIONID",null);
-		cookie.setMaxAge(0); //0 minutes
-		response.addCookie(cookie);
-		
+		try{
+			//Gets the current user's session
+			HttpSession session = request.getSession();
+			
+			//Invalidates the current session
+			session.invalidate();
+			
+			//Adds a new null JSESSIONID cookie to invalidate the current valid cookie
+			Cookie cookie = new Cookie("JSESSIONID",null);
+			cookie.setMaxAge(0); //0 minutes
+			response.addCookie(cookie);
+		}catch (Exception e){
+			logger.debug("LoginController - endUserSession() - Error", e);
+		}
+
 		logger.debug("LoginController - endUserSession() - End");
 		
 		return true;
@@ -145,30 +158,34 @@ public class LoginController {
 		//Value to be returned
 		Boolean isUserdVerfied = false;
 		
-		//Get the user's profile detail
-		ProfileDetail profileDetailQuery = userDAO.findByEmailAddress(loginForm.getEmailAddress());
-		
-		if(profileDetailQuery != null){
-			//Get user's profile detail hibernate's reference
-			ProfileDetail ProfileDetailReference = userDAO.findById(profileDetailQuery.getProfileDetailId());
+		try{
+			//Get the user's profile detail
+			ProfileDetail profileDetailQuery = userDAO.findByEmailAddress(loginForm.getEmailAddress());
 			
-			if(ProfileDetailReference != null){
-				//Get user's profile using the user's profile detail object
-				UserProfile userProfile = ProfileDetailReference.getUserProfile();
+			if(profileDetailQuery != null){
+				//Get user's profile detail hibernate's reference
+				ProfileDetail ProfileDetailReference = userDAO.findById(profileDetailQuery.getProfileDetailId());
 				
-				//Get original user's sal value. This value is needed to encrypt the user's input and see if it matches the value in the Database.
-				byte[] salt= userProfile.getSalt();
-				
-				//Get hashed passwrod from the user's input
-				String hashedPassword = shaEncryption.getHashedPassword(loginForm.getPassword(), salt);
-				
-				//If passwords match, return success
-				if (hashedPassword.equals(userProfile.getUserPassword())){
-					isUserdVerfied= true;
-				} else {
-					isUserdVerfied= false;
+				if(ProfileDetailReference != null){
+					//Get user's profile using the user's profile detail object
+					UserProfile userProfile = ProfileDetailReference.getUserProfile();
+					
+					//Get original user's sal value. This value is needed to encrypt the user's input and see if it matches the value in the Database.
+					byte[] salt= userProfile.getSalt();
+					
+					//Get hashed passwrod from the user's input
+					String hashedPassword = shaEncryption.getHashedPassword(loginForm.getPassword(), salt);
+					
+					//If passwords match, return success
+					if (hashedPassword.equals(userProfile.getUserPassword())){
+						isUserdVerfied= true;
+					} else {
+						isUserdVerfied= false;
+					}
 				}
 			}
+		}catch(Exception e){
+			logger.debug("LoginController - verifyUser() - Error", e);
 		}
 
 		logger.debug("LoginController - verifyUser() - End");
@@ -187,18 +204,22 @@ public class LoginController {
 	        HttpServletResponse response){
 		logger.debug("LoginController - verifySession() - Start");
 		
-		//Create user session or get the current in case one already exists
-		HttpSession session = request.getSession();
-		session.setAttribute("userEmail", loginForm.getEmailAddress().toString());
-		
-		//setting session to expire in 15 minutes
-		session.setMaxInactiveInterval(15*60);
-		
-		//Adds the JSESSIONID cookie to be able to maintain the same session
-		Cookie cookie = new Cookie("JSESSIONID",session.getId().toString());
-		cookie.setMaxAge(15*60); //15 minutes
-		response.addCookie(cookie);
-		
+		try{
+			//Create user session or get the current in case one already exists
+			HttpSession session = request.getSession();
+			session.setAttribute("userEmail", loginForm.getEmailAddress().toString());
+			
+			//setting session to expire in 15 minutes
+			session.setMaxInactiveInterval(15*60);
+			
+			//Adds the JSESSIONID cookie to be able to maintain the same session
+			Cookie cookie = new Cookie("JSESSIONID",session.getId().toString());
+			cookie.setMaxAge(15*60); //15 minutes
+			response.addCookie(cookie);	
+		}catch(Exception e){
+			logger.debug("LoginController - verifySession() - Error", e);
+		}
+
 		logger.debug("LoginController - verifySession() - End");
 	}
 }
