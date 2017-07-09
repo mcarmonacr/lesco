@@ -6,7 +6,7 @@
 
       <div class="starter-template">
       
-      <img src="../resources/images/ECCI.png" alt="..." class="img-rounded img-responsive center-block">
+      <img src="../resources/images/logo-ECCI.png" alt="..." class="img-rounded img-responsive center-block">
       
         <h1>Escuela de Ciencias De La Computación E Informática - ECCI</h1>
         

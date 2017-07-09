@@ -6,7 +6,7 @@
 
       <div class="starter-template">
       
-      <img src="../resources/images/logo-cenarec.jpg" alt="..." class="img-rounded img-responsive center-block">
+      <img src="../resources/images/logo-CENAREC.jpg" alt="..." class="img-rounded img-responsive center-block">
       
         <h1>CENAREC</h1>
         
@@ -21,7 +21,7 @@
       	
       	<br >
       	
-      	<img src="../resources/images/logo-tec.png" alt="..." class="img-rounded img-responsive center-block">
+      	<img src="../resources/images/logo-TEC.png" alt="..." class="img-rounded img-responsive center-block">
       	
       	<h1>Traductor digital LESCO - Instituto Tecnológico de Costa Rica (TEC)</h1>
         

@@ -15,8 +15,8 @@
       </ol>
       <div class="carousel-inner" role="listbox">
         <div class="item active">
-<!--           <img class="first-slide" src="resources/images/logo-ucr2.png" alt="First slide"> -->
-          <img class="first-slide" src="resources/images/free-background-wallpaper.jpg" alt="First slide">
+<!--           <img class="first-slide" src="resources/images/logo-UCR-2.png" alt="First slide"> -->
+          <img class="first-slide" src="resources/images/about-carrousel-background.jpg" alt="First slide">
           <div class="container">
             <div class="carousel-caption">
               <h1>Universidad de Costa Rica</h1>
@@ -27,7 +27,7 @@
           </div>
         </div>
         <div class="item">
-          <img class="second-slide" src="resources/images/free-background-wallpaper.jpg" alt="Second slide">
+          <img class="second-slide" src="resources/images/about-carrousel-background.jpg" alt="Second slide">
           <div class="container">
             <div class="carousel-caption">
               <h1>LESCO</h1>
@@ -38,7 +38,7 @@
           </div>
         </div>
         <div class="item">
-          <img class="third-slide" src="resources/images/free-background-wallpaper.jpg" alt="Third slide">
+          <img class="third-slide" src="resources/images/about-carrousel-background.jpg" alt="Third slide">
           <div class="container">
             <div class="carousel-caption">
               <h1>ECCI</h1>
@@ -49,7 +49,7 @@
           </div>
         </div>
         <div class="item">
-          <img class="forth-slide" src="resources/images/free-background-wallpaper.jpg" alt="Forth slide">
+          <img class="forth-slide" src="resources/images/about-carrousel-background.jpg" alt="Forth slide">
           <div class="container">
             <div class="carousel-caption">
               <h1>Recursos</h1>
@@ -84,19 +84,19 @@
       <br>
       
         <div class="col-lg-4">
-          <img class="img-circle" src="resources/images/marioCarmona2.PNG" alt="Mario Alonso Carmona Dinarte" width="140" height="140">
+          <img class="img-circle" src="resources/images/mario-carmona.PNG" alt="Mario Alonso Carmona Dinarte" width="140" height="140">
           <h2>Mario Alonso Carmona Dinarte</h2>
           <p class="text-justify">Bachiller y estudiante del grado de licenciatura de la Escuela de Ciencias de la Computación e Informática (ECCI) de la Universidad de Costa Rica.</p>
 <!--           <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p> -->
         </div><!-- /.col-lg-4 -->
         <div class="col-lg-4">
-          <img class="img-circle" src="resources/images/luisGuerrero.png" alt="Luis Alberto Guerrero Blanco" width="140" height="140">
+          <img class="img-circle" src="resources/images/luis-guerrero.png" alt="Luis Alberto Guerrero Blanco" width="140" height="140">
           <h2>Luis Alberto Guerrero Blanco</h2>
           <p class="text-justify">Profesor y actualmente coordinador Programa de Doctorado de la Escuela de Ciencias de la Computación e Informática (ECCI) de la Universidad de Costa Rica.</p>
 <!--           <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p> -->
         </div><!-- /.col-lg-4 -->
         <div class="col-lg-4">
-          <img class="img-circle" src="resources/images/luisQuesada2.jpg" alt="Luis Quesada Quirós" width="140" height="140">
+          <img class="img-circle" src="resources/images/luis-quesada.jpg" alt="Luis Quesada Quirós" width="140" height="140">
           <h2>Luis Quesada Quirós</h2>
           <p class="text-justify">Profesor e Investigador de la Escuela de Ciencias de la Computación e Informática (ECCI) de la Universidad de Costa Rica.</p>
 <!--           <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p> -->
@@ -119,8 +119,8 @@
           un 0,14% de la población mundial.</p>
         </div>
         <div class="col-md-5">
-          <img class="featurette-image img-responsive center-block" data-src="holder.js/500x500/auto" src="resources/images/Sign_language_families.png" alt="Generic placeholder image">
-<!--           https://upload.wikimedia.org/wikipedia/en/2/2f/Sign_language_families.png -->
+          <img class="featurette-image img-responsive center-block" data-src="holder.js/500x500/auto" src="resources/images/sign-language-families.png" alt="Generic placeholder image">
+<!--           https://upload.wikimedia.org/wikipedia/en/2/2f/sign-language-families.png -->
         </div>
       </div>
 
@@ -160,7 +160,7 @@
           personas con déficit auditivo en la sociedad, dando paso a una sociedad más igualitaria.</p>
         </div>
         <div class="col-md-5">
-          <img class="featurette-image img-responsive center-block" data-src="holder.js/500x500/auto" src="resources/images/dictionary.jpg" alt="Generic placeholder image">
+          <img class="featurette-image img-responsive center-block" data-src="holder.js/500x500/auto" src="resources/images/digital-dictionary.jpg" alt="Generic placeholder image">
 <!--           http://websearch.com/cms/imgfolder/dictionary2-flash.jpg -->
         </div>
       </div>
