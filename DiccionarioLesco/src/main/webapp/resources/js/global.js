@@ -1,97 +1,110 @@
 jQuery(document).ready(function($) {
 
-		$("#loginForm").submit(function(event) {
-			event.preventDefault();
-			submitGlobalLoginForm();
-
-		});
-		
-		$("#passwordRecoveryForm").submit(function(event) {
-			event.preventDefault();
-			submitPasswordRecoveryForm();
-
-		});
+	//Login form event binding
+	$("#loginForm").submit(function(event) {
+		event.preventDefault();
+		submitGlobalLoginForm();
+	});
+	
+	//Password recovery form event binding
+	$("#passwordRecoveryForm").submit(function(event) {
+		event.preventDefault();
+		submitPasswordRecoveryForm();
+	});
 
 });
 
+/**
+ * Submit the global login form
+ * 
+ * @returns nothing
+ */
 function submitGlobalLoginForm() {
 
-	  var loginEmailAddress=document.getElementById("loginEmailAddress");
-	  var loginPassword=document.getElementById("loginPassword");
+	//Get the user name and password
+	var loginEmailAddress=document.getElementById("loginEmailAddress");
+	var loginPassword=document.getElementById("loginPassword");
 
-	  
-	  var search = {
-	            "emailAddress":loginEmailAddress.value,
-	            "password":loginPassword.value
-	    }
+	//Create the JSON seach string
+	var search = {
+			"emailAddress":loginEmailAddress.value,
+	        "password":loginPassword.value
+	}
 
-	  $.ajax({
-	  	headers: { 
-	        'Accept': 'application/json',
-	        'Content-Type': 'application/json' 
-	    },
+	$.ajax({
+		  	headers: { 
+		        'Accept': 'application/json',
+		    'Content-Type': 'application/json' 
+		},
 		type: 'post',
-	    contentType : "application/json",
-	    //url: "http://localhost:8080/DiccionarioLesco/registro/verificarUsuario",
-	    url: "/DiccionarioLesco/ingreso/iniciarSesion",
-	    data : JSON.stringify(search),
-	    dataType : 'json',
-	    success : function(data) {
+		contentType : "application/json",
+		//url: "http://localhost:8080/DiccionarioLesco/registro/verificarUsuario",
+		url: "/DiccionarioLesco/ingreso/iniciarSesion",
+		data : JSON.stringify(search),
+		dataType : 'json',
+		success : function(data) {
 			console.log("SUCCESS: ", data);
-						
 			if(data != null  && data.code == "000"){
-				//The true parameter forces the page to release it's cache.
-				window.location.reload(true);
+				//Get the current location of the user
+				var pathname = window.location.pathname; // Returns path only
+				var ingresar = pathname.includes("/ingresar");
+				
+				//Means that the user comes from an attempt to access a restricted web page and should be redirected to the home page after login
+				//"/ingresar" is where the interceptor redirects the not logged users
+				if(ingresar){
+					$(window).attr('location','/DiccionarioLesco/')
+				} else{
+					//Reload the current location
+					window.location.reload(true);
+				}
 			} else {
-				//alert("Wrong password");
-				//document.getElementById("passwordRecoveryDiv").css("visibility", "visible");
 				$("#passwordRecoveryDiv").css("display", "inline");
 			}
 		},
 		error : function(e) {
 			console.log("ERROR: ", e);
-			//display(e);
 		},
 		done : function(e) {
 			console.log("DONE");
-			//enableSearchButton(true);
 		}
-	  });
-	  //return false;
+	});
 }
 
+/**
+ * Password recovery form submit
+ * 
+ * @returns nothing
+ */
 function submitPasswordRecoveryForm() {
 
-	  var loginEmailAddressModal= document.getElementById("loginEmailAddressModal");
+	//Get the recovery password modal
+	var loginEmailAddressModal= document.getElementById("loginEmailAddressModal");
 
-	  var search = {
-	            "emailAddress":loginEmailAddressModal.value
-	    }
+	//Create the JSON search string
+	var search = {
+			"emailAddress":loginEmailAddressModal.value
+	}
 
-	  $.ajax({
-	  	headers: { 
-	        'Accept': 'application/json',
-	        'Content-Type': 'application/json' 
-	    },
+	$.ajax({
+		  	headers: { 
+		        'Accept': 'application/json',
+		    'Content-Type': 'application/json' 
+		},
 		type: 'post',
-	    contentType : "application/json",
-	    url: "/DiccionarioLesco/registro/recuperarPassword",
-	    data : JSON.stringify(search),
-	    dataType : 'json',
-	    success : function(data) {
+		contentType : "application/json",
+		url: "/DiccionarioLesco/registro/recuperarPassword",
+		data : JSON.stringify(search),
+		dataType : 'json',
+		success : function(data) {
 			console.log("SUCCESS: ", data);
 			
 			//The true parameter forces the page to release it's cache.
 			window.location.reload(true);
 			
-			//display(data);
-			
 			if(data != null  && data.code == "000"){
-				
 			} else {
 				//alert("Wrong password");
 			}
-			
 		},
 		error : function(e) {
 			console.log("ERROR: ", e);
@@ -99,33 +112,32 @@ function submitPasswordRecoveryForm() {
 		},
 		done : function(e) {
 			console.log("DONE");
-			//enableSearchButton(true);
 		}
-	  });
-	  //return false;
+	});
 }
 
+/**
+ * Ends the user session
+ *  
+ * @returns nothing
+ */
 function endUserSession() {
 
-
-	  $.ajax({
-	  	headers: { 
-	        'Accept': 'application/json',
-	        'Content-Type': 'application/json' 
-	    },
+	$.ajax({
+		  	headers: { 
+		        'Accept': 'application/json',
+		    'Content-Type': 'application/json' 
+		},
 		type: 'post',
-	    contentType : "application/json",
-	    //url: "http://localhost:8080/DiccionarioLesco/registro/verificarUsuario",
-	    url: "/DiccionarioLesco/ingreso/finalizarSesion",
-	    //data : JSON.stringify(search),
-	    dataType : 'json',
-	    success : function(data) {
+		contentType : "application/json",
+		url: "/DiccionarioLesco/ingreso/finalizarSesion",
+		//data : JSON.stringify(search),
+		dataType : 'json',
+		success : function(data) {
 			console.log("SUCCESS: ", data);
 			
 			//The true parameter forces the page to release it's cache.
 			window.location.reload(true);
-			
-			//display(data);
 		},
 		error : function(e) {
 			console.log("ERROR: ", e);
@@ -133,8 +145,6 @@ function endUserSession() {
 		},
 		done : function(e) {
 			console.log("DONE");
-			//enableSearchButton(true);
-		}
-	  });
-	  //return false;
+			}
+	});
 }

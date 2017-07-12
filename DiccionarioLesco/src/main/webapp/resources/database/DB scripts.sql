@@ -67,7 +67,6 @@ PRIMARY KEY (Request_ID),
 FOREIGN KEY (UserProfile_ID) REFERENCES UserProfile(UserProfile_ID)
 );
 
-
 -- PreferredWord table
 CREATE TABLE PreferredWord
 (
@@ -78,7 +77,3 @@ PRIMARY KEY (PreferredWord_ID)
 );
 
 -- ********************************************* --
-
-
-
-
