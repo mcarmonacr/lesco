@@ -1,255 +1,272 @@
 jQuery(document).ready(function($) {
-	
+
+	//Checks the main input of words and updates the page accordingly
 	$("#termsInput").keyup(function(){
 		checkTerm();
 	});
 	
+	//Checks my terms input of words and updates the section accordingly
 	$("#myTermsInput").keyup(function(){
 		checkMyTerm();
 	});
 
 });
 
-function assignCategory(category, categoryId)
-{
-    $("#dropdownMenu1").html('<span class="glyphicon glyphicon-tasks"></span> '+ category +' <span class="caret"></span>' + '<div id="categoryIdDiv" hidden>' + categoryId+ '</div>');
-    //$("#categoryIdDiv").text(categoryId);
-    
-    //Check the term lists
-    checkTerm();
+/**
+ * Assign a category to the drop-down menu when an option is picked
+ * Assign the name and also sets the categoryId to the hidden field
+ * 
+ * @param category
+ * @param categoryId
+ * @returns nothing
+ */
+function assignCategory(category, categoryId) {
+	$("#categoriesDropdownMenu").html('<span class="glyphicon glyphicon-tasks"></span> '+ category +' <span class="caret"></span>' + '<div id="categoryIdDiv" hidden>' + categoryId+ '</div>');
+	
+	//Check the term lists
+	checkTerm();
 }
 
-function loadDetail(wordId)
-{
-    //$("#dropdownMenu1").html(category + '  <span class="caret"></span>');
+/**
+ * Loads all the data of a term in its proper fields
+ * 
+ * @param wordId
+ * @returns nothing
+ */
+function loadDetail(wordId) {
 	
-	  var userName=document.getElementById("userName");
-	  
-	  var search = {
-	            "wordId":wordId
-	    }
+	//Create the JSON search string  
+	var search = {
+			"wordId":wordId
+	}
 
-	  $.ajax({
+	$.ajax({
 	  	headers: { 
 	        'Accept': 'application/json',
-	        'Content-Type': 'application/json' 
-	    },
+	    'Content-Type': 'application/json' 
+		},
 		type: 'post',
-	    contentType : "application/json",
-	    url: "/DiccionarioLesco/termino/obtenerTermino",
-	    data : JSON.stringify(search),
-	    dataType : 'json',
-	    success : function(data) {
-	    	console.log("SUCCESS: ", data);
-	    	if(data != null && data.code == "000"){
-	    		
-	    		//console.log("Data: " + data.content.word);
-	    		
-	    		loadTermDetails(data.content);
-
-	    		//$('#divUserName').removeClass('has-error').addClass('has-success');
-				//$('#divUserName .glyphicon').removeClass('glyphicon-remove').addClass('glyphicon-ok');
-	    	}else {
-	    		//$('#divUserName').removeClass('has-success').addClass('has-error');
-				//$('#divUserName .glyphicon').removeClass('glyphicon-ok').addClass('glyphicon-remove');
-	    		
-	    		console.log("Data: " + data.content.word);
-	    	}
+		contentType : "application/json",
+		url: "/DiccionarioLesco/termino/obtenerTermino",
+		data : JSON.stringify(search),
+		dataType : 'json',
+		success : function(data) {
+			console.log("SUCCESS: ", data);
+			if(data != null && data.code == "000"){	    		
+				loadTermDetails(data.content);
+			}else {
+				console.log("Data: " + data.content.word);
+			}
 		},
 		error : function(e) {
 			console.log("ERROR: ", e);
-			//display(e);
 		},
 		done : function(e) {
-			//console.log("DONE");
-			//enableSearchButton(true);
+			console.log("DONE: ", e);
 		}
-	  });
-	  //return false;
+	});
 }
 
-
+/**
+ * Loads into the DOM all the term details
+ * 
+ * @param content
+ * @returns nothing
+ */
 function loadTermDetails(content){ 
 	
-	 $("#wordName").text(content.wordName);
+	 $("#wordName").text(decodeURIComponent(escape(content.wordName)));
 	 $('#termSourceURLIframe').attr('src', "https://www.youtube.com/embed/" + content.termYoutubeVideoID + "?controls=1");
 	 updateVideoRatingMetadata(content.termYoutubeVideoID, content.termVideoRating, content.termVideoMetadata);
 	 
-	 $("#definitionDiv").text(data.content.definition);
+	 $("#definitionDiv").text(decodeURIComponent(escape(data.content.definition)));
 	 $('#definitionSourceURLIframe').attr('src', "https://www.youtube.com/embed/" + content.definitionYoutubeVideoID + "?controls=1");
 	 updateVideoRatingMetadata(content.definitionYoutubeVideoID, content.definitionVideoRating, content.definitionVideoMetadata);
 	 
-	 $("#explanationDiv").text(data.content.explanation);
+	 $("#explanationDiv").text(decodeURIComponent(escape(data.content.explanation)));
 	 $('#explanationSourceURLIframe').attr('src', "https://www.youtube.com/embed/" + content.explanationYoutubeVideoID + "?controls=1");
 	 updateVideoRatingMetadata(content.explanationYoutubeVideoID, content.explanationVideoRating, content.explanationVideoMetadata);
 	 
-	 $("#exampleDiv").text(data.content.example);
+	 $("#exampleDiv").text(decodeURIComponent(escape(data.content.example)));
 	 $('#exampleSourceURLIframe').attr('src', "https://www.youtube.com/embed/" + content.exampleYoutubeVideoID + "?controls=1");
 	 updateVideoRatingMetadata(content.exampleYoutubeVideoID, content.exampleVideoRating, content.exampleVideoMetadata);
-	 
-	 //$("#numberOfVisitsSpan").text(data.content.numberOfVisits);	
 }
 
+/**
+ * Toggles the word into a preferred and non-preferred state
+ * 
+ * @param wordId
+ * @returns nothing
+ */
 function togglePreferred(wordId) {
-    //$("#dropdownMenu1").html(category + '  <span class="caret"></span>');
 	
-	  var spanElement=$("#span-"+wordId);
+	//Get the proper element based on the given ID
+	var spanElement=$("#span-"+wordId);
 	  
-	  var search = {
-	            "wordId":wordId
-	    }
+	var search = {
+			"wordId":wordId
+	}
 
-	  $.ajax({
+	$.ajax({
 	  	headers: { 
 	        'Accept': 'application/json',
 	        'Content-Type': 'application/json' 
-	    },
+	  	},
 		type: 'post',
-	    contentType : "application/json",
-	    url: "/DiccionarioLesco/termino/agregarPreferido",
-	    data : JSON.stringify(search),
-	    dataType : 'json',
-	    success : function(data) {
-	    	console.log("SUCCESS: ", data);
-	    	if(data != null && data.code == "000"){
-	    		
-	    		//If is true, then it should be now a favorite term
-	    		if(data.content.isOneOfMyFavoriteTerms == true){
-	    			$("#span-"+wordId).removeClass('fa-star-o').addClass('fa-star');
-	    		} 
-	    		if(data.content.isOneOfMyFavoriteTerms == false) {
-	    			$("#span-"+wordId).removeClass('fa-star').addClass('fa-star-o');
-	    		}
-	    		
-	    		//Update my Terms section
-	    		updateMyTermsList(data.content.listMyWords);
-	    		
-	    	}else {
-	    		console.log("Data: " + data.content.word);
-	    	}
+		contentType : "application/json",
+		url: "/DiccionarioLesco/termino/agregarPreferido",
+		data : JSON.stringify(search),
+		dataType : 'json',
+		success : function(data) {
+			console.log("SUCCESS: ", data);
+		if(data != null && data.code == "000"){
+			
+			//If is true, then it should be now a favorite term
+			if(data.content.isOneOfMyFavoriteTerms == true){
+				$("#span-"+wordId).removeClass('fa-star-o').addClass('fa-star');
+			} 
+			if(data.content.isOneOfMyFavoriteTerms == false) {
+				$("#span-"+wordId).removeClass('fa-star').addClass('fa-star-o');
+			}
+			
+			//Update my Terms section
+			updateMyTermsList(data.content.listMyWords);
+			
+		}else {
+			console.log("Data: " + data.content.word);
+			}
 		},
 		error : function(e) {
 			console.log("ERROR: ", e);
-			//display(e);
 		},
 		done : function(e) {
-			//console.log("DONE");
-			//enableSearchButton(true);
-		}
-	  });
-	  //return false;
+			console.log("DONE: ", e);
+			}
+	});
 }
 
+/**
+ * Checks the matching terms from the input term field and loads them in the list
+ * 
+ * @returns nothing
+ */
 function checkTerm() {
 
-	  var termsInput= document.getElementById("termsInput");
-	  var categoryIdDiv= document.getElementById("categoryIdDiv");
+	//Get the search elements
+	var termsInput= document.getElementById("termsInput");
+	var categoryIdDiv= document.getElementById("categoryIdDiv");
 	  
-	  var search= {
-	            "termsInput":termsInput.value,
-	            "categoryIdDiv":categoryIdDiv.textContent
-	    }
+	//Creates the JSON search string
+	var search= {
+			"termsInput":termsInput.value,
+			"categoryIdDiv":categoryIdDiv.textContent
+	}
 
-	  $.ajax({
+	$.ajax({
 	  	headers: { 
 	        'Accept': 'application/json',
 	        'Content-Type': 'application/json' 
-	    },
+		},
 		type: 'post',
-	    contentType : "application/json",
-	    url: "/DiccionarioLesco/termino/obtenerListaTerminos",
-	    data : JSON.stringify(search),
-	    dataType : 'json',
-	    success : function(data) {
-	    	console.log("SUCCESS: ", data);
-	    	if(data != null && data.code == "000"){
-	    		//$('#divUserName').removeClass('has-error').addClass('has-success');
-				//$('#divUserName .glyphicon').removeClass('glyphicon-remove').addClass('glyphicon-ok');
-	    		updateTermsList(data.content.wordsList, data.content.myWordsList, data.content.isSessionValid);
-	    	}else if(data != null && data.code == "001"){
-	    		//$('#divUserName').removeClass('has-success').addClass('has-error');
-				//$('#divUserName .glyphicon').removeClass('glyphicon-ok').addClass('glyphicon-remove');
-	    		var wordListDiv= $("#wordListDiv");
-	    		wordListDiv.children().remove();
-	    		
-	    		//Update the total terms counter
-	    		var totalTermsCounter= $("#totalTermsCounter");
-	    		
-	    		totalTermsCounter.text("Total: 0");
-	    		
-	    		//TO DO Update counter when there is an empty list
-	    		
-	    	} else {
-	    		
-	    	}
+		contentType : "application/json",
+		url: "/DiccionarioLesco/termino/obtenerListaTerminos",
+		data : JSON.stringify(search),
+		dataType : 'json',
+		success : function(data) {
+			console.log("SUCCESS: ", data);
+			if(data != null && data.code == "000"){
+				//Updates the terms give the data from the query
+				updateTermsList(data.content.wordsList, data.content.myWordsList, data.content.isSessionValid);
+			}else if(data != null && data.code == "001"){
+				//Empty the current list
+				var wordListDiv= $("#wordListDiv");
+				wordListDiv.children().remove();
+				
+				//Update the total terms counter
+				var totalTermsCounter= $("#totalTermsCounter");
+				
+				totalTermsCounter.text("Total: 0");
+				
+				//TO DO Update counter when there is an empty list
+				
+			} else {
+				
+			}
 		},
 		error : function(e) {
 			console.log("ERROR: ", e);
-			//display(e);
 		},
 		done : function(e) {
-			//console.log("DONE");
-			//enableSearchButton(true);
-		}
-	  });
-	  //return false;
+			console.log("DONE: ", e);
+			}
+	});
 }
 
+/**
+ * Checks the matching terms from the my input term field and loads them in the list
+ * 
+ * @returns nothing
+ */
 function checkMyTerm() {
 
-	  var termsInput= document.getElementById("myTermsInput");
-	  var categoryIdDiv= document.getElementById("myCategoryIdDiv");
+	//Get the search elements
+	var termsInput= document.getElementById("myTermsInput");
+	var categoryIdDiv= document.getElementById("myCategoryIdDiv");
 	  
-	  var search= {
-	            "myTermsInput":myTermsInput.value,
-	            "myCategoryIdDiv":myCategoryIdDiv.textContent
-	    }
+	//Creates the JSON search string
+	var search= {
+		"myTermsInput":myTermsInput.value,
+		"myCategoryIdDiv":myCategoryIdDiv.textContent
+	}
 
-	  $.ajax({
+	$.ajax({
 	  	headers: { 
 	        'Accept': 'application/json',
 	        'Content-Type': 'application/json' 
-	    },
+		},
 		type: 'post',
-	    contentType : "application/json",
-	    url: "/DiccionarioLesco/termino/obtenerListaMisTerminos",
-	    data : JSON.stringify(search),
-	    dataType : 'json',
-	    success : function(data) {
-	    	console.log("SUCCESS: ", data);
-	    	if(data != null && data.code == "000"){
-	    		//$('#divUserName').removeClass('has-error').addClass('has-success');
-				//$('#divUserName .glyphicon').removeClass('glyphicon-remove').addClass('glyphicon-ok');
-	    		updateMyTermsList(data.content.myWordsList);
-	    	}else if(data != null && data.code == "001"){
-	    		//$('#divUserName').removeClass('has-success').addClass('has-error');
-				//$('#divUserName .glyphicon').removeClass('glyphicon-ok').addClass('glyphicon-remove');
-	    		var myWordListDiv= $("#myWordListDiv");
-	    		myWordListDiv.children().remove();
-	    		
-	    		//Update the total terms counter
-	    		var myTotalTermsCounter= $("#myTotalTermsCounter");
-	    		
-	    		myTotalTermsCounter.text("Total: 0");
-	    		
-	    		//TO DO Update counter when there is an empty list
-	    		
-	    	} else {
-	    		
-	    	}
+		contentType : "application/json",
+		url: "/DiccionarioLesco/termino/obtenerListaMisTerminos",
+		data : JSON.stringify(search),
+		dataType : 'json',
+		success : function(data) {
+			console.log("SUCCESS: ", data);
+			if(data != null && data.code == "000"){
+				//Updates the list based on the results from the query
+				updateMyTermsList(data.content.myWordsList);
+			}else if(data != null && data.code == "001"){
+				//Empties the current list
+				var myWordListDiv= $("#myWordListDiv");
+				myWordListDiv.children().remove();
+				
+				//Update the total terms counter
+				var myTotalTermsCounter= $("#myTotalTermsCounter");
+				
+				myTotalTermsCounter.text("Total: 0");
+				
+				//TO DO Update counter when there is an empty list
+				
+			} else {
+				
+			}
 		},
 		error : function(e) {
 			console.log("ERROR: ", e);
-			//display(e);
 		},
 		done : function(e) {
-			//console.log("DONE");
-			//enableSearchButton(true);
-		}
-	  });
-	  //return false;
+			console.log("DONE: ", e);
+			}
+		  });
 }
 
+/**
+ * Updates the list of term with the given data
+ * 
+ * @param wordList
+ * @param myWordList
+ * @param isSessionValid
+ * @returns nothing
+ */
 function updateTermsList(wordList, myWordList, isSessionValid){
 	
 	//Get the ID wordListDiv
@@ -263,11 +280,14 @@ function updateTermsList(wordList, myWordList, isSessionValid){
 		var anchor= $("<a>");
 		anchor.addClass("list-group-item");
 		
+		//Checks if the session is a valid one
 		if(isSessionValid){
 			
+			//If it isn't an empty list
 			if(myWordList.length > 0) {
 				for (myIndex = 0; myIndex < myWordList.length; myIndex++) {
 					
+					//Checks if the word is a preferred one
 					if(wordList[index].wordName == myWordList[myIndex].wordName){
 						var spanFavorite= $("<span>");
 						spanFavorite.attr("href", "#");
@@ -280,7 +300,7 @@ function updateTermsList(wordList, myWordList, isSessionValid){
 						spanDetail.attr("href", "#");
 						spanDetail.attr("onclick", "loadDetail("+ wordList[index].wordId +")");
 						spanDetail.attr("title", "Cargar Detalle");
-						spanDetail.text(wordList[index].wordName);
+						spanDetail.text(decodeURIComponent(escape(wordList[index].wordName)));
 						
 						anchor.append(spanFavorite);
 						anchor.append(spanDetail);
@@ -296,7 +316,7 @@ function updateTermsList(wordList, myWordList, isSessionValid){
 						spanDetail.attr("href", "#");
 						spanDetail.attr("onclick", "loadDetail("+ wordList[index].wordId +")");
 						spanDetail.attr("title", "Cargar Detalle");
-						spanDetail.text(wordList[index].wordName);
+						spanDetail.text(decodeURIComponent(escape(wordList[index].wordName)));
 						
 						anchor.append(spanFavorite);
 						anchor.append(spanDetail);
@@ -314,7 +334,7 @@ function updateTermsList(wordList, myWordList, isSessionValid){
 				spanDetail.attr("href", "#");
 				spanDetail.attr("onclick", "loadDetail("+ wordList[index].wordId +")");
 				spanDetail.attr("title", "Cargar Detalle");
-				spanDetail.text(wordList[index].wordName);
+				spanDetail.text(decodeURIComponent(escape(wordList[index].wordName)));
 				
 				anchor.append(spanFavorite);
 				anchor.append(spanDetail);
@@ -325,29 +345,26 @@ function updateTermsList(wordList, myWordList, isSessionValid){
 			spanDetail.attr("href", "#");
 			spanDetail.attr("onclick", "loadDetail("+ wordList[index].wordId +")");
 			spanDetail.attr("title", "Cargar Detalle");
-			spanDetail.text(wordList[index].wordName);
+			spanDetail.text(decodeURIComponent(escape(wordList[index].wordName)));
 			
 			anchor.append(spanDetail);
 		}
-
+		//Appends the new row to the list
 		wordListDiv.append(anchor);
 	}
-	
 	//Update the total terms counter
 	var totalTermsCounter= $("#totalTermsCounter");
 	
+	//Set the counter number
 	totalTermsCounter.text("Total: " + wordList.length);
-	
-	
-	//totalTermsCounter
-		
-	
-	//wordListDiv
-	
-	//<a onclick="loadDetail(${word.wordId})" href="#" class="list-group-item">${word.wordName}</a>
-	
 }
 
+/**
+ * Updates my term list based on the given data
+ * 
+ * @param myWordList
+ * @returns nothing 
+ */
 function updateMyTermsList(myWordList){
 	
 	//Get the ID wordListDiv
@@ -362,37 +379,31 @@ function updateMyTermsList(myWordList){
 		anchor.attr("href", "#");
 		anchor.attr("onclick", "loadDetail("+ myWordList[index].wordId +")");
 		anchor.addClass("list-group-item");
-		anchor.text(myWordList[index].wordName);
+		anchor.text(decodeURIComponent(escape(myWordList[index].wordName)));
 		
+		//Appends the new row to the list
 		myWordListDiv.append(anchor);
 	}
-	
 	//Update the total terms counter
 	var myTotalTermsCounter= $("#myTotalTermsCounter");
 	
-	myTotalTermsCounter.text("Total: " + myWordList.length);
-	
-	
-	//totalTermsCounter
-		
-	
-	//wordListDiv
-	
-	//<a onclick="loadDetail(${word.wordId})" href="#" class="list-group-item">${word.wordName}</a>
-	
+	//Set the counter number
+	myTotalTermsCounter.text("Total: " + myWordList.length);	
 }
 
-function rateVideo(videoId, action){
-	var termsInput= document.getElementById("myTermsInput");
-	var categoryIdDiv= document.getElementById("myCategoryIdDiv");
-	
-	var hasLike= $('#spanLike-'+videoId).hasClass("fa-thumbs-up");
-	var hasDislike= $('#spanDislike-'+videoId).hasClass("fa-thumbs-down");
-	  
+/**
+ * Rate video function
+ * 
+ * @param videoId
+ * @param action
+ * @returns nothing
+ */
+function rateVideo(videoId, action){	
+	//Create the JSON search string
 	var search= {
-	            "videoId":videoId,
-	            "action":action
-	    }
+			"videoId":videoId,
+			"action":action
+	}
 
 	  $.ajax({
 	  	headers: { 
@@ -407,41 +418,21 @@ function rateVideo(videoId, action){
 	    success : function(data) {
 	    	console.log("SUCCESS: ", data);
 	    	if(data != null && data.code == "000"){
-	    		//$('#divUserName').removeClass('has-error').addClass('has-success');
-				//$('#divUserName .glyphicon').removeClass('glyphicon-remove').addClass('glyphicon-ok');
 	    		
-	    		//updateMyTermsList(data.content.myWordsList);
-	    		
+	    		//Update the rating of the specific video
 	    		updateVideoRatingMetadata(videoId, data.content.videoRating.rating, data.content.videoMetadata);
-	    		    		    		
-	    	}else if(data != null && data.code == "001"){
-	    		//$('#divUserName').removeClass('has-success').addClass('has-error');
-				//$('#divUserName .glyphicon').removeClass('glyphicon-ok').addClass('glyphicon-remove');
 	    		
-	    		//var myWordListDiv= $("#myWordListDiv");
-	    		//myWordListDiv.children().remove();
-	    		
-	    		//Update the total terms counter
-	    		//var myTotalTermsCounter= $("#myTotalTermsCounter");
-	    		
-	    		//myTotalTermsCounter.text("Total: 0");
-	    		
-	    		//TO DO Update counter when there is an empty list
-	    		
-	    	} else {
+	    	}else {
 	    		
 	    	}
 		},
 		error : function(e) {
 			console.log("ERROR: ", e);
-			//display(e);
 		},
 		done : function(e) {
-			//console.log("DONE");
-			//enableSearchButton(true);
+			console.log("DONE: ", e);
 		}
 	  });
-	  //return false;
 }
 
 //Updates the likes, the icons related and the number of view of a video
@@ -457,6 +448,7 @@ function updateVideoRatingMetadata(videoId, videoRating, videoMetadata){
 		$('#spanDislike-'+videoId).removeClass('fa-thumbs-down').addClass('fa-thumbs-o-down');
 	}
 	
+	//Update the likes and dislikes count
 	if(videoMetadata.statistics.likeCount != null && videoMetadata.statistics.dislikeCount != null){
 		$('#spanLike-'+videoId).text(" " + videoMetadata.statistics.likeCount);
 		$('#spanDislike-'+videoId).text(" " + videoMetadata.statistics.dislikeCount);
