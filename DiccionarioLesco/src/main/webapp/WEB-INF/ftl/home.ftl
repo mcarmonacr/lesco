@@ -106,29 +106,20 @@
 					src=${definitionSourceURL}>
 					</iframe> 
 				</div>
-			    <div class="row">
-			    
-			    <div class="panel panel-primary">
-					<div class="panel-heading">
-					  <h3 class="panel-title">Definición</h3>
-					  </div>
-					  <div class="panel-body" id="definitionDiv">
-					    ${randomWord.definition}
+				<div class="row">
+					<div class="panel-group">
+					  <div class="panel panel-primary">
+					    <div class="panel-heading">
+					      <h4 class="panel-title">
+					        <a data-toggle="collapse" href="#collapse123"><span class="glyphicon glyphicon-expand"></span> Definición</a>
+					      </h4>
+					    </div>
+					    <div id="collapse123" class="panel-collapse collapse">
+					      <div id="definitionDiv" class="panel-body">${randomWord.definition}</div>
+		<!-- 			      <div class="panel-footer">Panel Footer</div> -->
+					    </div>
 					  </div>
 					</div>
-<!-- 					<div class="panel-group"> -->
-<!-- 					  <div class="panel panel-default"> -->
-<!-- 					    <div class="panel-heading"> -->
-<!-- 					      <h4 class="panel-title"> -->
-<!-- 					        <a data-toggle="collapse" href="#collapse2">Definición</a> -->
-<!-- 					      </h4> -->
-<!-- 					    </div> -->
-<!-- 					    <div id="collapse2" class="panel-collapse collapse"> -->
-<!-- 					      <div id="definitionDiv" class="panel-body">Es un tipo de saludo.</div> -->
-<!-- 					      <div class="panel-footer">Panel Footer</div> -->
-<!-- 					    </div> -->
-<!-- 					  </div> -->
-<!-- 					</div> -->
 				</div>
 				<div class="row">
 					<div class="col-md-6">
@@ -185,7 +176,7 @@
 				</div>
 		    </div>
 		    <div role="tabpanel" class="tab-pane" id="messages">
-			    <div class="row">
+			    <div class="row embed-responsive embed-responsive-16by9">
 			    <#assign explanationSourceURL = "https://www.youtube.com/embed/${randomWord.video.explanationYoutubeVideoID}?controls=1">
 					 <iframe class="video-container" id="explanationSourceURLIframe"
 					src=${explanationSourceURL}>
@@ -261,7 +252,7 @@
 				</div>
 		    </div>
 		    <div role="tabpanel" class="tab-pane" id="settings">
-		    	<div class="row">
+		    	<div class="row embed-responsive embed-responsive-16by9">
 		    	<#assign exampleSourceURL = "https://www.youtube.com/embed/${randomWord.video.exampleYoutubeVideoID}?controls=1">
 					 <iframe class="video-container" id="exampleSourceURLIframe"
 					src=${exampleSourceURL}>
@@ -381,12 +372,12 @@
 		</div>
 	    
 	    <div class="row dropdown dropdown-container-home">
-		  <button class="btn btn-default dropdown-toggle dropdown-button-home" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+		  <button class="btn btn-default dropdown-toggle dropdown-button-home" type="button" id="categoriesDropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
 		    <span class="glyphicon glyphicon-tasks"></span> Categoría
 		    <span class="caret"></span>
 		    <div id="categoryIdDiv" hidden></div>
 		  </button>
-		  <ul class="dropdown-menu dropdown-ul-home" aria-labelledby="dropdownMenu1">
+		  <ul class="dropdown-menu dropdown-ul-home" aria-labelledby="categoriesDropdownMenu">
 		  		<li onclick="assignCategory($(this).find('a').text(), $(this).find('div').text())">
 		  			<a href="#">Cualquiera</a>
 		  			<div hidden></div>

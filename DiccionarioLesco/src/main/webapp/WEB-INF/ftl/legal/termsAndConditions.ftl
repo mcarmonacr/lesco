@@ -6,7 +6,7 @@
 
       <div class="starter-template">
       
-      <img src="../resources/images/terminos_y_condiciones2.png" alt="..." class="img-rounded img-responsive center-block">
+      <img src="../resources/images/terms-and-conditions.png" alt="..." class="img-rounded img-responsive center-block">
       
         <h1>Términos De Servicio</h1>
         

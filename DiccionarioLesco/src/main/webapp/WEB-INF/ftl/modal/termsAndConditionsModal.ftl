@@ -12,7 +12,7 @@
 				   <div class="row starter-template">
 					   <div class="row">
 					     	<div class="col-md-9">
-					   			<img src="resources/images/terminos_y_condiciones2.png" alt="..." class="img-rounded img-responsive center-block">
+					   			<img src="resources/images/terms-and-conditions.png" alt="..." class="img-rounded img-responsive center-block">
 					    		<h1>Términos De Servicio</h1>
 					     	</div>
 					    </div>

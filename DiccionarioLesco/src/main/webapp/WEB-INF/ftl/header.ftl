@@ -54,7 +54,7 @@
 					<#if (userName??)>
 					<div class="navbar-form navbar-right">
 						<strong class="text-primary">Bienvenido, ${userName}</strong>
-<!-- 						<img class="img-circle" src="resources/images/marioCarmona2.PNG" alt="Mario Alonso Carmona Dinarte" width="60" height="60"> -->
+<!-- 						<img class="img-circle" src="resources/images/mario-carmona.PNG" alt="Mario Alonso Carmona Dinarte" width="60" height="60"> -->
 							<br><a href="#" onClick="endUserSession();" class="text-primary">Salir</a>
 					</div>
 						

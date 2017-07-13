@@ -6,7 +6,7 @@
 
       <div class="starter-template">
       
-      <img src="../resources/images/privacidad.png" alt="..." class="img-rounded img-responsive center-block">
+      <img src="../resources/images/privacy.png" alt="..." class="img-rounded img-responsive center-block">
       
         <h1>Privacidad</h1>
         
