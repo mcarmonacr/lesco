@@ -15,7 +15,7 @@
 		        </div>
 	        </div>
 	      </div>
-	    </div>
-	  </div>
-	</div>
-</div>
+	    </div><!-- Modal-content DIV -->
+	  </div><!-- Modal-dialog DIV -->
+	</div><!-- addTermModal DIV -->
+</div><!-- Row DIV -->
