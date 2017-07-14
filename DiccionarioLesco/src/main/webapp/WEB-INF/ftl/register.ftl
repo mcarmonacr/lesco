@@ -125,6 +125,6 @@
 	</fieldset>
 </form>
 
-<!-- 	User Registration Modal --> <#include"/modal/registerUserModal.ftl">
+<!-- 	User Registration Modal --> <#include "/modal/registerUserModal.ftl">
 
 </@c.page>

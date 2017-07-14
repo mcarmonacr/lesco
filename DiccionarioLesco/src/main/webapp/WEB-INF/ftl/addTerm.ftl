@@ -236,8 +236,8 @@
 	</div>
 
 	<!-- Modals inclusion -->
-	<#include"/modal/loadingModal.ftl"> <#include"/modal/addTermModal.ftl">
-	<#include"/modal/requestTermModal.ftl">
+	<#include "/modal/loadingModal.ftl"> <#include"/modal/addTermModal.ftl">
+	<#include "/modal/requestTermModal.ftl">
 	
 </div>
 

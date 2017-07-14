@@ -32,4 +32,4 @@
 </div>
 
 <!-- Common loading modal -->
-<#include"/modal/termsAndConditionsModal.ftl">
+<#include "/modal/termsAndConditionsModal.ftl">

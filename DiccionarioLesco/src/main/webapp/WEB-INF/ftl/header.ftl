@@ -97,4 +97,4 @@
 </div>
 
 <!-- Modal loading -->
-<#include"/modal/passwordRecoveryModal.ftl">
+<#include "/modal/passwordRecoveryModal.ftl">
