@@ -68,6 +68,7 @@ public class LescoController {
 	 * 
 	 * @return ModelAndView
 	 */
+	@SuppressWarnings("unchecked")
 	@RequestMapping("/")
 	public ModelAndView diccionarioLesco(HttpServletRequest httpRequest, HttpServletResponse httpResponse) {
 		
@@ -77,6 +78,8 @@ public class LescoController {
 		try{
 			//Get all the categories
 			List<Category> listCategories = categoryDAO.list();
+			
+			List<Word> listMyPreferredWords = null;
 			
 			List<Word> listMyWords = null;
 
@@ -90,8 +93,11 @@ public class LescoController {
 				//Obtain the User that belongs to the email
 				ProfileDetail profileDetailQuery = userDAO.findByEmailAddress(userEmail);
 				
-				//Get the list of words
-				listMyWords = getWordsFromList(preferredWordDAO.findByUser(profileDetailQuery.getProfileDetailId()));
+				//Get the list of my preferred words
+				listMyPreferredWords = getWordsFromList(preferredWordDAO.findByUser(profileDetailQuery.getProfileDetailId()));
+				
+				//Get my words
+				listMyWords = processWordList(wordDAO.findByUser(profileDetailQuery.getProfileDetailId()));
 			}
 			
 			//Get all the categories
@@ -105,6 +111,7 @@ public class LescoController {
 			mv.addObject("videosMetadata", getVideosMetadata(randomWord, session));
 			mv.addObject("listCategories", listCategories);
 			mv.addObject("listWords", listWords);
+			mv.addObject("listMyPreferredWords", listMyPreferredWords);
 			mv.addObject("listMyWords", listMyWords);
 			
 		} catch (Exception e) {
@@ -429,6 +436,37 @@ public class LescoController {
 		}
 		
 		logger.debug("LescoController - getWordsFromList() - End");
+		
+		return result;
+	}
+	
+	/**
+	 * Get the raw data and place the necessary data in the resulting map
+	 * 
+	 * @param wordList
+	 * @return
+	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	private List processWordList(List<Word> wordList){
+		
+		logger.debug("TermnsController - processWordList() - Start");
+		List result = new ArrayList();
+		
+		try{
+			//Processes the word's list and add the necessary data in the resulting map
+			for(Word actualWord:wordList){
+				Map actualWordMap = new HashMap();
+				
+				actualWordMap.put("wordId", actualWord.getWordId());
+				actualWordMap.put("wordName", actualWord.getWordName());
+				
+				result.add(actualWordMap);
+			}
+		}catch(Exception e){
+			logger.error("TermnsController - processWordList() - Error", e);
+		}
+				
+		logger.debug("TermnsController - processWordList() - End");
 		
 		return result;
 	}

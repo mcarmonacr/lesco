@@ -53,6 +53,29 @@ public class WordDAOImpl implements WordDAO {
 	}
 	
 	/**
+	 * Deletes a word
+	 */
+	@Transactional
+	public Boolean deleteById(Integer wordId){
+		logger.debug("WordDAOImpl - deleteById() - Start");
+		
+		Boolean result = false;
+		
+        Query query = sessionFactory.getCurrentSession().createQuery("delete Word where wordId = :wordId");
+        query.setParameter("wordId", wordId);
+        
+        int queryResult = query.executeUpdate();
+        
+        if (queryResult > 0) {
+            result= true;
+        }
+        
+        logger.debug("WordDAOImpl - deleteById() - End");
+        
+        return result;
+	}
+	
+	/**
 	 * Get a list of all words
 	 */
 	@Transactional
@@ -89,6 +112,26 @@ public class WordDAOImpl implements WordDAO {
 	}
 	
 	/**
+	 * Get a list of all the matching words of a particular user
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	@Transactional
+	public List<Word> findByUserAndPattern(Integer userProfile_ID, String termsInput){
+		
+		logger.debug("WordDAOImpl - findByUserAndPattern() - Start");
+		
+		Query query = sessionFactory.getCurrentSession().createQuery("from Word where userProfile_ID=:userProfile_ID and wordName like :wordName Order By wordName");
+        query.setParameter("wordName", termsInput + "%");
+        query.setParameter("userProfile_ID", userProfile_ID);
+        List<Word> wordsList= query.list();
+        
+        logger.debug("WordDAOImpl - findByUserAndPattern() - End");
+        
+        return wordsList;
+	}
+	
+	/**
 	 * Find words that match the pattern and also the category
 	 */
 	@SuppressWarnings("unchecked")
@@ -103,6 +146,27 @@ public class WordDAOImpl implements WordDAO {
         List<Word> wordsList= query.list();
         
         logger.debug("WordDAOImpl - findByPatternAndCategoryId() - End");
+        
+        return wordsList;
+	}
+	
+	/**
+	 * Get a list of all the matching words and the given category ID of a particular user
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	@Transactional
+	public List<Word> findByUserPatternAndCategoryId(Integer userProfile_ID, String termsInput, Integer categoryId){
+		
+		logger.debug("WordDAOImpl - findByUserPatternAndCategoryId() - Start");
+		
+		Query query = sessionFactory.getCurrentSession().createQuery("from Word where userProfile_ID=:userProfile_ID and wordName like :wordName and Category_ID =:categoryId Order By wordName");
+        query.setParameter("wordName", termsInput + "%");
+        query.setParameter("categoryId", categoryId);
+        query.setParameter("userProfile_ID", userProfile_ID);
+        List<Word> wordsList= query.list();
+        
+        logger.debug("WordDAOImpl - findByUserPatternAndCategoryId() - End");
         
         return wordsList;
 	}
@@ -140,6 +204,24 @@ public class WordDAOImpl implements WordDAO {
         logger.debug("WordDAOImpl - findById() - End");
         
         return (Word) criteria.uniqueResult();      
+	}
+	
+	/**
+	 * List of words of a particular user
+	 */
+	@SuppressWarnings("unchecked")
+	@Transactional
+	public List<Word> findByUser(Integer userProfile_ID){
+		
+		logger.debug("WordDAOImpl - findByUser() - Start");
+		
+		Query query = sessionFactory.getCurrentSession().createQuery("from Word where userProfile_ID =:userProfile_ID Order By wordName");
+        query.setParameter("userProfile_ID", userProfile_ID);
+        List<Word> wordsList= query.list();
+        
+        logger.debug("WordDAOImpl - findByUser() - End");
+        
+        return wordsList;
 	}
 	
 	/**

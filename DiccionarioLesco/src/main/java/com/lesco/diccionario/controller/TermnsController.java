@@ -126,6 +126,32 @@ public class TermnsController {
 		return ajaxResponse;
 	}
 	
+	@RequestMapping(value= "/eliminarTermino", method = RequestMethod.POST, headers = "Accept=application/json", consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody AjaxResponseBody eliminarTermino(@RequestBody Map<String, String> json){
+		
+		//Generic Response Body for all Ajax request
+		AjaxResponseBody result = new AjaxResponseBody();
+		result.setMessage("Failure");
+		logger.debug("TermnsController - eliminarTermino() - Start");
+		
+		//Check if the category name coming form the form is not null
+		if(json.get("wordId") != null && !json.get("wordId").isEmpty()){
+			try{
+				//Checks if the category already exists
+				if(wordDAO.deleteById(Integer.valueOf(json.get("wordId")))){
+					result.setMessage("Sucess");
+				}else{
+					result.setMessage("Failure");
+				}
+			} catch (Exception e) {
+				logger.error("There was an error processing the request", e);
+			}
+		}			
+		logger.debug("TermnsController - eliminarTermino() - End");
+		
+		return result;
+	}
+	
 	
 	/**
 	 * Get the word corresponding to the sent ID
@@ -274,13 +300,12 @@ public class TermnsController {
 		return result;
 	}
 	
-	
 	/**
-	 * Gets all terms form the DB that match the search input pattern
+	 * Gets all my terms form the DB that match the search input pattern
 	 * 
 	 * Type: Json POST method
 	 * 
-	 * @param registerForm. Contains fields: myTermsInput, myCategoryIdDiv
+	 * @param registerForm. Contains fields: userName, emailAddress, password, passwordConfirmation, private String birthdate ,termsAndConditions.
 	 */
 	@RequestMapping(value= "/obtenerListaMisTerminos", method = RequestMethod.POST, headers = "Accept=application/json", consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody AjaxResponseBody obtenerListaMisTerminos(@RequestBody Map<String, String> json, HttpServletRequest request, HttpServletResponse response){
@@ -291,41 +316,43 @@ public class TermnsController {
 		
 		try{
 			List<Word> myWordsList = new ArrayList<Word>();
+
+			Map <String, Object> myWordsMap = new HashMap <String, Object> ();
 			
-			//Get user session
+			//Get user session and sets an attribute in the result datamap
 			HttpSession session = request.getSession();
-			
-			//Get the current logged in user emailAddress
-			String userEmail = session.getAttribute("userEmail").toString();
-			
-			//Obtain the User that belongs to the email
-			ProfileDetail profileDetailQuery = userDAO.findByEmailAddress(userEmail);
-			
-			if(profileDetailQuery != null){
+			if(session != null && session.getAttribute("userEmail") != null) {
 				//Validate input
 				if (json.get("myTermsInput") != null && !json.get("myTermsInput").isEmpty()){
+					
+					//Get the current logged in user emailAddress
+					String userEmail = session.getAttribute("userEmail").toString();
+					
+					//Obtain the User that belongs to the email
+					ProfileDetail profileDetailQuery = userDAO.findByEmailAddress(userEmail);
+					
 
 					//If there's a category then it's included in the search 
 					if(json.get("myCategoryIdDiv") != null && !json.get("myCategoryIdDiv").isEmpty()){
-						myWordsList = preferredWordDAO.findByPatternAndCategoryId(json.get("myTermsInput"), Integer.parseInt(json.get("myCategoryIdDiv")), profileDetailQuery.getProfileDetailId()); //wordDAO.list();
+						myWordsList = wordDAO.findByUserPatternAndCategoryId(profileDetailQuery.getProfileDetailId(), json.get("myTermsInput"), Integer.parseInt(json.get("myCategoryIdDiv"))); //wordDAO.list();
 					} else {
 						//Search the word regardless the category
-						myWordsList = preferredWordDAO.findByPattern(json.get("myTermsInput"), profileDetailQuery.getProfileDetailId());
-					}
-				} else {
-					// TODO
-					//If there wasn't any input, get them all
-					if(myWordsList.size() == 0){
-						myWordsList = preferredWordDAO.listMyWords(profileDetailQuery.getProfileDetailId());
+						myWordsList = wordDAO.findByUserAndPattern(profileDetailQuery.getProfileDetailId(), json.get("myTermsInput"));
 					}
 				}
+				else {
+					//If there wasn't any input, get them all
+					if(myWordsList.size() == 0){
+						myWordsList = wordDAO.list();
+					}
+				}
+				myWordsMap.put("isSessionValid", true);
+			} else {
+				myWordsMap.put("isSessionValid", false);
 			}
-
-			Map <String, Object> wordsMap = new HashMap <String, Object> ();
-						
-			// TODO process wordsMap in order to get only the list of words and its IDs 
-			wordsMap.put("myWordsList", processWordList(myWordsList));
-			result.setContent(wordsMap);
+			
+			myWordsMap.put("myWordsList", processWordList(myWordsList));
+			result.setContent(myWordsMap);
 					
 			//Checks if the input user name already exists in the database
 			if(myWordsList != null && !myWordsList.isEmpty()){			
@@ -340,6 +367,76 @@ public class TermnsController {
 		}
 
 		logger.debug("TermnsController - obtenerListaMisTerminos() - End");
+		
+		return result;
+	}
+	
+	
+	/**
+	 * Gets all terms form the DB that match the search input pattern
+	 * 
+	 * Type: Json POST method
+	 * 
+	 * @param registerForm. Contains fields: myTermsInput, myPreferredCategoryIdDiv
+	 */
+	@RequestMapping(value= "/obtenerListaMisTerminosPreferidos", method = RequestMethod.POST, headers = "Accept=application/json", consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody AjaxResponseBody obtenerListaMisTerminosPreferidos(@RequestBody Map<String, String> json, HttpServletRequest request, HttpServletResponse response){
+		
+		AjaxResponseBody result = new AjaxResponseBody();
+		
+		logger.debug("TermnsController - obtenerListaMisTerminosPreferidos() - Start");
+		
+		try{
+			List<Word> myPreferredWordsList = new ArrayList<Word>();
+			
+			//Get user session
+			HttpSession session = request.getSession();
+			
+			//Get the current logged in user emailAddress
+			String userEmail = session.getAttribute("userEmail").toString();
+			
+			//Obtain the User that belongs to the email
+			ProfileDetail profileDetailQuery = userDAO.findByEmailAddress(userEmail);
+			
+			if(profileDetailQuery != null){
+				//Validate input
+				if (json.get("myPreferredTermsInput") != null && !json.get("myPreferredTermsInput").isEmpty()){
+
+					//If there's a category then it's included in the search 
+					if(json.get("myPreferredCategoryIdDiv") != null && !json.get("myPreferredCategoryIdDiv").isEmpty()){
+						myPreferredWordsList = preferredWordDAO.findByPatternAndCategoryId(json.get("myPreferredTermsInput"), Integer.parseInt(json.get("myPreferredCategoryIdDiv")), profileDetailQuery.getProfileDetailId()); //wordDAO.list();
+					} else {
+						//Search the word regardless the category
+						myPreferredWordsList = preferredWordDAO.findByPattern(json.get("myPreferredTermsInput"), profileDetailQuery.getProfileDetailId());
+					}
+				} else {
+					// TODO
+					//If there wasn't any input, get them all
+					if(myPreferredWordsList.size() == 0){
+						myPreferredWordsList = preferredWordDAO.listMyWords(profileDetailQuery.getProfileDetailId());
+					}
+				}
+			}
+
+			Map <String, Object> wordsMap = new HashMap <String, Object> ();
+						
+			// TODO process wordsMap in order to get only the list of words and its IDs 
+			wordsMap.put("myPreferredWordsList", processWordList(myPreferredWordsList));
+			result.setContent(wordsMap);
+					
+			//Checks if the input user name already exists in the database
+			if(myPreferredWordsList != null && !myPreferredWordsList.isEmpty()){			
+				result.setMessage("Sucess");
+				result.setCode("000");
+			}else{
+				result.setMessage("List is empty");
+				result.setCode("001");
+			}
+		}catch(Exception e){
+			logger.error("TermnsController - obtenerListaMisTerminosPreferidos() - Error", e);
+		}
+
+		logger.debug("TermnsController - obtenerListaMisTerminosPreferidos() - End");
 		
 		return result;
 	}
@@ -513,7 +610,7 @@ public class TermnsController {
 	 * 
 	 * Type: Json POST method
 	 * 
-	 * @param registerForm. Contains fields: myTermsInput, myCategoryIdDiv
+	 * @param registerForm. Contains fields: myTermsInput, myPreferredCategoryIdDiv
 	 */
 	@RequestMapping(value= "/evaluarVideo", method = RequestMethod.POST, headers = "Accept=application/json", consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody AjaxResponseBody evaluarVideo(@RequestBody Map<String, String> json){

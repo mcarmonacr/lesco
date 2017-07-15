@@ -364,11 +364,14 @@
 				aria-controls="siteTerms" role="tab" data-toggle="tab">Términos</a></li>
 			<li role="presentation"><a href="#myFavoriteTerms"
 				aria-controls="myFavoriteTerms" role="tab" data-toggle="tab">Favoritos</a></li>
+			<li role="presentation"><a href="#myTerms"
+				aria-controls="myTerms" role="tab" data-toggle="tab">Mis Términos</a></li>
 		</ul>
 		</#if>
 
 		<!-- Tab panes -->
 		<div class="tab-content">
+		
 			<div role="tabpanel" class="tab-pane active" id="siteTerms">
 				<div class="panel panel-default">
 					<div class="panel-body">
@@ -441,8 +444,8 @@
 								<!-- 	    Checks if the user is logged in the site -->
 								<#if ((isSessionValid??) && (isSessionValid== "true"))> <!-- Work to do here: Add the proper classes and onClick actions -->
 								<#list listWords as word> <#if
-									((listMyWords??) && (listMyWords?size> 0))> <#list
-									listMyWords as myWord> <!-- This means that the word is a preferred word by the user -->
+									((listMyPreferredWords??) && (listMyPreferredWords?size> 0))> <#list
+									listMyPreferredWords as myWord> <!-- This means that the word is a preferred word by the user -->
 								<#if (word.wordName== myWord.wordName)> <a
 									class="list-group-item"> <span id="span-${word.wordId}"
 									title="Deshacer Favorito"
@@ -506,6 +509,104 @@
 								<span
 									class="glyphicon glyphicon-search input-group-addon home-search-glyphicon"></span>
 								<!-- 		   <span class="input-group-addon" id="basic-addon1">@</span> -->
+								<input id="myPreferredTermsInput" name="myPreferredTermsInput" type="text"
+									class="form-control" placeholder="Buscar"
+									aria-describedby="sizing-addon2">
+							</div>
+
+							<div class="row dropdown dropdown-container-home">
+								<button
+									class="btn btn-default dropdown-toggle dropdown-button-home"
+									type="button" id="myPreferredCategoryDropdownMenu"
+									data-toggle="dropdown" aria-haspopup="true"
+									aria-expanded="true">
+									<span class="glyphicon glyphicon-tasks"></span> Categoría <span
+										class="caret"></span>
+									<div id="myPreferredCategoryIdDiv" hidden></div>
+								</button>
+								<ul class="dropdown-menu dropdown-ul-home"
+									aria-labelledby="myPreferredCategoryDropdownMenu">
+									<li
+										onclick="assignMyPreferredCategory($(this).find('a').text(), $(this).find('div').text())">
+										<a href="#">Cualquiera</a>
+										<div hidden></div>
+									</li>
+									<li role="separator" class="divider"></li>
+									<#list listCategories as category> <!-- 	    	<li class="list-group-item list-group-item-info"><a href="#">${category.categoryName}</a></li> -->
+									<li
+										onclick="assignMyPreferredCategory($(this).find('a').text(), $(this).find('div').text())">
+										<a href="#">${category.categoryName}</a>
+										<div hidden>${category.categoryId}</div>
+									</li>
+
+									<!-- 				<li onclick="assignCategory(this.value)" id="1">1</li> -->
+									</#list>
+									<!-- 		    <li><a href="#">Action</a></li> -->
+									<!-- 		    <li><a href="#">Another action</a></li> -->
+									<!-- 		    <li><a href="#">Something else here</a></li> -->
+									<!-- 		    <li role="separator" class="divider"></li> -->
+									<!-- 		    <li><a href="#">Separated link</a></li> -->
+								</ul>
+							</div>
+
+							<div id="myPreferredWordListDiv" class="row terms-list text-center">
+
+								<!-- 	    <a href="#" class="list-group-item active"> -->
+								<!-- 		    Hola -->
+								<!-- 		  </a> -->
+
+								<!-- 		  <a href="#" class="list-group-item">Hotel</a> -->
+								<!-- 		  <a href="#" class="list-group-item">Importante</a> -->
+								<!-- 		  <a href="#" class="list-group-item">Letra</a> -->
+								<!-- 		  <a href="#" class="list-group-item">Nunca</a> -->
+
+								<#if listMyPreferredWords??> <#list listMyPreferredWords as myWord>
+								<a onclick="loadDetail(${myWord.wordId})" href="#"
+									class="list-group-item">${myWord.wordName}</a> </#list> </#if>
+							</div>
+
+							<#if listMyPreferredWords??>
+							<div class="row">
+								<h1>
+									<span id="myTotalPreferredTermsCounter"
+										class="label label-primary terms-header">Total:
+										${listMyPreferredWords?size} </span>
+								</h1>
+							</div>
+							<#else>
+							<div class="row">
+								<h1>
+									<span id="myTotalPreferredTermsCounter"
+										class="label label-primary terms-header">Total: 0 </span>
+								</h1>
+							</div>
+							</#if>
+						</div>
+
+					</div>
+				</div>
+			</div>
+			
+			<div role="tabpanel" class="tab-pane" id="myTerms">
+
+				<div class="panel panel-default">
+					<div class="panel-body">
+
+						<!-- Terms Section -->
+						<div class="list-group">
+
+							<div class="row">
+								<h1>
+									<span
+										class="label label-primary terms-header glyphicon glyphicon-th-list">
+										Mis Términos</span>
+								</h1>
+							</div>
+
+							<div class="row input-group search-text-box">
+								<span
+									class="glyphicon glyphicon-search input-group-addon home-search-glyphicon"></span>
+								<!-- 		   <span class="input-group-addon" id="basic-addon1">@</span> -->
 								<input id="myTermsInput" name="myTermsInput" type="text"
 									class="form-control" placeholder="Buscar"
 									aria-describedby="sizing-addon2">
@@ -557,9 +658,19 @@
 								<!-- 		  <a href="#" class="list-group-item">Letra</a> -->
 								<!-- 		  <a href="#" class="list-group-item">Nunca</a> -->
 
-								<#if listMyWords??> <#list listMyWords as myWord>
-								<a onclick="loadMyDetail(${myWord.wordId})" href="#"
-									class="list-group-item">${myWord.wordName}</a> </#list> </#if>
+								<#if listMyWords??> 
+									<#list listMyWords as myWord>
+									
+									<a class="list-group-item"> 
+										<span title="Eliminar" id="myWord-${myWord.wordId}"
+										class="glyphicon glyphicon-remove pull-left deleteWordConfirm"></span> <span
+										onclick="loadDetail(${myWord.wordId})" title="Cargar detalle">
+											${myWord.wordName}</span>
+									</a> 
+									
+									</#list> 
+
+								</#if>
 							</div>
 
 							<#if listMyWords??>
@@ -583,8 +694,14 @@
 					</div>
 				</div>
 			</div>
+			
 		</div>
 	</div>
+
+<!-- This DIV gets automatically hidden by JQueryUI -->
+	<div id="deleteWordDialog" title="Confirmación Requerida">¿Desea eliminar
+		este término?</div>
+
 </div>
 
 </@c.page>
