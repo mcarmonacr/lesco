@@ -8,7 +8,7 @@
       
       <img src="../resources/images/lesco.jpg" alt="..." class="img-rounded img-responsive center-block">
       
-        <h1>Lenguaje De Señas Costarricense - LESCO</h1>
+        <h2>Lenguaje De Señas Costarricense - LESCO</h2>
         
         <br>
         

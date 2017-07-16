@@ -1,16 +1,16 @@
-<div class="row" id="footer">
+
 	<footer class="navbar navbar-default navbar-fixed-bottom">
 		<div class="container-fluid">
-			<div class="row">
+			<div class="row footer-content">
 				<!-- 			  	<hr> -->
 				<div class="col-lg-12">
-					<div class="col-md-8">
+					<div class="col-md-8 col-sm-12">
 						<a data-toggle="modal" data-target="#myFooterModal">Términos Y
 							Condiciones</a> | <a data-toggle="modal" data-target="#myFooterModal">Privacidad</a>
 						<!-- 			        <a href="/DiccionarioLesco/legal/terminos-de-servicio">Términos Y Condiciones</a> | <a href="/DiccionarioLesco/legal/privacidad">Privacidad</a> -->
 					</div>
-					<div class="col-md-4">
-						<p class="muted pull-right">© ${year} Diccionario Lesco. Todos
+					<div class="col-md-4 col-sm-12">
+						<p class="muted">© ${year} Diccionario Lesco. Todos
 							los derechos reservados</p>
 					</div>
 				</div>
@@ -29,7 +29,7 @@
 			</#list> 
 		</#if> 
 	</#if>
-</div>
+
 
 <!-- Common loading modal -->
 <#include "/modal/termsAndConditionsModal.ftl">

@@ -7,22 +7,22 @@
 	<div class="col-md-9">
 		<div>
 			<!-- Video Details Section -->
-			<div class="panel panel-default">
+			<div class="panel panel-default video-panel">
 				<div class="panel-body">
 
 					<#if randomWord.wordName??>
 					<div class="row">
-						<h1>
-							<span class="label label-primary terms-header" id="wordName">
+						<h2>
+							<span class="header-black" id="wordName">
 								${randomWord.wordName}</span>
-						</h1>
+						</h2>
 					</div>
 					<#else>
 					<div class="row">
-						<h1>
-							<span class="label label-primary terms-header" id="wordName">
+						<h2>
+							<span class="header-black" id="wordName">
 								No Hay Términos</span>
-						</h1>
+						</h2>
 					</div>
 					</#if> <!-- Nav tabs --> <!-- Usar .col-md-offset-* para correr una columna *  a la derecha. Este es, creo: .col-md-4 .col-md-offset-4 -->
 					<div class="row">
@@ -380,11 +380,11 @@
 						<div class="list-group">
 
 							<div class="row">
-								<h1>
+								<h2>
 									<span
-										class="label label-primary terms-header glyphicon glyphicon-th-list">
+										class="header-black glyphicon glyphicon-th-list">
 										Términos</span>
-								</h1>
+								</h2>
 							</div>
 
 							<div class="row input-group search-text-box">
@@ -450,13 +450,13 @@
 									class="list-group-item"> <span id="span-${word.wordId}"
 									title="Deshacer Favorito"
 									onclick="togglePreferred(${word.wordId})"
-									class="fa fa-lg fa-star pull-left"></span> <span
+									class="preferred-button btn btn-sm btn-warning fa fa-lg fa-star pull-left"></span> <span
 									onclick="loadDetail(${word.wordId})" title="Cargar detalle">
 										${word.wordName}</span>
 								</a> </#if> </#list> <#else> <a class="list-group-item"> <span
 									id="span-${word.wordId}" title="Hacer Favorito"
 									onclick="togglePreferred(${word.wordId})"
-									class="fa fa-lg fa-star-o pull-left"></span> <span
+									class="preferred-button btn btn-sm btn-warning fa fa-lg fa-star-o pull-left"></span> <span
 									onclick="loadDetail(${word.wordId})" title="Cargar detalle">
 										${word.wordName}</span>
 								</a></#if> </#list> <#else> <#list listWords as word> <a
@@ -468,21 +468,22 @@
 							</div>
 
 							<#if randomWord.wordName??>
-							<div class="row">
-								<h1>
+							<div class="row total-items-counter">
+								<h2>
 									<span id="totalTermsCounter"
-										class="label label-primary terms-header">Total:
+										class="header-black">Total:
 										${listWords?size} </span>
-								</h1>
+								</h2>
 							</div>
 							<#else>
-							<div class="row">
-								<h1>
+							<div class="row total-items-counter">
+								<h2>
 									<span id="totalTermsCounter"
-										class="label label-primary terms-header">Total: 0 </span>
-								</h1>
+										class="header-black">Total: 0 </span>
+								</h2>
 							</div>
 							</#if>
+							
 						</div>
 
 					</div>
@@ -498,11 +499,11 @@
 						<div class="list-group">
 
 							<div class="row">
-								<h1>
+								<h2>
 									<span
-										class="label label-primary terms-header glyphicon glyphicon-th-list">
+										class="header-black glyphicon glyphicon-th-list">
 										Favoritos</span>
-								</h1>
+								</h2>
 							</div>
 
 							<div class="row input-group search-text-box">
@@ -566,19 +567,19 @@
 							</div>
 
 							<#if listMyPreferredWords??>
-							<div class="row">
-								<h1>
+							<div class="row total-items-counter">
+								<h2>
 									<span id="myTotalPreferredTermsCounter"
-										class="label label-primary terms-header">Total:
+										class="header-black">Total:
 										${listMyPreferredWords?size} </span>
-								</h1>
+								</h2>
 							</div>
 							<#else>
-							<div class="row">
-								<h1>
+							<div class="row total-items-counter">
+								<h2>
 									<span id="myTotalPreferredTermsCounter"
-										class="label label-primary terms-header">Total: 0 </span>
-								</h1>
+										class="header-black">Total: 0 </span>
+								</h2>
 							</div>
 							</#if>
 						</div>
@@ -596,11 +597,11 @@
 						<div class="list-group">
 
 							<div class="row">
-								<h1>
+								<h2>
 									<span
-										class="label label-primary terms-header glyphicon glyphicon-th-list">
+										class="header-black glyphicon glyphicon-th-list">
 										Mis Términos</span>
-								</h1>
+								</h2>
 							</div>
 
 							<div class="row input-group search-text-box">
@@ -663,7 +664,7 @@
 									
 									<a class="list-group-item"> 
 										<span title="Eliminar" id="myWord-${myWord.wordId}"
-										class="glyphicon glyphicon-remove pull-left deleteWordConfirm"></span> <span
+										class="btn btn-sm btn-danger glyphicon glyphicon-trash pull-left deleteWordConfirm"></span> <span
 										onclick="loadDetail(${myWord.wordId})" title="Cargar detalle">
 											${myWord.wordName}</span>
 									</a> 
@@ -674,19 +675,19 @@
 							</div>
 
 							<#if listMyWords??>
-							<div class="row">
-								<h1>
+							<div class="row total-items-counter">
+								<h2>
 									<span id="myTotalTermsCounter"
-										class="label label-primary terms-header">Total:
+										class="header-black">Total:
 										${listMyWords?size} </span>
-								</h1>
+								</h2>
 							</div>
 							<#else>
-							<div class="row">
-								<h1>
+							<div class="row total-items-counter">
+								<h2>
 									<span id="myTotalTermsCounter"
-										class="label label-primary terms-header">Total: 0 </span>
-								</h1>
+										class="header-black">Total: 0 </span>
+								</h2>
 							</div>
 							</#if>
 						</div>
@@ -699,7 +700,7 @@
 	</div>
 
 <!-- This DIV gets automatically hidden by JQueryUI -->
-	<div id="deleteWordDialog" title="Confirmación Requerida">¿Desea eliminar
+	<div id="deleteWordDialog" hidden title="Confirmación Requerida">¿Desea eliminar
 		este término?</div>
 
 </div>

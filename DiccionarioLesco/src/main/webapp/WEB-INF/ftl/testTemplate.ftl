@@ -2,7 +2,7 @@
 <@c.page css="resources/css/common.css">
 <!-- custom page content -->
 
-<h1>Test Template page</h1>
+<h2>Test Template page</h2>
 
 <div id="main-content">
 	<div class="list-group">

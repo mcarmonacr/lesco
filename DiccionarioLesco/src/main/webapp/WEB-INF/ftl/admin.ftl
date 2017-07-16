@@ -15,9 +15,9 @@ js="resources/js/admin.js">
 				<div class="list-group">
 
 					<div class="row">
-						<h1>
-							<span class="label label-primary terms-header">Categorías</span>
-						</h1>
+						<h2>
+							<span class="header-black">Categorías</span>
+						</h2>
 					</div>
 
 					<!-- 				<div class="row input-group search-text-box"> -->
@@ -43,7 +43,7 @@ js="resources/js/admin.js">
 						-->
 						<#list listCategories as category> <a
 							class="list-group-item"> <span id="${category.categoryId}"
-							title="Eliminar" class="glyphicon glyphicon-remove confirmLink"></span>
+							title="Eliminar" class="btn btn-sm btn-danger glyphicon glyphicon-trash confirmLink"></span>
 							<span> ${category.categoryName}</span>
 						</a> </#list>
 

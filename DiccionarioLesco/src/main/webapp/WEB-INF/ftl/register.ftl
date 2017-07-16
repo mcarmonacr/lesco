@@ -2,9 +2,9 @@
 <@c.page css="resources/css/register.css" js="resources/js/register.js">
 <!-- custom page content -->
 
-<h3>
-	Creación de Usuario <span class="label label-default">Nuevo</span>
-</h3>
+<!-- <h3> -->
+<!-- 	Creación de Usuario <span class="label label-default">Nuevo</span> -->
+<!-- </h3> -->
 
 <form class="form-horizontal" name="registerForm" id="registerForm">
 	<fieldset>
@@ -14,7 +14,7 @@
 
 		<!-- Text input-->
 		<div id="divUserName" class="form-group has-feedback">
-			<label class="col-md-4 control-label" for="textinput">Nombre
+			<label class="col-md-2 control-label" for="textinput">Nombre
 				de Usuario</label>
 			<div class="col-md-4">
 				<input id="userName" name="userName" placeholder="Nombre de Usuario"
@@ -27,7 +27,7 @@
 
 		<!-- Text input-->
 		<div id="divEmailAddress" class="form-group has-feedback">
-			<label class="col-md-4 control-label" for="textinput">Correo
+			<label class="col-md-2 control-label" for="textinput">Correo
 				Electrónico</label>
 			<div class="col-md-4">
 				<input id="emailAddress" name="emailAddress"
@@ -48,7 +48,7 @@
 
 		<!-- Password input-->
 		<div class="form-group">
-			<label class="col-md-4 control-label" for="passwordinput">Contraseña</label>
+			<label class="col-md-2 control-label" for="passwordinput">Contraseña</label>
 			<div class="col-md-4">
 				<input id="password" name="password" placeholder="Contraseña"
 					class="form-control input-md" required="" type="password">
@@ -58,7 +58,7 @@
 
 		<!-- Password input-->
 		<div class="form-group">
-			<label class="col-md-4 control-label" for="passwordinput">Confirmación
+			<label class="col-md-2 control-label" for="passwordinput">Confirmación
 				Contraseña</label>
 			<div class="col-md-4">
 				<input id="passwordConfirmation" name="passwordConfirmation"
@@ -70,7 +70,7 @@
 
 		<!-- Password input-->
 		<div class="form-group">
-			<label class="col-md-4 control-label" for="birthDate">Fecha
+			<label class="col-md-2 control-label" for="birthDate">Fecha
 				de Nacimiento</label>
 			<div class="col-md-4">
 				<div class="input-group input-append date" id="datePicker">
@@ -87,7 +87,7 @@
 
 		<!-- Multiple Checkboxes -->
 		<div class="form-group">
-			<label class="col-md-4 control-label" for="checkboxes">Aceptación
+			<label class="col-md-2 control-label" for="checkboxes">Aceptación
 				Términos y Condiciones</label>
 			<div class="col-md-4">
 				<div class="checkbox">
@@ -112,9 +112,11 @@
 		<!-- 			  </div> -->
 		<!-- 			</div> -->
 
+		<legend> </legend>
+
 		<!-- Button (Double) -->
 		<div class="form-group">
-			<label class="col-md-4 control-label" for="button1id"></label>
+			<label class="col-md-2 control-label" for="button1id"></label>
 			<div class="col-md-8">
 				<button type="submit" id="button1id" name="button1id"
 					class="btn btn-primary">Registrar</button>

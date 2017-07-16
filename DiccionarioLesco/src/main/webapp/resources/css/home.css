@@ -35,7 +35,8 @@ html, body {
 
 .terms-list{
 	overflow:auto;
-	height: 400px;
+	max-height: 400px;
+	min-height: 300px;
 }
 
 .video-container{
@@ -72,4 +73,40 @@ html, body {
     margin: 0 !important;
 }
 .modal-static .modal-content .icon {
+}
+
+.video-panel{
+	margin-bottom:50px;
+}
+
+.deleteWordConfirm{
+	    margin-top: -2%;
+}
+
+.preferred-button{
+	margin-top: -1%;
+}
+
+.carga-archivo-input {
+    position: relative;
+    overflow: hidden;
+    margin: 0px;    
+    color: #333;
+    background-color: #fff;
+    border-color: #ccc;
+    display:block;    
+}
+.carga-archivo-input input[type=file] {
+    position: absolute;
+	top: 0;
+	right: 0;
+	margin: 0;
+	padding: 0;
+	font-size: 20px;
+	cursor: pointer;
+	opacity: 0;
+	filter: alpha(opacity=0);
+}
+.carga-archivo-input-title {
+    margin-left:2px;
 }

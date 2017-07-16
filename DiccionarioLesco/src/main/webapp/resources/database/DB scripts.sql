@@ -1,6 +1,5 @@
 -- Users table
-CREATE TABLE UserProfile
-(
+CREATE TABLE UserProfile (
 UserProfile_ID INT NOT NULL AUTO_INCREMENT,
 UserName VARCHAR(100) NOT NULL,
 UserPassword VARCHAR(128) NOT NULL, -- SHA-512 password
@@ -10,8 +9,7 @@ PRIMARY KEY (UserProfile_ID)
 );
 
 -- UserProfile table
-CREATE TABLE ProfileDetail
-(
+CREATE TABLE ProfileDetail (
 ProfileDetail_ID INT NOT NULL,
 Email VARCHAR(100) NOT NULL,
 TermsnAndConditions BIT (1) DEFAULT 0,
@@ -21,16 +19,14 @@ FOREIGN KEY (ProfileDetail_ID) REFERENCES UserProfile(UserProfile_ID) -- One-To-
 );
 
 -- Categories table
-CREATE TABLE Category
-(
+CREATE TABLE Category (
 Category_ID INT NOT NULL AUTO_INCREMENT,
 CategoryName VARCHAR(100) NOT NULL,
 PRIMARY KEY (Category_ID)
 );
 
 -- Words table
-CREATE TABLE Word
-(
+CREATE TABLE Word (
 Word_ID INT NOT NULL AUTO_INCREMENT,
 UserProfile_ID INT,
 Category_ID INT,
@@ -45,8 +41,7 @@ FOREIGN KEY (Category_ID) REFERENCES Category(Category_ID)
 );
 
 -- Videos table
-CREATE TABLE Video
-(
+CREATE TABLE Video (
 Video_ID INT NOT NULL AUTO_INCREMENT,
 TermYoutubeVideoID VARCHAR(100) NOT NULL,
 DefinitionYoutubeVideoID VARCHAR(100) NOT NULL,
@@ -57,8 +52,7 @@ FOREIGN KEY (Video_ID) REFERENCES Word(Word_ID)
 );
 
 -- Request table
-CREATE TABLE Request
-(
+CREATE TABLE Request (
 Request_ID INT NOT NULL AUTO_INCREMENT,
 UserProfile_ID INT,
 WordName VARCHAR(100) NOT NULL,
@@ -68,8 +62,7 @@ FOREIGN KEY (UserProfile_ID) REFERENCES UserProfile(UserProfile_ID)
 );
 
 -- PreferredWord table
-CREATE TABLE PreferredWord
-(
+CREATE TABLE PreferredWord (
 PreferredWord_ID INT NOT NULL AUTO_INCREMENT,
 UserProfile_ID INT NOT NULL,
 Word_ID INT NOT NULL,

@@ -410,7 +410,7 @@ function updateTermsList(wordList, myWordList, isSessionValid){
 						spanFavorite.attr("onclick", "togglePreferred("+ wordList[index].wordId +")");
 						spanFavorite.attr("title", "Deshacer Favorito");
 						spanFavorite.attr("id", "span-"+wordList[index].wordId);
-						spanFavorite.attr("class", "fa fa-lg fa-star pull-left");
+						spanFavorite.attr("class", "preferred-button btn btn-sm btn-warning fa fa-lg fa-star pull-left");
 						
 						var spanDetail= $("<span>");
 						spanDetail.attr("href", "#");
@@ -426,7 +426,7 @@ function updateTermsList(wordList, myWordList, isSessionValid){
 						spanFavorite.attr("onclick", "togglePreferred("+ wordList[index].wordId +")");
 						spanFavorite.attr("title", "Hacer Favorito");
 						spanFavorite.attr("id", "span-"+wordList[index].wordId);
-						spanFavorite.attr("class", "fa fa-lg fa-star-o pull-left");
+						spanFavorite.attr("class", "preferred-button btn btn-sm btn-warning fa fa-lg fa-star-o pull-left");
 						
 						var spanDetail= $("<span>");
 						spanDetail.attr("href", "#");
@@ -444,7 +444,7 @@ function updateTermsList(wordList, myWordList, isSessionValid){
 				spanFavorite.attr("onclick", "togglePreferred("+ wordList[index].wordId +")");
 				spanFavorite.attr("title", "Hacer Favorito");
 				spanFavorite.attr("id", "span-"+wordList[index].wordId);
-				spanFavorite.attr("class", "fa fa-lg fa-star-o pull-left");
+				spanFavorite.attr("class", "preferred-button btn btn-sm btn-warning fa fa-lg fa-star-o pull-left");
 				
 				var spanDetail= $("<span>");
 				spanDetail.attr("href", "#");
@@ -497,7 +497,7 @@ function updateMyTermsList(myWordsList){
 		var spanDelete= $("<span>");
 		spanDelete.attr("title", "Eliminar");
 		spanDelete.attr("id", "word-"+myWordsList[index].wordId);
-		spanDelete.attr("class", "glyphicon glyphicon-remove pull-left deleteWordConfirm");
+		spanDelete.attr("class", "btn btn-sm btn-danger glyphicon glyphicon-trash pull-left deleteWordConfirm");
 		
 		var spanDetail= $("<span>");
 		spanDetail.attr("onclick", "loadDetail("+ myWordsList[index].wordId +")");

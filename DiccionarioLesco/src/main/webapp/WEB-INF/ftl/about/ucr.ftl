@@ -8,7 +8,7 @@
       
       <img src="../resources/images/logo-UCR.png" alt="..." class="img-rounded img-responsive center-block">
       
-        <h1>Universidad de Costa Rica</h1>
+        <h2>Universidad de Costa Rica</h2>
         
         <br>
         <div class="text-justify">

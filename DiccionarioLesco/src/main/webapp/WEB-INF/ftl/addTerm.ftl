@@ -14,9 +14,9 @@
 				<div class="list-group">
 
 					<div class="row">
-						<h1>
-							<span class="label label-primary terms-header">Solicitudes</span>
-						</h1>
+						<h2>
+							<span class="header-black">Solicitudes</span>
+						</h2>
 					</div>
 
 					<div class="row input-group search-text-box">
@@ -38,12 +38,12 @@
 							class="list-group-item">${request.wordName}</a> </#list>
 					</div>
 
-					<div class="row">
-						<h1>
+					<div class="row total-items-counter">
+						<h2>
 							<span id="totalRequestsCounter"
-								class="label label-primary terms-header">Total:
+								class="header-black">Total:
 								${requestList?size}</span>
-						</h1>
+						</h2>
 					</div>
 
 				</div>
@@ -83,21 +83,26 @@
 								<!-- Form Name -->
 								<legend>Agregar Término</legend>
 
-								<!-- Text input-->
+								<!-- Text input-->						
 								<div class="form-group">
-									<label class="col-md-4 control-label" for="textinput">Término</label>
+									<label class="col-md-2 control-label" for="textinput">Término</label>
 									<div class="col-md-4">
 										<input id="wordName" name="wordName" placeholder="Término"
 											class="form-control input-md" type="text" required="required">
-										<input id="filePath" name="filePath" class="input-file"
-											type="file" accept="video/*" required="required">
-										<!-- 					  <span class="help-block">help</span>   -->
+										<span class="input-group-btn"> 
+		                                    <div class="btn btn-info carga-archivo-input"> 
+		                                        <span class="glyphicon glyphicon-folder-open"></span>
+		                                        <span class="carga-archivo-input-title">Seleccionar archivo</span>
+		                                        <input id="filePath" name="filePath" class="input-file"
+													type="file" accept="video/*" required="required">
+		                                    </div>
+		                                </span>
 									</div>
 								</div>
-
+		
 								<!-- Select Basic -->
 								<div class="form-group">
-									<label class="col-md-4 control-label" for="categoryName">Categoría</label>
+									<label class="col-md-2 control-label" for="categoryName">Categoría</label>
 									<div class="col-md-4">
 										<select id="categoryName" name="categoryName"
 											class="form-control">
@@ -113,34 +118,52 @@
 
 								<!-- Textarea -->
 								<div class="form-group">
-									<label class="col-md-4 control-label" for="definition">Definición</label>
-									<div class="col-md-6">
+									<label class="col-md-2 control-label" for="definition">Definición</label>
+									<div class="col-md-4">
 										<textarea class="form-control" placeholder="Definición"
 											id="definition" name="definition" required="required"></textarea>
-										<input id="definitionFilePath" name="definitionFilePath"
+										<span class="input-group-btn"> 
+		                                    <div class="btn btn-info carga-archivo-input"> 
+		                                        <span class="glyphicon glyphicon-folder-open"></span>
+		                                        <span class="carga-archivo-input-title">Seleccionar archivo</span>
+		                                        <input id="definitionFilePath" name="definitionFilePath"
 											class="input-file" type="file" accept="video/*">
+		                                    </div>
+		                                </span>
 									</div>
 								</div>
 
 								<!-- Textarea -->
 								<div class="form-group">
-									<label class="col-md-4 control-label" for="explanation">Explicación</label>
-									<div class="col-md-6">
+									<label class="col-md-2 control-label" for="explanation">Explicación</label>
+									<div class="col-md-4">
 										<textarea class="form-control" id="explanation"
 											placeholder="Explicación" name="explanation"></textarea>
-										<input id="explanationFilePath" name="explanationFilePath"
+										<span class="input-group-btn"> 
+		                                    <div class="btn btn-info carga-archivo-input"> 
+		                                        <span class="glyphicon glyphicon-folder-open"></span>
+		                                        <span class="carga-archivo-input-title">Seleccionar archivo</span>
+		                                        <input id="explanationFilePath" name="explanationFilePath"
 											class="input-file" type="file" accept="video/*">
+		                                    </div>
+		                                </span>
 									</div>
 								</div>
 
 								<!-- Textarea -->
 								<div class="form-group">
-									<label class="col-md-4 control-label" for="example">Ejemplos</label>
-									<div class="col-md-6">
+									<label class="col-md-2 control-label" for="example">Ejemplos</label>
+									<div class="col-md-4">
 										<textarea class="form-control" id="example"
 											placeholder="Ejemplos" name="example"></textarea>
-										<input id="examplesFilePath" name="examplesFilePath"
+										<span class="input-group-btn"> 
+		                                    <div class="btn btn-info carga-archivo-input"> 
+		                                        <span class="glyphicon glyphicon-folder-open"></span>
+		                                        <span class="carga-archivo-input-title">Seleccionar archivo</span>
+		                                        <input id="examplesFilePath" name="examplesFilePath"
 											class="input-file" type="file" accept="video/*">
+		                                    </div>
+		                                </span>
 									</div>
 								</div>
 
@@ -172,10 +195,12 @@
 								<!-- 					  </div> -->
 								<!-- 					</div> -->
 
+								<legend> </legend>
+
 								<!-- Button (Double) -->
 								<div class="form-group">
 									<!-- 										  <label class="col-md-4 control-label" for="button1id">Acción</label> -->
-									<div class="col-md-6 col-md-offset-6">
+									<div class="col-md-6 col-md-offset-2">
 										<button id="addTermSubmitForm" name="addTermSubmitForm"
 											class="btn btn-success">Enviar</button>
 										<!-- 										    <button id="button2id" name="button2id" class="btn btn-danger">Descartar</button> -->
@@ -200,7 +225,7 @@
 
 								<!-- Text input-->
 								<div class="form-group">
-									<label class="col-md-4 control-label" for="requestedWordName">Término</label>
+									<label class="col-md-2 control-label" for="requestedWordName">Término</label>
 									<div class="col-md-4">
 										<input id="requestedWordName" name="requestedWordName"
 											placeholder="Término" class="form-control input-md"
@@ -210,18 +235,20 @@
 
 								<!-- Textarea -->
 								<div class="form-group">
-									<label class="col-md-4 control-label" for="requestedDescription">Descripción</label>
-									<div class="col-md-6">
+									<label class="col-md-2 control-label" for="requestedDescription">Descripción</label>
+									<div class="col-md-4">
 										<textarea class="form-control"
 											placeholder="requestedDescription" id="requestedDescription"
 											name="requestedDescription" required="required"></textarea>
 									</div>
 								</div>
 
+								<legend> </legend>
+
 								<!-- Button (Double) -->
 								<div class="form-group">
 									<!-- 										  <label class="col-md-4 control-label" for="button1id">Acción</label> -->
-									<div class="col-md-6 col-md-offset-6">
+									<div class="col-md-6 col-md-offset-2">
 										<button id="requestTermSubmitForm" name="requestTermSubmitForm"
 											class="btn btn-success">Enviar</button>
 										<!-- 										    <button id="button2id" name="button2id" class="btn btn-danger">Descartar</button> -->
@@ -234,11 +261,11 @@
 			</div>
 		</div>
 	</div>
-
-	<!-- Modals inclusion -->
-	<#include "/modal/loadingModal.ftl"> <#include"/modal/addTermModal.ftl">
-	<#include "/modal/requestTermModal.ftl">
-	
 </div>
+
+<!-- Modals inclusion -->
+	<#include "/modal/loadingModal.ftl">
+	<#include "/modal/requestTermModal.ftl"> 
+	<#include "/modal/addTermModal.ftl">
 
 </@c.page>
