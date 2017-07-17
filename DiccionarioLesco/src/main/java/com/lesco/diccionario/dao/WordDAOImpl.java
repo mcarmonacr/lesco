@@ -61,13 +61,23 @@ public class WordDAOImpl implements WordDAO {
 		
 		Boolean result = false;
 		
-        Query query = sessionFactory.getCurrentSession().createQuery("delete Word where wordId = :wordId");
-        query.setParameter("wordId", wordId);
+		//First deletes the associated video
+        Query query = sessionFactory.getCurrentSession().createQuery("delete Video where videoId = :videoId");
+        query.setParameter("videoId", wordId);
         
         int queryResult = query.executeUpdate();
         
+        //If there was a deletion then proceed with the word
         if (queryResult > 0) {
-            result= true;
+
+        	query = sessionFactory.getCurrentSession().createQuery("delete Word where wordId = :wordId");
+            query.setParameter("wordId", wordId);
+            
+            queryResult = query.executeUpdate();
+            
+            if (queryResult > 0) {
+                result= true;
+            }
         }
         
         logger.debug("WordDAOImpl - deleteById() - End");

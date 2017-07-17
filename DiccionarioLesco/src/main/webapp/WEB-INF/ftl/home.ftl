@@ -701,7 +701,10 @@
 
 <!-- This DIV gets automatically hidden by JQueryUI -->
 	<div id="deleteWordDialog" hidden title="Confirmación Requerida">¿Desea eliminar
-		este término?</div>
+		este término? 
+		<br >
+		Al hacerlo también eliminará los videos asociados
+		</div>
 
 </div>
 

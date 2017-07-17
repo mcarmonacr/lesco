@@ -247,9 +247,8 @@ public class RegisterController {
 			if(registerForm.getUserName() != null && registerForm.getEmailAddress() != null && registerForm.getPassword() != null && 
 					registerForm.getPasswordConfirmation() != null	&& registerForm.getBirthDate() != null && registerForm.getTermsAndConditions() != null){
 						
-				//Checks if the userName already exists
-				//TODO Add the validation of the email
-				if(userDAO.checkUserName(registerForm.getUserName()).equals(false)){
+				//Checks if the userName and the email address already exists
+				if(userDAO.checkUserName(registerForm.getUserName()).equals(false) && userDAO.checkEmailAddress(registerForm.getEmailAddress()).equals(false)){
 				
 					//Get unique random salt which will be used to encryp the user password
 					byte[] salt= SHAEncryption.getSalt();

@@ -117,9 +117,6 @@ public class RequestController {
 						requestMap.put("wordName", request.getWordName());						
 						requestMap.put("description", request.getDescription());
 						
-						//TODO update mapping
-						//wordMap.put("youtubeVideoID", word.getVideo().getYoutubeVideoID());
-						
 						result.setContent(requestMap);
 						result.setMessage("Success");
 						result.setCode("000");
@@ -171,8 +168,7 @@ public class RequestController {
 			
 			Map <String, Object> requestsMap = new HashMap <String, Object> ();
 			
-			// TODO process wordsMap in order to get only the list of words and its IDs 
-			
+			//Get only the list of words and its IDs 
 			requestsMap.put("requestsList", processRequestList(requestList));
 			result.setContent(requestsMap);
 					
@@ -212,8 +208,7 @@ public class RequestController {
 			//Validates that all values that come from the form
 			if(requestForm.getWordName() != null ){
 						
-				//Checks if the userName already exists in the word and request table
-				//TODO Add the validation of the email
+				//Checks if the word already exists in the word and request table
 				if(requestDAO.checkWordName(requestForm.getWordName().trim()).equals(false) && wordDAO.checkWordName(requestForm.getWordName().trim()).equals(false)){
 
 					//Get user session

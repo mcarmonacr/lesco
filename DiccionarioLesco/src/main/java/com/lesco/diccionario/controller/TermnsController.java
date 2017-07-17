@@ -137,12 +137,20 @@ public class TermnsController {
 		//Check if the category name coming form the form is not null
 		if(json.get("wordId") != null && !json.get("wordId").isEmpty()){
 			try{
-				//Checks if the category already exists
-				if(wordDAO.deleteById(Integer.valueOf(json.get("wordId")))){
-					result.setMessage("Sucess");
-				}else{
+				
+				//Deletes the associated videos
+				if(deleteVideos(json.get("wordId"))) {
+					//Checks if the category already exists
+					if(wordDAO.deleteById(Integer.valueOf(json.get("wordId")))){
+						result.setMessage("Sucess");
+					}else{
+						result.setMessage("Failure");
+					}
+				}else {
 					result.setMessage("Failure");
 				}
+				
+				
 			} catch (Exception e) {
 				logger.error("There was an error processing the request", e);
 			}
@@ -277,8 +285,7 @@ public class TermnsController {
 				wordsMap.put("isSessionValid", false);
 			}
 			
-			// TODO process wordsMap in order to get only the list of words and its IDs 
-		
+			//Get the processed list of words to be returned 
 			wordsMap.put("myWordsList", processWordList(listMyWords));
 			wordsMap.put("wordsList", processWordList(wordsList));
 			result.setContent(wordsMap);
@@ -410,7 +417,6 @@ public class TermnsController {
 						myPreferredWordsList = preferredWordDAO.findByPattern(json.get("myPreferredTermsInput"), profileDetailQuery.getProfileDetailId());
 					}
 				} else {
-					// TODO
 					//If there wasn't any input, get them all
 					if(myPreferredWordsList.size() == 0){
 						myPreferredWordsList = preferredWordDAO.listMyWords(profileDetailQuery.getProfileDetailId());
@@ -420,7 +426,7 @@ public class TermnsController {
 
 			Map <String, Object> wordsMap = new HashMap <String, Object> ();
 						
-			// TODO process wordsMap in order to get only the list of words and its IDs 
+			//Get only the list of words and its IDs 
 			wordsMap.put("myPreferredWordsList", processWordList(myPreferredWordsList));
 			result.setContent(wordsMap);
 					
@@ -739,7 +745,6 @@ public class TermnsController {
 					if(example != null) word.setExample(example);
 					word.setNumberOfVisits(0);
 					
-					//TODO Update the Youtube video ID according to the 4 new video names
 					//New Video
 					Video video = new Video();
 					//video.settermYouTubeVideoID(termYouTubeVideoID);
@@ -903,6 +908,63 @@ public class TermnsController {
 		}
 	
 		logger.debug("TermnsController - getWordsFromList() - End");
+		
+		return result;
+	}
+	
+	/**
+	 * Deletes the videos associated to a particular word
+	 * 
+	 * @param wordId
+	 * @return
+	 */
+	private Boolean deleteVideos(String wordId){
+		
+		//Boolean result= false;
+		Boolean result= true;
+		Boolean termVideo= true;
+		Boolean definitionVideo= true;
+		Boolean explanationVideo= true;
+		Boolean exampleVideo= true;
+		
+		logger.debug("TermnsController - deleteVideos() - Start");
+		
+		try{
+			Word actualWord= new Word();
+			
+			actualWord= wordDAO.findById(Integer.valueOf(wordId));
+			
+			//Deletes the main video
+			if(actualWord.getVideo().getTermYoutubeVideoID() != null && !actualWord.getVideo().getTermYoutubeVideoID().isEmpty()){
+				termVideo= youtubeHelper.deleteVideo(actualWord.getVideo().getTermYoutubeVideoID());
+			}
+			
+			//Deletes the definition video
+			if(actualWord.getVideo().getDefinitionYoutubeVideoID() != null && !actualWord.getVideo().getDefinitionYoutubeVideoID().isEmpty()){
+				definitionVideo= youtubeHelper.deleteVideo(actualWord.getVideo().getDefinitionYoutubeVideoID());
+			}
+			
+			//Deletes the explanation video
+			if(actualWord.getVideo().getExplanationYoutubeVideoID() != null && !actualWord.getVideo().getExplanationYoutubeVideoID().isEmpty()){
+				explanationVideo= youtubeHelper.deleteVideo(actualWord.getVideo().getExplanationYoutubeVideoID());
+			}
+			
+			//Deletes the example video
+			if(actualWord.getVideo().getExampleYoutubeVideoID() != null && !actualWord.getVideo().getExampleYoutubeVideoID().isEmpty()){
+				exampleVideo= youtubeHelper.deleteVideo(actualWord.getVideo().getExampleYoutubeVideoID());
+			}
+			
+			//If all were successful 
+			if(termVideo && definitionVideo && explanationVideo && exampleVideo){
+				result= true;
+			}
+			
+			
+		} catch(Exception e){
+			logger.debug("TermnsController - deleteVideos() - Error", e);
+		}
+		
+		logger.debug("TermnsController - deleteVideos() - End");
 		
 		return result;
 	}

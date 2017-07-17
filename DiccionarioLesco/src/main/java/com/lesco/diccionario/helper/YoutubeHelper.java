@@ -418,6 +418,57 @@ public class YoutubeHelper {
     }
     
     
+    /**
+     * Delete a particular video
+     * 
+     * @param videoID
+     * @return
+     */
+    public Boolean deleteVideo(String videoID) {
+    	// Read the developer key from the properties file.
+
+    	logger.debug("YoutubeHelper - deleteVideo() - Start");
+    	
+        Properties properties = new Properties();
+        
+        Boolean response = true;
+
+        loadProperties(properties);
+        
+        try{                        
+            List<String> scopes = Lists.newArrayList("https://www.googleapis.com/auth/youtube");
+            
+            // Authorize the request.
+            Credential credential = AuthHelper.authorize(scopes, "uploadvideo");
+
+            // This object is used to make YouTube Data API requests.
+            youtube = new YouTube.Builder(AuthHelper.HTTP_TRANSPORT, AuthHelper.JSON_FACTORY, credential).setApplicationName(
+                    "diccionario-lesco-youtube-channel").build();
+            
+            //https://developers.google.com/youtube/v3/docs/videos/delete
+            youtube.videos().delete(videoID).execute();  
+            
+        } catch (GoogleJsonResponseException e) {
+            System.err.println("There was a service error: " + e.getDetails().getCode() + " : "
+                    + e.getDetails().getMessage());
+          //Every time there is an error a false status should be returned
+            response = false;
+        } catch (IOException e) {
+            System.err.println("There was an IO error: " + e.getCause() + " : " + e.getMessage());
+          //Every time there is an error a false status should be returned
+            response = false;
+        } catch (Throwable t) {
+            t.printStackTrace();
+          //Every time there is an error a false status should be returned
+            response = false;
+        }
+
+        logger.debug("YoutubeHelper - deleteVideo() - End");
+        
+       return response;
+    }
+    
+    
     
     /**
      * Converts a MultipartFile file to particular File type

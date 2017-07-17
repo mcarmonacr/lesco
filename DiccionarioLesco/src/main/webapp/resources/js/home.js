@@ -29,6 +29,7 @@ jQuery(document).ready(function($) {
 	        "Confirm" : function() {
 	        	//If the user confirms, then the category should be deleted
 	        	deleteWord(wordId);
+	        	$(this).dialog("close");
 	        },
 	        "Cancel" : function() {
 	          $(this).dialog("close");
