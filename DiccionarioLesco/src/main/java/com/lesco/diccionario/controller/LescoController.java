@@ -319,10 +319,6 @@ public class LescoController {
 		Map result= new HashMap();
 		
 		try{
-//			com.google.api.services.youtube.model.Video definitionVideo= youtubeHelper.getVideoMetadata(randomWord.getVideo().getDefinitionYoutubeVideoID());
-//			com.google.api.services.youtube.model.Video exampleVideo= youtubeHelper.getVideoMetadata(randomWord.getVideo().getExampleYoutubeVideoID());
-//			com.google.api.services.youtube.model.Video explanationVideo= youtubeHelper.getVideoMetadata(randomWord.getVideo().getExplanationYoutubeVideoID());
-//			com.google.api.services.youtube.model.Video termVideo= youtubeHelper.getVideoMetadata(randomWord.getVideo().getTermYoutubeVideoID());
 			
 			//Setup default result values
 			result.put("definitionVideo", 0);
@@ -350,11 +346,17 @@ public class LescoController {
 				return result;	
 			}
 			
+			//TODO delete this testing code
+//			com.google.api.services.youtube.model.Video definitionVideo= youtubeHelper.getVideoMetadata("4z7rnfxhdms");
+//			com.google.api.services.youtube.model.Video exampleVideo= youtubeHelper.getVideoMetadata("63xrbVSXbXA");
+//			com.google.api.services.youtube.model.Video explanationVideo= youtubeHelper.getVideoMetadata("K64bcDY-Oko");
+//			com.google.api.services.youtube.model.Video termVideo= youtubeHelper.getVideoMetadata("PX4IBJNuMsE");
+			
 			//Get video's metadata, one by one
-			com.google.api.services.youtube.model.Video definitionVideo= youtubeHelper.getVideoMetadata("4z7rnfxhdms");
-			com.google.api.services.youtube.model.Video exampleVideo= youtubeHelper.getVideoMetadata("63xrbVSXbXA");
-			com.google.api.services.youtube.model.Video explanationVideo= youtubeHelper.getVideoMetadata("K64bcDY-Oko");
-			com.google.api.services.youtube.model.Video termVideo= youtubeHelper.getVideoMetadata("PX4IBJNuMsE");
+			com.google.api.services.youtube.model.Video definitionVideo= youtubeHelper.getVideoMetadata(randomWord.getVideo().getDefinitionYoutubeVideoID());
+			com.google.api.services.youtube.model.Video exampleVideo= youtubeHelper.getVideoMetadata(randomWord.getVideo().getExampleYoutubeVideoID());
+			com.google.api.services.youtube.model.Video explanationVideo= youtubeHelper.getVideoMetadata(randomWord.getVideo().getExplanationYoutubeVideoID());
+			com.google.api.services.youtube.model.Video termVideo= youtubeHelper.getVideoMetadata(randomWord.getVideo().getTermYoutubeVideoID());
 			
 			//Get video's rating. one by one
 			VideoRating definitionVideoRating = new VideoRating();
@@ -364,10 +366,16 @@ public class LescoController {
 			
 			//Only get the rating from youtube if the user is logged in
 			if(session != null && session.getAttribute("userEmail") != null) {
-				definitionVideoRating= youtubeHelper.getVideoRating("4z7rnfxhdms");
-				exampleVideoRating= youtubeHelper.getVideoRating("63xrbVSXbXA");
-				explanationVideoRating= youtubeHelper.getVideoRating("K64bcDY-Oko");
-				termVideoRating= youtubeHelper.getVideoRating("PX4IBJNuMsE");
+				definitionVideoRating= youtubeHelper.getVideoRating(randomWord.getVideo().getDefinitionYoutubeVideoID());
+				exampleVideoRating= youtubeHelper.getVideoRating(randomWord.getVideo().getExampleYoutubeVideoID());
+				explanationVideoRating= youtubeHelper.getVideoRating(randomWord.getVideo().getExplanationYoutubeVideoID());
+				termVideoRating= youtubeHelper.getVideoRating(randomWord.getVideo().getTermYoutubeVideoID());
+				
+				//TODO delete this testing code
+//				definitionVideoRating= youtubeHelper.getVideoRating("4z7rnfxhdms");
+//				exampleVideoRating= youtubeHelper.getVideoRating("63xrbVSXbXA");
+//				explanationVideoRating= youtubeHelper.getVideoRating("K64bcDY-Oko");
+//				termVideoRating= youtubeHelper.getVideoRating("PX4IBJNuMsE");
 			}
 			
 			/**

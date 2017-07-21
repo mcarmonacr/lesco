@@ -5,8 +5,8 @@
 				<!-- 			  	<hr> -->
 				<div class="col-lg-12">
 					<div class="col-md-8 col-sm-12">
-						<a data-toggle="modal" data-target="#myFooterModal">Términos Y
-							Condiciones</a> | <a data-toggle="modal" data-target="#myFooterModal">Privacidad</a>
+						<a data-toggle="modal" data-target="#termsAndConditionsModal">Términos Y
+							Condiciones</a> | <a data-toggle="modal" data-target="#privacyModal">Privacidad</a>
 						<!-- 			        <a href="/DiccionarioLesco/legal/terminos-de-servicio">Términos Y Condiciones</a> | <a href="/DiccionarioLesco/legal/privacidad">Privacidad</a> -->
 					</div>
 					<div class="col-md-4 col-sm-12">
@@ -32,4 +32,5 @@
 
 
 <!-- Common loading modal -->
-<#include "/modal/termsAndConditionsModal.ftl">
+<#include "/legal/privacyModal.ftl">
+<#include "/legal/termsAndConditionsModal.ftl">

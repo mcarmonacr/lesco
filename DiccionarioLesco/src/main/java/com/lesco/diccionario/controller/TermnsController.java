@@ -697,9 +697,10 @@ public class TermnsController {
 				String example = addTermForm.getExample() != null ? addTermForm.getExample() : "";
 				
 				//This video does not need validation on some values since its values are compulsory
-				//String termYoutubeVideoID = youtubeHelper.uploadVideo(wordName+ "en Lenguaje de Señas Costarricense (LESCO)" , wordName+ "en Lenguaje de Señas Costarricense (LESCO)" , videoFile);
+				String termYoutubeVideoID = youtubeHelper.uploadVideo(wordName+ "en Lenguaje de Señas Costarricense (LESCO)" , wordName+ "en Lenguaje de Señas Costarricense (LESCO)" , videoFile);
 				
-				String termYoutubeVideoID = "X7PpGPOHVrA";
+				//TODO delete this testing code
+				//String termYoutubeVideoID = "X7PpGPOHVrA";
 				
 				//Rest of the videos IDs
 				String definitionYoutubeVideoID = "";
@@ -707,15 +708,15 @@ public class TermnsController {
 				String exampleYoutubeVideoID = "";
 				
 				if (definition != null && definitionVideoFile != null){
-					//definitionYoutubeVideoID = youtubeHelper.uploadVideo("Definición en LESCO del término " + wordName, "Definición en LESCO del término: " + wordName + " - " + definition, definitionVideoFile);
+					definitionYoutubeVideoID = youtubeHelper.uploadVideo("Definición en LESCO del término " + wordName, "Definición en LESCO del término: " + wordName + " - " + definition, definitionVideoFile);
 				}
 				
 				if (explanation != null && explanationVideoFile != null){
-					//explanationYoutubeVideoID = youtubeHelper.uploadVideo("Explicación en LESCO del término " + wordName, "Explicación en LESCO del término: " + wordName + " - " + explanation, explanationVideoFile);
+					explanationYoutubeVideoID = youtubeHelper.uploadVideo("Explicación en LESCO del término " + wordName, "Explicación en LESCO del término: " + wordName + " - " + explanation, explanationVideoFile);
 				}
 				
 				if (example != null && exampleVideoFile != null){
-					//exampleYoutubeVideoID = youtubeHelper.uploadVideo("Ejemplo en LESCO del término " + wordName, "Ejemplo en LESCO del término: " + wordName + " - " + example, exampleVideoFile);
+					exampleYoutubeVideoID = youtubeHelper.uploadVideo("Ejemplo en LESCO del término " + wordName, "Ejemplo en LESCO del término: " + wordName + " - " + example, exampleVideoFile);
 				}
 				
 				
@@ -747,7 +748,6 @@ public class TermnsController {
 					
 					//New Video
 					Video video = new Video();
-					//video.settermYouTubeVideoID(termYouTubeVideoID);
 					video.setTermYoutubeVideoID(termYoutubeVideoID);
 					
 					//Set additional videos if available

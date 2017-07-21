@@ -614,7 +614,6 @@ function updateVideoRatingMetadata(videoId, videoRating, videoMetadata){
 		$('#spanDislike-'+videoId).text(" " + videoMetadata.statistics.dislikeCount);
 	}
 	
-	//TO-DO
 	//Updates the view count
 	$('#numberOfVisits-'+videoId).text(" " + videoMetadata.statistics.viewCount);
 }

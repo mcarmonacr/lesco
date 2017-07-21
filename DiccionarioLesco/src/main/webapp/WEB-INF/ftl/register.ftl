@@ -94,7 +94,7 @@
 					<label for="checkboxes-0"> <input name="termsAndConditions"
 						id="termsAndConditions" type="checkbox" required=""> He
 						leído y acepto los <a data-toggle="modal"
-						data-target="#myFooterModal">Términos Y Condiciones</a>
+						data-target="#termsAndConditionsModal">Términos Y Condiciones</a>
 					</label>
 				</div>
 			</div>
