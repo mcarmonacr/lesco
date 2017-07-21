@@ -50,6 +50,8 @@ public class SendMailTLS {
 		Properties props = new Properties();
 		initializeMailProperties(props);
 		
+		String result = LescoConstants.SUCCESS_MESSAGE;
+		
 		Session session = Session.getInstance(props,
 		  new javax.mail.Authenticator() {
 			protected PasswordAuthentication getPasswordAuthentication() {
@@ -70,11 +72,12 @@ public class SendMailTLS {
 			Transport.send(message);
 		} catch (MessagingException e) {
 			logger.error("SendMailTLS - sendMail() - Error: ",e);
+			result = LescoConstants.ERROR_MESSAGE; 
 		}
 		
 		logger.debug("SendMailTLS - sendMail() - End");
 		
-		return "success";
+		return result;
 	}
 	
 	/**
@@ -90,6 +93,8 @@ public class SendMailTLS {
 
 		Properties props = new Properties();
 		initializeMailProperties(props);
+		
+		String result = LescoConstants.SUCCESS_MESSAGE;
 		
 		Session session = Session.getInstance(props,
 		  new javax.mail.Authenticator() {
@@ -111,11 +116,12 @@ public class SendMailTLS {
 			Transport.send(message);
 		} catch (MessagingException e) {
 			logger.debug("SendMailTLS - sendPasswordRecoveryMail() - Error: ", e);
+			result = LescoConstants.ERROR_MESSAGE;
 		}
 		
 		logger.debug("SendMailTLS - sendPasswordRecoveryMail() - End");
 		
-		return LescoConstants.SUCCESS_MESSAGE;
+		return result;
 	}
 	
 	/**

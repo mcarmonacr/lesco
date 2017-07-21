@@ -17,6 +17,7 @@ import com.lesco.diccionario.dao.CategoryDAO;
 import com.lesco.diccionario.model.Category;
 import com.lesco.diccionario.pojo.AjaxResponseBody;
 import com.lesco.diccionario.pojo.CategoryForm;
+import com.lesco.diccionario.utils.LescoConstants;
 
 /**
  * Admin class
@@ -51,7 +52,6 @@ public class AdminController {
 		
 		//Get all the categories
 		List<Category> listCategories = categoryDAO.list();
-		 
 		mv.addObject("listCategories", listCategories);
 		
 		logger.debug("AdminController - admin() - End");
@@ -86,9 +86,9 @@ public class AdminController {
 				//If I wanted to get the ID from the category, I'd have to do something like:
 				//category.getId();
 			}
-			result.setMessage("Sucess");
+			result.setMessage(LescoConstants.SUCCESS_MESSAGE);
 		}else{
-			result.setMessage("Failure");
+			result.setMessage(LescoConstants.ERROR_MESSAGE);
 		}
 		
 		logger.debug("AdminController - agregarCategoria() - End");
@@ -101,7 +101,7 @@ public class AdminController {
 		
 		//Generic Response Body for all Ajax request
 		AjaxResponseBody result = new AjaxResponseBody();
-		result.setMessage("Failure");
+		result.setMessage(LescoConstants.ERROR_MESSAGE);
 		logger.debug("AdminController - eliminarCategoria() - Start");
 		
 		//Check if the category name coming form the form is not null
@@ -109,12 +109,13 @@ public class AdminController {
 			try{
 				//Checks if the category already exists
 				if(categoryDAO.deleteById(Integer.valueOf(json.get("categoryId")))){
-					result.setMessage("Sucess");
+					result.setMessage(LescoConstants.SUCCESS_MESSAGE);
 				}else{
-					result.setMessage("Failure");
+					result.setMessage(LescoConstants.ERROR_MESSAGE);
 				}
 			} catch (Exception e) {
 				logger.error("There was an error processing the request", e);
+				result.setMessage(LescoConstants.ERROR_MESSAGE);
 			}
 		}			
 		logger.debug("AdminController - eliminarCategoria() - End");

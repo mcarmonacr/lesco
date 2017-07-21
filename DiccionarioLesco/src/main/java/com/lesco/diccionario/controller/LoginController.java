@@ -19,6 +19,7 @@ import com.lesco.diccionario.model.ProfileDetail;
 import com.lesco.diccionario.model.UserProfile;
 import com.lesco.diccionario.pojo.AjaxResponseBody;
 import com.lesco.diccionario.pojo.LoginForm;
+import com.lesco.diccionario.utils.LescoConstants;
 import com.lesco.diccionario.utils.SHAEncryption;
 
 /**
@@ -65,11 +66,11 @@ public class LoginController {
 				//Validation the session, creates a new one in case there isn't one already created
 				verifySession(loginForm, request, response);
 
-				ajaxResponse.setCode("000");
-				ajaxResponse.setMessage("Success");
+				ajaxResponse.setCode(LescoConstants.SUCCESS_CODE);
+				ajaxResponse.setMessage(LescoConstants.SUCCESS_MESSAGE);
 			} else {
-				ajaxResponse.setCode("999");
-				ajaxResponse.setMessage("Error");
+				ajaxResponse.setCode(LescoConstants.ERROR_CODE);
+				ajaxResponse.setMessage(LescoConstants.ERROR_MESSAGE);
 			}
 		} catch (Exception e){
 			logger.error("LoginController - iniciarSesion() - Error", e);
@@ -98,11 +99,11 @@ public class LoginController {
 		try{
 			//Invalidates the user session. Response toggle based on the save return
 			if(endUserSession(request, response)){
-				ajaxResponse.setCode("000");
-				ajaxResponse.setMessage("Success");
+				ajaxResponse.setCode(LescoConstants.SUCCESS_CODE);
+				ajaxResponse.setMessage(LescoConstants.SUCCESS_MESSAGE);
 			} else {
-				ajaxResponse.setCode("999");
-				ajaxResponse.setMessage("Error");
+				ajaxResponse.setCode(LescoConstants.ERROR_CODE);
+				ajaxResponse.setMessage(LescoConstants.ERROR_MESSAGE);
 			}
 		} catch (Exception e){
 			logger.error("LoginController - finalizarSesion() - Error", e);

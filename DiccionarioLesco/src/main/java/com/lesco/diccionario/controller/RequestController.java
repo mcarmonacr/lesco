@@ -26,6 +26,7 @@ import com.lesco.diccionario.model.Request;
 import com.lesco.diccionario.model.UserProfile;
 import com.lesco.diccionario.pojo.AjaxResponseBody;
 import com.lesco.diccionario.pojo.RequestForm;
+import com.lesco.diccionario.utils.LescoConstants;
 
 /**
  * Handles all the request related operations
@@ -62,19 +63,19 @@ public class RequestController {
 		
 		logger.debug("RequestController - agregarSolicitud() - Start");
 		
-		AjaxResponseBody response = new AjaxResponseBody();
+		AjaxResponseBody ajaxResponse = new AjaxResponseBody();
 		
 		try{
 			//Saves the user to the database
 			String resultadoSalvar= salvarSolicitud(registerForm, httpRequest);
 			
 			//Response toggle based on the save return
-			if("Success".equals(resultadoSalvar)){
-				response.setCode("000");
-				response.setMessage("Success");
+			if(LescoConstants.SUCCESS_MESSAGE.equals(resultadoSalvar)){
+				ajaxResponse.setCode(LescoConstants.SUCCESS_CODE);
+				ajaxResponse.setMessage(LescoConstants.SUCCESS_MESSAGE);
 			}else{
-				response.setCode("999");
-				response.setMessage("Failure");
+				ajaxResponse.setCode(LescoConstants.ERROR_CODE);
+				ajaxResponse.setMessage(LescoConstants.ERROR_MESSAGE);
 			}
 		}catch(Exception e){
 			logger.error("RequestController - agregarSolicitud() - Error", e);
@@ -82,7 +83,7 @@ public class RequestController {
 
 		logger.debug("RequestController - agregarSolicitud() - End");
 		
-		return response;
+		return ajaxResponse;
 	}
 		
 	/**
@@ -95,7 +96,7 @@ public class RequestController {
 	@RequestMapping(value= "/obtenerSolicitud", method = RequestMethod.POST, headers = "Accept=application/json", consumes=MediaType.APPLICATION_JSON_VALUE/*, produces=MediaType.APPLICATION_JSON_VALUE*/)
 	public @ResponseBody AjaxResponseBody obtenerSolicitud(@RequestBody Map<String, String> json, HttpServletResponse httpResponse){
 		
-		AjaxResponseBody result = new AjaxResponseBody();
+		AjaxResponseBody ajaxResponse = new AjaxResponseBody();
 		
 //		httpResponse.setCharacterEncoding("ISO-8859-1");
 //		httpResponse.setHeader("Content-Type", "application/json; charset=ISO-8859-1");
@@ -117,17 +118,17 @@ public class RequestController {
 						requestMap.put("wordName", request.getWordName());						
 						requestMap.put("description", request.getDescription());
 						
-						result.setContent(requestMap);
-						result.setMessage("Success");
-						result.setCode("000");
-					} else {
-						result.setMessage("Could not find the request");
-						result.setCode("001");
+						ajaxResponse.setContent(requestMap);
+						ajaxResponse.setCode(LescoConstants.SUCCESS_CODE);
+						ajaxResponse.setMessage(LescoConstants.SUCCESS_MESSAGE);
+					}else{
+						ajaxResponse.setCode(LescoConstants.ERROR_CODE);
+						ajaxResponse.setMessage(LescoConstants.ERROR_MESSAGE);
 					}
 				}
 			} else{
-				result.setMessage("Failure");
-				result.setCode("001");
+				ajaxResponse.setCode(LescoConstants.ERROR_CODE);
+				ajaxResponse.setMessage(LescoConstants.ERROR_MESSAGE);
 			}
 		}catch(Exception e){
 			logger.error("RequestController - obtenerSolicitud() - Error", e);
@@ -135,7 +136,7 @@ public class RequestController {
 
 		logger.debug("RequestController - obtenerSolicitud() - End");
 		
-		return result;
+		return ajaxResponse;
 	}
 	
 	/**
@@ -234,9 +235,9 @@ public class RequestController {
 					//If I wanted to get the ID, I'd have to do something like:
 					//request.getId();
 				}
-				isUserSaved= "Success";
+				isUserSaved= LescoConstants.SUCCESS_MESSAGE;
 			}else{
-				isUserSaved= "Failure";
+				isUserSaved= LescoConstants.ERROR_MESSAGE;
 			}
 		}catch(Exception e){
 			logger.error("RequestController - salvarSolicitud() - Error", e);

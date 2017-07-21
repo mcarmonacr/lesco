@@ -56,7 +56,7 @@ public class SHAEncryption {
         
         try {
         	if(passwordToHash != null && salt != null){
-        		MessageDigest md = MessageDigest.getInstance("SHA-512");
+        		MessageDigest md = MessageDigest.getInstance(LescoConstants.SHA_512_ENCRYPTION_ALGORITHM);
         		
         		if(md != null){
         			

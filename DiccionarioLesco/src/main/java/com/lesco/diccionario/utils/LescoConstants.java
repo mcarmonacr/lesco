@@ -13,9 +13,9 @@ public final class LescoConstants {
 	public static final int RANDOM_PASSWORD_LENGHT= 10;
 	
 	public static final String SUCCESS_CODE= "000";
-	public static final String FAILURE_CODE= "999";
+	public static final String ERROR_CODE= "999";
 	public static final String SUCCESS_MESSAGE= "Success";
-	public static final String FAILURE_MESSAGE= "Failure";
+	public static final String ERROR_MESSAGE= "Error";
 	
 	//Port used to bind the Youtube API
 	public static final int YOUTUBE_AUTH_BINDING_PORT= 8080;
@@ -28,6 +28,12 @@ public final class LescoConstants {
 	
 	//Encryption type
 	public static final String ENCRYPTION_TYPE= "SHA1PRNG";
+	
+	//Character Encoding
+	public static final String CHARACTER_ENCODING= "ISO-8859-1";
+	
+	//SHAEncryption algorithm
+	public static final String SHA_512_ENCRYPTION_ALGORITHM= "SHA-512";
 	
 	// Private Section //
 

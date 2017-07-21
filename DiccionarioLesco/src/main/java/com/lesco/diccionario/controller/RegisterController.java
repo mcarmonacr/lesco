@@ -60,19 +60,19 @@ public class RegisterController {
 		
 		logger.debug("RegisterController - nuevoUsuario() - Start");
 		
-		AjaxResponseBody response = new AjaxResponseBody();
+		AjaxResponseBody ajaxResponse = new AjaxResponseBody();
 		
 		try{
 			//Saves the user to the database
 			String resultadoSalvar= salvarUsuario(registerForm);
 			
 			//Response toggle based on the save return
-			if("Success".equals(resultadoSalvar)){
-				response.setCode("000");
-				response.setMessage("Success");
-			}else{
-				response.setCode("999");
-				response.setMessage("Failure");
+			if(LescoConstants.SUCCESS_MESSAGE.equals(resultadoSalvar)){
+				ajaxResponse.setCode(LescoConstants.SUCCESS_CODE);
+				ajaxResponse.setMessage(LescoConstants.SUCCESS_MESSAGE);
+			} else {
+				ajaxResponse.setCode(LescoConstants.ERROR_CODE);
+				ajaxResponse.setMessage(LescoConstants.ERROR_MESSAGE);
 			}
 		}catch(Exception e){
 			logger.error("RegisterController - nuevoUsuario() - Error", e);
@@ -80,7 +80,7 @@ public class RegisterController {
 
 		logger.debug("RegisterController - nuevoUsuario() - End");
 		
-		return response;
+		return ajaxResponse;
 	}
 	
 	/**
@@ -214,8 +214,8 @@ public class RegisterController {
 							ajaxResponse.setCode(LescoConstants.SUCCESS_CODE);
 							ajaxResponse.setMessage(LescoConstants.SUCCESS_MESSAGE);
 						}else{
-							ajaxResponse.setCode(LescoConstants.FAILURE_CODE);
-							ajaxResponse.setMessage(LescoConstants.FAILURE_MESSAGE);
+							ajaxResponse.setCode(LescoConstants.ERROR_CODE);
+							ajaxResponse.setMessage(LescoConstants.ERROR_MESSAGE);
 						}
 				 }
 			}
@@ -240,7 +240,7 @@ public class RegisterController {
 		logger.debug("RegisterController - salvarUsuario() - Start");
 		
 		//String to the return, with the operation result
-		String isUserSaved = LescoConstants.FAILURE_MESSAGE;
+		String isUserSaved = LescoConstants.ERROR_MESSAGE;
 		
 		try{
 			//Validates that all values that come from the form
@@ -280,9 +280,9 @@ public class RegisterController {
 					//If I wanted to get the ID, I'd have to do something like:
 					//category.getId();
 				}
-				isUserSaved= "Success";
+				isUserSaved= LescoConstants.SUCCESS_MESSAGE;
 			}else{
-				isUserSaved= "Failure";
+				isUserSaved= LescoConstants.ERROR_MESSAGE;
 			}
 		}catch(Exception e){
 			logger.error("RegisterController - salvarUsuario() - Error", e);

@@ -111,11 +111,11 @@ public class TermnsController {
 				//Validate if the term is in the requests table, in which case should be deleted from there
 				checkRequestExistence(addTermForm);
 				
-				ajaxResponse.setCode("000");
-				ajaxResponse.setMessage("Success");
-			}else{
-				ajaxResponse.setCode("999");
-				ajaxResponse.setMessage("Failure");
+				ajaxResponse.setCode(LescoConstants.SUCCESS_CODE);
+				ajaxResponse.setMessage(LescoConstants.SUCCESS_MESSAGE);
+			} else {
+				ajaxResponse.setCode(LescoConstants.ERROR_CODE);
+				ajaxResponse.setMessage(LescoConstants.ERROR_MESSAGE);
 			}
 		} catch (Exception e){
 			logger.error("TermnsController - agregarTermino() - Error: ",e);
@@ -210,16 +210,16 @@ public class TermnsController {
 						wordMap.put("exampleVideoMetadata", youtubeHelper.getVideoMetadata(word.getVideo().getExampleYoutubeVideoID()));
 						
 						result.setContent(wordMap);
-						result.setMessage("Success");
-						result.setCode("000");
+						result.setMessage(LescoConstants.SUCCESS_MESSAGE);
+						result.setCode(LescoConstants.SUCCESS_CODE);
 					} else {
 						result.setMessage("Could not find the word");
-						result.setCode("001");
+						result.setCode(LescoConstants.ERROR_CODE);
 					}
 				}
 			} else{
-				result.setMessage("Failure");
-				result.setCode("001");
+				result.setMessage(LescoConstants.SUCCESS_MESSAGE);
+				result.setCode(LescoConstants.SUCCESS_CODE);
 			}
 		}catch(Exception e){
 			logger.error("TermnsController - obtenerTermino() - Error", e);
@@ -536,7 +536,7 @@ public class TermnsController {
 	@RequestMapping(value= "/agregarPreferido", method = RequestMethod.POST, headers = "Accept=application/json", consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody AjaxResponseBody agregarPreferido(@RequestBody Map<String, String> json, HttpServletRequest request, HttpServletResponse response){
 		
-		AjaxResponseBody result = new AjaxResponseBody();
+		AjaxResponseBody ajaxResponse = new AjaxResponseBody();
 		
 		logger.debug("TermnsController - agregarPreferido() - Start");
 		
@@ -590,17 +590,17 @@ public class TermnsController {
 							List<Word> listMyWords = getWordsFromList(preferredWordDAO.findByUser(profileDetailQuery.getProfileDetailId()));
 							resultMap.put("listMyWords", processWordList(listMyWords));
 						}
-						result.setContent(resultMap);
-						result.setMessage("Success");
-						result.setCode("000");
+						ajaxResponse.setContent(resultMap);
+						ajaxResponse.setCode(LescoConstants.SUCCESS_CODE);
+						ajaxResponse.setMessage(LescoConstants.SUCCESS_MESSAGE);
 					} else {
-						result.setMessage("Could not find the word");
-						result.setCode("001");
+						ajaxResponse.setMessage("Could not find the word");
+						ajaxResponse.setCode(LescoConstants.ERROR_CODE);
 					}
 				}
 			} else{
-				result.setMessage("Failure");
-				result.setCode("001");
+				ajaxResponse.setMessage(LescoConstants.ERROR_MESSAGE);
+				ajaxResponse.setCode(LescoConstants.ERROR_CODE);
 			}
 		}catch(Exception e){
 			logger.error("TermnsController - agregarPreferido() - Error", e);
@@ -608,7 +608,7 @@ public class TermnsController {
 		
 		logger.debug("TermnsController - agregarPreferido() - End");
 		
-		return result;
+		return ajaxResponse;
 	}
 	
 	/**
@@ -786,11 +786,11 @@ public class TermnsController {
 					wordDAO.save(word);
 					
 				} else {
-					result= LescoConstants.FAILURE_MESSAGE;
+					result= LescoConstants.ERROR_MESSAGE;
 				}
 				result= LescoConstants.SUCCESS_MESSAGE;
 			}else{
-				result= LescoConstants.FAILURE_MESSAGE;
+				result= LescoConstants.ERROR_MESSAGE;
 			}
 		} catch(Exception e) {
 			logger.error("TermnsController - salvarTermino() - Error: ", e);

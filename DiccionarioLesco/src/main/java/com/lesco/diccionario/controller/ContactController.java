@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.lesco.diccionario.pojo.AjaxResponseBody;
 import com.lesco.diccionario.pojo.ContactForm;
+import com.lesco.diccionario.utils.LescoConstants;
 import com.lesco.diccionario.utils.SendMailTLS;
 
 /**
@@ -56,12 +57,12 @@ public class ContactController {
 		//String sendEmailResponse = "success";
 		
 		//Response toggle based on the save return
-		if("success".equals(sendEmailResponse)){
-			ajaxResponse.setCode("000");
-			ajaxResponse.setMessage("Success");
+		if(LescoConstants.SUCCESS_MESSAGE.equals(sendEmailResponse)){
+			ajaxResponse.setCode(LescoConstants.SUCCESS_CODE);
+			ajaxResponse.setMessage(LescoConstants.SUCCESS_MESSAGE);
 		}else{
-			ajaxResponse.setCode("999");
-			ajaxResponse.setMessage("Error");
+			ajaxResponse.setCode(LescoConstants.ERROR_CODE);
+			ajaxResponse.setMessage(LescoConstants.ERROR_MESSAGE);
 		}
 		
 		logger.debug("ContactController - enviarFormularioContacto() - End");

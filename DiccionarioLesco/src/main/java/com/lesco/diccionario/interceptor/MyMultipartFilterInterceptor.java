@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 import org.springframework.web.multipart.support.MultipartFilter;
 
+import com.lesco.diccionario.utils.LescoConstants;
+
 /**
  * Sets the correct char encoding to use in the application
  * 
@@ -32,7 +34,7 @@ public class MyMultipartFilterInterceptor extends MultipartFilter {
     	
     	logger.debug("MyMultipartFilter - doFilterInternal() - Start");
 
-       request.setCharacterEncoding("ISO-8859-1");
+       request.setCharacterEncoding(LescoConstants.CHARACTER_ENCODING);
        request.getParameterNames();
 
        super.doFilterInternal(request, response, filterChain);
