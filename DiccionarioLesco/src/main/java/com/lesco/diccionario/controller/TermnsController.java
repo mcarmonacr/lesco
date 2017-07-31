@@ -702,6 +702,8 @@ public class TermnsController {
 				//TODO delete this testing code
 				//String termYoutubeVideoID = "X7PpGPOHVrA";
 				
+				//termYoutubeVideoID= "";
+				
 				//Rest of the videos IDs
 				String definitionYoutubeVideoID = "";
 				String explanationYoutubeVideoID = "";
@@ -718,9 +720,6 @@ public class TermnsController {
 				if (example != null && exampleVideoFile != null){
 					exampleYoutubeVideoID = youtubeHelper.uploadVideo("Ejemplo en LESCO del término " + wordName, "Ejemplo en LESCO del término: " + wordName + " - " + example, exampleVideoFile);
 				}
-				
-				
-				termYoutubeVideoID= "";
 				
 				//The term video is the only that is compulsory, the other ones are optional
 				if(!termYoutubeVideoID.isEmpty()){

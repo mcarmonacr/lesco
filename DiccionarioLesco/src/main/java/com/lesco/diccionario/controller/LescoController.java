@@ -435,7 +435,7 @@ public class LescoController {
 				
 				Word actualWord= new Word();
 				
-				actualWord= wordDAO.findById(actualPreferredWord.getUserProfileId());
+				actualWord= wordDAO.findById(actualPreferredWord.getWordId());
 				
 				result.add(actualWord);
 			}

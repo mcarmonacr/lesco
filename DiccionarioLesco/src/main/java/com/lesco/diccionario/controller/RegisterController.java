@@ -266,7 +266,7 @@ public class RegisterController {
 					userProfile.setUserPassword(shaEncryption.getHashedPassword(registerForm.getPassword(), salt));
 					
 					//Checks if the user should be administrator
-					if(registerForm.getUserName().equals("administrador")){
+					if(registerForm.getUserName() != null && registerForm.getUserName().trim().equals("administrador")){
 						userProfile.setUserRole("administrator");
 					}
 					

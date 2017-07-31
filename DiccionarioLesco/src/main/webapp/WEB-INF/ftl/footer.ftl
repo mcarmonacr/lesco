@@ -1,5 +1,5 @@
 
-	<footer class="navbar navbar-default navbar-fixed-bottom">
+	<footer id="siteFooter" class="navbar navbar-default navbar-fixed-bottom">
 		<div class="container-fluid">
 			<div class="row footer-content">
 				<!-- 			  	<hr> -->

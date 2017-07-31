@@ -206,6 +206,12 @@
 										<!-- 										    <button id="button2id" name="button2id" class="btn btn-danger">Descartar</button> -->
 									</div>
 								</div>
+								
+								
+								<legend> </legend>
+								<br >
+								<br >
+								
 							</fieldset>
 						</form>
 					</div>

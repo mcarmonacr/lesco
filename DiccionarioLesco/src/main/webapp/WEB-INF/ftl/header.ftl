@@ -33,7 +33,7 @@
 							class="glyphicon glyphicon-envelope"></span> Contacto
 					</a></li>
 
-					<#if (isSessionValid??)> <#if (userRole== "administrator")>
+					<#if (isSessionValid??)> <#if (userRole??) && (userRole== "administrator")>
 					<li><a href="/DiccionarioLesco/admin"> <span
 							class="glyphicon glyphicon-dashboard"></span> Admin
 					</a></li>

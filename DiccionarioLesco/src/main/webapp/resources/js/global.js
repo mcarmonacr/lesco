@@ -11,8 +11,28 @@ jQuery(document).ready(function($) {
 		event.preventDefault();
 		submitPasswordRecoveryForm();
 	});
+	
+	$( "#loginEmailAddress" ).focus(function() {
+		  hideFooter();
+	});
+	
+	$( "#loginPassword" ).focus(function() {
+		  hideFooter();
+	});
 
 });
+
+function hideFooter(){
+	
+	var width = screen.width;
+	var height = screen.height;
+	
+	//If the screen is less than 500, then hide the footer
+	if(width < 500 || height < 500){
+		$("#siteFooter" ).css( "display", "none" );
+	}
+	
+}
 
 /**
  * Submit the global login form

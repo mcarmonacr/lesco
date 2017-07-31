@@ -1,11 +1,11 @@
 jQuery(document).ready(function($) {
 	
 	$("#categoryForm").submit(function(event) {
-		// Disble the search button
+		// Disable the search button
 		//enableSearchButton(false);
 
 		// Prevent the form from submitting via the browser.
-		//event.preventDefault();
+		event.preventDefault();
 		submitdata();
 	});
 	

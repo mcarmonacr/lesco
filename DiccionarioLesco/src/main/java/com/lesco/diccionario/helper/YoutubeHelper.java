@@ -100,7 +100,7 @@ public class YoutubeHelper {
 
         try {
             // Authorize the request.
-            Credential credential = AuthHelper.authorize(scopes, "uploadvideo");
+            Credential credential = AuthHelper.authorize(scopes, "uploadVideo");
 
             // This object is used to make YouTube Data API requests.
             youtube = new YouTube.Builder(AuthHelper.HTTP_TRANSPORT, AuthHelper.JSON_FACTORY, credential).setApplicationName(
@@ -332,7 +332,7 @@ public class YoutubeHelper {
             List<String> scopes = Lists.newArrayList("https://www.googleapis.com/auth/youtube");
             
             // Authorize the request.
-            Credential credential = AuthHelper.authorize(scopes, "uploadvideo");
+            Credential credential = AuthHelper.authorize(scopes, "getVideoRating");
 
             // This object is used to make YouTube Data API requests.
             youtube = new YouTube.Builder(AuthHelper.HTTP_TRANSPORT, AuthHelper.JSON_FACTORY, credential).setApplicationName(
@@ -387,7 +387,7 @@ public class YoutubeHelper {
             List<String> scopes = Lists.newArrayList("https://www.googleapis.com/auth/youtube");
             
             // Authorize the request.
-            Credential credential = AuthHelper.authorize(scopes, "uploadvideo");
+            Credential credential = AuthHelper.authorize(scopes, "likeAVideo");
 
             // This object is used to make YouTube Data API requests.
             youtube = new YouTube.Builder(AuthHelper.HTTP_TRANSPORT, AuthHelper.JSON_FACTORY, credential).setApplicationName(
@@ -439,7 +439,7 @@ public class YoutubeHelper {
             List<String> scopes = Lists.newArrayList("https://www.googleapis.com/auth/youtube");
             
             // Authorize the request.
-            Credential credential = AuthHelper.authorize(scopes, "uploadvideo");
+            Credential credential = AuthHelper.authorize(scopes, "deleteVideo");
 
             // This object is used to make YouTube Data API requests.
             youtube = new YouTube.Builder(AuthHelper.HTTP_TRANSPORT, AuthHelper.JSON_FACTORY, credential).setApplicationName(

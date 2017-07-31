@@ -443,23 +443,39 @@
 
 								<!-- 	    Checks if the user is logged in the site -->
 								<#if ((isSessionValid??) && (isSessionValid== "true"))> <!-- Work to do here: Add the proper classes and onClick actions -->
-								<#list listWords as word> <#if
-									((listMyPreferredWords??) && (listMyPreferredWords?size> 0))> <#list
-									listMyPreferredWords as myWord> <!-- This means that the word is a preferred word by the user -->
-								<#if (word.wordName== myWord.wordName)> <a
-									class="list-group-item"> <span id="span-${word.wordId}"
-									title="Deshacer Favorito"
-									onclick="togglePreferred(${word.wordId})"
-									class="preferred-button btn btn-sm btn-warning fa fa-lg fa-star pull-left"></span> <span
-									onclick="loadDetail(${word.wordId})" title="Cargar detalle">
-										${word.wordName}</span>
-								</a> </#if> </#list> <#else> <a class="list-group-item"> <span
-									id="span-${word.wordId}" title="Hacer Favorito"
-									onclick="togglePreferred(${word.wordId})"
-									class="preferred-button btn btn-sm btn-warning fa fa-lg fa-star-o pull-left"></span> <span
-									onclick="loadDetail(${word.wordId})" title="Cargar detalle">
-										${word.wordName}</span>
-								</a></#if> </#list> <#else> <#list listWords as word> <a
+								<#list listWords as word> 
+									<#if ((listMyPreferredWords??) && (listMyPreferredWords?size> 0))> 
+										<#list listMyPreferredWords as myWord> <!-- This means that the word is a preferred word by the user -->
+											<#if (word.wordName== myWord.wordName)> 
+												<a
+													class="list-group-item"> <span id="span-${word.wordId}"
+													title="Deshacer Favorito"
+													onclick="togglePreferred(${word.wordId})"
+													class="preferred-button btn btn-sm btn-warning fa fa-lg fa-star pull-left"></span> <span
+													onclick="loadDetail(${word.wordId})" title="Cargar detalle">
+														${word.wordName}</span>
+												</a> 
+											<#else> 
+												<a class="list-group-item"> <span
+													id="span-${word.wordId}" title="Hacer Favorito"
+													onclick="togglePreferred(${word.wordId})"
+													class="preferred-button btn btn-sm btn-warning fa fa-lg fa-star-o pull-left"></span> <span
+													onclick="loadDetail(${word.wordId})" title="Cargar detalle">
+														${word.wordName}</span>
+												</a>
+											</#if> 
+										</#list> 
+									<#else> <a class="list-group-item"> <span
+										id="span-${word.wordId}" title="Hacer Favorito"
+										onclick="togglePreferred(${word.wordId})"
+										class="preferred-button btn btn-sm btn-warning fa fa-lg fa-star-o pull-left"></span> <span
+										onclick="loadDetail(${word.wordId})" title="Cargar detalle">
+											${word.wordName}</span>
+									</a>
+									</#if> 
+								</#list> 
+								<#else> 
+								<#list listWords as word> <a
 									class="list-group-item"> <span
 									onclick="loadDetail(${word.wordId})" title="Cargar detalle">
 										${word.wordName}</span>
@@ -697,6 +713,10 @@
 			</div>
 			
 		</div>
+		
+		<legend> </legend>
+								<br >
+		
 	</div>
 
 <!-- This DIV gets automatically hidden by JQueryUI -->

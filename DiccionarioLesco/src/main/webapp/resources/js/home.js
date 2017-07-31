@@ -139,15 +139,15 @@ function loadTermDetails(content){
 	 $('#termSourceURLIframe').attr('src', "https://www.youtube.com/embed/" + content.termYoutubeVideoID + "?controls=1");
 	 updateVideoRatingMetadata(content.termYoutubeVideoID, content.termVideoRating, content.termVideoMetadata);
 	 
-	 $("#definitionDiv").text(decodeURIComponent(escape(data.content.definition)));
+	 $("#definitionDiv").text(decodeURIComponent(escape(content.definition)));
 	 $('#definitionSourceURLIframe').attr('src', "https://www.youtube.com/embed/" + content.definitionYoutubeVideoID + "?controls=1");
 	 updateVideoRatingMetadata(content.definitionYoutubeVideoID, content.definitionVideoRating, content.definitionVideoMetadata);
 	 
-	 $("#explanationDiv").text(decodeURIComponent(escape(data.content.explanation)));
+	 $("#explanationDiv").text(decodeURIComponent(escape(content.explanation)));
 	 $('#explanationSourceURLIframe').attr('src', "https://www.youtube.com/embed/" + content.explanationYoutubeVideoID + "?controls=1");
 	 updateVideoRatingMetadata(content.explanationYoutubeVideoID, content.explanationVideoRating, content.explanationVideoMetadata);
 	 
-	 $("#exampleDiv").text(decodeURIComponent(escape(data.content.example)));
+	 $("#exampleDiv").text(decodeURIComponent(escape(content.example)));
 	 $('#exampleSourceURLIframe').attr('src', "https://www.youtube.com/embed/" + content.exampleYoutubeVideoID + "?controls=1");
 	 updateVideoRatingMetadata(content.exampleYoutubeVideoID, content.exampleVideoRating, content.exampleVideoMetadata);
 }

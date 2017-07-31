@@ -17,6 +17,7 @@ jQuery(document).ready(function($) {
 
 	//Register user form event binding 
 	$("#registerForm").submit(function(event) {
+		event.preventDefault();
 		submitform();
 	});
 
@@ -198,7 +199,7 @@ function submitform() {
 		success : function(data) {
 			console.log("SUCCESS: ", data);
 		
-			//Set the register user modal as static so the user can get rid of it by clikcing outside of it
+			//Set the register user modal as static so the user can get rid of it by clicking outside of it
 			$('#registerUserModal').modal({
 				backdrop: 'static'
 			});

@@ -87,6 +87,8 @@ js="resources/js/admin.js">
 							</div>
 						</div>
 						
+						<legend> </legend>
+								<br >
 					</fieldset>
 				</form>
 			</div>
