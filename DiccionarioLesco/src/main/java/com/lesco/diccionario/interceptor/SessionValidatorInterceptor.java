@@ -57,7 +57,7 @@ public class SessionValidatorInterceptor extends HandlerInterceptorAdapter {
 		    //session = request.getSession();
 			
 			//This works
-			//response.sendRedirect("/DiccionarioLesco/login");
+			//response.sendRedirect("/lesco/login");
 		} else {
 		    // Already created.
 		}

@@ -89,7 +89,7 @@ http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
 
 	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
 	    <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-	    <property name="url" value="jdbc:mysql://163.178.104.112:3306/lesco"/>
+	    <property name="url" value="jdbc:mysql://163.178.104.112/lesco"/>
 	    <property name="username" value="lesco"/>
 	    <property name="password" value="6pCD1V8POVnj"/>
 	</bean>

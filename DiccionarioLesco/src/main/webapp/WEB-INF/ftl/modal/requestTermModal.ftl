@@ -7,11 +7,11 @@
 	      <div class="modal-footer">
 	        <div class="row">
 	        	<div class="col-md-5 text-center">
-	        		<a href="/DiccionarioLesco/agregar" class="btn btn-info" role="button">Solicitar Nuevo Término</a>
+	        		<a href="/lesco/agregar" class="btn btn-info" role="button">Solicitar Nuevo Término</a>
 	        	</div>
 	        	<div class="col-md-2"></div>
 		        <div class="col-md-5 text-center">
-		        	<a href="/DiccionarioLesco/" class="btn btn-info" role="button">Página Principal</a>
+		        	<a href="/lesco/" class="btn btn-info" role="button">Página Principal</a>
 		        </div>
 	        </div>
 	      </div>

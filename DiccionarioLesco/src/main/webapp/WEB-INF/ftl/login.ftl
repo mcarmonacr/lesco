@@ -16,7 +16,7 @@
 		<p class="text-center">Debe estar autenticado para poder accesar
 			el contenido solicitado.</p>
 		<p class="text-center">
-			<a class="btn btn-primary" href="/DiccionarioLesco/"><i
+			<a class="btn btn-primary" href="/lesco/"><i
 				class="fa fa-home"></i> Diccionario Lesco</a>
 		</p>
 	</div>

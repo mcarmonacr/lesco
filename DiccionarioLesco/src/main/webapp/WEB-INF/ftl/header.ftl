@@ -10,7 +10,7 @@
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="/DiccionarioLesco/"> <span
+				<a class="navbar-brand" href="/lesco/"> <span
 					class="glyphicon glyphicon-home"></span> Diccionario Lesco
 				</a>
 			</div>
@@ -19,22 +19,22 @@
 				<ul class="nav navbar-nav">
 					<!-- 	            <li class="active"><a href="#">Diccionario</a></li> -->
 					<!-- 	             <li><a href="#">Diccionario</a></li> -->
-					<li><a href="/DiccionarioLesco/acerca"> <span
+					<li><a href="/lesco/acerca"> <span
 							class="glyphicon glyphicon-education"></span> Acerca del Proyecto
 					</a></li>
 
 					<#if (userRole??)> <#if (isSessionValid== "true")>
-					<li><a href="/DiccionarioLesco/agregar"> <span
+					<li><a href="/lesco/agregar"> <span
 							class="glyphicon glyphicon-book"></span> Términos
 					</a></li>
 					</#if> </#if>
 
-					<li><a href="/DiccionarioLesco/contacto"> <span
+					<li><a href="/lesco/contacto"> <span
 							class="glyphicon glyphicon-envelope"></span> Contacto
 					</a></li>
 
 					<#if (isSessionValid??)> <#if (userRole??) && (userRole== "administrator")>
-					<li><a href="/DiccionarioLesco/admin"> <span
+					<li><a href="/lesco/admin"> <span
 							class="glyphicon glyphicon-dashboard"></span> Admin
 					</a></li>
 					</#if> </#if>
@@ -83,7 +83,7 @@
 						<span class="glyphicon glyphicon-log-in"></span> Ingresar
 					</button>
 					<!-- 	            <button type="submit" class="btn btn-success" href="/registrarse/">Registrarse</button> -->
-					<a href="/DiccionarioLesco/registrarse" class="btn btn-primary">
+					<a href="/lesco/registrarse" class="btn btn-primary">
 						<span class="glyphicon glyphicon-user"></span> Registrarse
 					</a>
 				</form></#if>

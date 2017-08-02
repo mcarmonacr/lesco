@@ -51,7 +51,7 @@ function checkUserName() {
 		},
 		type: 'post',
 		contentType : "application/json",
-		url: "/DiccionarioLesco/registro/verificarUsuario",
+		url: "/lesco/registro/verificarUsuario",
 		data : JSON.stringify(search),
 		dataType : 'json',
 		success : function(data) {
@@ -135,8 +135,8 @@ function submitForm() {
 		//},
 		type: 'post',
 		//contentType : "application/json",
-		//url: "http://localhost:8080/DiccionarioLesco/registro/verificarUsuario",
-		url: "/DiccionarioLesco/termino/agregarTermino",
+		//url: "http://localhost:8080/lesco/registro/verificarUsuario",
+		url: "/lesco/termino/agregarTermino",
 		processData: false,
 		contentType: false,
 		//contentType: 'multipart/form-data;boundary=----WebKitFormBoundary0XBBar2mAFEE8zbv',
@@ -193,7 +193,7 @@ function submitRequestForm() {
 		},
 		type: 'post',
 		contentType : "application/json",
-		url: "/DiccionarioLesco/solicitud/agregarSolicitud",
+		url: "/lesco/solicitud/agregarSolicitud",
 		data : JSON.stringify(search),
 		dataType : 'json',
 		success : function(data) {
@@ -245,7 +245,7 @@ function loadRequestDetail(requestId) {
 	    },
 	    responseType:"application/json;charset:ISO-8859-1",
 	    //	    mimeType:"text/plain; charset=ISO-8859-1",
-	    url: "/DiccionarioLesco/solicitud/obtenerSolicitud",
+	    url: "/lesco/solicitud/obtenerSolicitud",
 	    data : JSON.stringify(search),
 	    dataType : 'json',
 	    success : function(data) {
@@ -293,7 +293,7 @@ function checkTerm() {
 			},
 			type: 'post',
 			contentType : "application/json",
-			url: "/DiccionarioLesco/solicitud/obtenerListaSolicitudes",
+			url: "/lesco/solicitud/obtenerListaSolicitudes",
 			data : JSON.stringify(search),
 			dataType : 'json',
 			success : function(data) {

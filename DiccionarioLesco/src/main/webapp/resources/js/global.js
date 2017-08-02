@@ -58,8 +58,8 @@ function submitGlobalLoginForm() {
 		},
 		type: 'post',
 		contentType : "application/json",
-		//url: "http://localhost:8080/DiccionarioLesco/registro/verificarUsuario",
-		url: "/DiccionarioLesco/ingreso/iniciarSesion",
+		//url: "http://localhost:8080/lesco/registro/verificarUsuario",
+		url: "/lesco/ingreso/iniciarSesion",
 		data : JSON.stringify(search),
 		dataType : 'json',
 		success : function(data) {
@@ -72,7 +72,7 @@ function submitGlobalLoginForm() {
 				//Means that the user comes from an attempt to access a restricted web page and should be redirected to the home page after login
 				//"/ingresar" is where the interceptor redirects the not logged users
 				if(ingresar){
-					$(window).attr('location','/DiccionarioLesco/')
+					$(window).attr('location','/lesco/')
 				} else{
 					//Reload the current location
 					window.location.reload(true);
@@ -112,7 +112,7 @@ function submitPasswordRecoveryForm() {
 		},
 		type: 'post',
 		contentType : "application/json",
-		url: "/DiccionarioLesco/registro/recuperarPassword",
+		url: "/lesco/registro/recuperarPassword",
 		data : JSON.stringify(search),
 		dataType : 'json',
 		success : function(data) {
@@ -150,7 +150,7 @@ function endUserSession() {
 		},
 		type: 'post',
 		contentType : "application/json",
-		url: "/DiccionarioLesco/ingreso/finalizarSesion",
+		url: "/lesco/ingreso/finalizarSesion",
 		//data : JSON.stringify(search),
 		dataType : 'json',
 		success : function(data) {

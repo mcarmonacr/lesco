@@ -39,7 +39,7 @@ function submitdata() {
 			},
 			type: 'post',
 			contentType : "application/json",
-			url: "/DiccionarioLesco/contacto/enviarFormularioContacto",
+			url: "/lesco/contacto/enviarFormularioContacto",
 			data : JSON.stringify(search),
 			dataType : 'json',
 			success : function(data) {

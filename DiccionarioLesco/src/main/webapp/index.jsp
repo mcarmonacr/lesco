@@ -19,7 +19,7 @@ pageEncoding="ISO-8859-1"%>
 	
 	<%
    // New location to be redirected
-   //String site = new String("http://localhost:8088/DiccionarioLesco/");
+   //String site = new String("http://localhost:8088/lesco/");
    //response.setStatus(response.SC_MOVED_TEMPORARILY);
    //response.setHeader("Location", site); 
 %>

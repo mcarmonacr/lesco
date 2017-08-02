@@ -25,7 +25,7 @@
 						prestigiosas y reconocidas de América Latina.</p>
 					<p>
 						<a class="btn btn-lg btn-primary"
-							href="/DiccionarioLesco/acerca/ucr" role="button">Conocer Más</a>
+							href="/lesco/acerca/ucr" role="button">Conocer Más</a>
 					</p>
 				</div>
 			</div>
@@ -43,7 +43,7 @@
 						sordas.</p>
 					<p>
 						<a class="btn btn-lg btn-primary"
-							href="/DiccionarioLesco/acerca/lesco" role="button">Conocer
+							href="/lesco/acerca/lesco" role="button">Conocer
 							Más</a>
 					</p>
 				</div>
@@ -63,7 +63,7 @@
 						Bachillerato y Licenciatura en Computación</p>
 					<p>
 						<a class="btn btn-lg btn-primary"
-							href="/DiccionarioLesco/acerca/ecci" role="button">Conocer
+							href="/lesco/acerca/ecci" role="button">Conocer
 							Más</a>
 					</p>
 				</div>
@@ -80,7 +80,7 @@
 						Señas Costarricense (LESCO)</p>
 					<p>
 						<a class="btn btn-lg btn-primary"
-							href="/DiccionarioLesco/acerca/recursos" role="button">Conocer
+							href="/lesco/acerca/recursos" role="button">Conocer
 							Más</a>
 					</p>
 				</div>

@@ -107,7 +107,7 @@ function loadDetail(wordId) {
 		},
 		type: 'post',
 		contentType : "application/json",
-		url: "/DiccionarioLesco/termino/obtenerTermino",
+		url: "/lesco/termino/obtenerTermino",
 		data : JSON.stringify(search),
 		dataType : 'json',
 		success : function(data) {
@@ -174,7 +174,7 @@ function togglePreferred(wordId) {
 	  	},
 		type: 'post',
 		contentType : "application/json",
-		url: "/DiccionarioLesco/termino/agregarPreferido",
+		url: "/lesco/termino/agregarPreferido",
 		data : JSON.stringify(search),
 		dataType : 'json',
 		success : function(data) {
@@ -229,7 +229,7 @@ function checkTerm() {
 		},
 		type: 'post',
 		contentType : "application/json",
-		url: "/DiccionarioLesco/termino/obtenerListaTerminos",
+		url: "/lesco/termino/obtenerListaTerminos",
 		data : JSON.stringify(search),
 		dataType : 'json',
 		success : function(data) {
@@ -286,7 +286,7 @@ function checkMyPreferredTerm() {
 		},
 		type: 'post',
 		contentType : "application/json",
-		url: "/DiccionarioLesco/termino/obtenerListaMisTerminosPreferidos",
+		url: "/lesco/termino/obtenerListaMisTerminosPreferidos",
 		data : JSON.stringify(search),
 		dataType : 'json',
 		success : function(data) {
@@ -343,7 +343,7 @@ function checkMyTerm() {
 		},
 		type: 'post',
 		contentType : "application/json",
-		url: "/DiccionarioLesco/termino/obtenerListaMisTerminos",
+		url: "/lesco/termino/obtenerListaMisTerminos",
 		data : JSON.stringify(search),
 		dataType : 'json',
 		success : function(data) {
@@ -572,7 +572,7 @@ function rateVideo(videoId, action){
 	    },
 		type: 'post',
 	    contentType : "application/json",
-	    url: "/DiccionarioLesco/termino/evaluarVideo",
+	    url: "/lesco/termino/evaluarVideo",
 	    data : JSON.stringify(search),
 	    dataType : 'json',
 	    success : function(data) {
@@ -638,7 +638,7 @@ function deleteWord(wordId){
 			},
 			type: 'post',
 			contentType : "application/json",
-			url: "/DiccionarioLesco/termino/eliminarTermino",
+			url: "/lesco/termino/eliminarTermino",
 			data : JSON.stringify(search),
 			dataType : 'json',
 			success : function(data) {

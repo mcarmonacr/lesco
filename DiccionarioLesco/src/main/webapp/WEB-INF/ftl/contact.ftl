@@ -87,12 +87,12 @@
 					<div class="modal-footer">
 						<div class="row">
 							<div class="col-md-5 text-center">
-								<a href="/DiccionarioLesco/contacto" class="btn btn-info"
+								<a href="/lesco/contacto" class="btn btn-info"
 									role="button">Enviar Nuevo Mensaje</a>
 							</div>
 							<div class="col-md-2"></div>
 							<div class="col-md-5 text-center">
-								<a href="/DiccionarioLesco/" class="btn btn-info" role="button">Página
+								<a href="/lesco/" class="btn btn-info" role="button">Página
 									Principal</a>
 							</div>
 						</div>

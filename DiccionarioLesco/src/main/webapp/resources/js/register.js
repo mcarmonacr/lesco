@@ -65,7 +65,7 @@ function checkUserName() {
 		},
 		type: 'post',
 		contentType : "application/json",
-		url: "/DiccionarioLesco/registro/verificarUsuario",
+		url: "/lesco/registro/verificarUsuario",
 		data : JSON.stringify(search),
 		dataType : 'json',
 		success : function(data) {
@@ -112,7 +112,7 @@ function checkEmailAddress() {
 		},
 		type: 'post',
 		contentType : "application/json",
-		url: "/DiccionarioLesco/registro/verificarCorreo",
+		url: "/lesco/registro/verificarCorreo",
 		data : JSON.stringify(search),
 		dataType : 'json',
 		success : function(data) {
@@ -193,7 +193,7 @@ function submitform() {
 		},
 		type: 'post',
 		contentType : "application/json",
-		url: "/DiccionarioLesco/registro/nuevoUsuario",
+		url: "/lesco/registro/nuevoUsuario",
 		data : JSON.stringify(search),
 		dataType : 'json',
 		success : function(data) {

@@ -51,7 +51,7 @@ function deleteCategory(categoryId){
 			},
 			type: 'post',
 			contentType : "application/json",
-			url: "/DiccionarioLesco/admin/eliminarCategoria",
+			url: "/lesco/admin/eliminarCategoria",
 			data : JSON.stringify(search),
 			dataType : 'json',
 			success : function(data) {
@@ -96,7 +96,7 @@ function submitdata() {
 	    },
 		type: 'post',
 	    contentType : "application/json",
-	    url: "/DiccionarioLesco/admin/agregarCategoria",
+	    url: "/lesco/admin/agregarCategoria",
 	    data : JSON.stringify(search),
 	    dataType : 'json',
 	    success : function(data) {
