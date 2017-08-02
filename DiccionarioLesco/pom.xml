@@ -228,10 +228,24 @@
 		    <artifactId>mail</artifactId>
 		    <version>1.4.7</version>
 		</dependency>
+		
+		<!-- OWASP Encoder -->
+		<dependency>
+		    <groupId>org.owasp.encoder</groupId>
+		    <artifactId>encoder</artifactId>
+		    <version>1.2.1</version>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/org.owasp.esapi/esapi -->
+		<dependency>
+		    <groupId>org.owasp.esapi</groupId>
+		    <artifactId>esapi</artifactId>
+		    <version>2.1.0</version>
+		</dependency>
 
 	</dependencies>
 	
   <build>
-    <finalName>DiccionarioLesco</finalName>
+    <finalName>lesco</finalName>
   </build>
 </project>
