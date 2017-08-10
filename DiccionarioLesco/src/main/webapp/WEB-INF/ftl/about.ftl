@@ -112,7 +112,7 @@
 
 		<br>
 
-		<div class="col-lg-4">
+		<div class="col-lg-3">
 			<img class="img-circle" src="resources/images/mario-carmona.PNG"
 				alt="Mario Alonso Carmona Dinarte" width="140" height="140">
 			<h2>Mario Alonso Carmona Dinarte</h2>
@@ -122,7 +122,7 @@
 			<!--           <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p> -->
 		</div>
 		<!-- /.col-lg-4 -->
-		<div class="col-lg-4">
+		<div class="col-lg-3">
 			<img class="img-circle" src="resources/images/luis-guerrero.png"
 				alt="Luis Alberto Guerrero Blanco" width="140" height="140">
 			<h2>Luis Alberto Guerrero Blanco</h2>
@@ -132,7 +132,7 @@
 			<!--           <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p> -->
 		</div>
 		<!-- /.col-lg-4 -->
-		<div class="col-lg-4">
+		<div class="col-lg-3">
 			<img class="img-circle" src="resources/images/luis-quesada.jpg"
 				alt="Luis Quesada Quirós" width="140" height="140">
 			<h2>Luis Quesada Quirós</h2>
@@ -142,6 +142,15 @@
 			<!--           <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p> -->
 		</div>
 		<!-- /.col-lg-4 -->
+		<div class="col-lg-3">
+			<img class="img-circle" src="resources/images/arturo-camacho.png"
+				alt="Arturo Camacho Lozano" width="140" height="140">
+			<h2>Arturo Camacho Lozano</h2>
+			<p class="text-justify">Profesor e Investigador de la Escuela de
+				Ciencias de la Computación e Informática (ECCI) de la Universidad de
+				Costa Rica.</p>
+			<!--           <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p> -->
+		</div>
 	</div>
 	<!-- /.row -->
 

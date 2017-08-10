@@ -268,6 +268,8 @@ public class RegisterController {
 					//Checks if the user should be administrator
 					if(registerForm.getUserName() != null && registerForm.getUserName().trim().equals("administrador")){
 						userProfile.setUserRole("administrator");
+					}else{
+						userProfile.setUserRole("user");
 					}
 					
 					//Because this two instances have a one-to-one relationship, this needs to be done
