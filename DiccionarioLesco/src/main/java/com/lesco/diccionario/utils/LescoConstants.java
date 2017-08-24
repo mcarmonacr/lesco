@@ -18,7 +18,8 @@ public final class LescoConstants {
 	public static final String ERROR_MESSAGE= "Error";
 	
 	//Port used to bind the Youtube API
-	public static final int YOUTUBE_AUTH_BINDING_PORT= 8080;
+	public static final int YOUTUBE_AUTH_BINDING_PORT= 1194;
+	//public static final int YOUTUBE_AUTH_BINDING_PORT= 8080;
 
 	//Available symbols to generate a random String
 	public static final String AVAILABLE_SYMBOLS = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
