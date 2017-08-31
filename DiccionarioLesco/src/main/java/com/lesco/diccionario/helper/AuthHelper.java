@@ -60,34 +60,42 @@ public class AuthHelper {
     	
     	logger.debug("Auth - authorize() - Start");
 
-        // Load client secrets.
-        Reader clientSecretReader = new InputStreamReader(AuthHelper.class.getResourceAsStream(CLIENT_SECRETS_JSON));
-        GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, clientSecretReader);
+    	Credential returnCredential = null;
+    	
+    	try{
+    		 // Load client secrets.
+            Reader clientSecretReader = new InputStreamReader(AuthHelper.class.getResourceAsStream(CLIENT_SECRETS_JSON));
+            GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, clientSecretReader);
 
-        // Checks that the defaults have been replaced (Default = "Enter X here").
-        if (clientSecrets.getDetails().getClientId().startsWith("Enter")
-                || clientSecrets.getDetails().getClientSecret().startsWith("Enter ")) {
-            System.out.println(
-                    "Enter Client ID and Secret from https://console.developers.google.com/project/_/apiui/credential "
-                            + "into src/main/resources/client_secrets.json");
-            System.exit(1);
-        }
+            // Checks that the defaults have been replaced (Default = "Enter X here").
+            if (clientSecrets.getDetails().getClientId().startsWith("Enter")
+                    || clientSecrets.getDetails().getClientSecret().startsWith("Enter ")) {
+                System.out.println(
+                        "Enter Client ID and Secret from https://console.developers.google.com/project/_/apiui/credential "
+                                + "into src/main/resources/client_secrets.json");
+                System.exit(1);
+            }
 
-        // This creates the credentials datastore at ~/.oauth-credentials/${credentialDatastore}
-        //FileDataStoreFactory fileDataStoreFactory = new FileDataStoreFactory(new File(System.getProperty("user.home") + "/" + ".auth" + "/" + CREDENTIALS_DIRECTORY));
-        FileDataStoreFactory fileDataStoreFactory = new FileDataStoreFactory(new File(System.getProperty("user.home") + "/" + CREDENTIALS_DIRECTORY));
-        DataStore<StoredCredential> datastore = fileDataStoreFactory.getDataStore(credentialDatastore);
+            // This creates the credentials datastore at ~/.oauth-credentials/${credentialDatastore}
+            //FileDataStoreFactory fileDataStoreFactory = new FileDataStoreFactory(new File(System.getProperty("user.home") + "/" + ".auth" + "/" + CREDENTIALS_DIRECTORY));
+            FileDataStoreFactory fileDataStoreFactory = new FileDataStoreFactory(new File(System.getProperty("user.home") + "/" + CREDENTIALS_DIRECTORY));
+            DataStore<StoredCredential> datastore = fileDataStoreFactory.getDataStore(credentialDatastore);
 
-        GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
-                HTTP_TRANSPORT, JSON_FACTORY, clientSecrets, scopes).setCredentialDataStore(datastore)
-                .build();
+            GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
+                    HTTP_TRANSPORT, JSON_FACTORY, clientSecrets, scopes).setCredentialDataStore(datastore)
+                    .build();
 
-        // Build the local server and bind it to port 8080
-        LocalServerReceiver localReceiver = new LocalServerReceiver.Builder().setPort(LescoConstants.YOUTUBE_AUTH_BINDING_PORT).build();
+            // Build the local server and bind it to port 8080
+            LocalServerReceiver localReceiver = new LocalServerReceiver.Builder().setPort(LescoConstants.YOUTUBE_AUTH_BINDING_PORT).build();
 
-        logger.debug("Auth - authorize() - End");
-        
+            logger.debug("Auth - authorize() - End"); 
+    		
+    		returnCredential = new AuthorizationCodeInstalledApp(flow, localReceiver).authorize("user");
+    	} catch(Exception e){
+    		logger.error("Auth - authorize() - Error:: Puerto: " + LescoConstants.YOUTUBE_AUTH_BINDING_PORT, e);
+    	}
+
         // Authorize.
-        return new AuthorizationCodeInstalledApp(flow, localReceiver).authorize("user");
+        return returnCredential;
     }
 }
