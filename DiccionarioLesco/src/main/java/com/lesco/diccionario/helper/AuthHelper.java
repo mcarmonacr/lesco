@@ -59,11 +59,11 @@ public class AuthHelper {
     public static Credential authorize(List<String> scopes, String credentialDatastore) throws IOException {
     	
     	logger.debug("Auth - authorize() - Start");
-
-    	Credential returnCredential = null;
     	
-    	try{
-    		 // Load client secrets.
+    	Credential credential= null;
+    	
+    	try {
+    		// Load client secrets.
             Reader clientSecretReader = new InputStreamReader(AuthHelper.class.getResourceAsStream(CLIENT_SECRETS_JSON));
             GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, clientSecretReader);
 
@@ -87,15 +87,23 @@ public class AuthHelper {
 
             // Build the local server and bind it to port 8080
             LocalServerReceiver localReceiver = new LocalServerReceiver.Builder().setPort(LescoConstants.YOUTUBE_AUTH_BINDING_PORT).build();
+            //LocalServerReceiver localReceiver = new LocalServerReceiver.Builder().setPort(LescoConstants.YOUTUBE_AUTH_BINDING_PORT).build();
+            
+            
+            logger.debug("Auth - authorize() - End");
+            
+         // Authorize.
+            //credential= new AuthorizationCodeInstalledApp(flow, localReceiver).authorize("user");
+            credential= new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver()).authorize("user");
 
-            logger.debug("Auth - authorize() - End"); 
-    		
-    		returnCredential = new AuthorizationCodeInstalledApp(flow, localReceiver).authorize("user");
-    	} catch(Exception e){
-    		logger.error("Auth - authorize() - Error:: Puerto: " + LescoConstants.YOUTUBE_AUTH_BINDING_PORT, e);
+            
+    	} catch (IOException ioe){
+    		logger.error("Auth - authorize() - Port: " + LescoConstants.YOUTUBE_AUTH_BINDING_PORT + " - IOException", ioe);
+    	} catch (Exception e){
+    		logger.error("Auth - authorize() - Port: " + LescoConstants.YOUTUBE_AUTH_BINDING_PORT + " - Exception", e);
     	}
+    	
+    	return credential;
 
-        // Authorize.
-        return returnCredential;
     }
 }

@@ -71,6 +71,7 @@ http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
 		</property>
 	</bean>
 
+<!-- Localhost home -->
 <!-- 	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close"> -->
 <!-- 	    <property name="driverClassName" value="com.mysql.jdbc.Driver"/> -->
 <!-- 	    <property name="url" value="jdbc:mysql://localhost:3306/world"/> -->
@@ -78,7 +79,7 @@ http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
 <!-- 	    <property name="password" value="password"/> -->
 <!-- 	</bean> -->
 
-
+<!-- Localhost openshift -->
 <!-- 	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close"> -->
 <!-- 	    <property name="driverClassName" value="com.mysql.jdbc.Driver"/> -->
 <!-- 	    <property name="url" value="jdbc:mysql://127.13.22.2:3306/lesco"/> -->
@@ -86,13 +87,21 @@ http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
 <!-- 	    <property name="password" value="7Pq9FjVEWDGW"/> -->
 <!-- 	</bean> -->
 
-
+<!-- Localhost citic -->
 	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
 	    <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
 	    <property name="url" value="jdbc:mysql://localhost:3306/lesco"/>
 	    <property name="username" value="lesco"/>
 	    <property name="password" value="6pCD1V8POVnj"/>
 	</bean>
+	
+<!-- Localhost Accenture -->
+<!-- 	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close"> -->
+<!-- 	    <property name="driverClassName" value="com.mysql.jdbc.Driver"/> -->
+<!-- 	    <property name="url" value="jdbc:mysql://localhost:3306/lesco"/> -->
+<!-- 	    <property name="username" value="root"/> -->
+<!-- 	    <property name="password" value="password"/> -->
+<!-- 	</bean> -->
 	
 	<bean id="sessionFactory"
     class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
